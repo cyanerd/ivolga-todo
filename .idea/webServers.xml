@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="WebServers">
+    <option name="servers">
+      <webServer id="652515cb-d311-4b23-9a1a-915dee3fc125" name="ivolga" url="http://host1867956.hostland.pro/">
+        <fileTransfer rootFolder="/host1867956.hostland.pro/htdocs/www/" host="host1867956.hostland.pro" port="21">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" passiveMode="true" shareSSLContext="true" />
+          </advancedOptions>
+        </fileTransfer>
+      </webServer>
+    </option>
+  </component>
+</project>

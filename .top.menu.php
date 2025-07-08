@@ -1,0 +1,32 @@
+<?
+$aMenuLinks = Array(
+	Array(
+		"Каталог", 
+		"/catalog/", 
+		Array(), 
+		Array("CLASS"=>"catalog-link"), 
+		"" 
+	),
+	Array(
+		"Образы", 
+		"/looks/", 
+		Array(), 
+		Array(), 
+		"" 
+	),
+	Array(
+		"Коллекции", 
+		"/collections/", 
+		Array(), 
+		Array(), 
+		"" 
+	),
+	Array(
+		"Прямые эфиры", 
+		"/live/", 
+		Array(), 
+		Array(), 
+		"" 
+	)
+);
+?>
