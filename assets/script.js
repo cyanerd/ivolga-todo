@@ -204,18 +204,16 @@ const del_addr = (id) => {
 const plus_cart = (id) => {
     if($('.order-busy').length) return false;
 
-    let value = parseInt($(`#basket-element-${id}`).val());
-    if(value < 100) value++
-    //$(`#basket-element-${id}`).val(value)
-    updatecartamount(id, value)
+    $.postJSON('/ajax/sale.php', {command:'plus_cart', id:id}, function (res_data) {
+        updatecart();
+    })
 }
 const minus_cart = (id) => {
     if($('.order-busy').length) return false;
 
-    let value = parseInt($(`#basket-element-${id}`).val());
-    if(value > 1) value--
-    //$(`#basket-element-${id}`).val(value)
-    updatecartamount(id, value)
+    $.postJSON('/ajax/sale.php', {command:'minus_cart', id:id}, function (res_data) {
+        updatecart();
+    })
 }
 const updatecartamount = (id, value) => {
     $.postJSON('/ajax/sale.php', {command:'update_cart_amount', id, value}, function (res_data) {

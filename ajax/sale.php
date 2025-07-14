@@ -1,5 +1,7 @@
 <?php
 include($_SERVER["DOCUMENT_ROOT"] . "/bitrix/modules/main/include/prolog_before.php");
+include($_SERVER["DOCUMENT_ROOT"] . "/local/php_interface/include/log_helper.php");
+
 CModule::IncludeModule("catalog");
 CModule::IncludeModule("iblock");
 CModule::IncludeModule("sale");
@@ -18,13 +20,17 @@ if ($command == 'add_to_cart'):
     $product_id = $request['item_id'];
     $quantity = 1;
 
+    projectDebugLog('Add to cart: Product ID: ' . $product_id, 'cart_add');
+
     $arFilter = array("=ID" => $product_id, "ACTIVE" => "Y");
     $arProduct = CIBlockElement::GetList(array('SORT' => 'ASC'), $arFilter, false, false, ['ID', 'NAME'])->GetNext();
     if (!$arProduct['ID']):
+        projectErrorLog('Add to cart: Product not found', 'cart_add');
         echo json_encode(['error' => 'Товар не найден']);
         die;
     endif;
-    //$price = CPrice::GetBasePrice($arProduct['ID'])['PRICE'];
+    
+    projectDebugLog('Add to cart: Found product: ' . $arProduct['NAME'], 'cart_add');
 
     $fields = [
         'PRODUCT_ID' => $arProduct['ID'], // ID товара, обязательно
@@ -34,6 +40,7 @@ if ($command == 'add_to_cart'):
     ];
 
     $r = Bitrix\Catalog\Product\Basket::addProduct($fields);
+    projectDebugLog('Add to cart: Result: ' . print_r($r, true), 'cart_add');
 
     echo \Bitrix\Main\Web\Json::encode(
         ['result' => 'ok']

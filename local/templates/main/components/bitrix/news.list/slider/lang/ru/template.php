@@ -1,0 +1,21 @@
+<?if(!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED!==true)die();
+$MESS["T_IBLOCK_DESC_NEWS_DATE"] = "Показывать дату элемента";
+$MESS["T_IBLOCK_DESC_NEWS_NAME"] = "Показывать название элемента";
+$MESS["T_IBLOCK_DESC_NEWS_PICTURE"] = "Показывать детальное изображение";
+$MESS["T_IBLOCK_DESC_NEWS_TEXT"] = "Показывать текст анонса";
+$MESS["T_IBLOCK_DESC_NEWS_USE_SHARE"] = "Показывать панель соц. закладок";
+$MESS["T_IBLOCK_DESC_NEWS_SHARE_HIDE"] = "Не раскрывать панель соц. закладок по умолчанию";
+$MESS["T_IBLOCK_DESC_NEWS_SHARE_TEMPLATE"] = "Шаблон компонента панели соц. закладок";
+$MESS["T_IBLOCK_DESC_NEWS_SHARE_SYSTEM"] = "Используемые соц. закладки и сети";
+$MESS["T_IBLOCK_DESC_NEWS_SHARE_SYSTEM_DELICIOUS"] = "Delicious";
+$MESS["T_IBLOCK_DESC_NEWS_SHARE_SYSTEM_DIGG"] = "Digg";
+$MESS["T_IBLOCK_DESC_NEWS_SHARE_SYSTEM_FACEBOOK"] = "Facebook";
+$MESS["T_IBLOCK_DESC_NEWS_SHARE_SYSTEM_GOOGLE"] = "Google+";
+$MESS["T_IBLOCK_DESC_NEWS_SHARE_SYSTEM_LINKEDIN"] = "LinkedIn";
+$MESS["T_IBLOCK_DESC_NEWS_SHARE_SYSTEM_LJ"] = "LiveJournal";
+$MESS["T_IBLOCK_DESC_NEWS_SHARE_SYSTEM_REDDIT"] = "Reddit";
+$MESS["T_IBLOCK_DESC_NEWS_SHARE_SYSTEM_TWITTER"] = "Twitter";
+$MESS["T_IBLOCK_DESC_NEWS_SHARE_SYSTEM_VKONTAKTE"] = "ВКонтакте";
+$MESS["T_IBLOCK_DESC_NEWS_SHARE_SHORTEN_URL_LOGIN"] = "Логин для bit.ly";
+$MESS["T_IBLOCK_DESC_NEWS_SHARE_SHORTEN_URL_KEY"] = "Ключ API для bit.ly";
+?> 

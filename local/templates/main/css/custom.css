@@ -1,0 +1,14 @@
+.catalogpage__sort form {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.catalogpage__sort form input[name="order"] + .sort-order-btn svg {
+    transform: rotate(-90deg);
+}
+
+.catalogpage__sort form input[name="order"][value="desc"] + .sort-order-btn svg {
+    position: relative;
+    top: -4px;
+}
