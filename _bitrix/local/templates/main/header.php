@@ -5,7 +5,6 @@ IncludeTemplateLangFile(__FILE__);
 <?
 
 use Bitrix\Main\Page\Asset;
-use local\php_interface\include\Axi;
 
 ?>
 <!DOCTYPE html>

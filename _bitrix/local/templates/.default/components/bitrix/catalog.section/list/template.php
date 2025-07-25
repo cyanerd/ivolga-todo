@@ -1,6 +1,4 @@
-<?php use local\php_interface\MyTools;
-
-if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED !== true) die(); ?>
+<?php if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED !== true) die(); ?>
 <div style="opacity: 1; transform: none;">
     <div class="products-card-container__content">
         <?php if (empty($arResult['ITEMS'])): ?>

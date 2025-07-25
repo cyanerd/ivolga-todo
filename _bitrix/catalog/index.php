@@ -117,11 +117,6 @@ $APPLICATION->SetTitle("Каталог");
       ],
       false
     ); ?>
-
-    <button class="catalogpage__more">
-      Показать ещё
-    </button>
-
   </div>
   <? if ($_GET['ajax'] === 'Y') {
     die();

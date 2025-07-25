@@ -218,32 +218,10 @@ const updateFilters = () => {
   }
 }
 
-document.addEventListener('DOMContentLoaded', () => {
-
-  var thProd = new Swiper(".pageprod__gallery-thumbs", {
-    spaceBetween: 10,
-    slidesPerView: 6,
-    watchSlidesProgress: true,
-    breakpoints: {
-      768: {
-        slidesPerView: 4,
-        direction: "vertical",
-      },
-    },
-  });
-  var prod = new Swiper(".pageprod__gallery-main", {
-    spaceBetween: 10,
-    thumbs: {
-      swiper: thProd,
-    },
-  });
-
-
+const initProductCardsSlider = () => {
   const productCards = document.querySelectorAll('.product-card');
 
   productCards.forEach(card => {
-
-
     const sliderTrack = card.querySelector('.product-card__slider-track');
     const slides = card.querySelectorAll('.product-card__slide');
     const dots = card.querySelectorAll('.product-card__pagination-dot');
@@ -278,7 +256,6 @@ document.addEventListener('DOMContentLoaded', () => {
       updateActiveSlide(0);
     });
 
-
     const radios = document.querySelectorAll('input[name="color"]');
     const clearButton = document.querySelector('.prodpar__block-clear');
 
@@ -295,13 +272,35 @@ document.addEventListener('DOMContentLoaded', () => {
       clearButton.classList.remove('active');
     });
   });
+}
 
+document.addEventListener('DOMContentLoaded', () => {
 
+  var thProd = new Swiper(".pageprod__gallery-thumbs", {
+    spaceBetween: 10,
+    slidesPerView: 6,
+    watchSlidesProgress: true,
+    breakpoints: {
+      768: {
+        slidesPerView: 4,
+        direction: "vertical",
+      },
+    },
+  });
+  var prod = new Swiper(".pageprod__gallery-main", {
+    spaceBetween: 10,
+    thumbs: {
+      swiper: thProd,
+    },
+  });
+
+  initProductCardsSlider();
 });
 
 const initFilters = () => {
   console.log('initFilters');
   updateFilters();
+  initProductCardsSlider();
   customSelect('select');
 
   const catdropBlocks = document.querySelectorAll('.catdrop-block');
@@ -311,7 +310,7 @@ const initFilters = () => {
   const header = document.querySelector('.catdrop__header');
   header.insertAdjacentElement('afterend', selectedFiltersContainer);
 
-// Создаем второй контейнер для дублирования фильтров
+  // Создаем второй контейнер для дублирования фильтров
   const duplicateFiltersContainer = document.createElement('div');
   duplicateFiltersContainer.className = 'duplicate-selected-filters';
   const catalogHeadingLeft = document.querySelector('.catalogpage__heading-left');
@@ -421,6 +420,9 @@ const initFilters = () => {
       const block = input.closest('.catdrop-block');
       if (block) toggleHasChecked(block); // Обновляем состояние блока
     });
+
+    const search = window.getCatalogParams();
+    window.updateCatalogAjax(search);
 
     toggleSelectedFiltersVisibility();
   }

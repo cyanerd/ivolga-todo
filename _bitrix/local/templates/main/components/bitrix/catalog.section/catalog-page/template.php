@@ -1,4 +1,4 @@
-<? use local\php_interface\MyTools;
+<?
 
 if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED !== true) die();
 $this->setFrameMode(true);
@@ -126,192 +126,182 @@ $isNotCatalog = substr_count($APPLICATION->GetCurPage(), '/collections/')
   </div>
 <? } ?>
 
-<div class="catalogpage__main">
-  <? if ($arResult["ITEMS"]): ?>
-    <? foreach (
-      $arResult["ITEMS"] as $arItem): ?>
-      <?
-      $this->AddEditAction($arItem['ID'], $arItem['EDIT_LINK'], CIBlock::GetArrayByID($arItem["IBLOCK_ID"], "ELEMENT_EDIT"));
-      $this->AddDeleteAction($arItem['ID'], $arItem['DELETE_LINK'], CIBlock::GetArrayByID($arItem["IBLOCK_ID"], "ELEMENT_DELETE"), ["CONFIRM" => GetMessage('CT_BCE_ELEMENT_DELETE_CONFIRM')]);
-      ?>
-      <div class="catalogpage__col" id="<?= $this->GetEditAreaId($arItem['ID']); ?>">
-        <div class="product-card" data-product-id="<?= $arItem['ID'] ?>">
-          <div class="product-card__image">
-            <a href="<?= $arItem["DETAIL_PAGE_URL"] ?>" class="product-card__slider">
-              <div class="product-card__slider-track">
-                <? if (!empty($arItem["PROPERTIES"]["MORE_PHOTO"]["VALUE"])): ?>
-                  <? foreach ($arItem["PROPERTIES"]["MORE_PHOTO"]["VALUE"] as $imageId): ?>
+<div class="catalogpage__items">
+  <div class="catalogpage__main">
+    <? if ($arResult["ITEMS"]): ?>
+      <? foreach (
+        $arResult["ITEMS"] as $arItem): ?>
+        <?
+        $this->AddEditAction($arItem['ID'], $arItem['EDIT_LINK'], CIBlock::GetArrayByID($arItem["IBLOCK_ID"], "ELEMENT_EDIT"));
+        $this->AddDeleteAction($arItem['ID'], $arItem['DELETE_LINK'], CIBlock::GetArrayByID($arItem["IBLOCK_ID"], "ELEMENT_DELETE"), ["CONFIRM" => GetMessage('CT_BCE_ELEMENT_DELETE_CONFIRM')]);
+        ?>
+        <div class="catalogpage__col" id="<?= $this->GetEditAreaId($arItem['ID']); ?>">
+          <div class="product-card" data-product-id="<?= $arItem['ID'] ?>">
+            <div class="product-card__image">
+              <a href="<?= $arItem["DETAIL_PAGE_URL"] ?>" class="product-card__slider">
+                <div class="product-card__slider-track">
+                  <? if (!empty($arItem["PROPERTIES"]["MORE_PHOTO"]["VALUE"])): ?>
+                    <? foreach ($arItem["PROPERTIES"]["MORE_PHOTO"]["VALUE"] as $imageId): ?>
+                      <div class="product-card__slide">
+                        <img src="<?= CFile::GetPath($imageId) ?>" alt="<?= $arItem["NAME"] ?>">
+                      </div>
+                    <? endforeach; ?>
+                  <? else: ?>
                     <div class="product-card__slide">
-                      <img src="<?= CFile::GetPath($imageId) ?>" alt="<?= $arItem["NAME"] ?>">
+                      <img src="/assets/img/no-photo.jpg" alt="<?= $arItem["NAME"] ?>">
                     </div>
-                  <? endforeach; ?>
-                <? else: ?>
-                  <div class="product-card__slide">
-                    <img src="/assets/img/no-photo.jpg" alt="<?= $arItem["NAME"] ?>">
-                  </div>
+                  <? endif; ?>
+                </div>
+              </a>
+              <div class="product-card__tags">
+                <? if ($arItem["PROPERTIES"]["NEW"]["VALUE"]): ?>
+                  <span class="product-card__tag">Новинка</span>
+                <? endif; ?>
+                <? if ($arItem["PROPERTIES"]["PREORDER"]["VALUE"]): ?>
+                  <span class="product-card__tag">Предзаказ</span>
+                <? endif; ?>
+              </div>
+              <i class="product-card__like<?= $arItem["PROPERTIES"]["FAVORITE"]["VALUE"] ? ' active' : '' ?>"
+                 data-product-id="<?= $arItem["ID"] ?>">
+                <svg class="activelike" width="20" height="18" viewBox="0 0 20 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path fill-rule="evenodd" clip-rule="evenodd"
+                        d="M1.74163 2.13008C2.69464 1.19149 3.9848 0.666199 5.32771 0.666199C6.66597 0.666199 7.95186 1.18787 8.9039 2.12038L10.0005 3.12621L11.0971 2.12038C12.0491 1.18787 13.335 0.666199 14.6733 0.666199C16.0162 0.666199 17.3063 1.19149 18.2593 2.13008C19.2127 3.06906 19.7505 4.34504 19.7505 5.67796C19.7505 7.00999 19.2135 8.28515 18.2613 9.22394L18.2593 9.22584L10.0005 17.4763L1.73968 9.22392C0.787496 8.28512 0.250488 7.00998 0.250488 5.67796C0.250488 4.34504 0.78823 3.06906 1.74163 2.13008ZM5.32771 2.1662C4.37531 2.1662 3.46419 2.53892 2.79417 3.1988C2.12455 3.85829 1.75049 4.75031 1.75049 5.67796C1.75049 6.60562 2.12455 7.49764 2.79417 8.15713L2.79797 8.16087L10.0005 15.3561L17.2068 8.15712C17.8764 7.49762 18.2505 6.60562 18.2505 5.67796C18.2505 4.75031 17.8764 3.85829 17.2068 3.1988C16.5368 2.53892 15.6257 2.1662 14.6733 2.1662C13.7209 2.1662 12.8097 2.53892 12.1397 3.1988L12.1302 3.20814L10.0005 5.16165L7.87073 3.20814L7.86124 3.1988C7.19123 2.53892 6.2801 2.1662 5.32771 2.1662Z"
+                        fill="#232229"/>
+                  <path
+                    d="M2.79417 3.1988C3.46419 2.53892 4.37531 2.1662 5.32771 2.1662C6.2801 2.1662 7.19123 2.53892 7.86124 3.1988L7.87073 3.20814L10.0005 5.16165L12.1302 3.20814L12.1397 3.1988C12.8097 2.53892 13.7209 2.1662 14.6733 2.1662C15.6257 2.1662 16.5368 2.53892 17.2068 3.1988C17.8764 3.85829 18.2505 4.75031 18.2505 5.67796C18.2505 6.60562 17.8764 7.49762 17.2068 8.15712L10.0005 15.3561L2.79797 8.16087L2.79417 8.15713C2.12455 7.49764 1.75049 6.60562 1.75049 5.67796C1.75049 4.75031 2.12455 3.85829 2.79417 3.1988Z"
+                    fill="#232229"/>
+                </svg>
+
+                <svg class="deflike" width="21" height="18" viewBox="0 0 21 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path fill-rule="evenodd" clip-rule="evenodd"
+                        d="M2.24212 1.96389C3.19513 1.02529 4.48529 0.5 5.8282 0.5C7.16646 0.5 8.45235 1.02167 9.40439 1.95418L10.501 2.96001L11.5976 1.95418C12.5496 1.02167 13.8355 0.5 15.1738 0.5C16.5167 0.5 17.8068 1.02529 18.7598 1.96389C19.7132 2.90286 20.251 4.17884 20.251 5.51177C20.251 6.84379 19.714 8.11895 18.7618 9.05774C18.7611 9.05838 18.7605 9.05901 18.7598 9.05964L10.501 17.3101L2.24017 9.05772C1.28798 8.11893 0.750977 6.84378 0.750977 5.51177C0.750977 4.17884 1.28872 2.90286 2.24212 1.96389ZM5.8282 2C4.8758 2 3.96467 2.37272 3.29466 3.0326C2.62504 3.69209 2.25098 4.58411 2.25098 5.51177C2.25098 6.43942 2.62504 7.33144 3.29466 7.99093L3.29846 7.99468L10.501 15.1899L17.7073 7.99092C18.3769 7.33143 18.751 6.43942 18.751 5.51177C18.751 4.58411 18.3769 3.69209 17.7073 3.0326C17.0373 2.37272 16.1262 2 15.1738 2C14.2214 2 13.3102 2.37272 12.6402 3.0326L12.6307 3.04194L10.501 4.99545L8.37122 3.04194L8.36173 3.0326C7.69172 2.37272 6.78059 2 5.8282 2Z"
+                        fill="#232229"/>
+                </svg>
+              </i>
+            </div>
+            <a href="<?= $arItem["DETAIL_PAGE_URL"] ?>" class="product-card__info">
+              <h3 class="product-card__title"><?= $arItem["NAME"] ?></h3>
+              <?php
+              // --- Цена ---
+              $price = null;
+              $oldPrice = null;
+              $discount = null;
+              if (!empty($arItem['OFFERS']) && is_array($arItem['OFFERS'])) {
+                $minPrice = null;
+                foreach ($arItem['OFFERS'] as $offer) {
+                  if (!empty($offer['PRICES'])) {
+                    foreach ($offer['PRICES'] as $priceType) {
+                      $offerPrice = $priceType['DISCOUNT_VALUE'] ?? $priceType['VALUE'] ?? null;
+                      if ($offerPrice !== null && ($minPrice === null || $offerPrice < $minPrice)) {
+                        $minPrice = $offerPrice;
+                        $price = $priceType['PRINT_DISCOUNT_VALUE'] ?: $priceType['PRINT_VALUE'];
+                        $oldPrice = $priceType['PRINT_VALUE'] !== $priceType['PRINT_DISCOUNT_VALUE'] ? $priceType['PRINT_VALUE'] : null;
+                        $discount = !empty($priceType['DISCOUNT_DIFF_PERCENT']) ? round($priceType['DISCOUNT_DIFF_PERCENT']) : null;
+                      }
+                    }
+                  } elseif (!empty($offer['CATALOG_PRICE_1'])) {
+                    $offerPrice = $offer['CATALOG_PRICE_1'];
+                    if ($minPrice === null || $offerPrice < $minPrice) {
+                      $minPrice = $offerPrice;
+                      $price = number_format($offerPrice, 0, '', ' ') . '₽';
+                    }
+                  } elseif (!empty($offer['CATALOG_PRICE_7'])) {
+                    $offerPrice = $offer['CATALOG_PRICE_7'];
+                    if ($minPrice === null || $offerPrice < $minPrice) {
+                      $minPrice = $offerPrice;
+                      $price = number_format($offerPrice, 0, '', ' ') . '₽';
+                    }
+                  }
+                }
+              }
+              if (!$price && !empty($arItem['MIN_PRICE'])) {
+                $price = $arItem['MIN_PRICE']['PRINT_DISCOUNT_VALUE'] ?: $arItem['MIN_PRICE']['PRINT_VALUE'];
+                $oldPrice = $arItem['MIN_PRICE']['PRINT_VALUE'] !== $arItem['MIN_PRICE']['PRINT_DISCOUNT_VALUE'] ? $arItem['MIN_PRICE']['PRINT_VALUE'] : null;
+                $discount = !empty($arItem['MIN_PRICE']['DISCOUNT_DIFF_PERCENT']) ? round($arItem['MIN_PRICE']['DISCOUNT_DIFF_PERCENT']) : null;
+              }
+              // Добавляем обработку ITEM_PRICES
+              if (!$price && !empty($arItem['OFFERS'][0]['ITEM_PRICES'][0]['PRINT_PRICE'])) {
+                $price = $arItem['OFFERS'][0]['ITEM_PRICES'][0]['PRINT_PRICE'];
+                // Если есть скидка, можно добавить обработку $arItem['ITEM_PRICES'][0]['PRINT_BASE_PRICE'] и ['PERCENT']
+                if (!empty($arItem['OFFERS'][0]['ITEM_PRICES'][0]['PRINT_BASE_PRICE']) && $arItem['OFFERS'][0]['ITEM_PRICES'][0]['PRINT_BASE_PRICE'] !== $arItem['OFFERS'][0]['ITEM_PRICES'][0]['PRINT_PRICE']) {
+                  $oldPrice = $arItem['OFFERS'][0]['ITEM_PRICES'][0]['PRINT_BASE_PRICE'];
+                  $discount = !empty($arItem['OFFERS'][0]['ITEM_PRICES'][0]['PERCENT']) ? $arItem['OFFERS'][0]['ITEM_PRICES'][0]['PERCENT'] : null;
+                }
+              }
+              ?>
+              <div class="product-card__price">
+                <div class="product-card__price-current">
+                  <span><?= $price ?></span>
+                  <? if ($discount): ?>
+                    <div class="product-card__discount">-<?= $discount ?>%</div>
+                  <? endif; ?>
+                </div>
+                <? if ($oldPrice): ?>
+                  <span class="product-card__price-old"><?= $oldPrice ?></span>
                 <? endif; ?>
               </div>
             </a>
-            <div class="product-card__tags">
-              <? if ($arItem["PROPERTIES"]["NEW"]["VALUE"]): ?>
-                <span class="product-card__tag">Новинка</span>
-              <? endif; ?>
-              <? if ($arItem["PROPERTIES"]["PREORDER"]["VALUE"]): ?>
-                <span class="product-card__tag">Предзаказ</span>
-              <? endif; ?>
-            </div>
-            <i class="product-card__like<?= $arItem["PROPERTIES"]["FAVORITE"]["VALUE"] ? ' active' : '' ?>"
-               data-product-id="<?= $arItem["ID"] ?>">
-              <svg class="activelike" width="20" height="18" viewBox="0 0 20 18" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path fill-rule="evenodd" clip-rule="evenodd"
-                      d="M1.74163 2.13008C2.69464 1.19149 3.9848 0.666199 5.32771 0.666199C6.66597 0.666199 7.95186 1.18787 8.9039 2.12038L10.0005 3.12621L11.0971 2.12038C12.0491 1.18787 13.335 0.666199 14.6733 0.666199C16.0162 0.666199 17.3063 1.19149 18.2593 2.13008C19.2127 3.06906 19.7505 4.34504 19.7505 5.67796C19.7505 7.00999 19.2135 8.28515 18.2613 9.22394L18.2593 9.22584L10.0005 17.4763L1.73968 9.22392C0.787496 8.28512 0.250488 7.00998 0.250488 5.67796C0.250488 4.34504 0.78823 3.06906 1.74163 2.13008ZM5.32771 2.1662C4.37531 2.1662 3.46419 2.53892 2.79417 3.1988C2.12455 3.85829 1.75049 4.75031 1.75049 5.67796C1.75049 6.60562 2.12455 7.49764 2.79417 8.15713L2.79797 8.16087L10.0005 15.3561L17.2068 8.15712C17.8764 7.49762 18.2505 6.60562 18.2505 5.67796C18.2505 4.75031 17.8764 3.85829 17.2068 3.1988C16.5368 2.53892 15.6257 2.1662 14.6733 2.1662C13.7209 2.1662 12.8097 2.53892 12.1397 3.1988L12.1302 3.20814L10.0005 5.16165L7.87073 3.20814L7.86124 3.1988C7.19123 2.53892 6.2801 2.1662 5.32771 2.1662Z"
-                      fill="#232229"/>
-                <path
-                  d="M2.79417 3.1988C3.46419 2.53892 4.37531 2.1662 5.32771 2.1662C6.2801 2.1662 7.19123 2.53892 7.86124 3.1988L7.87073 3.20814L10.0005 5.16165L12.1302 3.20814L12.1397 3.1988C12.8097 2.53892 13.7209 2.1662 14.6733 2.1662C15.6257 2.1662 16.5368 2.53892 17.2068 3.1988C17.8764 3.85829 18.2505 4.75031 18.2505 5.67796C18.2505 6.60562 17.8764 7.49762 17.2068 8.15712L10.0005 15.3561L2.79797 8.16087L2.79417 8.15713C2.12455 7.49764 1.75049 6.60562 1.75049 5.67796C1.75049 4.75031 2.12455 3.85829 2.79417 3.1988Z"
-                  fill="#232229"/>
-              </svg>
 
-              <svg class="deflike" width="21" height="18" viewBox="0 0 21 18" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path fill-rule="evenodd" clip-rule="evenodd"
-                      d="M2.24212 1.96389C3.19513 1.02529 4.48529 0.5 5.8282 0.5C7.16646 0.5 8.45235 1.02167 9.40439 1.95418L10.501 2.96001L11.5976 1.95418C12.5496 1.02167 13.8355 0.5 15.1738 0.5C16.5167 0.5 17.8068 1.02529 18.7598 1.96389C19.7132 2.90286 20.251 4.17884 20.251 5.51177C20.251 6.84379 19.714 8.11895 18.7618 9.05774C18.7611 9.05838 18.7605 9.05901 18.7598 9.05964L10.501 17.3101L2.24017 9.05772C1.28798 8.11893 0.750977 6.84378 0.750977 5.51177C0.750977 4.17884 1.28872 2.90286 2.24212 1.96389ZM5.8282 2C4.8758 2 3.96467 2.37272 3.29466 3.0326C2.62504 3.69209 2.25098 4.58411 2.25098 5.51177C2.25098 6.43942 2.62504 7.33144 3.29466 7.99093L3.29846 7.99468L10.501 15.1899L17.7073 7.99092C18.3769 7.33143 18.751 6.43942 18.751 5.51177C18.751 4.58411 18.3769 3.69209 17.7073 3.0326C17.0373 2.37272 16.1262 2 15.1738 2C14.2214 2 13.3102 2.37272 12.6402 3.0326L12.6307 3.04194L10.501 4.99545L8.37122 3.04194L8.36173 3.0326C7.69172 2.37272 6.78059 2 5.8282 2Z"
-                      fill="#232229"/>
-              </svg>
-            </i>
-          </div>
-          <a href="<?= $arItem["DETAIL_PAGE_URL"] ?>" class="product-card__info">
-            <h3 class="product-card__title"><?= $arItem["NAME"] ?></h3>
-            <?php
-            // --- Цена ---
-            $price = null;
-            $oldPrice = null;
-            $discount = null;
-            if (!empty($arItem['OFFERS']) && is_array($arItem['OFFERS'])) {
-              $minPrice = null;
-              foreach ($arItem['OFFERS'] as $offer) {
-                if (!empty($offer['PRICES'])) {
-                  foreach ($offer['PRICES'] as $priceType) {
-                    $offerPrice = $priceType['DISCOUNT_VALUE'] ?? $priceType['VALUE'] ?? null;
-                    if ($offerPrice !== null && ($minPrice === null || $offerPrice < $minPrice)) {
-                      $minPrice = $offerPrice;
-                      $price = $priceType['PRINT_DISCOUNT_VALUE'] ?: $priceType['PRINT_VALUE'];
-                      $oldPrice = $priceType['PRINT_VALUE'] !== $priceType['PRINT_DISCOUNT_VALUE'] ? $priceType['PRINT_VALUE'] : null;
-                      $discount = !empty($priceType['DISCOUNT_DIFF_PERCENT']) ? round($priceType['DISCOUNT_DIFF_PERCENT']) : null;
-                    }
-                  }
-                } elseif (!empty($offer['CATALOG_PRICE_1'])) {
-                  $offerPrice = $offer['CATALOG_PRICE_1'];
-                  if ($minPrice === null || $offerPrice < $minPrice) {
-                    $minPrice = $offerPrice;
-                    $price = number_format($offerPrice, 0, '', ' ') . '₽';
-                  }
-                } elseif (!empty($offer['CATALOG_PRICE_7'])) {
-                  $offerPrice = $offer['CATALOG_PRICE_7'];
-                  if ($minPrice === null || $offerPrice < $minPrice) {
-                    $minPrice = $offerPrice;
-                    $price = number_format($offerPrice, 0, '', ' ') . '₽';
-                  }
-                }
+            <div class="product-card__footer">
+              <?php
+              // --- Цвета ---
+              $colors = [];
+              if (!empty($arItem['PROPERTIES']['CML2_ARTICLE']['VALUE'])) {
+                $colors = MyTools::getVariantColors($arItem['PROPERTIES']['CML2_ARTICLE']['VALUE']);
               }
-            }
-            if (!$price && !empty($arItem['MIN_PRICE'])) {
-              $price = $arItem['MIN_PRICE']['PRINT_DISCOUNT_VALUE'] ?: $arItem['MIN_PRICE']['PRINT_VALUE'];
-              $oldPrice = $arItem['MIN_PRICE']['PRINT_VALUE'] !== $arItem['MIN_PRICE']['PRINT_DISCOUNT_VALUE'] ? $arItem['MIN_PRICE']['PRINT_VALUE'] : null;
-              $discount = !empty($arItem['MIN_PRICE']['DISCOUNT_DIFF_PERCENT']) ? round($arItem['MIN_PRICE']['DISCOUNT_DIFF_PERCENT']) : null;
-            }
-            // Добавляем обработку ITEM_PRICES
-            if (!$price && !empty($arItem['OFFERS'][0]['ITEM_PRICES'][0]['PRINT_PRICE'])) {
-              $price = $arItem['OFFERS'][0]['ITEM_PRICES'][0]['PRINT_PRICE'];
-              // Если есть скидка, можно добавить обработку $arItem['ITEM_PRICES'][0]['PRINT_BASE_PRICE'] и ['PERCENT']
-              if (!empty($arItem['OFFERS'][0]['ITEM_PRICES'][0]['PRINT_BASE_PRICE']) && $arItem['OFFERS'][0]['ITEM_PRICES'][0]['PRINT_BASE_PRICE'] !== $arItem['OFFERS'][0]['ITEM_PRICES'][0]['PRINT_PRICE']) {
-                $oldPrice = $arItem['OFFERS'][0]['ITEM_PRICES'][0]['PRINT_BASE_PRICE'];
-                $discount = !empty($arItem['OFFERS'][0]['ITEM_PRICES'][0]['PERCENT']) ? $arItem['OFFERS'][0]['ITEM_PRICES'][0]['PERCENT'] : null;
-              }
-            }
-            ?>
-            <div class="product-card__price">
-              <div class="product-card__price-current">
-                <span><?= $price ?></span>
-                <? if ($discount): ?>
-                  <div class="product-card__discount">-<?= $discount ?>%</div>
-                <? endif; ?>
+              ?>
+              <div class="product-card__colors">
+                <?php foreach ($colors as $color => $detail_page_url): ?>
+                  <a href="<?= $detail_page_url ?>" class="product-card__colors-item product-card-color-small"
+                     style="background-image: url(<?= MyTools::getColor($color) ?>)"></a>
+                <?php endforeach; ?>
               </div>
-              <? if ($oldPrice): ?>
-                <span class="product-card__price-old"><?= $oldPrice ?></span>
-              <? endif; ?>
-            </div>
-          </a>
-
-          <div class="product-card__footer">
-            <?php
-            // --- Цвета ---
-            $colors = [];
-            if (!empty($arItem['PROPERTIES']['CML2_ARTICLE']['VALUE'])) {
-              $colors = MyTools::getVariantColors($arItem['PROPERTIES']['CML2_ARTICLE']['VALUE']);
-            }
-            ?>
-            <div class="product-card__colors">
-              <?php foreach ($colors as $color => $detail_page_url): ?>
-                <a href="<?= $detail_page_url ?>" class="product-card__colors-item product-card-color-small"
-                   style="background-image: url(<?= MyTools::getColor($color) ?>)"></a>
-              <?php endforeach; ?>
-            </div>
-            <?php
-            // --- Размеры ---
-            $sizes_list = [];
-            $arInfo = CCatalogSKU::GetInfoByProductIBlock($arItem["IBLOCK_ID"]);
-            if ($arInfo && !empty($arInfo['IBLOCK_ID']) && !empty($arInfo['SKU_PROPERTY_ID'])) {
-              $rsOffers = CIBlockElement::GetList(
-                [],
-                [
-                  'IBLOCK_ID' => $arInfo['IBLOCK_ID'],
-                  'PROPERTY_' . $arInfo['SKU_PROPERTY_ID'] => $arItem['ID']
-                ],
-                false,
-                false,
-                ["ID", "IBLOCK_ID", "NAME", "PROPERTY_RAZMER"]
-              );
-              while ($rs = $rsOffers->GetNextElement()) {
-                $arOffer = $rs->getFields();
-                $arOffer['PROPERTIES'] = $rs->getProperties();
-                if (!empty($arOffer['PROPERTIES']['RAZMER']['VALUE'])) {
-                  $sizes_list[] = [
-                    'id' => $arOffer['ID'],
-                    'title' => $arOffer['PROPERTIES']['RAZMER']['VALUE'],
-                  ];
+              <?php
+              // --- Размеры ---
+              $sizes_list = [];
+              $arInfo = CCatalogSKU::GetInfoByProductIBlock($arItem["IBLOCK_ID"]);
+              if ($arInfo && !empty($arInfo['IBLOCK_ID']) && !empty($arInfo['SKU_PROPERTY_ID'])) {
+                $rsOffers = CIBlockElement::GetList(
+                  [],
+                  [
+                    'IBLOCK_ID' => $arInfo['IBLOCK_ID'],
+                    'PROPERTY_' . $arInfo['SKU_PROPERTY_ID'] => $arItem['ID']
+                  ],
+                  false,
+                  false,
+                  ["ID", "IBLOCK_ID", "NAME", "PROPERTY_RAZMER"]
+                );
+                while ($rs = $rsOffers->GetNextElement()) {
+                  $arOffer = $rs->getFields();
+                  $arOffer['PROPERTIES'] = $rs->getProperties();
+                  if (!empty($arOffer['PROPERTIES']['RAZMER']['VALUE'])) {
+                    $sizes_list[] = [
+                      'id' => $arOffer['ID'],
+                      'title' => $arOffer['PROPERTIES']['RAZMER']['VALUE'],
+                    ];
+                  }
                 }
               }
-            }
-            ?>
-            <div class="product-card__sizes">
-              <?php foreach ($sizes_list as $size): ?>
-                <span class="product-card__sizes-item"><?= htmlspecialchars($size['title']) ?></span>
-              <?php endforeach; ?>
+              ?>
+              <div class="product-card__sizes">
+                <?php foreach ($sizes_list as $size): ?>
+                  <span class="product-card__sizes-item"><?= htmlspecialchars($size['title']) ?></span>
+                <?php endforeach; ?>
+              </div>
             </div>
           </div>
         </div>
-      </div>
-    <? endforeach; ?>
-  <? endif; ?>
-</div>
-
-<? if ($arResult["NAV_STRING"]): ?>
-  <div class="catalogpage__pagination">
-    <?= $arResult["NAV_STRING"] ?>
+      <? endforeach; ?>
+    <? endif; ?>
   </div>
-<? endif; ?>
-
-<? if (is_object($arResult["NAV_RESULT"]) && method_exists($arResult["NAV_RESULT"], "GetPageCount") && $arResult["NAV_RESULT"]->GetPageCount() > 1): ?>
-  <button class="catalogpage__more" onclick="loadMoreProducts()">
+</div>
+<? if (is_object($arResult["NAV_RESULT"]) && $arResult["NAV_RESULT"]->NavPageCount > $arResult["NAV_RESULT"]->NavPageNomer) { ?>
+  <button class="catalogpage__more" data-page="<?= $arResult["NAV_RESULT"]->NavPageNomer ?>">
     Показать ещё
   </button>
-<? endif; ?>
+<? } ?>
 
 <script>
-  function loadMoreProducts() {
-    // Здесь будет логика загрузки дополнительных товаров
-    console.log('Загрузка дополнительных товаров...');
-  }
-
   function toggleSortOrder() {
     const form = document.querySelector('.catalogpage__sort form');
     const orderInput = form.querySelector('input[name="order"]');
@@ -406,7 +396,7 @@ while ($arEl = $rsElements->GetNext()) {
     <?php
     $selectedSizes = [];
     if (!empty($_GET['size'])) {
-        $selectedSizes = explode(',', $_GET['size']);
+      $selectedSizes = explode(',', $_GET['size']);
     }
     ?>
     <?php if (!empty($sizes)): ?>
@@ -417,7 +407,8 @@ while ($arEl = $rsElements->GetNext()) {
             <div class="catdrop-block__checks">
               <?php foreach ($sizes as $i => $size): ?>
                 <div class="catdrop-block__checks-item">
-                  <input type="checkbox" value="<?= htmlspecialchars($size) ?>" name="size" id="size-<?= $i ?>" <?= in_array($size, $selectedSizes) ? 'checked' : '' ?>>
+                  <input type="checkbox" value="<?= htmlspecialchars($size) ?>" name="size"
+                         id="size-<?= $i ?>" <?= in_array($size, $selectedSizes) ? 'checked' : '' ?>>
                   <label for="size-<?= $i ?>"><?= htmlspecialchars($size) ?></label>
                 </div>
               <?php endforeach; ?>
@@ -484,66 +475,3 @@ while ($arEl = $rsElements->GetNext()) {
   </div>
 </div>
 <div class="backdrop"></div>
-
-<script>
-  // По умолчанию ajax включён, можно выключить: window.USE_CATALOG_AJAX = false;
-  window.USE_CATALOG_AJAX = true;
-
-  function updateCatalogAjax(params) {
-    const url = window.location.pathname + (params ? ('?' + params) : '');
-    window.history.pushState({}, '', url);
-    $("#catalog-ajax-container").addClass('loading');
-    closeModal('.catdrop', true);
-    $.get(url + (params ? '&' : '?') + 'ajax=Y', function (data) {
-      const $container = $(data).filter('#catalog-ajax-container');
-      const html = $container.length ? $container.html() : $(data).find('#catalog-ajax-container').html();
-      $('#catalog-ajax-container').html(html);
-      $("#catalog-ajax-container").removeClass('loading');
-      window.scrollTo({top: $("#catalog-ajax-container").offset().top - 50, behavior: 'smooth'});
-      $(html).removeClass('locked');
-      initFilters();
-    });
-  }
-
-  // Фильтрация каталога по выбранным фильтрам (AJAX или обычная перезагрузка)
-  $(document).on('click', '.catdrop__apply', function (e) {
-    const params = {};
-    const cat = $("input[name='categories']:checked").val();
-    if (cat) params.category = cat;
-    const sizes = $("input[name='size']:checked").map(function () {return this.value;}).get();
-    if (sizes.length) params.size = sizes.join(',');
-    const colors = $("input[name='color']:checked").map(function () {return this.value;}).get();
-    if (colors.length) params.color = colors.join(',');
-    const materials = $("input[name='material']:checked").map(function () {return this.value;}).get();
-    if (materials.length) params.material = materials.join(',');
-    const collections = $("input[name='collections']:checked").map(function () {return this.value;}).get();
-    if (collections.length) params.collection = collections.join(',');
-    const search = Object.keys(params).map(key => encodeURIComponent(key) + '=' + encodeURIComponent(params[key])).join('&');
-
-    if (window.USE_CATALOG_AJAX) {
-      e.preventDefault();
-      updateCatalogAjax(search);
-    } else {
-      // Обычная перезагрузка страницы с нужными параметрами
-      const url = window.location.pathname + (search ? ('?' + search) : '');
-      window.location.href = url;
-    }
-  });
-
-  // Сбросить все фильтры (AJAX)
-  $(document).on('click', '.catdrop__reset', function (e) {
-    e.preventDefault();
-    $(this).closest('.catdrop').find('input[type=checkbox], input[type=radio]').prop('checked', false);
-    if (window.USE_CATALOG_AJAX) {
-      updateCatalogAjax('');
-    } else {
-      window.location.href = window.location.pathname;
-    }
-  });
-
-  // Поддержка истории браузера (назад/вперёд)
-  window.addEventListener('popstate', function () {
-    const params = window.location.search.replace(/^\?/, '');
-    updateCatalogAjax(params);
-  });
-</script>

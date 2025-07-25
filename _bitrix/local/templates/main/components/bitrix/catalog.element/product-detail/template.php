@@ -1,6 +1,4 @@
-<? use local\php_interface\MyTools;
-
-if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED !== true) die();
+<? if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED !== true) die();
 $this->setFrameMode(true);
 ?>
 
@@ -328,19 +326,19 @@ document.addEventListener('DOMContentLoaded', function() {
       likeButton.classList.add('active');
     }
   }
-
+  
   // Обработчик выбора размера для обновления ID торгового предложения
   const sizeInputs = document.querySelectorAll('input[name="size"]');
   const colorInputs = document.querySelectorAll('input[name="color"]');
   const addToCartButton = document.querySelector('.pageprod__buy-cart');
-
+  
   // Функция для проверки состояния кнопки
   function updateAddToCartButtonState() {
     if (!addToCartButton) return;
-
+    
     const hasSelectedSize = addToCartButton.dataset.offerId && addToCartButton.dataset.offerId !== '';
     const hasSelectedColor = !colorInputs.length || (addToCartButton.dataset.selectedColor && addToCartButton.dataset.selectedColor !== '');
-
+    
     if (sizeInputs.length > 0 && !hasSelectedSize) {
       addToCartButton.disabled = true;
       addToCartButton.style.opacity = '0.5';
@@ -358,7 +356,7 @@ document.addEventListener('DOMContentLoaded', function() {
       addToCartButton.textContent = 'В корзину';
     }
   }
-
+  
   if (sizeInputs.length > 0 && addToCartButton) {
     sizeInputs.forEach(input => {
       input.addEventListener('change', function() {
@@ -369,7 +367,7 @@ document.addEventListener('DOMContentLoaded', function() {
       });
     });
   }
-
+  
   // Обработчик выбора цвета (если есть)
   if (colorInputs.length > 0 && addToCartButton) {
     colorInputs.forEach(input => {
@@ -382,7 +380,7 @@ document.addEventListener('DOMContentLoaded', function() {
       });
     });
   }
-
+  
   // Инициализируем состояние кнопки
   updateAddToCartButtonState();
 });
@@ -392,7 +390,7 @@ const openAlert = () => {
   const cartaler = document.querySelector('.cartaler');
   if (cartaler) {
     cartaler.classList.add('open');
-
+    
     // Автоматически закрываем через 3 секунды
     setTimeout(() => {
       cartaler.classList.remove('open');
@@ -404,7 +402,7 @@ const openAlert = () => {
 const updateCartAlertInfo = (productId) => {
   const cartaler = document.querySelector('.cartaler');
   if (!cartaler) return;
-
+  
   // Получаем информацию о товаре со страницы
   const productName = document.querySelector('.pageprod__title')?.textContent?.trim() || 'Товар';
   // Ищем фото: сначала в .pageprod__img img, если нет — в .product-card__image img
@@ -413,7 +411,7 @@ const updateCartAlertInfo = (productId) => {
   const productPrice = document.querySelector('.pageprod__prices')?.textContent?.trim() || '';
   // Старая цена (если есть)
   const productOldPrice = document.querySelector('.pageprod__price-old')?.textContent?.trim() || '';
-
+  
   // Получаем выбранные характеристики
   const selectedSize = document.querySelector('input[name="size"]:checked')?.nextElementSibling?.textContent?.trim() || '';
   const selectedColor = document.querySelector('input[name="color"]:checked')?.value || '';
@@ -421,7 +419,7 @@ const updateCartAlertInfo = (productId) => {
   const addToCartButton = document.querySelector('.pageprod__buy-cart');
   const buttonSelectedColor = addToCartButton?.dataset?.selectedColor || '';
   const finalSelectedColor = selectedColor || buttonSelectedColor;
-
+  
   // Обновляем изображение товара
   const cartalerImg = cartaler.querySelector('.cartaler__img img');
   if (cartalerImg) {

@@ -1,6 +1,4 @@
-<? use local\php_interface\MyTools;
-
-if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED !== true) die(); ?>
+<? if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED !== true) die(); ?>
 <main class="content">
     <div class="catalog-collection">
         <div class="catalog__banner">

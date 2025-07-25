@@ -12,7 +12,7 @@ foreach ($arResult['JS_DATA']["ORDER_PROP"]["properties"] as &$property) {
   if ($property['ID'] == 26) {
     global $USER;
     $addresses = [];
-
+    
     if ($USER->IsAuthorized()) {
       $userAddresses = MyTools::getAddresses($USER->GetID());
       if (!empty($userAddresses)) {
@@ -25,14 +25,13 @@ foreach ($arResult['JS_DATA']["ORDER_PROP"]["properties"] as &$property) {
         }
       }
     }
-
+    
     $property['OPTIONS'] = $addresses;
   }
 }
 
 use Bitrix\Main;
 use Bitrix\Main\Localization\Loc;
-use local\php_interface\MyTools;
 
 /**
  * @var array $arParams
