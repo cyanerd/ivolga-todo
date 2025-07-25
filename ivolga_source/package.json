@@ -83,7 +83,7 @@
     "watch": "webpack --config configuration/webpack.dev.config.js --mode=development --watch",
     "bundle": "npm install && npm run watch",
     "serve": "webpack serve --config configuration/webpack.dev.config.js --mode=development",
-    "build": "webpack --config configuration/webpack.prod.config.js --mode=production",
+    "build": "webpack --config configuration/webpack.prod.config.js --mode=production --progress",
     "build:wp": "webpack --config configuration/webpack.wp.config.js --mode=production",
     "build:dev_wp": "webpack --config configuration/webpack.wp.config.js --mode=development",
     "lint:sass": "sass-lint -v -q",
