@@ -310,6 +310,10 @@ class MyTools
       'PROPERTY_CITY',
       'PROPERTY_ADDRESS',
       'PROPERTY_COMMENT',
+      'PROPERTY_ENTRANCE',
+      'PROPERTY_HOUSE',
+      'PROPERTY_APARTMENT',
+      'PROPERTY_FLOOR',
     ];
     $rsElement = \CIBlockElement::GetList($sort, $filter, false, [], $select);
     while ($arElement = $rsElement->GetNext()) {
@@ -320,6 +324,10 @@ class MyTools
         'CITY' => $arElement['PROPERTY_CITY_VALUE'],
         'ADDRESS' => $arElement['PROPERTY_ADDRESS_VALUE'],
         'COMMENT' => $arElement['PROPERTY_COMMENT_VALUE'],
+        'ENTRANCE' => $arElement['PROPERTY_ENTRANCE_VALUE'],
+        'APARTMENT' => $arElement['PROPERTY_APARTMENT_VALUE'],
+        'FLOOR' => $arElement['PROPERTY_FLOOR_VALUE'],
+        'HOUSE' => $arElement['PROPERTY_HOUSE_VALUE'],
       ];
     }
     return $items;

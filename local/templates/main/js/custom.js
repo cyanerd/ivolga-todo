@@ -1,11 +1,281 @@
-console.log('custom.js loaded');
+$(document).ready(function () {
+  let authMode = 'initial';
+
+  const $openBtn = $('#open-profile-modal-auth');
+  const $modal = $('#profile-modal-auth');
+
+  if ($openBtn.length && $modal.length) {
+    $openBtn.on('click', function () {
+      $modal.addClass('open');
+      $('body').addClass('modal-open');
+    });
+  }
+
+  $('.lkmodal__back.back-button').on('click', function () {
+    authMode = 'guest';
+    onAuthModeChange();
+  });
+
+  // Закрытие модалки по крестику
+  $('#profile-modal-auth .lkmodal__close').on('click', function () {
+    $modal.removeClass('open');
+    $('body').removeClass('modal-open');
+  });
+
+  $('#enter-as-guest').bind('click', function () {
+    authMode = 'guest';
+    onAuthModeChange();
+  });
+
+  $('.main-header__button.modal-button[data-src=".profile-modal"]').each(function () {
+    $(this).on('click', function () {
+      const $modal = $('.modal-right.profile-modal');
+      if ($modal.length) {
+        $modal.find('.profile-modal__step').addClass('hide');
+        const $step1 = $modal.find('.profile-modal__step--1');
+        if ($step1.length) $step1.removeClass('hide');
+        $modal.addClass('active');
+        $('body').addClass('modal-open');
+      }
+    });
+  });
+
+  const $formSendSms = $('#form--send--sms');
+  if ($formSendSms.length) {
+    $formSendSms.on('submit', function (e) {
+      e.preventDefault();
+      const $form = $(this);
+      const $btn = $form.find('button[type="submit"]');
+      $btn.prop('disabled', true);
+
+      const formData = new FormData(this);
+
+      $.ajax({
+        url: '/ajax/auth.php',
+        type: 'POST',
+        data: formData,
+        processData: false,
+        contentType: false,
+        dataType: 'json',
+        success: function (data) {
+          authMode = 'code';
+          $btn.prop('disabled', false);
+          onAuthModeChange();
+        }
+      });
+    });
+  }
+
+  $('#get--code--repeat').bind('click', function () {
+    $formSendSms.submit();
+    $('.lkmodal__form.mode-code .lkmodal__form-descr').text('Мы повторно отправили код на номер');
+  });
+
+  const $formVerifySms = $('#form--verify--sms');
+  if ($formVerifySms.length) {
+    $formVerifySms.on('submit', function (e) {
+      e.preventDefault();
+      const $form = $(this);
+      const $btn = $form.find('button[type="submit"]');
+      $btn.prop('disabled', true);
+
+      const formData = new FormData(this);
+
+      // Получаем номер телефона из скрытого поля (или из input, если нужно)
+      const phone = $('#verifed--phone').val() || $('#phone').val();
+      if (phone) {
+        formData.set('phone', phone); // set перезапишет, append — добавит ещё одно поле
+      }
+
+      $.ajax({
+        url: '/ajax/check.php',
+        type: 'POST',
+        data: formData,
+        processData: false,
+        contentType: false,
+        dataType: 'json',
+        success: function (data) {
+          $btn.prop('disabled', false);
+          const $errorDiv = $('#check--error');
+          if (data.status === 'error') {
+            if ($errorDiv.length) $errorDiv.text(data.message || 'Ошибка');
+            const $codeInput = $('#verificationCode');
+            if ($codeInput.length) $codeInput.val('');
+          }
+          if (data.status === 'success') {
+            location.href = '/personal/';
+          }
+        }
+      });
+    });
+  }
+
+  const onAuthModeChange = () => {
+    $('.lkmodal__form').addClass('hide');
+    $('.lkmodal__form.mode-' + authMode).removeClass('hide');
+  }
+
+  // --- Модалки open/close ---
+  window.openModal = function(id, bySelector = false) {
+    let modal;
+    if (!bySelector) modal = document.getElementById(id);
+    else modal = document.querySelector(id);
+
+    if (modal) {
+      modal.classList.add('open');
+      if ($('.backdrop').length) $('.backdrop').addClass('open');
+    }
+  }
+  window.closeModal = function(id, bySelector = false) {
+
+    let modal;
+    if (!bySelector) modal = document.getElementById(id);
+    else modal = document.querySelector(id);
+
+    $('html').removeClass('locked');
+
+    if (modal) {
+      modal.classList.remove('open');
+      if ($('.backdrop').length) $('.backdrop').removeClass('open');
+    }
+  }
+
+  // --- Смена пароля ---
+  var form = document.getElementById('changePassForm');
+  if (form) {
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      var data = new FormData(form);
+      var errorBlock = document.getElementById('changePassError');
+      errorBlock.style.display = 'none';
+      fetch('/ajax/change_password.php', {
+        method: 'POST',
+        body: data
+      })
+        .then(r => r.json())
+        .then(res => {
+          if (res.success) {
+            window.closeModal('changepass');
+            window.openModal('changepass_ok');
+            form.reset();
+          } else {
+            errorBlock.textContent = res.error || 'Ошибка';
+            errorBlock.style.display = 'block';
+          }
+        })
+        .catch(() => {
+          errorBlock.textContent = 'Ошибка соединения';
+          errorBlock.style.display = 'block';
+        });
+    });
+  }
+
+  // --- Маска телефона ---
+  if (window.IMask) {
+    const phoneInputs = document.querySelectorAll('input[type="tel"]');
+    const maskOptions = { mask: '+7 (000) 000-00-00' };
+    phoneInputs.forEach(input => {
+      IMask(input, maskOptions);
+    });
+  }
+
+  // --- Добавление адреса (форма) ---
+  var addForm = document.querySelector('#newadress .lkmodal__form');
+  if (addForm) {
+    addForm.addEventListener('submit', function (e) {
+      e.preventDefault();
+      var street = document.getElementById('street').value.trim();
+      var home = document.getElementById('home').value.trim();
+      var podesz = document.getElementById('podesz').value.trim();
+      var room = document.getElementById('room').value.trim();
+      var floor = document.getElementById('floor').value.trim();
+      var comment = document.getElementById('comment').value.trim();
+      var address = street + (home ? ', д. ' + home : '') + (podesz ? ', подъезд ' + podesz : '') + (room ? ', кв. ' + room : '') + (floor ? ', этаж ' + floor : '');
+      var data = new FormData();
+      data.append('action', 'add_address');
+      data.append('title', street + (home ? ', д. ' + home : ''));
+      data.append('address', address);
+      data.append('comment', comment);
+      fetch('/personal/', {
+        method: 'POST',
+        body: data
+      })
+        .then(r => r.text())
+        .then(res => {
+          window.closeModal('newadress');
+          window.openModal('newadress_ok');
+          setTimeout(function () {
+            window.location.href = '/personal/addresses/';
+          }, 1200);
+        })
+        .catch(() => {
+          alert('Ошибка при добавлении адреса');
+        });
+    });
+  }
+  // --- Добавление адреса (div, не form) ---
+  var addFormDiv = document.querySelector('#newadress .lkmodal__form');
+  var addBtn = addFormDiv ? addFormDiv.querySelector('.lkmodal__form-submit') : null;
+  if (addFormDiv && addBtn) {
+    addBtn.type = 'button';
+    addBtn.addEventListener('click', function (e) {
+      e.preventDefault();
+      if (addBtn.disabled) return;
+      addBtn.disabled = true;
+      var street = document.getElementById('street').value.trim();
+      var home = document.getElementById('home').value.trim();
+      var podesz = document.getElementById('podesz').value.trim();
+      var room = document.getElementById('room').value.trim();
+      var floor = document.getElementById('floor').value.trim();
+      var comment = document.getElementById('comment').value.trim();
+      var address = street + (home ? ', д. ' + home : '') + (podesz ? ', подъезд ' + podesz : '') + (room ? ', кв. ' + room : '') + (floor ? ', этаж ' + floor : '');
+      var data = new FormData();
+      data.append('action', 'add_address');
+      data.append('title', street + (home ? ', д. ' + home : ''));
+      data.append('address', address);
+      data.append('comment', comment);
+      fetch('/personal/', {
+        method: 'POST',
+        body: data
+      })
+        .then(r => r.text())
+        .then(res => {
+          window.closeModal('newadress');
+          window.openModal('newadress_ok');
+          setTimeout(function () {
+            window.location.href = '/personal/addresses/';
+          }, 1200);
+        })
+        .catch(() => {
+          alert('Ошибка при добавлении адреса');
+        })
+        .finally(() => {
+          addBtn.disabled = false;
+        });
+    });
+  }
+
+  // Валидация даты рождения (только дата, не в будущем)
+  $('#date').on('change blur', function () {
+    const value = $(this).val();
+    // Проверяем формат YYYY-MM-DD и что дата не в будущем
+    const isValid = /^\d{4}-\d{2}-\d{2}$/.test(value) && new Date(value) <= new Date();
+    if (!isValid && value !== '') {
+      $(this).addClass('input-error');
+      this.setCustomValidity('Введите корректную дату рождения');
+    } else {
+      $(this).removeClass('input-error');
+      this.setCustomValidity('');
+    }
+  });
+});
+
 
 // ===== ФУНКЦИИ ДЛЯ РАБОТЫ С ИЗБРАННЫМ =====
 
 // Функция для получения избранных товаров из localStorage
 function getFavouriteProducts() {
-  const favourites = JSON.parse(localStorage.getItem('favourite_products') || '[]');
-  return favourites;
+  return JSON.parse(localStorage.getItem('favourite_products') || '[]');
 }
 
 // Функция для добавления товара в избранное
@@ -58,7 +328,7 @@ function updateFavouriteCounter() {
   countElements.forEach(element => {
     if (favourites.length > 0) {
       element.textContent = favourites.length;
-      element.style.display = 'flex';
+      element.style.display = element.dataset.dd || 'flex';
     } else {
       element.textContent = '';
       element.style.display = 'none';
@@ -101,11 +371,7 @@ function initFavouriteButtons() {
     return;
   }
 
-  document.addEventListener('click', function(e) {
-    console.log('Click detected on:', e.target);
-    console.log('Target classList:', e.target.classList);
-    console.log('Target tagName:', e.target.tagName);
-
+  document.addEventListener('click', function (e) {
     // Проверяем, кликнули ли мы на кнопку избранного или её содержимое
     const likeButton = e.target.closest('.product-card__like');
     if (likeButton) {
@@ -124,25 +390,16 @@ function initFavouriteButtons() {
         productId = productCard.dataset.productId;
       }
 
-      console.log('Like button:', likeButton);
-      console.log('Product card:', productCard);
-      console.log('Product ID from button:', likeButton.dataset.productId);
-      console.log('Product ID from card:', productCard ? productCard.dataset.productId : 'no card');
-      console.log('Final Product ID:', productId);
-
       if (productId) {
         if (isFavourite(productId)) {
           console.log('Removing from favourite:', productId);
           removeFromFavourite(productId);
-          showNotification('Товар удален из избранного', 'success');
         } else {
           console.log('Adding to favourite:', productId);
           addToFavourite(productId);
-          showNotification('Товар добавлен в избранное', 'success');
         }
       } else {
         console.error('Product ID not found!');
-        showNotification('Ошибка: не удалось определить товар', 'error');
       }
     }
   });
@@ -151,55 +408,55 @@ function initFavouriteButtons() {
 }
 
 // Инициализация при загрузке страницы
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
   console.log('Initializing favourite functionality');
   initFavouriteButtons();
   updateFavouriteButtons();
   updateFavouriteCounter();
 });
 
-// Функция для показа уведомлений
-function showNotification(message, type = 'info') {
-  // Создаем элемент уведомления
-  const notification = document.createElement('div');
-  notification.className = `notification notification--${type}`;
-  notification.innerHTML = `
-    <div class="notification__content">
-      <span class="notification__message">${message}</span>
-      <button class="notification__close">&times;</button>
-    </div>
-  `;
+// Функция для обновления состояния кнопки "В корзину"
+function updateAddToCartButtonState() {
+  const addToCartButton = document.querySelector('.pageprod__buy-cart');
+  if (!addToCartButton) return;
 
-  // Добавляем на страницу
-  document.body.appendChild(notification);
+  // Проверяем, есть ли цвета для выбора
+  const colorInputs = document.querySelectorAll('input[name="color"]');
+  const hasColors = colorInputs.length > 0;
 
-  // Показываем уведомление
-  setTimeout(() => {
-    notification.style.transform = 'translateX(0)';
-  }, 100);
+  // Проверяем, есть ли размеры для выбора
+  const sizeInputs = document.querySelectorAll('input[name="size"]');
+  const hasSizes = sizeInputs.length > 0;
 
-  // Обработчик закрытия
-  const closeBtn = notification.querySelector('.notification__close');
-  closeBtn.addEventListener('click', () => {
-    notification.style.transform = 'translateX(100%)';
-    setTimeout(() => {
-      if (document.body.contains(notification)) {
-        document.body.removeChild(notification);
-      }
-    }, 300);
-  });
+  // Проверяем выбор цвета
+  const selectedColor = document.querySelector('input[name="color"]:checked')?.value || addToCartButton.dataset.selectedColor || '';
 
-  // Автоматически скрываем через 3 секунды
-  setTimeout(() => {
-    if (document.body.contains(notification)) {
-      notification.style.transform = 'translateX(100%)';
-      setTimeout(() => {
-        if (document.body.contains(notification)) {
-          document.body.removeChild(notification);
-        }
-      }, 300);
-    }
-  }, 3000);
+  // Проверяем выбор размера
+  const selectedSize = document.querySelector('input[name="size"]:checked');
+
+  let isDisabled = false;
+  let buttonText = 'В корзину';
+
+  // Проверяем цвет
+  if (hasColors && (!selectedColor || selectedColor === '')) {
+    isDisabled = true;
+    buttonText = 'Выберите цвет';
+  }
+  // Проверяем размер
+  else if (hasSizes && !selectedSize) {
+    isDisabled = true;
+    buttonText = 'Выберите размер';
+  }
+
+  // Обновляем состояние кнопки
+  addToCartButton.disabled = isDisabled;
+  addToCartButton.textContent = buttonText;
+
+  if (isDisabled) {
+    addToCartButton.classList.add('disabled');
+  } else {
+    addToCartButton.classList.remove('disabled');
+  }
 }
 
 // ===== ФУНКЦИИ ДЛЯ РАБОТЫ С КОРЗИНОЙ =====
@@ -231,11 +488,10 @@ async function addToCart(productId, quantity = 1) {
       // Обновляем счетчик корзины
       updateCartCounter();
     } else {
-      showNotification('Ошибка при добавлении товара', 'error');
+      console.error('Error adding to cart: server error');
     }
   } catch (error) {
     console.error('Error adding to cart:', error);
-    showNotification('Ошибка при добавлении товара', 'error');
   }
 }
 
@@ -275,13 +531,11 @@ async function removeFromCart(cartId) {
     const result = await response.json();
 
     if (result.result === 'ok') {
-      showNotification('Товар удален из корзины', 'success');
       updateCartContent();
       updateCartCounter();
     }
   } catch (error) {
     console.error('Error removing from cart:', error);
-    showNotification('Ошибка при удалении товара', 'error');
   }
 }
 
@@ -354,7 +608,7 @@ async function updateCartCounter() {
 function initCartEventListeners() {
   // Обработчики для кнопок увеличения/уменьшения количества
   document.querySelectorAll('.counter__prev').forEach(button => {
-    button.addEventListener('click', function(e) {
+    button.addEventListener('click', function (e) {
       e.preventDefault();
       e.stopPropagation();
       const cartItem = this.closest('.modalcart-item');
@@ -368,7 +622,7 @@ function initCartEventListeners() {
   });
 
   document.querySelectorAll('.counter__next').forEach(button => {
-    button.addEventListener('click', function(e) {
+    button.addEventListener('click', function (e) {
       e.preventDefault();
       e.stopPropagation();
       const cartItem = this.closest('.modalcart-item');
@@ -381,7 +635,7 @@ function initCartEventListeners() {
 
   // Обработчики для кнопок удаления
   document.querySelectorAll('.modalcart-item__cart').forEach(button => {
-    button.addEventListener('click', function(e) {
+    button.addEventListener('click', function (e) {
       e.preventDefault();
       e.stopPropagation();
       const cartItem = this.closest('.modalcart-item');
@@ -393,11 +647,37 @@ function initCartEventListeners() {
 
 // Обработчик для кнопок "В корзину"
 function initAddToCartButtons() {
-  document.addEventListener('click', function(e) {
+  // Инициализируем состояние кнопки при загрузке
+  updateAddToCartButtonState();
+
+  // Обработчики для выбора цвета
+  document.addEventListener('change', function (e) {
+    if (e.target.name === 'color') {
+      const addToCartButton = document.querySelector('.pageprod__buy-cart');
+      if (addToCartButton) {
+        addToCartButton.dataset.selectedColor = e.target.value;
+        updateAddToCartButtonState();
+      }
+    }
+  });
+
+  // Обработчики для выбора размера
+  document.addEventListener('change', function (e) {
+    if (e.target.name === 'size') {
+      updateAddToCartButtonState();
+    }
+  });
+
+  document.addEventListener('click', function (e) {
     const addToCartButton = e.target.closest('.pageprod__buy-cart');
     if (addToCartButton) {
       e.preventDefault();
       e.stopPropagation();
+
+      // Проверяем, отключена ли кнопка
+      if (addToCartButton.disabled) {
+        return;
+      }
 
       // Проверяем, есть ли выбранное торговое предложение
       const offerId = addToCartButton.dataset.offerId;
@@ -413,28 +693,13 @@ function initAddToCartButtons() {
 
       // Проверяем выбор цвета, если он требуется
       const selectedColor = document.querySelector('input[name="color"]:checked')?.value || addToCartButton.dataset.selectedColor || '';
-      console.log('Color check:', {
-        hasColors,
-        selectedColor,
-        colorInputs: colorInputs.length,
-        checkedColorInput: document.querySelector('input[name="color"]:checked')?.value,
-        buttonSelectedColor: addToCartButton.dataset.selectedColor
-      });
       if (hasColors && (!selectedColor || selectedColor === '')) {
-        showNotification('Пожалуйста, выберите цвет', 'error');
         return;
       }
 
       // Проверяем выбор размера, если он требуется
       const selectedSize = document.querySelector('input[name="size"]:checked');
-      console.log('Size check:', {
-        hasSizes,
-        selectedSize: selectedSize?.id,
-        offerId,
-        sizeInputs: sizeInputs.length
-      });
       if (hasSizes && !selectedSize) {
-        showNotification('Пожалуйста, выберите размер', 'error');
         return;
       }
 
@@ -460,7 +725,7 @@ function initAddToCartButtons() {
 }
 
 // Инициализация при загрузке страницы
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
   console.log('Initializing cart functionality');
   initAddToCartButtons();
   updateCartCounter(); // Загружаем счетчик корзины при загрузке страницы
@@ -468,8 +733,8 @@ document.addEventListener('DOMContentLoaded', function() {
   // Загружаем содержимое корзины при открытии модального окна
   const cartModal = document.getElementById('cart');
   if (cartModal) {
-    const observer = new MutationObserver(function(mutations) {
-      mutations.forEach(function(mutation) {
+    const observer = new MutationObserver(function (mutations) {
+      mutations.forEach(function (mutation) {
         if (mutation.type === 'attributes' && mutation.attributeName === 'style') {
           const isVisible = cartModal.style.display === 'block' || cartModal.style.display === 'flex';
           if (isVisible) {
@@ -484,6 +749,129 @@ document.addEventListener('DOMContentLoaded', function() {
       attributeFilter: ['style']
     });
   }
+
+  // Обработчик для кнопки "Оформить заказ" в модальном окне корзины
+  document.addEventListener('click', function (e) {
+    if (e.target.classList.contains('modalcart__order')) {
+      e.preventDefault();
+
+      // Закрываем модальное окно корзины
+      const cartModal = document.getElementById('cart');
+      if (cartModal) {
+        cartModal.style.display = 'none';
+      }
+
+      // Перенаправляем на страницу оформления заказа
+      window.location.href = '/checkout/';
+    }
+  });
+
+  // === Логика для alert-main ===
+  const alertMain = document.getElementById('alert-main');
+  const alertClose = document.getElementById('alert-close');
+  const alertClosedKey = 'alertMainClosed';
+
+  if (alertMain) {
+    if (localStorage.getItem(alertClosedKey) === '1') {
+      alertMain.style.display = 'none';
+    } else {
+      alertMain.style.display = '';
+      if (alertClose) {
+        alertClose.addEventListener('click', function () {
+          alertMain.style.display = 'none';
+          localStorage.setItem(alertClosedKey, '1');
+        });
+      }
+    }
+  }
+
+  // === Newsletter subscribe AJAX ===
+  const newsletterForm = document.getElementById('newsletter-form');
+  if (newsletterForm) {
+    newsletterForm.addEventListener('submit', async function (e) {
+      e.preventDefault();
+      const input = newsletterForm.querySelector('input[type="email"]');
+      const email = input.value.trim();
+      const button = newsletterForm.querySelector('button[type="submit"]');
+      button.disabled = true;
+      let msg = document.querySelector('.newsletter-msg');
+      if (!msg) {
+        msg = document.createElement('div');
+        msg.className = 'newsletter-msg';
+        msg.style.marginTop = '10px';
+        msg.style.textAlign = 'center';
+        newsletterForm.parentNode.insertBefore(msg, newsletterForm.nextSibling);
+      }
+      msg.textContent = '';
+      try {
+        const res = await fetch('/ajax/ajax.php', {
+          method: 'POST',
+          headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+          body: `command=newsletter_subscribe&email=${encodeURIComponent(email)}`
+        });
+        const data = await res.json();
+        if (data.status === 'success') {
+          msg.textContent = data.message;
+          msg.style.color = 'green';
+          input.value = '';
+        } else {
+          msg.textContent = data.message || 'Ошибка';
+          msg.style.color = 'red';
+        }
+      } catch (err) {
+        msg.textContent = 'Ошибка соединения';
+        msg.style.color = 'red';
+      }
+      button.disabled = false;
+    });
+  }
+
+  // AJAX-сохранение профиля
+  $('#profile-form').on('submit', function(e) {
+    e.preventDefault();
+    const $form = $(this);
+
+    // Получаем дату и преобразуем
+    const $date = $form.find('input[name="PERSONAL_BIRTHDAY"]');
+    const val = $date.val();
+    let formattedDate = val;
+    if (val && /^\d{4}-\d{2}-\d{2}$/.test(val)) {
+      const parts = val.split('-');
+      formattedDate = parts[2] + '.' + parts[1] + '.' + parts[0];
+    }
+
+    const $btn = $form.find('button[type="submit"]');
+    $btn.prop('disabled', true);
+    const formData = new FormData(this);
+    formData.set('PERSONAL_BIRTHDAY', formattedDate);
+    if (!formData.has('sessid')) {
+      formData.append('sessid', $('input[name="sessid"]').val());
+    }
+    if (!formData.has('save')) {
+      formData.append('save', 'Y');
+    }
+    $.ajax({
+      url: '/ajax/update_profile.php',
+      type: 'POST',
+      data: formData,
+      processData: false,
+      contentType: false,
+      dataType: 'json',
+      success: function (data) {
+        if (data.success) {
+          openModal('updateprofile');
+        } else {
+          alert(data.error || 'Ошибка при сохранении профиля');
+        }
+        $btn.prop('disabled', false);
+      },
+      error: function () {
+        $btn.prop('disabled', false);
+        alert('Ошибка при сохранении профиля. Попробуйте ещё раз.');
+      }
+    });
+    return false;
+  });
 });
 
 // Делаем функции глобально доступными
@@ -493,7 +881,7 @@ window.isFavourite = isFavourite;
 window.getFavouriteProducts = getFavouriteProducts;
 window.updateFavouriteCounter = updateFavouriteCounter;
 window.updateFavouriteButtons = updateFavouriteButtons;
-window.showNotification = showNotification;
+window.updateAddToCartButtonState = updateAddToCartButtonState;
 window.addToCart = addToCart;
 window.updateCartQuantity = updateCartQuantity;
 window.removeFromCart = removeFromCart;
@@ -580,3 +968,229 @@ window.closeAlert = () => {
     cartaler.classList.remove('open');
   }
 };
+
+$(document).on('click', '#logout-btn', function (e) {
+  e.preventDefault();
+  $.ajax({
+    url: '/ajax/logout.php',
+    type: 'POST',
+    dataType: 'json',
+    success: function (response) {
+      if (response.result === 'ok') {
+        window.location.href = '/';
+      } else {
+        alert('Вы уже не авторизованы');
+        window.location.reload();
+      }
+    },
+    error: function () {
+      alert('Ошибка при выходе');
+    }
+  });
+});
+
+$(document).ready(function () {
+  // Модалка подтверждения выхода
+  if ($('.logout-confirm').length && $('#logout-modal').length === 0) {
+    // Добавляем разметку модалки в конец body, если её ещё нет
+    $('body').append(`
+      <div class="lkmodal" id="logout-modal" style="display:none; position:fixed; z-index:1001; left:0; top:0; width:100vw; height:100vh; background:rgba(0,0,0,0.5); align-items:center; justify-content:center;">
+        <div style="background:#fff; border-radius:8px; max-width:90vw; width:350px; margin:auto; padding:32px 24px; text-align:center; position:relative;">
+          <div style="font-size:20px; font-weight:600; margin-bottom:16px;">Вы уверены, что хотите выйти?</div>
+          <div style="display:flex; gap:16px; justify-content:center; margin-top:24px;">
+            <button id="logout-yes" class="primary-button" style="min-width:90px;">Да</button>
+            <button id="logout-no" class="primary-button" style="background:#eee; color:#232229; min-width:90px;">Нет</button>
+          </div>
+        </div>
+      </div>
+    `);
+  }
+
+  $(document).on('click', '.logout-confirm', function (e) {
+    e.preventDefault();
+    $('#logout-modal').fadeIn(120);
+    const logoutHref = $(this).attr('href');
+    $('#logout-yes').off('click').on('click', function () {
+      window.location.href = logoutHref;
+    });
+    $('#logout-no').off('click').on('click', function () {
+      $('#logout-modal').fadeOut(120);
+    });
+    // Закрытие по клику вне окна
+    $('#logout-modal').off('click').on('click', function (event) {
+      if (event.target === this) {
+        $(this).fadeOut(120);
+      }
+    });
+  });
+});
+
+// ====== AJAX отмена заказа ======
+$(function () {
+  $(document).on('click', '.singleorder-footer__cancel', function (e) {
+    e.preventDefault();
+    var $btn = $(this);
+    var orderId = $('input[name="order_id"]').val() || $btn.data('order-id');
+    if (!orderId) {
+      alert('Не удалось определить номер заказа.');
+      return;
+    }
+    if (!confirm('Вы уверены, что хотите отменить заказ?')) return;
+    $.ajax({
+      url: '/ajax/cancel_order.php',
+      type: 'POST',
+      data: {order_id: orderId},
+      dataType: 'json',
+      success: function (data) {
+        if (data.status === 'success') {
+          $btn.hide();
+          window.location.href = '/personal/orders/';
+        } else {
+          alert(data.message || 'Ошибка при отмене заказа.');
+        }
+      },
+      error: function () {
+        alert('Ошибка соединения.');
+      }
+    });
+  });
+});
+
+// ====== АДРЕСА: добавление, редактирование, удаление ======
+$(function () {
+  // Открытие модалки для добавления адреса
+  $(document).on('click', '.lk-locations__add', function (e) {
+    e.preventDefault();
+    $('#editadress-title').text('Добавить новый адрес');
+    $('#editadress-submit').text('Добавить');
+    $('#editadress').removeData('id');
+    $('#editadress input').val('');
+    $('#editadress').addClass('open');
+    if ($('.backdrop').length) $('.backdrop').addClass('open');
+  });
+
+  // Открытие модалки для редактирования адреса
+  $(document).on('click', '.js-edit-address', function (e) {
+    e.preventDefault();
+    const id = $(this).data('id');
+    const address = $(this).data('address');
+    const house = $(this).data('house');
+    const entrance = $(this).data('entrance');
+    const apartment = $(this).data('apartment');
+    const floor = $(this).data('floor');
+    const comment = $(this).data('comment');
+    $('#editadress-title').text('Редактировать адрес');
+    $('#editadress-submit').text('Редактировать');
+    $('#editadress').data('id', id);
+    $('#editadress input#street').val(address);
+    $('#editadress input#home').val(house);
+    $('#editadress input#podesz').val(entrance);
+    $('#editadress input#room').val(apartment);
+    $('#editadress input#floor').val(floor);
+    $('#editadress input#comment').val(comment);
+    $('#editadress').addClass('open');
+    if ($('.backdrop').length) $('.backdrop').addClass('open');
+  });
+
+  // Сохранение (добавление или редактирование)
+  $(document).on('click', '#editadress-submit', async function (e) {
+    e.preventDefault();
+    const id = $('#editadress').data('id');
+    const address = $('#editadress input#street').val();
+    const house = $('#editadress input#home').val();
+    const entrance = $('#editadress input#podesz').val();
+    const apartment = $('#editadress input#room').val();
+    const floor = $('#editadress input#floor').val();
+    const comment = $('#editadress input#comment').val();
+    const isEdit = !!id;
+    const command = isEdit ? 'edit_addr' : 'add_addr';
+    try {
+      const response = await $.ajax({
+        url: '/ajax/sale.php',
+        type: 'POST',
+        data: {
+          command: command,
+          id: id,
+          address: address,
+          house: house,
+          entrance: entrance,
+          apartment: apartment,
+          floor: floor,
+          comment: comment
+        },
+        dataType: 'json'
+      });
+      $('#editadress').removeClass('open');
+      if (response.result === 'ok') {
+        $('#editadress-ok-title').text('Готово!');
+        $('#editadress-ok-msg').text(isEdit ? 'Адрес успешно сохранён' : 'Адрес успешно добавлен');
+        $('#editadress_ok').addClass('open');
+        setTimeout(function () { location.reload(); }, 1000);
+      } else {
+        alert(response.message || 'Ошибка при сохранении адреса');
+      }
+    } catch (err) {
+      alert('Ошибка соединения');
+    }
+  });
+
+  // Удаление адреса
+  window.del_addr = function (id) {
+    if (confirm('Вы уверены, что хотите удалить этот адрес?')) {
+      $.ajax({
+        url: '/ajax/sale.php',
+        type: 'POST',
+        data: {
+          command: 'del_addr',
+          id: id
+        },
+        success: function (response) {
+          var data = typeof response === 'object' ? response : JSON.parse(response);
+          if (data.result === 'ok') {
+            $('#addr' + id).remove();
+            if ($('.lk-locations__item').length === 0) {
+              location.reload();
+            }
+          } else {
+            alert('Ошибка при удалении адреса');
+          }
+        },
+        error: function () {
+          alert('Ошибка при удалении адреса');
+        }
+      });
+    }
+  };
+
+  // Закрытие модалки подтверждения
+  $(document).on('click', '#editadress_ok .lkmodal__form-submit, #editadress_ok .lkmodal__close', function (e) {
+    e.preventDefault();
+    $('#editadress_ok').removeClass('open');
+    if ($('.backdrop').length) $('.backdrop').removeClass('open');
+  });
+
+  // Закрытие модалки по клику на оверлей
+  $(document).on('click', '.backdrop', function (e) {
+    $('#editadress').removeClass('open');
+    $('#editadress_ok').removeClass('open');
+    $('.catdrop').removeClass('open');
+    $(this).removeClass('open');
+  });
+});
+
+// Открытие карточки товара по клику на картинку в избранном
+$(document).on('click', '.catalogpage__main .product-card__image', function (e) {
+  // Не реагируем на клик по лайку
+  if ($(e.target).closest('.product-card__like').length) return;
+  const $card = $(this).closest('.product-card');
+  const $info = $card.find('.product-card__info');
+  if ($info.length) {
+    window.location.href = $info.attr('href');
+  }
+});
+
+$(document).on('click', '.catalogpage__togfilter1', function (e) {
+  e.preventDefault();
+  openModal('.catdrop', true);
+});
+

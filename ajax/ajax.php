@@ -48,3 +48,33 @@ switch ($command){
         echo $data;
         break;
 }
+
+// === Подписка на новости (footer newsletter) ===
+if ($command == 'newsletter_subscribe') {
+    $email = trim($request['email']);
+    if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        echo json_encode([
+            'status' => 'error',
+            'message' => 'Некорректный email',
+        ]);
+        exit;
+    }
+    CModule::IncludeModule("form");
+    $formId = 1;
+    $arValues = array(
+        "form_text_1" => $email,
+    );
+    $RESULT_ID = CFormResult::Add($formId, $arValues);
+    if ($RESULT_ID) {
+        echo json_encode([
+            'status' => 'success',
+            'message' => 'Спасибо! Вы успешно подписались на новости.'
+        ]);
+    } else {
+        echo json_encode([
+            'status' => 'error',
+            'message' => 'Ошибка при сохранении. Попробуйте позже.'
+        ]);
+    }
+    exit;
+}

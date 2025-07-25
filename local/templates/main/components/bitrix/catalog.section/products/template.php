@@ -1,23 +1,26 @@
 <? if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED !== true) die();
 $this->setFrameMode(true);
 ?>
+
 <section class="new-products">
-  <div class="container">
-    <a href="/catalog/" class="new-products__header">
-      <h2 class="new-products__title">Новое</h2>
-      <div class="new-products__link">
-        <svg width="24" height="25" viewBox="0 0 24 25" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path fill-rule="evenodd" clip-rule="evenodd"
-                d="M17.75 7.1665V8.1665C17.75 9.96143 19.2051 11.4165 21 11.4165V12.9165C18.3766 12.9165 16.25 10.7899 16.25 8.1665V7.1665H17.75Z"
-                fill="#232229"/>
-          <path fill-rule="evenodd" clip-rule="evenodd"
-                d="M21 12.9165C19.2051 12.9165 17.75 14.3716 17.75 16.1665V17.1665H16.25V16.1665C16.25 13.5432 18.3766 11.4165 21 11.4165V12.9165Z"
-                fill="#232229"/>
-          <path fill-rule="evenodd" clip-rule="evenodd" d="M21 12.9165H3V11.4165H21V12.9165Z" fill="#232229"/>
-        </svg>
-      </div>
-    </a>
-  </div>
+  <? if ($arProps['HIDE_CAPTION'] === 'Y') { ?>
+    <div class="container">
+      <a href="/catalog/" class="new-products__header">
+        <h2 class="new-products__title">Новое</h2>
+        <div class="new-products__link">
+          <svg width="24" height="25" viewBox="0 0 24 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path fill-rule="evenodd" clip-rule="evenodd"
+                  d="M17.75 7.1665V8.1665C17.75 9.96143 19.2051 11.4165 21 11.4165V12.9165C18.3766 12.9165 16.25 10.7899 16.25 8.1665V7.1665H17.75Z"
+                  fill="#232229"/>
+            <path fill-rule="evenodd" clip-rule="evenodd"
+                  d="M21 12.9165C19.2051 12.9165 17.75 14.3716 17.75 16.1665V17.1665H16.25V16.1665C16.25 13.5432 18.3766 11.4165 21 11.4165V12.9165Z"
+                  fill="#232229"/>
+            <path fill-rule="evenodd" clip-rule="evenodd" d="M21 12.9165H3V11.4165H21V12.9165Z" fill="#232229"/>
+          </svg>
+        </div>
+      </a>
+    </div>
+  <? } ?>
   <div class="new-products__slider">
     <div class="swiper new-products__swiper">
       <div class="swiper-wrapper">
@@ -27,16 +30,30 @@ $this->setFrameMode(true);
               <div class="product-card__image">
                 <div class="product-card__slider">
                   <div class="product-card__slider-track">
-                    <? foreach ($arItem["PROPERTIES"]["MORE_PHOTO"]["VALUE"] as $imageId): ?>
+                    <? if (!empty($arItem["PROPERTIES"]["MORE_PHOTO"]["VALUE"])): ?>
+                      <? foreach ($arItem["PROPERTIES"]["MORE_PHOTO"]["VALUE"] as $imageId): ?>
+                        <div class="product-card__slide">
+                          <a href="<?= $arItem["DETAIL_PAGE_URL"] ?>">
+                            <img src="<?= CFile::GetPath($imageId) ?>" alt="<?= $arItem["NAME"] ?>">
+                          </a>
+                        </div>
+                      <? endforeach; ?>
+                    <? else: ?>
                       <div class="product-card__slide">
-                        <img src="<?= CFile::GetPath($imageId) ?>" alt="<?= $arItem["NAME"] ?>">
+                        <a href="<?= $arItem["DETAIL_PAGE_URL"] ?>">
+                          <img src="/assets/img/no-photo.jpg" alt="<?= $arItem["NAME"] ?>">
+                        </a>
                       </div>
-                    <? endforeach; ?>
+                    <? endif; ?>
                   </div>
                   <div class="product-card__pagination">
-                    <? foreach ($arItem["PROPERTIES"]["MORE_PHOTO"]["VALUE"] as $index => $imageId): ?>
-                      <span class="product-card__pagination-dot<?= $index === 0 ? ' active' : '' ?>"></span>
-                    <? endforeach; ?>
+                    <? if (!empty($arItem["PROPERTIES"]["MORE_PHOTO"]["VALUE"])): ?>
+                      <? foreach ($arItem["PROPERTIES"]["MORE_PHOTO"]["VALUE"] as $index => $imageId): ?>
+                        <span class="product-card__pagination-dot<?= $index === 0 ? ' active' : '' ?>"></span>
+                      <? endforeach; ?>
+                    <? else: ?>
+                      <span class="product-card__pagination-dot active"></span>
+                    <? endif; ?>
                   </div>
                 </div>
                 <div class="product-card__tags">
@@ -50,9 +67,10 @@ $this->setFrameMode(true);
                           fill="#232229"/>
                   </svg>
 
-                  <svg class="activelike" width="20" height="18" viewBox="0 0 20 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <svg class="activelike" width="20" height="18" viewBox="0 0 20 18" fill="none"
+                       xmlns="http://www.w3.org/2000/svg">
                     <path fill-rule="evenodd" clip-rule="evenodd"
-                          d="M1.74163 2.13008C2.69464 1.19149 3.9848 0.666199 5.32771 0.666199C6.66597 0.666199 7.95186 1.18787 8.9039 2.12038L10.0005 3.12621L11.0971 2.12038C12.0491 1.18787 13.335 0.666199 14.6733 0.666199C16.0162 0.666199 17.3063 1.19149 18.2593 2.13008C19.2127 3.06906 19.7505 4.34504 19.7505 5.67796C19.7505 7.00999 19.2135 8.28515 18.2613 9.22394L18.2593 9.22584L10.0005 17.4763L1.73968 9.22392C0.787496 8.28512 0.250488 7.00998 0.250488 5.67796C0.250488 4.34504 0.78823 3.06906 1.74163 2.13008ZM5.32771 2.1662C4.37531 2.1662 3.46419 2.53892 2.79417 3.1988C2.12455 3.85829 1.75049 4.75031 1.75049 5.67796C1.75049 6.60562 2.12455 7.49764 2.79417 8.15713L2.79797 8.16087L10.0005 15.3561L17.2068 8.15712C17.8764 7.49762 18.2505 6.60562 18.2505 5.67796C18.2505 4.75031 17.8764 3.85829 17.2068 3.1988C16.5368 2.53892 15.6257 2.1662 14.6733 2.1662C13.7209 2.1662 12.8097 2.53892 12.1397 3.1988L12.1302 3.20814L10.0005 5.16165L7.87073 3.20814L7.86124 3.1988C7.19123 2.53892 6.2801 2.1662 5.32771 2.1662Z"
+                          d="M1.74163 2.13008C2.69464 1.19149 3.9848 0.666199 5.32771 0.666199C6.66597 0.666199 7.95186 1.18787 8.9039 2.12038L10.0005 3.12621L11.0971 2.12038C12.0491 1.18787 13.335 0.666199 14.6733 0.666199C16.0162 0.666199 17.3063 1.19149 18.2593 2.13008C19.2127 3.06906 19.7505 4.34504 19.7505 5.67796C19.7505 7.00999 19.2135 8.28515 18.2613 9.22394L18.2593 9.22584L10.0005 17.4763L1.73968 9.22392C0.787496 8.28512 0.250488 7.00998 0.250488 5.67796C0.250488 4.34504 0.78823 3.06906 1.74163 2.13008ZM5.32771 2.1662C4.37531 2.1662 3.46419 2.53892 2.79417 3.1988C2.12455 3.85829 1.75049 4.75031 1.75049 5.67796C1.75049 6.60562 2.12455 7.49764 2.79417 8.15713L2.79797 8.16087L10.0005 15.3561L17.2068 8.15712C17.8764 7.49762 18.2505 6.60562 18.2505 5.67796C18.2505 4.75031 17.8764 3.85829 17.2068 3.1988C16.5368 2.53892 15.6257 2.1662 14.6733 2.1662C13.7209 2.1662 12.8097 2.53892 12.1397 3.1988L12.1302 3.20814L10.0005 5.16165L7.87073 3.20814L7.86124 3.1988C7.19123 2.53892 6.2801 2 5.32771 2.1662Z"
                           fill="#232229"/>
                     <path
                       d="M2.79417 3.1988C3.46419 2.53892 4.37531 2.1662 5.32771 2.1662C6.2801 2.1662 7.19123 2.53892 7.86124 3.1988L7.87073 3.20814L10.0005 5.16165L12.1302 3.20814L12.1397 3.1988C12.8097 2.53892 13.7209 2.1662 14.6733 2.1662C15.6257 2.1662 16.5368 2.53892 17.2068 3.1988C17.8764 3.85829 18.2505 4.75031 18.2505 5.67796C18.2505 6.60562 17.8764 7.49762 17.2068 8.15712L10.0005 15.3561L2.79797 8.16087L2.79417 8.15713C2.12455 7.49764 1.75049 6.60562 1.75049 5.67796C1.75049 4.75031 2.12455 3.85829 2.79417 3.1988Z"
@@ -62,28 +80,126 @@ $this->setFrameMode(true);
               </div>
               <a href="<?= $arItem["DETAIL_PAGE_URL"] ?>" class="product-card__info">
                 <h3 class="product-card__title"><?= $arItem["NAME"] ?></h3>
+                <?php
+                $price = null;
+                $oldPrice = null;
+                $discount = null;
+
+                // Если есть офферы — ищем минимальную цену среди всех офферов
+                if (!empty($arItem['OFFERS']) && is_array($arItem['OFFERS'])) {
+                  $minPrice = null;
+                  foreach ($arItem['OFFERS'] as $offer) {
+                    // 1. Если есть PRICES
+                    if (!empty($offer['PRICES'])) {
+                      foreach ($offer['PRICES'] as $priceType) {
+                        $offerPrice = $priceType['DISCOUNT_VALUE'] ?? $priceType['VALUE'] ?? null;
+                        if ($offerPrice !== null && ($minPrice === null || $offerPrice < $minPrice)) {
+                          $minPrice = $offerPrice;
+                          $price = $priceType['PRINT_DISCOUNT_VALUE'] ?: $priceType['PRINT_VALUE'];
+                          $oldPrice = $priceType['PRINT_VALUE'] !== $priceType['PRINT_DISCOUNT_VALUE'] ? $priceType['PRINT_VALUE'] : null;
+                          $discount = !empty($priceType['DISCOUNT_DIFF_PERCENT']) ? round($priceType['DISCOUNT_DIFF_PERCENT']) : null;
+                        }
+                      }
+                    } // 2. Если есть CATALOG_PRICE_1 или CATALOG_PRICE_7
+                    elseif (!empty($offer['CATALOG_PRICE_1'])) {
+                      $offerPrice = $offer['CATALOG_PRICE_1'];
+                      if ($minPrice === null || $offerPrice < $minPrice) {
+                        $minPrice = $offerPrice;
+                        $price = number_format($offerPrice, 0, '', ' ') . '₽';
+                        $oldPrice = null;
+                        $discount = null;
+                      }
+                    } elseif (!empty($offer['CATALOG_PRICE_7'])) {
+                      $offerPrice = $offer['CATALOG_PRICE_7'];
+                      if ($minPrice === null || $offerPrice < $minPrice) {
+                        $minPrice = $offerPrice;
+                        $price = number_format($offerPrice, 0, '', ' ') . '₽';
+                        $oldPrice = null;
+                        $discount = null;
+                      }
+                    }
+                  }
+                }
+                // Если нет офферов — старая логика
+                if (!$price && !empty($arItem['MIN_PRICE'])) {
+                  $price = $arItem['MIN_PRICE']['PRINT_DISCOUNT_VALUE'] ?: $arItem['MIN_PRICE']['PRINT_VALUE'];
+                  $oldPrice = $arItem['MIN_PRICE']['PRINT_VALUE'] !== $arItem['MIN_PRICE']['PRINT_DISCOUNT_VALUE'] ? $arItem['MIN_PRICE']['PRINT_VALUE'] : null;
+                  $discount = !empty($arItem['MIN_PRICE']['DISCOUNT_DIFF_PERCENT']) ? round($arItem['MIN_PRICE']['DISCOUNT_DIFF_PERCENT']) : null;
+                }
+                ?>
                 <div class="product-card__price">
                   <div class="product-card__price-current">
-                    <span>12 000₽</span>
-                    <div class="product-card__discount">-25%</div>
+                    <span><?= $price ?: '—' ?></span>
+                    <? if ($discount): ?>
+                      <div class="product-card__discount">-<?= $discount ?>%</div>
+                    <? endif; ?>
                   </div>
-                  <span class="product-card__price-old">16 000₽</span>
+                  <? if ($oldPrice): ?>
+                    <span class="product-card__price-old"><?= $oldPrice ?></span>
+                  <? endif; ?>
                 </div>
               </a>
               <div class="product-card__footer">
+                <?php
+                $colors = [];
+                $sizes = [];
+                if (!empty($arItem['OFFERS']) && is_array($arItem['OFFERS'])) {
+                  foreach ($arItem['OFFERS'] as $offer) {
+                    // Цвет
+                    if (!empty($offer['PROPERTIES']['TSVET']['VALUE'])) {
+                      $colors[$offer['PROPERTIES']['TSVET']['VALUE']] = $offer['PROPERTIES']['TSVET']['VALUE'];
+                    }
+                    // Размер
+                    if (!empty($offer['PROPERTIES']['RAZMER']['VALUE'])) {
+                      $sizes[$offer['PROPERTIES']['RAZMER']['VALUE']] = $offer['PROPERTIES']['RAZMER']['VALUE'];
+                    }
+                  }
+                }
+                ?>
+                <?php
+                // Получаем список цветов через MyTools::getVariantColors
+                $colors = [];
+                if (!empty($arItem['PROPERTIES']['CML2_ARTICLE']['VALUE'])) {
+                  $colors = MyTools::getVariantColors($arItem['PROPERTIES']['CML2_ARTICLE']['VALUE']);
+                }
+                ?>
                 <div class="product-card__colors">
-                  <a href="" class="product-card__colors-item" style="background-color: #3b3465;"></a>
-                  <a href="" class="product-card__colors-item" style="background-color: #34654f;"></a>
-                  <a href="" class="product-card__colors-item" style="background-color: #ba6868;"></a>
-                  <a href="" class="product-card__colors-item" style="background-color: #232229;"></a>
-                  <a href="" class="product-card__colors-item" style="background-color: #fff;"></a>
+                  <?php foreach ($colors as $color => $detail_page_url): ?>
+                    <a href="<?= $detail_page_url ?>" class="product-card__colors-item product-card-color-small"
+                       style="background-image: url(<?= MyTools::getColor($color) ?>)">
+                    </a>
+                  <?php endforeach; ?>
                 </div>
+                <?php
+                $sizes_list = [];
+                $arInfo = CCatalogSKU::GetInfoByProductIBlock($arItem["IBLOCK_ID"]);
+                if ($arInfo && !empty($arInfo['IBLOCK_ID']) && !empty($arInfo['SKU_PROPERTY_ID'])) {
+                  $rsOffers = CIBlockElement::GetList(
+                    [],
+                    [
+                      'IBLOCK_ID' => $arInfo['IBLOCK_ID'],
+                      'PROPERTY_' . $arInfo['SKU_PROPERTY_ID'] => $arItem['ID']
+                    ],
+                    false,
+                    false,
+                    ["ID", "IBLOCK_ID", "NAME", "PROPERTY_RAZMER"]
+                  );
+                  while ($rs = $rsOffers->GetNextElement()) {
+                    $arOffer = $rs->getFields();
+                    $arOffer['PROPERTIES'] = $rs->getProperties();
+                    if (!empty($arOffer['PROPERTIES']['RAZMER']['VALUE'])) {
+                      $sizes_list[] = [
+                        'id' => $arOffer['ID'],
+                        'title' => $arOffer['PROPERTIES']['RAZMER']['VALUE'],
+                      ];
+                    }
+                  }
+                }
+                ?>
                 <div class="product-card__sizes">
-                  <a href="" class="product-card__sizes-item">S</a>
-                  <a href="" class="product-card__sizes-item">M</a>
-                  <a href="" class="product-card__sizes-item">L</a>
-                  <a href="" class="product-card__sizes-item">XL</a>
-                  <a href="" class="product-card__sizes-item">2XL</a>
+                  <?php foreach ($sizes_list as $size): ?>
+                    <span class="product-card__sizes-item"><?= htmlspecialchars($size['title']) ?></span>
+                  <?php endforeach; ?>
                 </div>
               </div>
             </div>

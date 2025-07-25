@@ -95,6 +95,46 @@ if($command == 'del_addr'){
     ]);
 }
 /*
+ * редактировать адрес
+ */
+if ($command == 'edit_addr') {
+    $id = $request['id'];
+    $address = $request['address'];
+    $house = $request['house'];
+    $entrance = $request['entrance'];
+    $apartment = $request['apartment'];
+    $floor = $request['floor'];
+    $comment = $request['comment'];
+
+    // Формируем полный адрес для NAME
+    $fullName = $address;
+    if ($house) $fullName .= ', д. ' . $house;
+    if ($entrance) $fullName .= ', подъезд ' . $entrance;
+    if ($apartment) $fullName .= ', кв. ' . $apartment;
+    if ($floor) $fullName .= ', этаж ' . $floor;
+
+    // Проверяем, что адрес принадлежит пользователю
+    $arElement = CIBlockElement::GetList([], ['=ID' => $id], false, false, ['ID', 'PROPERTY_USER_ID'])->GetNext();
+    if ($arElement['PROPERTY_USER_ID_VALUE'] == $USER->GetID()) {
+        $arProps = [
+            'ADDRESS' => $address,
+            'HOUSE' => $house,
+            'ENTRANCE' => $entrance,
+            'APARTMENT' => $apartment,
+            'FLOOR' => $floor,
+            'COMMENT' => $comment,
+        ];
+        CIBlockElement::SetPropertyValuesEx($id, false, $arProps);
+        // Обновляем NAME (полный адрес)
+        $el = new CIBlockElement();
+        $el->Update($id, ['NAME' => $fullName]);
+        echo \Bitrix\Main\Web\Json::encode(['result' => 'ok']);
+    } else {
+        echo \Bitrix\Main\Web\Json::encode(['result' => 'error', 'message' => 'Нет доступа']);
+    }
+    exit;
+}
+/*
  * получить адрес
  */
 if($command == 'get_addr'){
@@ -105,4 +145,71 @@ if($command == 'get_addr'){
         'addr' => $addr['PROPERTIES']['ADDRESS']['VALUE'],
         'comment' => $addr['PROPERTIES']['COMMENT']['VALUE'],
     ]);
+}
+/*
+ * получить адреса пользователя
+ */
+if($command == 'get_user_addresses'):
+    if (!$USER->IsAuthorized()) {
+        echo \Bitrix\Main\Web\Json::encode([
+            'success' => false,
+            'message' => 'Пользователь не авторизован'
+        ]);
+        return;
+    }
+    
+    $userAddresses = MyTools::getAddresses($USER->GetID());
+    
+    echo \Bitrix\Main\Web\Json::encode([
+        'success' => true,
+        'addresses' => $userAddresses
+    ]);
+endif;
+
+/*
+ * добавить адрес
+ */
+if ($command == 'add_addr') {
+    if (!$USER->IsAuthorized()) {
+        echo \Bitrix\Main\Web\Json::encode(['result' => 'error', 'message' => 'Пользователь не авторизован']);
+        exit;
+    }
+    $address = $request['address'];
+    $house = $request['house'];
+    $entrance = $request['entrance'];
+    $apartment = $request['apartment'];
+    $floor = $request['floor'];
+    $comment = $request['comment'];
+
+    // Формируем полный адрес для NAME
+    $fullName = $address;
+    if ($house) $fullName .= ', д. ' . $house;
+    if ($entrance) $fullName .= ', подъезд ' . $entrance;
+    if ($apartment) $fullName .= ', кв. ' . $apartment;
+    if ($floor) $fullName .= ', этаж ' . $floor;
+
+    $iblockId = 23; // ID инфоблока адресов
+
+    $el = new CIBlockElement();
+    $arFields = [
+        'IBLOCK_ID' => $iblockId,
+        'NAME' => $fullName,
+        'ACTIVE' => 'Y',
+        'PROPERTY_VALUES' => [
+            'USER_ID' => $USER->GetID(),
+            'ADDRESS' => $address,
+            'HOUSE' => $house,
+            'ENTRANCE' => $entrance,
+            'APARTMENT' => $apartment,
+            'FLOOR' => $floor,
+            'COMMENT' => $comment,
+        ],
+    ];
+    $newId = $el->Add($arFields);
+    if ($newId) {
+        echo \Bitrix\Main\Web\Json::encode(['result' => 'ok', 'id' => $newId]);
+    } else {
+        echo \Bitrix\Main\Web\Json::encode(['result' => 'error', 'message' => 'Ошибка добавления адреса']);
+    }
+    exit;
 }

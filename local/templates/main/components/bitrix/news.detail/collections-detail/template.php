@@ -1,6 +1,32 @@
 <? if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED !== true) die();
 $this->setFrameMode(true);
 ?>
+
+<div class="breadcrumbs">
+  <div class="container">
+    <div class="breadcrumbs__row desc">
+      <a href="/">
+        Главная
+      </a>
+      <a href="/collections/">
+        Коллекции
+      </a>
+      <span>
+        <?= htmlspecialcharsbx($arResult['NAME']) ?>
+      </span>
+    </div>
+    <a href="/collections/" class="breadcrumbs__back mob">
+      <i>
+        <svg width="16" height="17" viewBox="0 0 16 17" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path fill-rule="evenodd" clip-rule="evenodd"
+                d="M8.58333 3.3665C8.58333 5.53088 6.60759 7.4165 4 7.4165V8.9165C6.60759 8.9165 8.58333 10.8021 8.58333 12.9665V14.1665H10.0833V12.9665C10.0833 10.8809 8.84622 9.11574 7.0523 8.1665C8.84622 7.21727 10.0833 5.45208 10.0833 3.3665V2.1665H8.58333V3.3665Z"
+                fill="#232229" fill-opacity="0.5"/>
+        </svg>
+      </i>
+      Назад
+    </a>
+  </div>
+</div>
 <section class="collectionsinfo">
   <div class="container">
     <div class="collectionsinfo__content collectionsinfo__content_first">
@@ -11,7 +37,8 @@ $this->setFrameMode(true);
   </div>
   <? if ($arResult['PROPERTIES']['PICTURE']['VALUE']): ?>
     <div class="collectionsinfo__fullimage">
-      <img src="<?= CFile::GetPath($arResult['PROPERTIES']['PICTURE']['VALUE']) ?>" alt="<?= htmlspecialcharsbx($arResult['NAME']) ?>">
+      <img src="<?= CFile::GetPath($arResult['PROPERTIES']['PICTURE']['VALUE']) ?>"
+           alt="<?= htmlspecialcharsbx($arResult['NAME']) ?>">
     </div>
   <? endif; ?>
   <div class="container">
@@ -20,9 +47,9 @@ $this->setFrameMode(true);
         <h3><?= htmlspecialcharsbx($arResult['PROPERTIES']['SUBTITLE']['VALUE']) ?></h3><? endif; ?>
     </div>
   </div>
-  <? if (is_array($arResult['PROPERTIES']['ITEMS']['VALUE']) && count($arResult['PROPERTIES']['ITEMS']['VALUE'])): ?>
+  <? if (is_array($arResult['PROPERTIES']['IMAGES']['VALUE']) && count($arResult['PROPERTIES']['IMAGES']['VALUE'])): ?>
     <div class="collectionsinfo__row">
-      <? foreach ($arResult['PROPERTIES']['ITEMS']['VALUE'] as $itemImg): ?>
+      <? foreach ($arResult['PROPERTIES']['IMAGES']['VALUE'] as $itemImg): ?>
         <div class="collectionsinfo__col">
           <div class="collectionsinfo-image">
             <img src="<?= CFile::GetPath($itemImg) ?>" alt="<?= htmlspecialcharsbx($arResult['NAME']) ?>">
@@ -31,11 +58,13 @@ $this->setFrameMode(true);
       <? endforeach; ?>
     </div>
   <? endif; ?>
-  <div class="container">
-    <div class="collectionsinfo__content">
-      <? if ($arResult['DETAIL_TEXT']): ?><?= $arResult['DETAIL_TEXT'] ?><? endif; ?>
+  <? if ($arResult['PREVIEW_TEXT']) { ?>
+    <div class="container">
+      <div class="collectionsinfo__content">
+        <?= $arResult['PREVIEW_TEXT'] ?>
+      </div>
     </div>
-  </div>
+  <? } ?>
   <? if (is_array($arResult['PROPERTIES']['GALLERY']['VALUE']) && count($arResult['PROPERTIES']['GALLERY']['VALUE'])): ?>
     <div class="collectionsinfo__gallery">
       <div class="collectionsinfo__gallery-slider swiper">
@@ -81,4 +110,131 @@ $this->setFrameMode(true);
       </div>
     </div>
   <? endif; ?>
+  <? if ($arResult['DETAIL_TEXT']) { ?>
+    <div class="container">
+      <div class="collectionsinfo__content">
+        <?= $arResult['DETAIL_TEXT'] ?>
+      </div>
+    </div>
+  <? } ?>
+
+  <? if (!empty($arResult['PROPERTIES']['ITEMS']['VALUE'])) { ?>
+    <?
+    $APPLICATION->IncludeComponent(
+      "bitrix:catalog.section",
+      "catalog-page",
+      [
+        "IBLOCK_TYPE" => "CRM_PRODUCT_CATALOG",
+        "IBLOCK_ID" => "29",
+        "SECTION_ID" => "",
+        "SECTION_CODE" => "",
+        "SECTION_USER_FIELDS" => [],
+        "ELEMENT_SORT_FIELD" => "SORT",
+        "ELEMENT_SORT_ORDER" => "ASC",
+        "ELEMENT_SORT_FIELD2" => "ID",
+        "ELEMENT_SORT_ORDER2" => "DESC",
+        "FILTER_NAME" => "",
+        "INCLUDE_SUBSECTIONS" => "Y",
+        "SHOW_ALL_WO_SECTION" => "N",
+        "PAGE_ELEMENT_COUNT" => "20",
+        "LINE_ELEMENT_COUNT" => "4",
+        "PROPERTY_CODE" => ["MORE_PHOTO"],
+        "OFFERS_LIMIT" => "0",
+        "TEMPLATE_THEME" => "",
+        "PRICE_CODE" => ["Розничная цена"],
+        "ADD_PICT_PROP" => "",
+        "LABEL_PROP" => [],
+        "PRODUCT_DISPLAY_MODE" => "Y",
+        "PRODUCT_BLOCKS_ORDER" => "",
+        "SECTION_URL" => "",
+        "DETAIL_URL" => "",
+        "BASKET_URL" => "/personal/basket.php",
+        "ACTION_VARIABLE" => "action",
+        "PRODUCT_ID_VARIABLE" => "id",
+        "PRODUCT_QUANTITY_VARIABLE" => "quantity",
+        "PRODUCT_PROPS_VARIABLE" => "prop",
+        "SECTION_ID_VARIABLE" => "SECTION_ID",
+        "SET_TITLE" => "N",
+        "SET_BROWSER_TITLE" => "N",
+        "SET_META_KEYWORDS" => "N",
+        "SET_META_DESCRIPTION" => "N",
+        "SET_LAST_MODIFIED" => "N",
+        "USE_MAIN_ELEMENT_SECTION" => "N",
+        "CACHE_TYPE" => "A",
+        "CACHE_TIME" => "0",
+        "CACHE_GROUPS" => "Y",
+        "DISPLAY_TOP_PAGER" => "N",
+        "DISPLAY_BOTTOM_PAGER" => "N",
+        "PAGER_TITLE" => "Товары",
+        "PAGER_SHOW_ALWAYS" => "N",
+        "PAGER_TEMPLATE" => ".default",
+        "PAGER_DESC_NUMBERING" => "N",
+        "PAGER_DESC_NUMBERING_CACHE_TIME" => "36000",
+        "PAGER_SHOW_ALL" => "N",
+        "PAGER_BASE_LINK_ENABLE" => "N",
+        "SET_STATUS_404" => "N",
+        "SHOW_404" => "N",
+        "MESSAGE_404" => "",
+        "COMPATIBLE_MODE" => "Y",
+        "ELEMENT_ID" => $arResult['PROPERTIES']['ITEMS']['VALUE'],
+        "HIDE_CAPTION" => "Y"
+      ],
+      false
+    );
+    ?>
+  <? } ?>
+  <br><br>
+  <div class="container">
+    <h1 class="pagecollect__title">
+      Другие коллекции
+    </h1>
+  </div>
+  <?
+  // Фильтр для исключения текущей коллекции
+  global $otherCollectionsFilter;
+  $otherCollectionsFilter = array(
+    "!ID" => $arResult['ID'],
+    "ACTIVE" => "Y"
+  );
+  ?>
+  <?$APPLICATION->IncludeComponent(
+    "bitrix:news.list",
+    "collections",
+    array(
+      "IBLOCK_TYPE" => "content",
+      "IBLOCK_ID" => "21",
+      "NEWS_COUNT" => "4",
+      "SORT_BY1" => "SORT",
+      "SORT_ORDER1" => "ASC",
+      "SORT_BY2" => "ID",
+      "SORT_ORDER2" => "DESC",
+      "FIELD_CODE" => array("ID", "NAME", "PREVIEW_PICTURE", "DETAIL_PICTURE"),
+      "PROPERTY_CODE" => array("SUBTITLE", "URL", "PICTURE", "ITEMS"),
+      "DISPLAY_PANEL" => "N",
+      "SET_TITLE" => "N",
+      "SET_BROWSER_TITLE" => "N",
+      "SET_META_KEYWORDS" => "N",
+      "SET_META_DESCRIPTION" => "N",
+      "SET_LAST_MODIFIED" => "N",
+      "INCLUDE_IBLOCK_INTO_CHAIN" => "N",
+      "ADD_SECTIONS_CHAIN" => "N",
+      "CACHE_TYPE" => "A",
+      "CACHE_TIME" => "3600",
+      "CACHE_FILTER" => "N",
+      "CACHE_GROUPS" => "Y",
+      "DISPLAY_TOP_PAGER" => "N",
+      "DISPLAY_BOTTOM_PAGER" => "Y",
+      "PAGER_SHOW_ALWAYS" => "N",
+      "PAGER_TEMPLATE" => ".default",
+      "PAGER_DESC_NUMBERING" => "N",
+      "PAGER_DESC_NUMBERING_CACHE_TIME" => "36000",
+      "PAGER_SHOW_ALL" => "N",
+      "PAGER_BASE_LINK_ENABLE" => "N",
+      "SET_STATUS_404" => "N",
+      "SHOW_404" => "N",
+      "MESSAGE_404" => "",
+      "FILTER_NAME" => "otherCollectionsFilter",
+    ),
+    false
+  );?>
 </section>

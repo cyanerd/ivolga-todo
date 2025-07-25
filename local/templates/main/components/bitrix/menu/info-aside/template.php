@@ -1,7 +1,7 @@
 <?if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED !== true) die();
 if (empty($arResult)) return;
 ?>
-<p class="infopage__aside-title">Покупателям</p>
+<p class="infopage__aside-title"><?= $arParams["TITLE"] ?? 'Покупателям' ?></p>
 <ul class="infopage__aside-list">
   <?foreach ($arResult as $arItem):?>
     <?
@@ -13,4 +13,4 @@ if (empty($arResult)) return;
       </a>
     </li>
   <?endforeach;?>
-</ul> 
+</ul>

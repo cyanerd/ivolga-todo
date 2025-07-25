@@ -3,18 +3,6 @@ require ($_SERVER['DOCUMENT_ROOT'] . '/bitrix/header.php');
 $APPLICATION->SetTitle('Коллекции');
 ?>
 <?
-$APPLICATION->IncludeComponent(
-  'bitrix:breadcrumb',
-  'breadcrumb',
-  [
-    'PATH' => '',
-    'SITE_ID' => SITE_ID,
-    'START_FROM' => '0',
-  ]
-);
-?>
-
-<?
 $code = $_REQUEST['CODE'];
 $APPLICATION->IncludeComponent(
   'bitrix:news.detail',
@@ -24,7 +12,7 @@ $APPLICATION->IncludeComponent(
     'IBLOCK_ID' => '21',
     'ELEMENT_CODE' => $code,
     'FIELD_CODE' => array('ID', 'NAME', 'PREVIEW_TEXT', 'DETAIL_TEXT', 'PREVIEW_PICTURE', 'DETAIL_PICTURE'),
-    'PROPERTY_CODE' => array('SUBTITLE', 'PICTURE', 'ITEMS', 'GALLERY'),
+    'PROPERTY_CODE' => array('SUBTITLE', 'PICTURE', 'ITEMS', 'GALLERY', 'IMAGES'),
     'SET_TITLE' => 'Y',
     'SET_CANONICAL_URL' => 'N',
     'SET_BROWSER_TITLE' => 'Y',

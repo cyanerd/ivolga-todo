@@ -94,6 +94,7 @@ CJSCore::Init(array("jquery"));
 ?>
 <script src="/assets/main.js"></script>
 <script src="/assets/script.js"></script>
+<script src="/local/templates/main/js/app.js"></script>
 </body>
 
 </html>

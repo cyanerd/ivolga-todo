@@ -1,6 +1,5 @@
-<?if(!defined("B_PROLOG_INCLUDED")||B_PROLOG_INCLUDED!==true)die();
+<?if(!defined("B_PROLOG_INCLUDED")||B_PROLOG_INCLUDED!==true)die(); ?>
 
-?>
 <div class="breadcrumbs">
   <div class="container">
     <div class="breadcrumbs__row desc">

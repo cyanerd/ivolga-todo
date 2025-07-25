@@ -51,7 +51,7 @@
                 </form>
                 <?endif;?>
 
-                <a class="primary-button" href="/?logout=yes&<?=bitrix_sessid_get()?>">Выйти из профиля</a>
+                <a class="primary-button logout-confirm" href="/?logout=yes&<?=bitrix_sessid_get()?>">Выйти из профиля</a>
 
             </div>
         </div>

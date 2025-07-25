@@ -82,6 +82,10 @@ $siteSettings = [
   'UF_MAP_LINK' => \COption::GetOptionString("askaron.settings", "UF_MAP_LINK"),
 
   'UF_ABOUT' => \COption::GetOptionString("askaron.settings", "UF_ABOUT"),
+
+  'UF_SIZE_TABLE' => \COption::GetOptionString("askaron.settings", "UF_SIZE_TABLE"),
+  'UF_SIZE_TABS' => \COption::GetOptionString("askaron.settings", "UF_SIZE_TABS"),
+  'UF_SIZE_TABS_CONTENT' => \COption::GetOptionString("askaron.settings", "UF_SIZE_TABS_CONTENT"),
 ];
 
 $bodyClasses = [];
@@ -100,7 +104,7 @@ if ($APPLICATION->GetCurPage() === '/policy/') {
 
 <div class="topblock">
   <? if ($siteSettings['alert']) { ?>
-    <div class="alert-main" id="alert-main">
+    <div class="alert-main" id="alert-main" style="display: none;">
       <span class="alert-main__text"><?= $siteSettings['alert'] ?></span>
       <button class="alert-main__close" id="alert-close">
         <svg width="14" height="18" viewBox="0 0 14 18" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -112,26 +116,26 @@ if ($APPLICATION->GetCurPage() === '/policy/') {
   <? } ?>
 
   <header class="header">
-    <div class="header__container container">
+    <div class="header__container _container">
       <div class="header__menu">
         <div class="header__menu-mob mobheader">
           <button class="header__menu-burger">
             <span></span><span></span>
           </button>
-          <button class="header__button header__button--search">
+          <a href="/search/" class="header__button header__button--search">
             <svg width="24" height="25" viewBox="0 0 24 25" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path fill-rule="evenodd" clip-rule="evenodd"
                     d="M13.0001 6.4165C10.1006 6.4165 7.75006 8.76701 7.75006 11.6665C7.75006 13.1165 8.33686 14.4279 9.28775 15.3788C10.2386 16.3297 11.5501 16.9165 13.0001 16.9165C15.8996 16.9165 18.2501 14.566 18.2501 11.6665C18.2501 8.76701 15.8996 6.4165 13.0001 6.4165ZM6.25006 11.6665C6.25006 7.93858 9.27213 4.9165 13.0001 4.9165C16.728 4.9165 19.7501 7.93858 19.7501 11.6665C19.7501 15.3944 16.728 18.4165 13.0001 18.4165C11.4066 18.4165 9.94124 17.8636 8.78683 16.9404L5.53039 20.1968L4.46973 19.1362L7.72617 15.8797C6.80292 14.7253 6.25006 13.26 6.25006 11.6665Z"
                     fill="#232229"/>
             </svg>
 
-          </button>
+          </a>
         </div>
         <?
         $APPLICATION->IncludeComponent(
           "bitrix:menu",
           "main-menu-left",
-          array(
+          [
             "ROOT_MENU_TYPE" => "top1",
             "MAX_LEVEL" => "3",
             "CHILD_MENU_TYPE" => "left",
@@ -141,9 +145,9 @@ if ($APPLICATION->GetCurPage() === '/policy/') {
             "MENU_CACHE_TYPE" => "N",
             "MENU_CACHE_TIME" => "3600",
             "MENU_CACHE_USE_GROUPS" => "Y",
-            "MENU_CACHE_GET_VARS" => array(),
+            "MENU_CACHE_GET_VARS" => [],
             "COMPONENT_TEMPLATE" => "main-menu-left"
-          ),
+          ],
           false
         );
         ?>
@@ -157,7 +161,7 @@ if ($APPLICATION->GetCurPage() === '/policy/') {
           $APPLICATION->IncludeComponent(
             "bitrix:menu",
             "main-menu-right",
-            array(
+            [
               "ROOT_MENU_TYPE" => "top2",
               "MAX_LEVEL" => "3",
               "CHILD_MENU_TYPE" => "left",
@@ -167,32 +171,44 @@ if ($APPLICATION->GetCurPage() === '/policy/') {
               "MENU_CACHE_TYPE" => "N",
               "MENU_CACHE_TIME" => "3600",
               "MENU_CACHE_USE_GROUPS" => "Y",
-              "MENU_CACHE_GET_VARS" => array(),
+              "MENU_CACHE_GET_VARS" => [],
               "COMPONENT_TEMPLATE" => "main-menu-right"
-            ),
+            ],
             false
           );
           ?>
           <div class="header__buttons">
-            <button class="header__button header__button--search descheader">
+            <a href="/search/" class="header__button header__button--search descheader">
               <svg width="24" height="25" viewBox="0 0 24 25" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path fill-rule="evenodd" clip-rule="evenodd"
                       d="M13.0001 6.4165C10.1006 6.4165 7.75006 8.76701 7.75006 11.6665C7.75006 13.1165 8.33686 14.4279 9.28775 15.3788C10.2386 16.3297 11.5501 16.9165 13.0001 16.9165C15.8996 16.9165 18.2501 14.566 18.2501 11.6665C18.2501 8.76701 15.8996 6.4165 13.0001 6.4165ZM6.25006 11.6665C6.25006 7.93858 9.27213 4.9165 13.0001 4.9165C16.728 4.9165 19.7501 7.93858 19.7501 11.6665C19.7501 15.3944 16.728 18.4165 13.0001 18.4165C11.4066 18.4165 9.94124 17.8636 8.78683 16.9404L5.53039 20.1968L4.46973 19.1362L7.72617 15.8797C6.80292 14.7253 6.25006 13.26 6.25006 11.6665Z"
                       fill="#232229"/>
               </svg>
 
-            </button>
-            <a href="/personal/" class="header__button">
-              <svg width="24" height="25" viewBox="0 0 24 25" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path fill-rule="evenodd" clip-rule="evenodd"
-                      d="M12 6.4165C9.65279 6.4165 7.75 8.31929 7.75 10.6665C7.75 13.0137 9.65279 14.9165 12 14.9165C14.3472 14.9165 16.25 13.0137 16.25 10.6665C16.25 8.31929 14.3472 6.4165 12 6.4165ZM6.25 10.6665C6.25 7.49087 8.82436 4.9165 12 4.9165C15.1756 4.9165 17.75 7.49087 17.75 10.6665C17.75 13.8421 15.1756 16.4165 12 16.4165C8.82436 16.4165 6.25 13.8421 6.25 10.6665Z"
-                      fill="#232229"/>
-                <path fill-rule="evenodd" clip-rule="evenodd"
-                      d="M12 16.5415C9.841 16.5415 7.84726 18.2292 6.69517 21.0731L6.41357 21.7682L5.02332 21.205L5.30492 20.5099C6.57408 17.377 8.97783 15.0415 12 15.0415C15.0223 15.0415 17.426 17.377 18.6952 20.5099L18.9768 21.205L17.5865 21.7682L17.3049 21.0731C16.1528 18.2292 14.1591 16.5415 12 16.5415Z"
-                      fill="#232229"/>
-              </svg>
-
             </a>
+            <?php if ($USER->IsAuthorized()): ?>
+              <a href="/personal/" class="header__button">
+                <svg width="24" height="25" viewBox="0 0 24 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path fill-rule="evenodd" clip-rule="evenodd"
+                        d="M12 6.4165C9.65279 6.4165 7.75 8.31929 7.75 10.6665C7.75 13.0137 9.65279 14.9165 12 14.9165C14.3472 14.9165 16.25 13.0137 16.25 10.6665C16.25 8.31929 14.3472 6.4165 12 6.4165ZM6.25 10.6665C6.25 7.49087 8.82436 4.9165 12 4.9165C15.1756 4.9165 17.75 7.49087 17.75 10.6665C17.75 13.8421 15.1756 16.4165 12 16.4165C8.82436 16.4165 6.25 13.8421 6.25 10.6665Z"
+                        fill="#232229"/>
+                  <path fill-rule="evenodd" clip-rule="evenodd"
+                        d="M12 16.5415C9.841 16.5415 7.84726 18.2292 6.69517 21.0731L6.41357 21.7682L5.02332 21.205L5.30492 20.5099C6.57408 17.377 8.97783 15.0415 12 15.0415C15.0223 15.0415 17.426 17.377 18.6952 20.5099L18.9768 21.205L17.5865 21.7682L17.3049 21.0731C16.1528 18.2292 14.1591 16.5415 12 16.5415Z"
+                        fill="#232229"/>
+                </svg>
+              </a>
+            <?php else: ?>
+              <button class="header__button" type="button" id="open-profile-modal-auth">
+                <svg width="24" height="25" viewBox="0 0 24 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path fill-rule="evenodd" clip-rule="evenodd"
+                        d="M12 6.4165C9.65279 6.4165 7.75 8.31929 7.75 10.6665C7.75 13.0137 9.65279 14.9165 12 14.9165C14.3472 14.9165 16.25 13.0137 16.25 10.6665C16.25 8.31929 14.3472 6.4165 12 6.4165ZM6.25 10.6665C6.25 7.49087 8.82436 4.9165 12 4.9165C15.1756 4.9165 17.75 7.49087 17.75 10.6665C17.75 13.8421 15.1756 16.4165 12 16.4165C8.82436 16.4165 6.25 13.8421 6.25 10.6665Z"
+                        fill="#232229"/>
+                  <path fill-rule="evenodd" clip-rule="evenodd"
+                        d="M12 16.5415C9.841 16.5415 7.84726 18.2292 6.69517 21.0731L6.41357 21.7682L5.02332 21.205L5.30492 20.5099C6.57408 17.377 8.97783 15.0415 12 15.0415C15.0223 15.0415 17.426 17.377 18.6952 20.5099L18.9768 21.205L17.5865 21.7682L17.3049 21.0731C16.1528 18.2292 14.1591 16.5415 12 16.5415Z"
+                        fill="#232229"/>
+                </svg>
+              </button>
+            <?php endif; ?>
             <a href="/favourite/" class="header__button">
               <svg width="24" height="25" viewBox="0 0 24 25" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path fill-rule="evenodd" clip-rule="evenodd"
@@ -219,6 +235,70 @@ if ($APPLICATION->GetCurPage() === '/policy/') {
       </div>
     </div>
   </header>
+  <!-- Модальное окно авторизации в стиле lkmodal -->
+  <div class="lkmodal" id="profile-modal-auth">
+    <div class="lkmodal__header">
+      <p class="lkmodal__title">Вход</p>
+      <button class="lkmodal__close js--close" type="button">
+        <svg width="24" height="25" viewBox="0 0 24 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M18 20.5L12 12.5M6 4.5L12 12.5M12 12.5L18 4.5M12 12.5L6 20.5" stroke="#232229" stroke-width="1.5"/>
+        </svg>
+      </button>
+    </div>
+    <div class="lkmodal__body">
+      <!-- Шаг 1: выбор действия -->
+      <div class="lkmodal__form profile-modal__step profile-modal__step--1 mode-initial">
+        <p class="lkmodal__form-descr">Зарегистрируйтесь или войдите в свой аккаунт, чтобы воспользоваться программой лояльности</p>
+        <div class="lkmodal__form-el">
+          <button class="lkmodal__form-submit primary-button-active" type="button" id="enter-as-guest">Войти / Зарегистрироваться</button>
+        </div>
+        <?/*
+        <div class="lkmodal__form-el">
+          <button class="lkmodal__form-submit primary-button" type="button" id="enter-as-guest">Продолжить как гость</button>
+        </div>
+        */?>
+      </div>
+      <!-- Шаг 2: ввод телефона -->
+      <form class="lkmodal__form profile-modal__step profile-modal__step--2 hide mode-guest" id="form--send--sms" autocomplete="off">
+        <p class="lkmodal__form-descr">Мы отправим на номер SMS-сообщение с кодом подтверждения.</p>
+        <div class="lkmodal__form-el">
+          <div class="inputel">
+            <input class="input mobile-phone-input js_phone" id="phone" name="phone" placeholder="+7 (___) ___-__-__" type="tel" required>
+            <label for="phone">Ваш номер телефона</label>
+          </div>
+        </div>
+        <div class="lkmodal__form-el">
+          <button class="lkmodal__form-submit primary-button" type="submit">Отправить</button>
+        </div>
+      </form>
+      <!-- Шаг 3: ввод кода -->
+      <form class="lkmodal__form profile-modal__step profile-modal__step--3 hide mode-code" id="form--verify--sms" autocomplete="off">
+        <div class="lkmodal__form-el">
+          <button class="lkmodal__back back-button" type="button">
+            <svg width="24" height="25" viewBox="0 0 24 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M15 19L8 12.5L15 6" stroke="#232229" stroke-width="1.5"/>
+            </svg>
+            <span>Назад</span>
+          </button>
+        </div>
+        <p class="lkmodal__form-descr">Мы отправили код на номер</p>
+        <div id="check--error" class="lkmodal__form-error"></div>
+        <div class="lkmodal__form-el">
+          <div class="inputel">
+            <input class="input" id="verificationCode" name="verificationCode" placeholder="----" maxlength="4" required>
+            <label for="verificationCode">Код из SMS</label>
+          </div>
+        </div>
+        <div class="lkmodal__form-el">
+          <button class="lkmodal__form-submit primary-button" type="submit">Подтвердить телефон</button>
+        </div>
+        <div class="lkmodal__form-el">
+          <button id="get--code--repeat" class="lkmodal__form-submit primary-button" type="button">Получить код повторно</button>
+        </div>
+        <input type="hidden" name="phone" id="verifed--phone"/>
+      </form>
+    </div>
+  </div>
 </div>
 
 <main class="homepage" id="root">

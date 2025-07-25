@@ -83,6 +83,7 @@ $APPLICATION->IncludeComponent(
     "PROPERTY_CODE" => ["MORE_PHOTO"],
     "OFFERS_LIMIT" => "0",
     "TEMPLATE_THEME" => "",
+    "PRICE_CODE" => ["Розничная цена"],
     "ADD_PICT_PROP" => "",
     "LABEL_PROP" => [],
     "PRODUCT_DISPLAY_MODE" => "Y",
@@ -207,7 +208,8 @@ $APPLICATION->IncludeComponent(
     "SORT_BY2" => "SORT",
     "SORT_ORDER1" => "DESC",
     "SORT_ORDER2" => "ASC",
-    "STRICT_SECTION_CHECK" => "N"
+    "STRICT_SECTION_CHECK" => "N",
+    "SHOW_CAPTION" => "Y",
   ]
 ); ?>
 

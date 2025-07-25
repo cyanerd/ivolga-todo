@@ -1,9 +1,24 @@
 <?
-require($_SERVER["DOCUMENT_ROOT"]."/bitrix/header.php");
+require($_SERVER["DOCUMENT_ROOT"] . "/bitrix/header.php");
 $APPLICATION->SetTitle("Поиск");
-?><?$APPLICATION->IncludeComponent(
-	"dm:search.page",
-	"",
-	Array(
-	)
-);?><?require($_SERVER["DOCUMENT_ROOT"]."/bitrix/footer.php");?>
+?>
+
+<section class="pagecollect">
+  <div class="pagecollect__wrap">
+    <div class="container">
+      <h1 class="pagecollect__title">
+        <? $APPLICATION->ShowTitle(); ?>
+      </h1>
+    </div>
+
+    <? $APPLICATION->IncludeComponent(
+      "dm:search.page",
+      "",
+      [
+      ]
+    ); ?>
+
+  </div>
+</section>
+
+<? require($_SERVER["DOCUMENT_ROOT"] . "/bitrix/footer.php"); ?>

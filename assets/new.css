@@ -219,7 +219,8 @@ body .catalog-collection .modal-top-content.modal-right-content {
   min-height: calc(100vh - var(--padding-top));
 }
 
-.products-card-container__content .container {
+.products-card-container__content .container,
+.products-card-container__content ._container {
   width: 100%;
 }
 

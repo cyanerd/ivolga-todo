@@ -2,22 +2,24 @@
 $this->setFrameMode(true);
 ?>
 <section class="blog">
-  <div class="container">
-    <a href="/blog/" class="blog__header">
-      <h2 class="blog__title">Ivolga Blog</h2>
-      <div class="blog__link">
-        <svg width="24" height="25" viewBox="0 0 24 25" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path fill-rule="evenodd" clip-rule="evenodd"
-                d="M17.75 7.1665V8.1665C17.75 9.96143 19.2051 11.4165 21 11.4165V12.9165C18.3766 12.9165 16.25 10.7899 16.25 8.1665V7.1665H17.75Z"
-                fill="#232229"/>
-          <path fill-rule="evenodd" clip-rule="evenodd"
-                d="M21 12.9165C19.2051 12.9165 17.75 14.3716 17.75 16.1665V17.1665H16.25V16.1665C16.25 13.5432 18.3766 11.4165 21 11.4165V12.9165Z"
-                fill="#232229"/>
-          <path fill-rule="evenodd" clip-rule="evenodd" d="M21 12.9165H3V11.4165H21V12.9165Z" fill="#232229"/>
-        </svg>
-      </div>
-    </a>
-  </div>
+  <? if ($arOptions['SHOW_CAPTION'] === 'Y') { ?>
+    <div class="container">
+      <a href="/blog/" class="blog__header">
+        <h2 class="blog__title">Ivolga Blog</h2>
+        <div class="blog__link">
+          <svg width="24" height="25" viewBox="0 0 24 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path fill-rule="evenodd" clip-rule="evenodd"
+                  d="M17.75 7.1665V8.1665C17.75 9.96143 19.2051 11.4165 21 11.4165V12.9165C18.3766 12.9165 16.25 10.7899 16.25 8.1665V7.1665H17.75Z"
+                  fill="#232229"/>
+            <path fill-rule="evenodd" clip-rule="evenodd"
+                  d="M21 12.9165C19.2051 12.9165 17.75 14.3716 17.75 16.1665V17.1665H16.25V16.1665C16.25 13.5432 18.3766 11.4165 21 11.4165V12.9165Z"
+                  fill="#232229"/>
+            <path fill-rule="evenodd" clip-rule="evenodd" d="M21 12.9165H3V11.4165H21V12.9165Z" fill="#232229"/>
+          </svg>
+        </div>
+      </a>
+    </div>
+  <? } ?>
 
   <div class="blog__slider">
     <div class="swiper blog__swiper">

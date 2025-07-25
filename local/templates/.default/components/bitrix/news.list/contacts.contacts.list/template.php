@@ -15,7 +15,6 @@ $this->setFrameMode(true);
 <div style="opacity: 1; transform: none;">
     <div class="contacts-info-container">
         <div class="contacts-info">
-            <h1 class="faq-info__title">Контакты</h1>
             <ul class="faq-info__contacts">
                 <?foreach ($arResult['ITEMS'] as $arItem):?>
                 <li>

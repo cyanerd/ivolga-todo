@@ -25,6 +25,13 @@
                     endif?>
                 </div>
                 <div class="swiper-pagination"></div>
+                <?else:?>
+                <div class="swiper-wrapper">
+                    <div class="swiper-slide">
+                        <img src="/assets/img/no-photo.jpg" alt="pick">
+                    </div>
+                </div>
+                <div class="swiper-pagination"></div>
                 <?endif?>
             </div>
 

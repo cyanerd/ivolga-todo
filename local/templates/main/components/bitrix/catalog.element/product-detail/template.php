@@ -57,6 +57,12 @@ $this->setFrameMode(true);
                         <img src="<?= $arResult["PREVIEW_PICTURE"]["SRC"] ?>" alt="<?= $arResult["NAME"] ?>">
                       </div>
                     </div>
+                  <? else: ?>
+                    <div class="swiper-slide">
+                      <div class="pageprod__gallery-thumb">
+                        <img src="/assets/img/no-photo.jpg" alt="<?= $arResult["NAME"] ?>">
+                      </div>
+                    </div>
                   <? endif; ?>
                 <? endif; ?>
               </div>
@@ -77,6 +83,12 @@ $this->setFrameMode(true);
                     <div class="swiper-slide">
                       <a href="<?= $arResult["PREVIEW_PICTURE"]["SRC"] ?>" data-fancybox="gallery" class="pageprod__gallery-slide">
                         <img src="<?= $arResult["PREVIEW_PICTURE"]["SRC"] ?>" alt="<?= $arResult["NAME"] ?>">
+                      </a>
+                    </div>
+                  <? else: ?>
+                    <div class="swiper-slide">
+                      <a href="/assets/img/no-photo.jpg" data-fancybox="gallery" class="pageprod__gallery-slide">
+                        <img src="/assets/img/no-photo.jpg" alt="<?= $arResult["NAME"] ?>">
                       </a>
                     </div>
                   <? endif; ?>
@@ -152,7 +164,7 @@ $this->setFrameMode(true);
                     </div>
                   <? endforeach; ?>
                 </div>
-                <button class="prodpar__block-guide">
+                <button class="prodpar__block-guide js--modal" data-modal="modalguide">
                   Гайд по размерам
                 </button>
               </div>

@@ -20,12 +20,16 @@ $this->setFrameMode(true);
                       <img src="<?= CFile::GetPath($imageId) ?>" alt="<?= $arItem["NAME"] ?>">
                     </div>
                   <? endforeach; ?>
-                                  <? else: ?>
-                    <? if ($arItem["PREVIEW_PICTURE"]["SRC"]): ?>
-                      <div class="product-card__slide">
-                        <img src="<?= $arItem["PREVIEW_PICTURE"]["SRC"] ?>" alt="<?= $arItem["NAME"] ?>">
-                      </div>
-                    <? endif; ?>
+                <? else: ?>
+                  <? if ($arItem["PREVIEW_PICTURE"]["SRC"]): ?>
+                    <div class="product-card__slide">
+                      <img src="<?= $arItem["PREVIEW_PICTURE"]["SRC"] ?>" alt="<?= $arItem["NAME"] ?>">
+                    </div>
+                  <? else: ?>
+                    <div class="product-card__slide">
+                      <img src="/assets/img/no-photo.jpg" alt="<?= $arItem["NAME"] ?>">
+                    </div>
+                  <? endif; ?>
                 <? endif; ?>
               </div>
               <div class="product-card__pagination">

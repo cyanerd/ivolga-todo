@@ -158,18 +158,13 @@
           <img
             src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjQiIGhlaWdodD0iMTkiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGcgY2xpcC1wYXRoPSJ1cmwoI2EpIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiIGNsaXAtcnVsZT0iZXZlbm9kZCI+PHBhdGggZD0iTTE3LjI0Ni41di4wMDhjLS4wMDggMC0yLjUtLjAwOC0zLjE2NCAyLjM1OC0uNjEgMi4xNy0yLjMyNiA4LjE1OS0yLjM3NCA4LjMyNGgtLjQ3NFM5LjQ3NyA1LjA2NyA4Ljg2IDIuODU4QzguMTk2LjQ5MiA1LjY5Ni41IDUuNjk2LjVIMHYxOGg1LjY5NlY3LjgxaC40NzVMOS40OTMgMTguNWgzLjk1NkwxNi43NyA3LjgxOGguNDc1VjE4LjVoNS42OTZWLjVoLTUuNjk2Wk0zOC4wNTIuNXMtMS42Ny4xNS0yLjQ1MyAxLjg4NmwtNC4wMzQgOC44MDRoLS40NzVWLjVoLTUuNjk2djE4aDUuMzhzMS43NDgtLjE1NyAyLjUzMS0xLjg4N2wzLjk1Ni04LjgwM2guNDc0VjE4LjVoNS42OTZWLjVoLTUuMzhaTTQ1Ljk2MyA4LjY3NVYxOC41aDUuNjk2di01LjczOGg2LjE3YTYuMTYgNi4xNiAwIDAgMCA1LjgxNS00LjA4N0g0NS45NjNaIiBmaWxsPSIjNERCNDVFIi8+PHBhdGggZD0iTTU3LjgzLjVINDUuMTYzYy42MzMgMy40MjcgMy4yMiA2LjE3OCA2LjU2NiA3LjA3NC43Ni4yMDUgMS41NTkuMzE1IDIuMzgxLjMxNWg5Ljc2M2MuMDg3LS40MS4xMjYtLjgyNi4xMjYtMS4yNThDNjQgMy4yNDMgNjEuMjQuNSA1Ny44My41WiIgZmlsbD0idXJsKCNiKSIvPjwvZz48ZGVmcz48bGluZWFyR3JhZGllbnQgaWQ9ImIiIHgxPSI0NS4xNjYiIHkxPSI0LjE5NCIgeDI9IjY0IiB5Mj0iNC4xOTQiIGdyYWRpZW50VW5pdHM9InVzZXJTcGFjZU9uVXNlIj48c3RvcCBvZmZzZXQ9Ii4zIiBzdG9wLWNvbG9yPSIjMDBCNEU2Ii8+PHN0b3Agb2Zmc2V0PSIxIiBzdG9wLWNvbG9yPSIjMDg4Q0NCIi8+PC9saW5lYXJHcmFkaWVudD48Y2xpcFBhdGggaWQ9ImEiPjxwYXRoIGZpbGw9IiNmZmYiIHRyYW5zZm9ybT0idHJhbnNsYXRlKDAgLjUpIiBkPSJNMCAwaDY0djE4SDB6Ii8+PC9jbGlwUGF0aD48L2RlZnM+PC9zdmc+"
             alt="МИР" class="footer__payment-img">
-          <img
-            src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iNDEiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGcgY2xpcC1wYXRoPSJ1cmwoI2EpIj48cGF0aCBkPSJNNDAgNy42OEgwdjI1LjY0aDQwVjcuNjhaIiBmaWxsPSIjMEU0NTk1Ii8+PHBhdGggZD0ibTE1LjAzNiAyNS41NjQgMS43MS0xMC4wNGgyLjczN2wtMS43MTIgMTAuMDRoLTIuNzM1Wm0xMi42MjEtOS44MjNhNy4wNjcgNy4wNjcgMCAwIDAtMi40NTItLjQyMmMtMi43MDQgMC00LjYwOSAxLjM2Mi00LjYyNSAzLjMxMy0uMDE1IDEuNDQzIDEuMzYgMi4yNDggMi4zOTggMi43MjggMS4wNjUuNDkyIDEuNDIzLjgwNiAxLjQxOCAxLjI0NS0uMDA3LjY3My0uODUuOTgtMS42MzcuOTgtMS4wOTYgMC0xLjY3OC0uMTUyLTIuNTc2LS41MjdsLS4zNTMtLjE2LS4zODQgMi4yNDhjLjY0LjI4IDEuODIxLjUyMyAzLjA0OC41MzYgMi44NzcgMCA0Ljc0NC0xLjM0NiA0Ljc2NS0zLjQzLjAxLTEuMTQyLS43MTgtMi4wMTEtMi4yOTctMi43MjgtLjk1Ny0uNDY0LTEuNTQyLS43NzQtMS41MzYtMS4yNDQgMC0uNDE3LjQ5Ni0uODY0IDEuNTY3LS44NjRhNS4wNTEgNS4wNTEgMCAwIDEgMi4wNDguMzg1bC4yNDUuMTE2LjM3MS0yLjE3NlptNy4wNDItLjIxN2gtMi4xMTVjLS42NTUgMC0xLjE0NS4xOC0xLjQzMy44MzNsLTQuMDY0IDkuMmgyLjg3NHMuNDctMS4yMzcuNTc2LTEuNTA5bDMuNTA0LjAwNWMuMDgyLjM1MS4zMzMgMS41MDQuMzMzIDEuNTA0aDIuNTRsLTIuMjE1LTEwLjAzM1ptLTMuMzU1IDYuNDgzYy4yMjYtLjU3OCAxLjA5LTIuODA2IDEuMDktMi44MDYtLjAxNi4wMjYuMjI1LS41ODIuMzYzLS45NTlsLjE4NS44NjYuNjMzIDIuODk5aC0yLjI3MVptLTE4LjYzMS02LjQ4My0yLjY3OSA2Ljg0Ny0uMjg2LTEuMzkyYy0uNDk4LTEuNjA0LTIuMDUyLTMuMzQxLTMuNzktNC4yMWwyLjQ1IDguNzc5IDIuODk2LS4wMDQgNC4zMDctMTAuMDJoLTIuODk4IiBmaWxsPSIjZmZmIi8+PHBhdGggZD0iTTcuNTM0IDE1LjUyNEgzLjEyMmwtLjAzNS4yMDljMy40MzMuODMgNS43MDQgMi44MzkgNi42NDcgNS4yNTFsLS45Ni00LjYxM2MtLjE2NS0uNjM2LS42NDUtLjgyNS0xLjI0LS44NDgiIGZpbGw9IiNGMkFFMTQiLz48L2c+PGRlZnM+PGNsaXBQYXRoIGlkPSJhIj48cGF0aCBmaWxsPSIjZmZmIiB0cmFuc2Zvcm09InRyYW5zbGF0ZSgwIC41KSIgZD0iTTAgMGg0MHY0MEgweiIvPjwvY2xpcFBhdGg+PC9kZWZzPjwvc3ZnPg=="
-            alt="Visa" class="footer__payment-img">
         </div>
       </div>
     </div>
   </div>
 </footer>
 
-
 <div class="backdrop js--close"></div>
-
 
 <div class="modalcart" id="cart">
   <div class="modalcart__header">
@@ -182,372 +177,11 @@
       </svg>
     </button>
   </div>
-  <div class="modalcart__body" id="cart-content">
-    <!-- Содержимое корзины будет загружаться динамически -->
+  <div id="cart-content">
     <div class="cart-loading">
       <p>Загрузка корзины...</p>
     </div>
   </div>
-</div>
-<div class="modalcart-item">
-  <div class="modalcart-item__group">
-    <a href="" class="modalcart-item__img">
-      <img src="/html/assets/img/modal-prod.c2771fc9b14c1d861b3d.jpg" alt="Название товара">
-    </a>
-    <div class="modalcart-item__content">
-      <a href="" class="modalcart-item__title">
-        Сарафан молочный <br>
-        с цветочным принтом
-      </a>
-      <p class="modalcart-item__meta">
-        Цвет: Розовый <br>
-        Размер: М
-      </p>
-      <div class="counter js--count">
-        <button class="counter__prev">
-          <svg width="16" height="17" viewBox="0 0 16 17" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path fill-rule="evenodd" clip-rule="evenodd" d="M2 9.25V7.75H14V9.25H2Z" fill="#232229"/>
-          </svg>
-        </button>
-        <input type="number" value="1" class="counter__number">
-        <button class="counter__next">
-          <svg width="16" height="17" viewBox="0 0 16 17" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path fill-rule="evenodd" clip-rule="evenodd"
-                  d="M8.75 7.75V4.5H7.25V7.75H2V9.25H7.25V12.5H8.75V9.25H14V7.75H8.75Z" fill="#232229"/>
-          </svg>
-        </button>
-      </div>
-    </div>
-  </div>
-
-  <div class="modalcart-item__price">
-    <p class="modalcart-item__price-current">
-      12 000₽
-      <span>
-                        -25%
-                    </span>
-    </p>
-    <p class="modalcart-item__price-old">
-      16 000₽
-    </p>
-  </div>
-  <button class="modalcart-item__cart">
-    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path fill-rule="evenodd" clip-rule="evenodd" d="M3.75 4.5H20.25V6H3.75V4.5Z" fill="#4A4855"/>
-      <path fill-rule="evenodd" clip-rule="evenodd" d="M15.75 3H8.25V1.5H15.75V3Z" fill="#4A4855"/>
-      <path fill-rule="evenodd" clip-rule="evenodd" d="M6 5.25V19.5H18V5.25H19.5V21H4.5V5.25H6Z" fill="#4A4855"/>
-    </svg>
-  </button>
-</div>
-<div class="modalcart-item">
-  <div class="modalcart-item__group">
-    <a href="" class="modalcart-item__img">
-      <img src="/html/assets/img/modal-prod.c2771fc9b14c1d861b3d.jpg" alt="Название товара">
-    </a>
-    <div class="modalcart-item__content">
-      <a href="" class="modalcart-item__title">
-        Сарафан молочный <br>
-        с цветочным принтом
-      </a>
-      <p class="modalcart-item__meta">
-        Цвет: Розовый <br>
-        Размер: М
-      </p>
-      <div class="counter js--count">
-        <button class="counter__prev">
-          <svg width="16" height="17" viewBox="0 0 16 17" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path fill-rule="evenodd" clip-rule="evenodd" d="M2 9.25V7.75H14V9.25H2Z" fill="#232229"/>
-          </svg>
-        </button>
-        <input type="number" value="1" class="counter__number">
-        <button class="counter__next">
-          <svg width="16" height="17" viewBox="0 0 16 17" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path fill-rule="evenodd" clip-rule="evenodd"
-                  d="M8.75 7.75V4.5H7.25V7.75H2V9.25H7.25V12.5H8.75V9.25H14V7.75H8.75Z" fill="#232229"/>
-          </svg>
-        </button>
-      </div>
-    </div>
-  </div>
-
-  <div class="modalcart-item__price">
-    <p class="modalcart-item__price-current">
-      12 000₽
-      <span>
-                        -25%
-                    </span>
-    </p>
-    <p class="modalcart-item__price-old">
-      16 000₽
-    </p>
-  </div>
-  <button class="modalcart-item__cart">
-    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path fill-rule="evenodd" clip-rule="evenodd" d="M3.75 4.5H20.25V6H3.75V4.5Z" fill="#4A4855"/>
-      <path fill-rule="evenodd" clip-rule="evenodd" d="M15.75 3H8.25V1.5H15.75V3Z" fill="#4A4855"/>
-      <path fill-rule="evenodd" clip-rule="evenodd" d="M6 5.25V19.5H18V5.25H19.5V21H4.5V5.25H6Z" fill="#4A4855"/>
-    </svg>
-  </button>
-</div>
-<div class="modalcart-item">
-  <div class="modalcart-item__group">
-    <a href="" class="modalcart-item__img">
-      <img src="/html/assets/img/modal-prod.c2771fc9b14c1d861b3d.jpg" alt="Название товара">
-    </a>
-    <div class="modalcart-item__content">
-      <a href="" class="modalcart-item__title">
-        Сарафан молочный <br>
-        с цветочным принтом
-      </a>
-      <p class="modalcart-item__meta">
-        Цвет: Розовый <br>
-        Размер: М
-      </p>
-      <div class="counter js--count">
-        <button class="counter__prev">
-          <svg width="16" height="17" viewBox="0 0 16 17" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path fill-rule="evenodd" clip-rule="evenodd" d="M2 9.25V7.75H14V9.25H2Z" fill="#232229"/>
-          </svg>
-        </button>
-        <input type="number" value="1" class="counter__number">
-        <button class="counter__next">
-          <svg width="16" height="17" viewBox="0 0 16 17" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path fill-rule="evenodd" clip-rule="evenodd"
-                  d="M8.75 7.75V4.5H7.25V7.75H2V9.25H7.25V12.5H8.75V9.25H14V7.75H8.75Z" fill="#232229"/>
-          </svg>
-        </button>
-      </div>
-    </div>
-  </div>
-
-  <div class="modalcart-item__price">
-    <p class="modalcart-item__price-current">
-      12 000₽
-      <span>
-                        -25%
-                    </span>
-    </p>
-    <p class="modalcart-item__price-old">
-      16 000₽
-    </p>
-  </div>
-  <button class="modalcart-item__cart">
-    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path fill-rule="evenodd" clip-rule="evenodd" d="M3.75 4.5H20.25V6H3.75V4.5Z" fill="#4A4855"/>
-      <path fill-rule="evenodd" clip-rule="evenodd" d="M15.75 3H8.25V1.5H15.75V3Z" fill="#4A4855"/>
-      <path fill-rule="evenodd" clip-rule="evenodd" d="M6 5.25V19.5H18V5.25H19.5V21H4.5V5.25H6Z" fill="#4A4855"/>
-    </svg>
-  </button>
-</div>
-<div class="modalcart-item">
-  <div class="modalcart-item__group">
-    <a href="" class="modalcart-item__img">
-      <img src="/html/assets/img/modal-prod.c2771fc9b14c1d861b3d.jpg" alt="Название товара">
-    </a>
-    <div class="modalcart-item__content">
-      <a href="" class="modalcart-item__title">
-        Сарафан молочный <br>
-        с цветочным принтом
-      </a>
-      <p class="modalcart-item__meta">
-        Цвет: Розовый <br>
-        Размер: М
-      </p>
-      <div class="counter js--count">
-        <button class="counter__prev">
-          <svg width="16" height="17" viewBox="0 0 16 17" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path fill-rule="evenodd" clip-rule="evenodd" d="M2 9.25V7.75H14V9.25H2Z" fill="#232229"/>
-          </svg>
-        </button>
-        <input type="number" value="1" class="counter__number">
-        <button class="counter__next">
-          <svg width="16" height="17" viewBox="0 0 16 17" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path fill-rule="evenodd" clip-rule="evenodd"
-                  d="M8.75 7.75V4.5H7.25V7.75H2V9.25H7.25V12.5H8.75V9.25H14V7.75H8.75Z" fill="#232229"/>
-          </svg>
-        </button>
-      </div>
-    </div>
-  </div>
-
-  <div class="modalcart-item__price">
-    <p class="modalcart-item__price-current">
-      12 000₽
-      <span>
-                        -25%
-                    </span>
-    </p>
-    <p class="modalcart-item__price-old">
-      16 000₽
-    </p>
-  </div>
-  <button class="modalcart-item__cart">
-    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path fill-rule="evenodd" clip-rule="evenodd" d="M3.75 4.5H20.25V6H3.75V4.5Z" fill="#4A4855"/>
-      <path fill-rule="evenodd" clip-rule="evenodd" d="M15.75 3H8.25V1.5H15.75V3Z" fill="#4A4855"/>
-      <path fill-rule="evenodd" clip-rule="evenodd" d="M6 5.25V19.5H18V5.25H19.5V21H4.5V5.25H6Z" fill="#4A4855"/>
-    </svg>
-  </button>
-</div>
-<div class="modalcart-item">
-  <div class="modalcart-item__group">
-    <a href="" class="modalcart-item__img">
-      <img src="/html/assets/img/modal-prod.c2771fc9b14c1d861b3d.jpg" alt="Название товара">
-    </a>
-    <div class="modalcart-item__content">
-      <a href="" class="modalcart-item__title">
-        Сарафан молочный <br>
-        с цветочным принтом
-      </a>
-      <p class="modalcart-item__meta">
-        Цвет: Розовый <br>
-        Размер: М
-      </p>
-      <div class="counter js--count">
-        <button class="counter__prev">
-          <svg width="16" height="17" viewBox="0 0 16 17" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path fill-rule="evenodd" clip-rule="evenodd" d="M2 9.25V7.75H14V9.25H2Z" fill="#232229"/>
-          </svg>
-        </button>
-        <input type="number" value="1" class="counter__number">
-        <button class="counter__next">
-          <svg width="16" height="17" viewBox="0 0 16 17" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path fill-rule="evenodd" clip-rule="evenodd"
-                  d="M8.75 7.75V4.5H7.25V7.75H2V9.25H7.25V12.5H8.75V9.25H14V7.75H8.75Z" fill="#232229"/>
-          </svg>
-        </button>
-      </div>
-    </div>
-  </div>
-
-  <div class="modalcart-item__price">
-    <p class="modalcart-item__price-current">
-      12 000₽
-      <span>
-                        -25%
-                    </span>
-    </p>
-    <p class="modalcart-item__price-old">
-      16 000₽
-    </p>
-  </div>
-  <button class="modalcart-item__cart">
-    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path fill-rule="evenodd" clip-rule="evenodd" d="M3.75 4.5H20.25V6H3.75V4.5Z" fill="#4A4855"/>
-      <path fill-rule="evenodd" clip-rule="evenodd" d="M15.75 3H8.25V1.5H15.75V3Z" fill="#4A4855"/>
-      <path fill-rule="evenodd" clip-rule="evenodd" d="M6 5.25V19.5H18V5.25H19.5V21H4.5V5.25H6Z" fill="#4A4855"/>
-    </svg>
-  </button>
-</div>
-<div class="modalcart-item">
-  <div class="modalcart-item__group">
-    <a href="" class="modalcart-item__img">
-      <img src="/html/assets/img/modal-prod.c2771fc9b14c1d861b3d.jpg" alt="Название товара">
-    </a>
-    <div class="modalcart-item__content">
-      <a href="" class="modalcart-item__title">
-        Сарафан молочный <br>
-        с цветочным принтом
-      </a>
-      <p class="modalcart-item__meta">
-        Цвет: Розовый <br>
-        Размер: М
-      </p>
-      <div class="counter js--count">
-        <button class="counter__prev">
-          <svg width="16" height="17" viewBox="0 0 16 17" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path fill-rule="evenodd" clip-rule="evenodd" d="M2 9.25V7.75H14V9.25H2Z" fill="#232229"/>
-          </svg>
-        </button>
-        <input type="number" value="1" class="counter__number">
-        <button class="counter__next">
-          <svg width="16" height="17" viewBox="0 0 16 17" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path fill-rule="evenodd" clip-rule="evenodd"
-                  d="M8.75 7.75V4.5H7.25V7.75H2V9.25H7.25V12.5H8.75V9.25H14V7.75H8.75Z" fill="#232229"/>
-          </svg>
-        </button>
-      </div>
-    </div>
-  </div>
-
-  <div class="modalcart-item__price">
-    <p class="modalcart-item__price-current">
-      12 000₽
-      <span>
-                        -25%
-                    </span>
-    </p>
-    <p class="modalcart-item__price-old">
-      16 000₽
-    </p>
-  </div>
-  <button class="modalcart-item__cart">
-    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path fill-rule="evenodd" clip-rule="evenodd" d="M3.75 4.5H20.25V6H3.75V4.5Z" fill="#4A4855"/>
-      <path fill-rule="evenodd" clip-rule="evenodd" d="M15.75 3H8.25V1.5H15.75V3Z" fill="#4A4855"/>
-      <path fill-rule="evenodd" clip-rule="evenodd" d="M6 5.25V19.5H18V5.25H19.5V21H4.5V5.25H6Z" fill="#4A4855"/>
-    </svg>
-  </button>
-</div>
-<div class="modalcart-item">
-  <div class="modalcart-item__group">
-    <a href="" class="modalcart-item__img">
-      <img src="/html/assets/img/modal-prod.c2771fc9b14c1d861b3d.jpg" alt="Название товара">
-    </a>
-    <div class="modalcart-item__content">
-      <a href="" class="modalcart-item__title">
-        Сарафан молочный <br>
-        с цветочным принтом
-      </a>
-      <p class="modalcart-item__meta">
-        Цвет: Розовый <br>
-        Размер: М
-      </p>
-      <div class="counter js--count">
-        <button class="counter__prev">
-          <svg width="16" height="17" viewBox="0 0 16 17" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path fill-rule="evenodd" clip-rule="evenodd" d="M2 9.25V7.75H14V9.25H2Z" fill="#232229"/>
-          </svg>
-        </button>
-        <input type="number" value="1" class="counter__number">
-        <button class="counter__next">
-          <svg width="16" height="17" viewBox="0 0 16 17" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path fill-rule="evenodd" clip-rule="evenodd"
-                  d="M8.75 7.75V4.5H7.25V7.75H2V9.25H7.25V12.5H8.75V9.25H14V7.75H8.75Z" fill="#232229"/>
-          </svg>
-        </button>
-      </div>
-    </div>
-  </div>
-
-  <div class="modalcart-item__price">
-    <p class="modalcart-item__price-current">
-      12 000₽
-      <span>
-                        -25%
-                    </span>
-    </p>
-    <p class="modalcart-item__price-old">
-      16 000₽
-    </p>
-  </div>
-  <button class="modalcart-item__cart">
-    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path fill-rule="evenodd" clip-rule="evenodd" d="M3.75 4.5H20.25V6H3.75V4.5Z" fill="#4A4855"/>
-      <path fill-rule="evenodd" clip-rule="evenodd" d="M15.75 3H8.25V1.5H15.75V3Z" fill="#4A4855"/>
-      <path fill-rule="evenodd" clip-rule="evenodd" d="M6 5.25V19.5H18V5.25H19.5V21H4.5V5.25H6Z" fill="#4A4855"/>
-    </svg>
-  </button>
-</div>
-</div>
-<div class="modalcart__footer">
-  <p class="modalcart__price">
-    ИТОГО: 22 000₽
-  </p>
-  <button class="modalcart__order">
-    Оформить заказ
-  </button>
-</div>
 </div>
 
 
@@ -562,184 +196,39 @@
       </svg>
     </button>
   </div>
-  <div class="modalguide__table">
-    <div class="modalguide__table-row">
-      <p class="modalguide__table-th">
-        Размер
-      </p>
-      <p class="modalguide__table-th">
-        Обхват груди
-      </p>
-      <p class="modalguide__table-th">
-        Обхват талии
-      </p>
-      <p class="modalguide__table-th">
-        Обхват бёдер
-      </p>
-    </div>
-    <div class="modalguide__table-row">
-      <p class="modalguide__table-td">
-        40
-      </p>
-      <p class="modalguide__table-td">
-        82-88
-      </p>
-      <p class="modalguide__table-td">
-        58-64
-      </p>
-      <p class="modalguide__table-td">
-        88-94
-      </p>
-    </div>
-    <div class="modalguide__table-row">
-      <p class="modalguide__table-td">
-        40
-      </p>
-      <p class="modalguide__table-td">
-        82-88
-      </p>
-      <p class="modalguide__table-td">
-        58-64
-      </p>
-      <p class="modalguide__table-td">
-        88-94
-      </p>
-    </div>
-    <div class="modalguide__table-row">
-      <p class="modalguide__table-td">
-        40
-      </p>
-      <p class="modalguide__table-td">
-        82-88
-      </p>
-      <p class="modalguide__table-td">
-        58-64
-      </p>
-      <p class="modalguide__table-td">
-        88-94
-      </p>
-    </div>
-
-    <div class="modalguide__table-row">
-      <p class="modalguide__table-td">
-        40
-      </p>
-      <p class="modalguide__table-td">
-        82-88
-      </p>
-      <p class="modalguide__table-td">
-        58-64
-      </p>
-      <p class="modalguide__table-td">
-        88-94
-      </p>
-    </div>
-    <div class="modalguide__table-row">
-      <p class="modalguide__table-td">
-        40
-      </p>
-      <p class="modalguide__table-td">
-        82-88
-      </p>
-      <p class="modalguide__table-td">
-        58-64
-      </p>
-      <p class="modalguide__table-td">
-        88-94
-      </p>
-    </div>
-    <div class="modalguide__table-row">
-      <p class="modalguide__table-td">
-        40
-      </p>
-      <p class="modalguide__table-td">
-        82-88
-      </p>
-      <p class="modalguide__table-td">
-        58-64
-      </p>
-      <p class="modalguide__table-td">
-        88-94
-      </p>
-    </div>
-  </div>
+  <?= $siteSettings['UF_SIZE_TABLE'] ?>
 
   <div class="modalguide-how">
     <p class="modalguide-how__title">
       Как измерить?
     </p>
-    <div class="modalguide-how__block">
-      <button class="modalguide-how__header">
-        <p>
-          Обхват груди
-        </p>
-        <i>
-          <svg width="18" height="12" viewBox="0 0 18 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path fill-rule="evenodd" clip-rule="evenodd" d="M9.75 5.25V0H8.25V5.25H0V6.75H8.25V12H9.75V6.75H18V5.25H9.75Z"
-                  fill="#232229"/>
-          </svg>
-        </i>
-      </button>
-      <div class="modalguide-how__body-wrap">
-        <div class="modalguide-how__body">
+    <? foreach ($siteSettings['UF_SIZE_TABS'] as $i => $tabTitle) { ?>
+      <div class="modalguide-how__block">
+        <button class="modalguide-how__header">
           <p>
-            — Доставка: курьером по городу — 1-2 дня, в регионы — 3-7 дней. Самовывоз из пунктов выдачи доступен. <br>
-            <br> — Оплата: онлайн на сайте, картой при получении или наличными. Возврат и обмен в течение 14 дней.
+            <?= $tabTitle ?>
           </p>
+          <i>
+            <svg width="18" height="12" viewBox="0 0 18 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path fill-rule="evenodd" clip-rule="evenodd" d="M9.75 5.25V0H8.25V5.25H0V6.75H8.25V12H9.75V6.75H18V5.25H9.75Z"
+                    fill="#232229"/>
+            </svg>
+          </i>
+        </button>
+        <div class="modalguide-how__body-wrap">
+          <div class="modalguide-how__body">
+            <?= $siteSettings['UF_SIZE_TABS_CONTENT'][$i] ?>
+          </div>
         </div>
       </div>
-    </div>
-    <div class="modalguide-how__block">
-      <button class="modalguide-how__header">
-        <p>
-          Обхват талии
-        </p>
-        <i>
-          <svg width="18" height="12" viewBox="0 0 18 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path fill-rule="evenodd" clip-rule="evenodd" d="M9.75 5.25V0H8.25V5.25H0V6.75H8.25V12H9.75V6.75H18V5.25H9.75Z"
-                  fill="#232229"/>
-          </svg>
-        </i>
-      </button>
-      <div class="modalguide-how__body-wrap">
-        <div class="modalguide-how__body">
-          <p>
-            — Доставка: курьером по городу — 1-2 дня, в регионы — 3-7 дней. Самовывоз из пунктов выдачи доступен. <br>
-            <br> — Оплата: онлайн на сайте, картой при получении или наличными. Возврат и обмен в течение 14 дней.
-          </p>
-        </div>
-      </div>
-    </div>
-    <div class="modalguide-how__block">
-      <button class="modalguide-how__header">
-        <p>
-          Обхват бёдер
-        </p>
-        <i>
-          <svg width="18" height="12" viewBox="0 0 18 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path fill-rule="evenodd" clip-rule="evenodd" d="M9.75 5.25V0H8.25V5.25H0V6.75H8.25V12H9.75V6.75H18V5.25H9.75Z"
-                  fill="#232229"/>
-          </svg>
-        </i>
-      </button>
-      <div class="modalguide-how__body-wrap">
-        <div class="modalguide-how__body">
-          <p>
-            — Доставка: курьером по городу — 1-2 дня, в регионы — 3-7 дней. Самовывоз из пунктов выдачи доступен. <br>
-            <br> — Оплата: онлайн на сайте, картой при получении или наличными. Возврат и обмен в течение 14 дней.
-          </p>
-        </div>
-      </div>
-    </div>
+    <? } ?>
   </div>
 </div>
 
 
 <div class="lkmodal" id="changepass">
   <div class="lkmodal__header">
-    <p class="lkmodal__title">
-      Изменение пароля
-    </p>
+    <p class="lkmodal__title">Изменение пароля</p>
     <button class="lkmodal__close js--close">
       <svg width="24" height="25" viewBox="0 0 24 25" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path d="M18 20.5L12 12.5M6 4.5L12 12.5M12 12.5L18 4.5M12 12.5L6 20.5" stroke="#232229" stroke-width="1.5"/>
@@ -747,68 +236,35 @@
     </button>
   </div>
   <div class="lkmodal__body">
-    <div class="lkmodal__form">
+    <form class="lkmodal__form" id="changePassForm">
       <div class="lkmodal__form-el">
         <div class="inputel inputel_pas">
-          <input type="password" placeholder="1" id="password">
+          <input type="password" name="current" placeholder="1" id="password" required>
           <label for="password">Введите текущий пароль</label>
-          <i class="inputel_pas--ico">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path
-                d="M12 4.5C15.9994 4.5 18.8049 6.30686 20.5928 8.09473C21.4845 8.9865 22.1277 9.87711 22.5488 10.5459C22.7597 10.8808 22.9157 11.1621 23.0205 11.3623C23.0729 11.4624 23.1134 11.542 23.1406 11.5986C23.1543 11.627 23.1644 11.6498 23.1719 11.666C23.1756 11.6741 23.1784 11.6806 23.1807 11.6855L23.1846 11.6934C23.1847 11.6937 23.1854 11.6954 22.5 12C23.1854 12.3046 23.1847 12.3053 23.1846 12.3057L23.1807 12.3145C23.1784 12.3194 23.1756 12.3259 23.1719 12.334C23.1644 12.3502 23.1543 12.373 23.1406 12.4014C23.1134 12.458 23.0729 12.5376 23.0205 12.6377C22.9157 12.8379 22.7597 13.1192 22.5488 13.4541C22.1277 14.1229 21.4845 15.0135 20.5928 15.9053C18.8049 17.6931 15.9994 19.5 12 19.5C8.00057 19.5 5.1951 17.6931 3.40723 15.9053C2.51546 15.0135 1.87226 14.1229 1.45117 13.4541C1.24032 13.1192 1.08434 12.8379 0.979492 12.6377C0.927072 12.5376 0.886637 12.458 0.859375 12.4014C0.845735 12.373 0.835629 12.3502 0.828125 12.334C0.824403 12.3259 0.821563 12.3194 0.819336 12.3145L0.81543 12.3066C0.815268 12.3063 0.814641 12.3046 1.5 12C0.814641 11.6954 0.815268 11.6947 0.81543 11.6943L0.819336 11.6855C0.821563 11.6806 0.824403 11.6741 0.828125 11.666C0.835629 11.6498 0.845735 11.627 0.859375 11.5986C0.886637 11.542 0.927072 11.4624 0.979492 11.3623C1.08434 11.1621 1.24032 10.8808 1.45117 10.5459C1.87226 9.87711 2.51546 8.9865 3.40723 8.09473C5.1951 6.30686 8.00057 4.5 12 4.5ZM12 6C8.49943 6 6.0549 7.56814 4.46777 9.15527C3.67212 9.95092 3.09649 10.7479 2.7207 11.3447C2.55366 11.61 2.4271 11.8347 2.33887 12C2.4271 12.1653 2.55366 12.39 2.7207 12.6553C3.09649 13.2521 3.67212 14.0491 4.46777 14.8447C6.0549 16.4319 8.49943 18 12 18C15.5006 18 17.9451 16.4319 19.5322 14.8447C20.3279 14.0491 20.9035 13.2521 21.2793 12.6553C21.4462 12.3902 21.5719 12.1652 21.6602 12C21.5719 11.8348 21.4462 11.6098 21.2793 11.3447C20.9035 10.7479 20.3279 9.95092 19.5322 9.15527C17.9451 7.56814 15.5006 6 12 6ZM1.5 12L0.814453 12.3047L0.679688 12L0.814453 11.6953L1.5 12ZM23.3203 12L23.1855 12.3047L22.5 12L23.1855 11.6953L23.3203 12Z"
-                fill="#232229"/>
-              <path
-                d="M15 12C15 10.3431 13.6569 9 12 9C10.3431 9 9 10.3431 9 12C9 13.6569 10.3431 15 12 15C13.6569 15 15 13.6569 15 12ZM16.5 12C16.5 14.4853 14.4853 16.5 12 16.5C9.51472 16.5 7.5 14.4853 7.5 12C7.5 9.51472 9.51472 7.5 12 7.5C14.4853 7.5 16.5 9.51472 16.5 12Z"
-                fill="#232229"/>
-            </svg>
-          </i>
         </div>
       </div>
       <div class="lkmodal__form-el">
         <div class="inputel inputel_pas">
-          <input type="password" placeholder="1" id="password2">
+          <input type="password" name="new" placeholder="1" id="password2" required>
           <label for="password2">Введите новый пароль</label>
-          <i class="inputel_pas--ico">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path
-                d="M12 4.5C15.9994 4.5 18.8049 6.30686 20.5928 8.09473C21.4845 8.9865 22.1277 9.87711 22.5488 10.5459C22.7597 10.8808 22.9157 11.1621 23.0205 11.3623C23.0729 11.4624 23.1134 11.542 23.1406 11.5986C23.1543 11.627 23.1644 11.6498 23.1719 11.666C23.1756 11.6741 23.1784 11.6806 23.1807 11.6855L23.1846 11.6934C23.1847 11.6937 23.1854 11.6954 22.5 12C23.1854 12.3046 23.1847 12.3053 23.1846 12.3057L23.1807 12.3145C23.1784 12.3194 23.1756 12.3259 23.1719 12.334C23.1644 12.3502 23.1543 12.373 23.1406 12.4014C23.1134 12.458 23.0729 12.5376 23.0205 12.6377C22.9157 12.8379 22.7597 13.1192 22.5488 13.4541C22.1277 14.1229 21.4845 15.0135 20.5928 15.9053C18.8049 17.6931 15.9994 19.5 12 19.5C8.00057 19.5 5.1951 17.6931 3.40723 15.9053C2.51546 15.0135 1.87226 14.1229 1.45117 13.4541C1.24032 13.1192 1.08434 12.8379 0.979492 12.6377C0.927072 12.5376 0.886637 12.458 0.859375 12.4014C0.845735 12.373 0.835629 12.3502 0.828125 12.334C0.824403 12.3259 0.821563 12.3194 0.819336 12.3145L0.81543 12.3066C0.815268 12.3063 0.814641 12.3046 1.5 12C0.814641 11.6954 0.815268 11.6947 0.81543 11.6943L0.819336 11.6855C0.821563 11.6806 0.824403 11.6741 0.828125 11.666C0.835629 11.6498 0.845735 11.627 0.859375 11.5986C0.886637 11.542 0.927072 11.4624 0.979492 11.3623C1.08434 11.1621 1.24032 10.8808 1.45117 10.5459C1.87226 9.87711 2.51546 8.9865 3.40723 8.09473C5.1951 6.30686 8.00057 4.5 12 4.5ZM12 6C8.49943 6 6.0549 7.56814 4.46777 9.15527C3.67212 9.95092 3.09649 10.7479 2.7207 11.3447C2.55366 11.61 2.4271 11.8347 2.33887 12C2.4271 12.1653 2.55366 12.39 2.7207 12.6553C3.09649 13.2521 3.67212 14.0491 4.46777 14.8447C6.0549 16.4319 8.49943 18 12 18C15.5006 18 17.9451 16.4319 19.5322 14.8447C20.3279 14.0491 20.9035 13.2521 21.2793 12.6553C21.4462 12.3902 21.5719 12.1652 21.6602 12C21.5719 11.8348 21.4462 11.6098 21.2793 11.3447C20.9035 10.7479 20.3279 9.95092 19.5322 9.15527C17.9451 7.56814 15.5006 6 12 6ZM1.5 12L0.814453 12.3047L0.679688 12L0.814453 11.6953L1.5 12ZM23.3203 12L23.1855 12.3047L22.5 12L23.1855 11.6953L23.3203 12Z"
-                fill="#232229"/>
-              <path
-                d="M15 12C15 10.3431 13.6569 9 12 9C10.3431 9 9 10.3431 9 12C9 13.6569 10.3431 15 12 15C13.6569 15 15 13.6569 15 12ZM16.5 12C16.5 14.4853 14.4853 16.5 12 16.5C9.51472 16.5 7.5 14.4853 7.5 12C7.5 9.51472 9.51472 7.5 12 7.5C14.4853 7.5 16.5 9.51472 16.5 12Z"
-                fill="#232229"/>
-            </svg>
-          </i>
         </div>
       </div>
       <div class="lkmodal__form-el">
         <div class="inputel inputel_pas">
-          <input type="password" placeholder="1" id="password3">
+          <input type="password" name="repeat" placeholder="1" id="password3" required>
           <label for="password3">Повторите пароль</label>
-          <i class="inputel_pas--ico">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path
-                d="M12 4.5C15.9994 4.5 18.8049 6.30686 20.5928 8.09473C21.4845 8.9865 22.1277 9.87711 22.5488 10.5459C22.7597 10.8808 22.9157 11.1621 23.0205 11.3623C23.0729 11.4624 23.1134 11.542 23.1406 11.5986C23.1543 11.627 23.1644 11.6498 23.1719 11.666C23.1756 11.6741 23.1784 11.6806 23.1807 11.6855L23.1846 11.6934C23.1847 11.6937 23.1854 11.6954 22.5 12C23.1854 12.3046 23.1847 12.3053 23.1846 12.3057L23.1807 12.3145C23.1784 12.3194 23.1756 12.3259 23.1719 12.334C23.1644 12.3502 23.1543 12.373 23.1406 12.4014C23.1134 12.458 23.0729 12.5376 23.0205 12.6377C22.9157 12.8379 22.7597 13.1192 22.5488 13.4541C22.1277 14.1229 21.4845 15.0135 20.5928 15.9053C18.8049 17.6931 15.9994 19.5 12 19.5C8.00057 19.5 5.1951 17.6931 3.40723 15.9053C2.51546 15.0135 1.87226 14.1229 1.45117 13.4541C1.24032 13.1192 1.08434 12.8379 0.979492 12.6377C0.927072 12.5376 0.886637 12.458 0.859375 12.4014C0.845735 12.373 0.835629 12.3502 0.828125 12.334C0.824403 12.3259 0.821563 12.3194 0.819336 12.3145L0.81543 12.3066C0.815268 12.3063 0.814641 12.3046 1.5 12C0.814641 11.6954 0.815268 11.6947 0.81543 11.6943L0.819336 11.6855C0.821563 11.6806 0.824403 11.6741 0.828125 11.666C0.835629 11.6498 0.845735 11.627 0.859375 11.5986C0.886637 11.542 0.927072 11.4624 0.979492 11.3623C1.08434 11.1621 1.24032 10.8808 1.45117 10.5459C1.87226 9.87711 2.51546 8.9865 3.40723 8.09473C5.1951 6.30686 8.00057 4.5 12 4.5ZM12 6C8.49943 6 6.0549 7.56814 4.46777 9.15527C3.67212 9.95092 3.09649 10.7479 2.7207 11.3447C2.55366 11.61 2.4271 11.8347 2.33887 12C2.4271 12.1653 2.55366 12.39 2.7207 12.6553C3.09649 13.2521 3.67212 14.0491 4.46777 14.8447C6.0549 16.4319 8.49943 18 12 18C15.5006 18 17.9451 16.4319 19.5322 14.8447C20.3279 14.0491 20.9035 13.2521 21.2793 12.6553C21.4462 12.3902 21.5719 12.1652 21.6602 12C21.5719 11.8348 21.4462 11.6098 21.2793 11.3447C20.9035 10.7479 20.3279 9.95092 19.5322 9.15527C17.9451 7.56814 15.5006 6 12 6ZM1.5 12L0.814453 12.3047L0.679688 12L0.814453 11.6953L1.5 12ZM23.3203 12L23.1855 12.3047L22.5 12L23.1855 11.6953L23.3203 12Z"
-                fill="#232229"/>
-              <path
-                d="M15 12C15 10.3431 13.6569 9 12 9C10.3431 9 9 10.3431 9 12C9 13.6569 10.3431 15 12 15C13.6569 15 15 13.6569 15 12ZM16.5 12C16.5 14.4853 14.4853 16.5 12 16.5C9.51472 16.5 7.5 14.4853 7.5 12C7.5 9.51472 9.51472 7.5 12 7.5C14.4853 7.5 16.5 9.51472 16.5 12Z"
-                fill="#232229"/>
-            </svg>
-          </i>
         </div>
       </div>
-      <button class="lkmodal__form-submit js--modal" data-modal="changepass_ok">
-        Изменить
-      </button>
-    </div>
+      <div class="lkmodal__form-el">
+        <div class="lkmodal__form-error" id="changePassError" style="color:red;display:none;"></div>
+      </div>
+      <button type="submit" class="lkmodal__form-submit">Изменить</button>
+    </form>
   </div>
 </div>
-
-
 <div class="lkmodal" id="changepass_ok">
   <div class="lkmodal__header">
-    <p class="lkmodal__title">
-      Изменение пароля
-    </p>
+    <p class="lkmodal__title">Изменение пароля</p>
     <button class="lkmodal__close js--close">
       <svg width="24" height="25" viewBox="0 0 24 25" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path d="M18 20.5L12 12.5M6 4.5L12 12.5M12 12.5L18 4.5M12 12.5L6 20.5" stroke="#232229" stroke-width="1.5"/>
@@ -817,18 +273,30 @@
   </div>
   <div class="lkmodal__body">
     <div class="lkmodal__done">
-      <p class="lkmodal__done-title">
-        Готово!
-      </p>
-      <p class="lkmodal__done-txt">
-        Пароль успешно изменён
-      </p>
-      <a href="#" class="lkmodal__form-submit">
-        Перейти в профиль
-      </a>
+      <p class="lkmodal__done-title">Готово!</p>
+      <p class="lkmodal__done-txt">Пароль успешно изменён</p>
+      <a href="#" class="lkmodal__form-submit js--close">Закрыть</a>
     </div>
   </div>
 </div>
+<div class="lkmodal" id="updateprofile">
+  <div class="lkmodal__header">
+    <p class="lkmodal__title">Обновление данных</p>
+    <button class="lkmodal__close js--close">
+      <svg width="24" height="25" viewBox="0 0 24 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M18 20.5L12 12.5M6 4.5L12 12.5M12 12.5L18 4.5M12 12.5L6 20.5" stroke="#232229" stroke-width="1.5"/>
+      </svg>
+    </button>
+  </div>
+  <div class="lkmodal__body">
+    <div class="lkmodal__done">
+      <p class="lkmodal__done-title">Готово!</p>
+      <p class="lkmodal__done-txt">Профиль успешно обновлен</p>
+      <a href="#" class="lkmodal__form-submit js--close">Закрыть</a>
+    </div>
+  </div>
+</div>
+<div class="lkmodal" id="newadress"></div>
 
 
 <div class="lkmodal" id="resetpass">
@@ -953,64 +421,6 @@
   </div>
 </div>
 
-
-<div class="lkmodal" id="newadress">
-  <div class="lkmodal__header">
-    <p class="lkmodal__title">
-      Добавить новый адрес
-    </p>
-    <button class="lkmodal__close js--close">
-      <svg width="24" height="25" viewBox="0 0 24 25" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M18 20.5L12 12.5M6 4.5L12 12.5M12 12.5L18 4.5M12 12.5L6 20.5" stroke="#232229" stroke-width="1.5"/>
-      </svg>
-    </button>
-  </div>
-  <div class="lkmodal__body">
-    <div class="lkmodal__form">
-      <div class="lkmodal__form-el">
-        <div class="inputel">
-          <input placeholder="1" id="street">
-          <label for="street">Улица</label>
-        </div>
-      </div>
-      <div class="lkmodal__form-el lkmodal__form-el_6">
-        <div class="inputel">
-          <input placeholder="1" id="home">
-          <label for="home">Дом</label>
-        </div>
-      </div>
-      <div class="lkmodal__form-el lkmodal__form-el_6">
-        <div class="inputel">
-          <input placeholder="1" id="podesz">
-          <label for="podesz">Подъезд</label>
-        </div>
-      </div>
-      <div class="lkmodal__form-el lkmodal__form-el_6">
-        <div class="inputel">
-          <input placeholder="1" id="room">
-          <label for="room">Квартира</label>
-        </div>
-      </div>
-      <div class="lkmodal__form-el lkmodal__form-el_6">
-        <div class="inputel">
-          <input placeholder="1" id="floor">
-          <label for="floor">Этаж</label>
-        </div>
-      </div>
-      <div class="lkmodal__form-el">
-        <div class="inputel">
-          <input placeholder="1" id="comment">
-          <label for="comment">Комментарий</label>
-        </div>
-      </div>
-      <button class="lkmodal__form-submit js--modal" data-modal="resetpass_code">
-        Добавить
-      </button>
-    </div>
-  </div>
-</div>
-
-
 <div class="lkmodal" id="newadress_ok">
   <div class="lkmodal__header">
     <p class="lkmodal__title">
@@ -1038,10 +448,11 @@
 </div>
 
 
+<!-- Универсальная модалка для добавления и редактирования адреса -->
 <div class="lkmodal" id="editadress">
   <div class="lkmodal__header">
     <p class="lkmodal__title">
-      Редактировать адрес
+      <span id="editadress-title">Добавить новый адрес</span>
     </p>
     <button class="lkmodal__close js--close">
       <svg width="24" height="25" viewBox="0 0 24 25" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -1087,18 +498,16 @@
           <label for="comment">Комментарий</label>
         </div>
       </div>
-      <button class="lkmodal__form-submit js--modal" data-modal="resetpass_code">
-        Добавить
-      </button>
+      <button class="lkmodal__form-submit" id="editadress-submit">Добавить</button>
     </div>
   </div>
 </div>
 
-
+<!-- Модалка подтверждения -->
 <div class="lkmodal" id="editadress_ok">
   <div class="lkmodal__header">
     <p class="lkmodal__title">
-      Редактировать адрес
+      <span id="editadress-ok-title">Готово!</span>
     </p>
     <button class="lkmodal__close js--close">
       <svg width="24" height="25" viewBox="0 0 24 25" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -1111,16 +520,13 @@
       <p class="lkmodal__done-title">
         Готово!
       </p>
-      <p class="lkmodal__done-txt">
-        Адрес успешно изменен
+      <p class="lkmodal__done-txt" id="editadress-ok-msg">
+        Адрес успешно сохранён
       </p>
-      <a href="#" class="lkmodal__form-submit">
-        Перейти в профиль
-      </a>
+      <a href="#" class="lkmodal__form-submit js--close">Закрыть</a>
     </div>
   </div>
 </div>
-
 
 <div class="lkmodal" id="deleteadress">
   <div class="lkmodal__header">
@@ -1173,7 +579,6 @@
     </div>
   </div>
 </div>
-
 
 <div class="lkmodal" id="cancel">
   <div class="lkmodal__header">
@@ -1300,25 +705,6 @@
     </div>
   </div>
 </div>
-<script src="https://unpkg.com/imask"></script>
-<script>
-
-  const openAlert = () => {
-    document.querySelector('.cartaler').classList.add('open')
-  }
-
-  const phoneInputs = document.querySelectorAll('input[type="tel"]');
-
-  // Определяем маску для русского телефона
-  const maskOptions = {
-    mask: '+7 (000) 000-00-00'
-  };
-
-  // Применяем маску к каждому полю ввода
-  phoneInputs.forEach(input => {
-    IMask(input, maskOptions);
-  });
-</script>
 
 </body>
 
