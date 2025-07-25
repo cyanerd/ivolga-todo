@@ -225,6 +225,22 @@
   </div>
 </div>
 
+<div class="lkmodal" id="logout-modal">
+  <div class="lkmodal__header">
+    <p class="lkmodal__title">Вы уверены, что хотите выйти?</p>
+    <button class="lkmodal__close js--close">
+      <svg width="24" height="25" viewBox="0 0 24 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M18 20.5L12 12.5M6 4.5L12 12.5M12 12.5L18 4.5M12 12.5L6 20.5" stroke="#232229" stroke-width="1.5"/>
+      </svg>
+    </button>
+  </div>
+  <div class="lkmodal__body">
+    <div style="margin-bottom: 10px;">
+      <button id="logout-yes" class="modalcart__button" style="min-width:90px;">Да</button>
+    </div>
+    <button id="logout-no" class="modalcart__button" style="background:#eee; color:#232229; min-width:90px;">Нет</button>
+  </div>
+</div>
 
 <div class="lkmodal" id="changepass">
   <div class="lkmodal__header">

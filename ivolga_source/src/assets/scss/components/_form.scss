@@ -1,0 +1,147 @@
+.form {
+    &__group {
+       margin-bottom: rem(20px);
+    }
+    
+    &__label {
+        display: block;
+        font-family: $font-pragmatica;
+        font-size: $font-size-base;
+        color: $color-black;
+        margin-bottom: rem(8px);
+    }
+    
+    &__input,
+    &__textarea,
+    &__select {
+        display: block;
+        width: 100%;
+        padding: rem(12px) rem(16px);
+        font-family: $font-pragmatica;
+        font-size: $font-size-base;
+        line-height: 1.5;
+        color: $color-black;
+        background-color: $color-white;
+        border: 1px solid rgba($color-black, 0.2);
+        transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        
+        &:focus {
+            border-color: $color-black;
+            outline: none;
+        }
+        
+        &::placeholder {
+            color: rgba($color-black, 0.5);
+        }
+        
+        &--error {
+            border-color: $color-red;
+        }
+    }
+    
+    &__textarea {
+        resize: vertical;
+        min-height: rem(120px);
+    }
+    
+    &__select {
+        appearance: none;
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23000000' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+        background-repeat: no-repeat;
+        background-position: right rem(16px) center;
+        background-size: rem(16px);
+        padding-right: rem(40px);
+    }
+    
+    &__checkbox,
+    &__radio {
+        position: absolute;
+        opacity: 0;
+        
+        & + label {
+            position: relative;
+            padding-left: rem(30px);
+            cursor: pointer;
+            display: inline-block;
+            font-family: $font-pragmatica;
+            font-size: $font-size-base;
+            color: $color-black;
+            
+            &:before {
+                content: '';
+                position: absolute;
+                left: 0;
+                top: rem(2px);
+                width: rem(20px);
+                height: rem(20px);
+                border: 1px solid rgba($color-black, 0.2);
+                background: $color-white;
+                transition: all 0.3s ease;
+            }
+        }
+        
+        &:hover + label:before {
+            border-color: $color-black;
+        }
+        
+        &:checked + label:before {
+            background-color: $color-black;
+            border-color: $color-black;
+        }
+        
+        &:checked + label:after {
+            content: '';
+            position: absolute;
+            left: rem(5px);
+            top: rem(9px);
+            background: $color-white;
+            width: rem(2px);
+            height: rem(2px);
+            box-shadow: 
+                rem(2px) 0 0 $color-white, 
+                rem(4px) 0 0 $color-white, 
+                rem(4px) rem(-2px) 0 $color-white, 
+                rem(4px) rem(-4px) 0 $color-white, 
+                rem(4px) rem(-6px) 0 $color-white, 
+                rem(4px) rem(-8px) 0 $color-white;
+            transform: rotate(45deg);
+        }
+    }
+    
+    &__radio {
+        & + label:before {
+            border-radius: 50%;
+        }
+        
+        &:checked + label:after {
+            content: '';
+            left: rem(6px);
+            top: rem(8px);
+            width: rem(8px);
+            height: rem(8px);
+            border-radius: 50%;
+            background: $color-white;
+            box-shadow: none;
+            transform: none;
+        }
+    }
+    
+    &__error {
+        display: block;
+        font-family: $font-pragmatica;
+        font-size: $font-size-xs;
+        color: $color-red;
+        margin-top: rem(5px);
+    }
+    
+    &__button {
+        margin-top: rem(10px);
+    }
+    
+    &__note {
+        font-family: $font-pragmatica;
+        font-size: $font-size-xs;
+        color: rgba($color-black, 0.6);
+        margin-top: rem(10px);
+    }
+}

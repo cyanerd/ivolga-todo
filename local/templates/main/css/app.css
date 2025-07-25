@@ -3420,7 +3420,8 @@ footer {
     text-align: left
 }
 
-.modalcart__order {
+.modalcart__order,
+.modalcart__button {
     -webkit-box-pack: center;
     -ms-flex-pack: center;
     -webkit-box-align: center;
@@ -3446,7 +3447,8 @@ footer {
     width: 100%
 }
 
-.modalcart__order:hover {
+.modalcart__order:hover,
+.modalcart__button:hover {
     background: transparent;
     color: #232229
 }

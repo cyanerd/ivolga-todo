@@ -1,0 +1,1636 @@
+<%= require('@parts/header.ejs')({title: 'IVOLGA - Авторские украшения и одежда' }) %>
+
+<main class="homepage" id="root">
+    <div class="catalogpage">
+        <div class="container">
+            <ul class="catalogpage__nav">
+                <li>
+                    <a href="" class="active">
+                        Вся одежда
+                        <span>
+                            (230)
+                        </span>
+                    </a>
+                </li>
+                <li>
+                    <a href="">
+                        Верхняя одежда
+                        <span>
+                            (230)
+                        </span>
+                    </a>
+                </li>
+                <li>
+                    <a href="">
+                        Джинсы
+                        <span>
+                            (230)
+                        </span>
+                    </a>
+                </li>
+                <li>
+                    <a href="">
+                        Брюки
+                        <span>
+                            (230)
+                        </span>
+                    </a>
+                </li>
+                <li>
+                    <a href="">
+                        Свитеры и джемперы
+                        <span>
+                            (230)
+                        </span>
+                    </a>
+                </li>
+                <li>
+                    <a href="">
+                        Худи и свитшоты
+                        <span>
+                            (230)
+                        </span>
+                    </a>
+                </li>
+            </ul>
+
+            <div class="catalogpage__heading-wrap">
+              <div class="catalogpage__heading">
+                  <div class="catalogpage__heading-left">
+                    <button class="catalogpage__togfilter">
+                      <i>
+                          <svg width="24" height="25" viewBox="0 0 24 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+                              <path fill-rule="evenodd" clip-rule="evenodd" d="M9.75 7.6665C8.92157 7.6665 8.25 8.33808 8.25 9.1665C8.25 9.99493 8.92157 10.6665 9.75 10.6665C10.5784 10.6665 11.25 9.99493 11.25 9.1665C11.25 8.33808 10.5784 7.6665 9.75 7.6665ZM6.75 9.1665C6.75 7.50965 8.09315 6.1665 9.75 6.1665C11.4069 6.1665 12.75 7.50965 12.75 9.1665C12.75 10.8234 11.4069 12.1665 9.75 12.1665C8.09315 12.1665 6.75 10.8234 6.75 9.1665Z" fill="#232229"/>
+                              <path fill-rule="evenodd" clip-rule="evenodd" d="M15.75 14.6665C14.9216 14.6665 14.25 15.3381 14.25 16.1665C14.25 16.9949 14.9216 17.6665 15.75 17.6665C16.5784 17.6665 17.25 16.9949 17.25 16.1665C17.25 15.3381 16.5784 14.6665 15.75 14.6665ZM12.75 16.1665C12.75 14.5096 14.0931 13.1665 15.75 13.1665C17.4069 13.1665 18.75 14.5096 18.75 16.1665C18.75 17.8234 17.4069 19.1665 15.75 19.1665C14.0931 19.1665 12.75 17.8234 12.75 16.1665Z" fill="#232229"/>
+                              <path fill-rule="evenodd" clip-rule="evenodd" d="M20.25 9.9165H12V8.4165H20.25V9.9165Z" fill="#232229"/>
+                              <path fill-rule="evenodd" clip-rule="evenodd" d="M7.5 9.9165H3.75V8.4165H7.5V9.9165Z" fill="#232229"/>
+                              <path fill-rule="evenodd" clip-rule="evenodd" d="M20.25 16.9165H18V15.4165H20.25V16.9165Z" fill="#232229"/>
+                              <path fill-rule="evenodd" clip-rule="evenodd" d="M13.5 16.9165H3.75V15.4165H13.5V16.9165Z" fill="#232229"/>
+                          </svg>                            
+                      </i>
+                      <span>
+                          Фильтры
+                      </span>
+                  </button>
+                  </div>
+                  
+                  <div class="catalogpage__mobsort mob">
+                      Сортировать
+                      <i>
+                          <svg width="16" height="17" viewBox="0 0 16 17" fill="none" xmlns="http://www.w3.org/2000/svg">
+                              <path fill-rule="evenodd" clip-rule="evenodd" d="M12 9.4165H4V7.9165H12V9.4165Z" fill="#232229"/>
+                              <path fill-rule="evenodd" clip-rule="evenodd" d="M14.5 6.4165H1.5V4.9165H14.5V6.4165Z" fill="#232229"/>
+                              <path fill-rule="evenodd" clip-rule="evenodd" d="M9.5 12.4165H6.5V10.9165H9.5V12.4165Z" fill="#232229"/>
+                          </svg>                            
+                      </i>
+                  </div>
+                  <div class="catalogpage__sort desc">
+                      <p>
+                          Сортировать
+                      </p>
+                      <div class="catalogpage__sort-select">
+                          <select>
+                              <option value="1">
+                                  по умолчанию
+                              </option>
+                              <option value="2">
+                                  по умолчанию2
+                              </option>
+                              <option value="3">
+                                  по умолчанию3
+                              </option>
+                          </select>
+                      </div>
+                      <i>
+                          <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                              <path fill-rule="evenodd" clip-rule="evenodd" d="M15 11.375H5V9.875H15V11.375Z" fill="#232229"/>
+                              <path fill-rule="evenodd" clip-rule="evenodd" d="M18.125 7.625H1.875V6.125H18.125V7.625Z" fill="#232229"/>
+                              <path fill-rule="evenodd" clip-rule="evenodd" d="M11.875 15.125H8.125V13.625H11.875V15.125Z" fill="#232229"/>
+                          </svg>                            
+                      </i>
+                  </div>
+              </div>
+            </div>
+        </div>
+        <div class="catalogpage__main">
+            <div class="catalogpage__col">
+                <div class="product-card">
+                    <div class="product-card__image">
+                      <a href="#" class="product-card__slider">
+                        <div class="product-card__slider-track">
+                          <div class="product-card__slide">
+                            <img src="<%=require('@img/products/product1.jpg')%>" alt="Название товара">
+                          </div>
+                          <div class="product-card__slide">
+                            <img src="<%=require('@img/blog/blog1.jpg')%>" alt="Название товара">
+                          </div>
+                          <div class="product-card__slide">
+                            <img src="<%=require('@img/products/product1.jpg')%>" alt="Название товара">
+                          </div>
+                        </div>
+                        <div class="product-card__pagination">
+                          <span class="product-card__pagination-dot active"></span>
+                          <span class="product-card__pagination-dot"></span>
+                          <span class="product-card__pagination-dot"></span>
+                        </div>
+                      </a>
+                      <div class="product-card__tags">
+                        <span class="product-card__tag">Новинка</span>
+                        <span class="product-card__tag">Предзаказ</span>
+                      </div>
+                      <i class="product-card__like active">
+                        <svg class="activelike" width="20" height="18" viewBox="0 0 20 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path fill-rule="evenodd" clip-rule="evenodd" d="M1.74163 2.13008C2.69464 1.19149 3.9848 0.666199 5.32771 0.666199C6.66597 0.666199 7.95186 1.18787 8.9039 2.12038L10.0005 3.12621L11.0971 2.12038C12.0491 1.18787 13.335 0.666199 14.6733 0.666199C16.0162 0.666199 17.3063 1.19149 18.2593 2.13008C19.2127 3.06906 19.7505 4.34504 19.7505 5.67796C19.7505 7.00999 19.2135 8.28515 18.2613 9.22394L18.2593 9.22584L10.0005 17.4763L1.73968 9.22392C0.787496 8.28512 0.250488 7.00998 0.250488 5.67796C0.250488 4.34504 0.78823 3.06906 1.74163 2.13008ZM5.32771 2.1662C4.37531 2.1662 3.46419 2.53892 2.79417 3.1988C2.12455 3.85829 1.75049 4.75031 1.75049 5.67796C1.75049 6.60562 2.12455 7.49764 2.79417 8.15713L2.79797 8.16087L10.0005 15.3561L17.2068 8.15712C17.8764 7.49762 18.2505 6.60562 18.2505 5.67796C18.2505 4.75031 17.8764 3.85829 17.2068 3.1988C16.5368 2.53892 15.6257 2.1662 14.6733 2.1662C13.7209 2.1662 12.8097 2.53892 12.1397 3.1988L12.1302 3.20814L10.0005 5.16165L7.87073 3.20814L7.86124 3.1988C7.19123 2.53892 6.2801 2.1662 5.32771 2.1662Z" fill="#232229"/>
+<path d="M2.79417 3.1988C3.46419 2.53892 4.37531 2.1662 5.32771 2.1662C6.2801 2.1662 7.19123 2.53892 7.86124 3.1988L7.87073 3.20814L10.0005 5.16165L12.1302 3.20814L12.1397 3.1988C12.8097 2.53892 13.7209 2.1662 14.6733 2.1662C15.6257 2.1662 16.5368 2.53892 17.2068 3.1988C17.8764 3.85829 18.2505 4.75031 18.2505 5.67796C18.2505 6.60562 17.8764 7.49762 17.2068 8.15712L10.0005 15.3561L2.79797 8.16087L2.79417 8.15713C2.12455 7.49764 1.75049 6.60562 1.75049 5.67796C1.75049 4.75031 2.12455 3.85829 2.79417 3.1988Z" fill="#232229"/>
+</svg>
+
+                        <svg class="deflike" width="21" height="18" viewBox="0 0 21 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                          <path fill-rule="evenodd" clip-rule="evenodd" d="M2.24212 1.96389C3.19513 1.02529 4.48529 0.5 5.8282 0.5C7.16646 0.5 8.45235 1.02167 9.40439 1.95418L10.501 2.96001L11.5976 1.95418C12.5496 1.02167 13.8355 0.5 15.1738 0.5C16.5167 0.5 17.8068 1.02529 18.7598 1.96389C19.7132 2.90286 20.251 4.17884 20.251 5.51177C20.251 6.84379 19.714 8.11895 18.7618 9.05774C18.7611 9.05838 18.7605 9.05901 18.7598 9.05964L10.501 17.3101L2.24017 9.05772C1.28798 8.11893 0.750977 6.84378 0.750977 5.51177C0.750977 4.17884 1.28872 2.90286 2.24212 1.96389ZM5.8282 2C4.8758 2 3.96467 2.37272 3.29466 3.0326C2.62504 3.69209 2.25098 4.58411 2.25098 5.51177C2.25098 6.43942 2.62504 7.33144 3.29466 7.99093L3.29846 7.99468L10.501 15.1899L17.7073 7.99092C18.3769 7.33143 18.751 6.43942 18.751 5.51177C18.751 4.58411 18.3769 3.69209 17.7073 3.0326C17.0373 2.37272 16.1262 2 15.1738 2C14.2214 2 13.3102 2.37272 12.6402 3.0326L12.6307 3.04194L10.501 4.99545L8.37122 3.04194L8.36173 3.0326C7.69172 2.37272 6.78059 2 5.8282 2Z" fill="#232229"/>
+                        </svg>                    
+                      </i>
+                    </div>
+                    <a href="#" class="product-card__info">
+                      <h3 class="product-card__title">Название товара</h3>
+                      <div class="product-card__price">
+                        <div class="product-card__price-current">
+                          <span>12 000₽</span>
+                          <div class="product-card__discount">-25%</div>
+                        </div>
+                        <span class="product-card__price-old">16 000₽</span>
+                      </div>
+                    </a>
+      
+                    <div class="product-card__footer">
+                      <div class="product-card__colors">
+                        <a href="" class="product-card__colors-item" style="background-color: #3B3465;"></a>
+                        <a href="" class="product-card__colors-item" style="background-color: #34654F;"></a>
+                        <a href="" class="product-card__colors-item" style="background-color: #BA6868;"></a>
+                        <a href="" class="product-card__colors-item" style="background-color: #232229;"></a>
+                        <a href="" class="product-card__colors-item" style="background-color: #FFFFFF;"></a>
+                      </div>
+                      <div class="product-card__sizes">
+                        <a href="" class="product-card__sizes-item">
+                          S
+                        </a>
+                        <a href="" class="product-card__sizes-item">
+                          M
+                        </a>
+                        <a href="" class="product-card__sizes-item">
+                          L
+                        </a>
+                        <a href="" class="product-card__sizes-item">
+                          XL
+                        </a>
+                        <a href="" class="product-card__sizes-item">
+                          2XL
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+            </div>
+            <div class="catalogpage__col">
+                <div class="product-card">
+                    <div class="product-card__image">
+                      <a href="#" class="product-card__slider">
+                        <div class="product-card__slider-track">
+                          <div class="product-card__slide">
+                            <img src="<%=require('@img/products/product1.jpg')%>" alt="Название товара">
+                          </div>
+                          <div class="product-card__slide">
+                            <img src="<%=require('@img/blog/blog1.jpg')%>" alt="Название товара">
+                          </div>
+                          <div class="product-card__slide">
+                            <img src="<%=require('@img/products/product1.jpg')%>" alt="Название товара">
+                          </div>
+                        </div>
+                        <div class="product-card__pagination">
+                          <span class="product-card__pagination-dot active"></span>
+                          <span class="product-card__pagination-dot"></span>
+                          <span class="product-card__pagination-dot"></span>
+                        </div>
+                      </a>
+                      <div class="product-card__tags">
+                        <span class="product-card__tag">Новинка</span>
+                        <span class="product-card__tag">Предзаказ</span>
+                      </div>
+                      <i class="product-card__like active">
+                        <svg class="activelike" width="20" height="18" viewBox="0 0 20 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path fill-rule="evenodd" clip-rule="evenodd" d="M1.74163 2.13008C2.69464 1.19149 3.9848 0.666199 5.32771 0.666199C6.66597 0.666199 7.95186 1.18787 8.9039 2.12038L10.0005 3.12621L11.0971 2.12038C12.0491 1.18787 13.335 0.666199 14.6733 0.666199C16.0162 0.666199 17.3063 1.19149 18.2593 2.13008C19.2127 3.06906 19.7505 4.34504 19.7505 5.67796C19.7505 7.00999 19.2135 8.28515 18.2613 9.22394L18.2593 9.22584L10.0005 17.4763L1.73968 9.22392C0.787496 8.28512 0.250488 7.00998 0.250488 5.67796C0.250488 4.34504 0.78823 3.06906 1.74163 2.13008ZM5.32771 2.1662C4.37531 2.1662 3.46419 2.53892 2.79417 3.1988C2.12455 3.85829 1.75049 4.75031 1.75049 5.67796C1.75049 6.60562 2.12455 7.49764 2.79417 8.15713L2.79797 8.16087L10.0005 15.3561L17.2068 8.15712C17.8764 7.49762 18.2505 6.60562 18.2505 5.67796C18.2505 4.75031 17.8764 3.85829 17.2068 3.1988C16.5368 2.53892 15.6257 2.1662 14.6733 2.1662C13.7209 2.1662 12.8097 2.53892 12.1397 3.1988L12.1302 3.20814L10.0005 5.16165L7.87073 3.20814L7.86124 3.1988C7.19123 2.53892 6.2801 2.1662 5.32771 2.1662Z" fill="#232229"/>
+<path d="M2.79417 3.1988C3.46419 2.53892 4.37531 2.1662 5.32771 2.1662C6.2801 2.1662 7.19123 2.53892 7.86124 3.1988L7.87073 3.20814L10.0005 5.16165L12.1302 3.20814L12.1397 3.1988C12.8097 2.53892 13.7209 2.1662 14.6733 2.1662C15.6257 2.1662 16.5368 2.53892 17.2068 3.1988C17.8764 3.85829 18.2505 4.75031 18.2505 5.67796C18.2505 6.60562 17.8764 7.49762 17.2068 8.15712L10.0005 15.3561L2.79797 8.16087L2.79417 8.15713C2.12455 7.49764 1.75049 6.60562 1.75049 5.67796C1.75049 4.75031 2.12455 3.85829 2.79417 3.1988Z" fill="#232229"/>
+</svg>
+
+                        <svg class="deflike" width="21" height="18" viewBox="0 0 21 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                          <path fill-rule="evenodd" clip-rule="evenodd" d="M2.24212 1.96389C3.19513 1.02529 4.48529 0.5 5.8282 0.5C7.16646 0.5 8.45235 1.02167 9.40439 1.95418L10.501 2.96001L11.5976 1.95418C12.5496 1.02167 13.8355 0.5 15.1738 0.5C16.5167 0.5 17.8068 1.02529 18.7598 1.96389C19.7132 2.90286 20.251 4.17884 20.251 5.51177C20.251 6.84379 19.714 8.11895 18.7618 9.05774C18.7611 9.05838 18.7605 9.05901 18.7598 9.05964L10.501 17.3101L2.24017 9.05772C1.28798 8.11893 0.750977 6.84378 0.750977 5.51177C0.750977 4.17884 1.28872 2.90286 2.24212 1.96389ZM5.8282 2C4.8758 2 3.96467 2.37272 3.29466 3.0326C2.62504 3.69209 2.25098 4.58411 2.25098 5.51177C2.25098 6.43942 2.62504 7.33144 3.29466 7.99093L3.29846 7.99468L10.501 15.1899L17.7073 7.99092C18.3769 7.33143 18.751 6.43942 18.751 5.51177C18.751 4.58411 18.3769 3.69209 17.7073 3.0326C17.0373 2.37272 16.1262 2 15.1738 2C14.2214 2 13.3102 2.37272 12.6402 3.0326L12.6307 3.04194L10.501 4.99545L8.37122 3.04194L8.36173 3.0326C7.69172 2.37272 6.78059 2 5.8282 2Z" fill="#232229"/>
+                        </svg>                    
+                      </i>
+                    </div>
+                    <a href="#" class="product-card__info">
+                      <h3 class="product-card__title">Название товара</h3>
+                      <div class="product-card__price">
+                        <div class="product-card__price-current">
+                          <span>12 000₽</span>
+                          <div class="product-card__discount">-25%</div>
+                        </div>
+                        <span class="product-card__price-old">16 000₽</span>
+                      </div>
+                    </a>
+      
+                    <div class="product-card__footer">
+                      <div class="product-card__colors">
+                        <a href="" class="product-card__colors-item" style="background-color: #3B3465;"></a>
+                        <a href="" class="product-card__colors-item" style="background-color: #34654F;"></a>
+                        <a href="" class="product-card__colors-item" style="background-color: #BA6868;"></a>
+                        <a href="" class="product-card__colors-item" style="background-color: #232229;"></a>
+                        <a href="" class="product-card__colors-item" style="background-color: #FFFFFF;"></a>
+                      </div>
+                      <div class="product-card__sizes">
+                        <a href="" class="product-card__sizes-item">
+                          S
+                        </a>
+                        <a href="" class="product-card__sizes-item">
+                          M
+                        </a>
+                        <a href="" class="product-card__sizes-item">
+                          L
+                        </a>
+                        <a href="" class="product-card__sizes-item">
+                          XL
+                        </a>
+                        <a href="" class="product-card__sizes-item">
+                          2XL
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+            </div>
+            <div class="catalogpage__col">
+                <div class="product-card">
+                    <div class="product-card__image">
+                      <a href="#" class="product-card__slider">
+                        <div class="product-card__slider-track">
+                          <div class="product-card__slide">
+                            <img src="<%=require('@img/products/product1.jpg')%>" alt="Название товара">
+                          </div>
+                          <div class="product-card__slide">
+                            <img src="<%=require('@img/blog/blog1.jpg')%>" alt="Название товара">
+                          </div>
+                          <div class="product-card__slide">
+                            <img src="<%=require('@img/products/product1.jpg')%>" alt="Название товара">
+                          </div>
+                        </div>
+                        <div class="product-card__pagination">
+                          <span class="product-card__pagination-dot active"></span>
+                          <span class="product-card__pagination-dot"></span>
+                          <span class="product-card__pagination-dot"></span>
+                        </div>
+                      </a>
+                      <div class="product-card__tags">
+                        <span class="product-card__tag">Новинка</span>
+                        <span class="product-card__tag">Предзаказ</span>
+                      </div>
+                      <i class="product-card__like">
+                        <svg class="activelike" width="20" height="18" viewBox="0 0 20 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path fill-rule="evenodd" clip-rule="evenodd" d="M1.74163 2.13008C2.69464 1.19149 3.9848 0.666199 5.32771 0.666199C6.66597 0.666199 7.95186 1.18787 8.9039 2.12038L10.0005 3.12621L11.0971 2.12038C12.0491 1.18787 13.335 0.666199 14.6733 0.666199C16.0162 0.666199 17.3063 1.19149 18.2593 2.13008C19.2127 3.06906 19.7505 4.34504 19.7505 5.67796C19.7505 7.00999 19.2135 8.28515 18.2613 9.22394L18.2593 9.22584L10.0005 17.4763L1.73968 9.22392C0.787496 8.28512 0.250488 7.00998 0.250488 5.67796C0.250488 4.34504 0.78823 3.06906 1.74163 2.13008ZM5.32771 2.1662C4.37531 2.1662 3.46419 2.53892 2.79417 3.1988C2.12455 3.85829 1.75049 4.75031 1.75049 5.67796C1.75049 6.60562 2.12455 7.49764 2.79417 8.15713L2.79797 8.16087L10.0005 15.3561L17.2068 8.15712C17.8764 7.49762 18.2505 6.60562 18.2505 5.67796C18.2505 4.75031 17.8764 3.85829 17.2068 3.1988C16.5368 2.53892 15.6257 2.1662 14.6733 2.1662C13.7209 2.1662 12.8097 2.53892 12.1397 3.1988L12.1302 3.20814L10.0005 5.16165L7.87073 3.20814L7.86124 3.1988C7.19123 2.53892 6.2801 2.1662 5.32771 2.1662Z" fill="#232229"/>
+<path d="M2.79417 3.1988C3.46419 2.53892 4.37531 2.1662 5.32771 2.1662C6.2801 2.1662 7.19123 2.53892 7.86124 3.1988L7.87073 3.20814L10.0005 5.16165L12.1302 3.20814L12.1397 3.1988C12.8097 2.53892 13.7209 2.1662 14.6733 2.1662C15.6257 2.1662 16.5368 2.53892 17.2068 3.1988C17.8764 3.85829 18.2505 4.75031 18.2505 5.67796C18.2505 6.60562 17.8764 7.49762 17.2068 8.15712L10.0005 15.3561L2.79797 8.16087L2.79417 8.15713C2.12455 7.49764 1.75049 6.60562 1.75049 5.67796C1.75049 4.75031 2.12455 3.85829 2.79417 3.1988Z" fill="#232229"/>
+</svg>
+
+                        <svg class="deflike" width="21" height="18" viewBox="0 0 21 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                          <path fill-rule="evenodd" clip-rule="evenodd" d="M2.24212 1.96389C3.19513 1.02529 4.48529 0.5 5.8282 0.5C7.16646 0.5 8.45235 1.02167 9.40439 1.95418L10.501 2.96001L11.5976 1.95418C12.5496 1.02167 13.8355 0.5 15.1738 0.5C16.5167 0.5 17.8068 1.02529 18.7598 1.96389C19.7132 2.90286 20.251 4.17884 20.251 5.51177C20.251 6.84379 19.714 8.11895 18.7618 9.05774C18.7611 9.05838 18.7605 9.05901 18.7598 9.05964L10.501 17.3101L2.24017 9.05772C1.28798 8.11893 0.750977 6.84378 0.750977 5.51177C0.750977 4.17884 1.28872 2.90286 2.24212 1.96389ZM5.8282 2C4.8758 2 3.96467 2.37272 3.29466 3.0326C2.62504 3.69209 2.25098 4.58411 2.25098 5.51177C2.25098 6.43942 2.62504 7.33144 3.29466 7.99093L3.29846 7.99468L10.501 15.1899L17.7073 7.99092C18.3769 7.33143 18.751 6.43942 18.751 5.51177C18.751 4.58411 18.3769 3.69209 17.7073 3.0326C17.0373 2.37272 16.1262 2 15.1738 2C14.2214 2 13.3102 2.37272 12.6402 3.0326L12.6307 3.04194L10.501 4.99545L8.37122 3.04194L8.36173 3.0326C7.69172 2.37272 6.78059 2 5.8282 2Z" fill="#232229"/>
+                        </svg>                    
+                      </i>
+                    </div>
+                    <a href="#" class="product-card__info">
+                      <h3 class="product-card__title">Название товара</h3>
+                      <div class="product-card__price">
+                        <div class="product-card__price-current">
+                          <span>12 000₽</span>
+                          <div class="product-card__discount">-25%</div>
+                        </div>
+                        <span class="product-card__price-old">16 000₽</span>
+                      </div>
+                    </a>
+      
+                    <div class="product-card__footer">
+                      <div class="product-card__colors">
+                        <a href="" class="product-card__colors-item" style="background-color: #3B3465;"></a>
+                        <a href="" class="product-card__colors-item" style="background-color: #34654F;"></a>
+                        <a href="" class="product-card__colors-item" style="background-color: #BA6868;"></a>
+                        <a href="" class="product-card__colors-item" style="background-color: #232229;"></a>
+                        <a href="" class="product-card__colors-item" style="background-color: #FFFFFF;"></a>
+                      </div>
+                      <div class="product-card__sizes">
+                        <a href="" class="product-card__sizes-item">
+                          S
+                        </a>
+                        <a href="" class="product-card__sizes-item">
+                          M
+                        </a>
+                        <a href="" class="product-card__sizes-item">
+                          L
+                        </a>
+                        <a href="" class="product-card__sizes-item">
+                          XL
+                        </a>
+                        <a href="" class="product-card__sizes-item">
+                          2XL
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+            </div>
+            <div class="catalogpage__col">
+                <div class="product-card">
+                    <div class="product-card__image">
+                      <a href="#" class="product-card__slider">
+                        <div class="product-card__slider-track">
+                          <div class="product-card__slide">
+                            <img src="<%=require('@img/products/product1.jpg')%>" alt="Название товара">
+                          </div>
+                          <div class="product-card__slide">
+                            <img src="<%=require('@img/blog/blog1.jpg')%>" alt="Название товара">
+                          </div>
+                          <div class="product-card__slide">
+                            <img src="<%=require('@img/products/product1.jpg')%>" alt="Название товара">
+                          </div>
+                        </div>
+                        <div class="product-card__pagination">
+                          <span class="product-card__pagination-dot active"></span>
+                          <span class="product-card__pagination-dot"></span>
+                          <span class="product-card__pagination-dot"></span>
+                        </div>
+                      </a>
+                      <div class="product-card__tags">
+                        <span class="product-card__tag">Новинка</span>
+                        <span class="product-card__tag">Предзаказ</span>
+                      </div>
+                      <i class="product-card__like active">
+                        <svg class="activelike" width="20" height="18" viewBox="0 0 20 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path fill-rule="evenodd" clip-rule="evenodd" d="M1.74163 2.13008C2.69464 1.19149 3.9848 0.666199 5.32771 0.666199C6.66597 0.666199 7.95186 1.18787 8.9039 2.12038L10.0005 3.12621L11.0971 2.12038C12.0491 1.18787 13.335 0.666199 14.6733 0.666199C16.0162 0.666199 17.3063 1.19149 18.2593 2.13008C19.2127 3.06906 19.7505 4.34504 19.7505 5.67796C19.7505 7.00999 19.2135 8.28515 18.2613 9.22394L18.2593 9.22584L10.0005 17.4763L1.73968 9.22392C0.787496 8.28512 0.250488 7.00998 0.250488 5.67796C0.250488 4.34504 0.78823 3.06906 1.74163 2.13008ZM5.32771 2.1662C4.37531 2.1662 3.46419 2.53892 2.79417 3.1988C2.12455 3.85829 1.75049 4.75031 1.75049 5.67796C1.75049 6.60562 2.12455 7.49764 2.79417 8.15713L2.79797 8.16087L10.0005 15.3561L17.2068 8.15712C17.8764 7.49762 18.2505 6.60562 18.2505 5.67796C18.2505 4.75031 17.8764 3.85829 17.2068 3.1988C16.5368 2.53892 15.6257 2.1662 14.6733 2.1662C13.7209 2.1662 12.8097 2.53892 12.1397 3.1988L12.1302 3.20814L10.0005 5.16165L7.87073 3.20814L7.86124 3.1988C7.19123 2.53892 6.2801 2.1662 5.32771 2.1662Z" fill="#232229"/>
+<path d="M2.79417 3.1988C3.46419 2.53892 4.37531 2.1662 5.32771 2.1662C6.2801 2.1662 7.19123 2.53892 7.86124 3.1988L7.87073 3.20814L10.0005 5.16165L12.1302 3.20814L12.1397 3.1988C12.8097 2.53892 13.7209 2.1662 14.6733 2.1662C15.6257 2.1662 16.5368 2.53892 17.2068 3.1988C17.8764 3.85829 18.2505 4.75031 18.2505 5.67796C18.2505 6.60562 17.8764 7.49762 17.2068 8.15712L10.0005 15.3561L2.79797 8.16087L2.79417 8.15713C2.12455 7.49764 1.75049 6.60562 1.75049 5.67796C1.75049 4.75031 2.12455 3.85829 2.79417 3.1988Z" fill="#232229"/>
+</svg>
+
+                        <svg class="deflike" width="21" height="18" viewBox="0 0 21 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                          <path fill-rule="evenodd" clip-rule="evenodd" d="M2.24212 1.96389C3.19513 1.02529 4.48529 0.5 5.8282 0.5C7.16646 0.5 8.45235 1.02167 9.40439 1.95418L10.501 2.96001L11.5976 1.95418C12.5496 1.02167 13.8355 0.5 15.1738 0.5C16.5167 0.5 17.8068 1.02529 18.7598 1.96389C19.7132 2.90286 20.251 4.17884 20.251 5.51177C20.251 6.84379 19.714 8.11895 18.7618 9.05774C18.7611 9.05838 18.7605 9.05901 18.7598 9.05964L10.501 17.3101L2.24017 9.05772C1.28798 8.11893 0.750977 6.84378 0.750977 5.51177C0.750977 4.17884 1.28872 2.90286 2.24212 1.96389ZM5.8282 2C4.8758 2 3.96467 2.37272 3.29466 3.0326C2.62504 3.69209 2.25098 4.58411 2.25098 5.51177C2.25098 6.43942 2.62504 7.33144 3.29466 7.99093L3.29846 7.99468L10.501 15.1899L17.7073 7.99092C18.3769 7.33143 18.751 6.43942 18.751 5.51177C18.751 4.58411 18.3769 3.69209 17.7073 3.0326C17.0373 2.37272 16.1262 2 15.1738 2C14.2214 2 13.3102 2.37272 12.6402 3.0326L12.6307 3.04194L10.501 4.99545L8.37122 3.04194L8.36173 3.0326C7.69172 2.37272 6.78059 2 5.8282 2Z" fill="#232229"/>
+                        </svg>                    
+                      </i>
+                    </div>
+                    <a href="#" class="product-card__info">
+                      <h3 class="product-card__title">Название товара</h3>
+                      <div class="product-card__price">
+                        <div class="product-card__price-current">
+                          <span>12 000₽</span>
+                          <div class="product-card__discount">-25%</div>
+                        </div>
+                        <span class="product-card__price-old">16 000₽</span>
+                      </div>
+                    </a>
+      
+                    <div class="product-card__footer">
+                      <div class="product-card__colors">
+                        <a href="" class="product-card__colors-item" style="background-color: #3B3465;"></a>
+                        <a href="" class="product-card__colors-item" style="background-color: #34654F;"></a>
+                        <a href="" class="product-card__colors-item" style="background-color: #BA6868;"></a>
+                        <a href="" class="product-card__colors-item" style="background-color: #232229;"></a>
+                        <a href="" class="product-card__colors-item" style="background-color: #FFFFFF;"></a>
+                      </div>
+                      <div class="product-card__sizes">
+                        <a href="" class="product-card__sizes-item">
+                          S
+                        </a>
+                        <a href="" class="product-card__sizes-item">
+                          M
+                        </a>
+                        <a href="" class="product-card__sizes-item">
+                          L
+                        </a>
+                        <a href="" class="product-card__sizes-item">
+                          XL
+                        </a>
+                        <a href="" class="product-card__sizes-item">
+                          2XL
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+            </div>
+            <div class="catalogpage__col">
+                <div class="product-card">
+                    <div class="product-card__image">
+                      <a href="#" class="product-card__slider">
+                        <div class="product-card__slider-track">
+                          <div class="product-card__slide">
+                            <img src="<%=require('@img/products/product1.jpg')%>" alt="Название товара">
+                          </div>
+                          <div class="product-card__slide">
+                            <img src="<%=require('@img/blog/blog1.jpg')%>" alt="Название товара">
+                          </div>
+                          <div class="product-card__slide">
+                            <img src="<%=require('@img/products/product1.jpg')%>" alt="Название товара">
+                          </div>
+                        </div>
+                        <div class="product-card__pagination">
+                          <span class="product-card__pagination-dot active"></span>
+                          <span class="product-card__pagination-dot"></span>
+                          <span class="product-card__pagination-dot"></span>
+                        </div>
+                      </a>
+                      <div class="product-card__tags">
+                        <span class="product-card__tag">Новинка</span>
+                        <span class="product-card__tag">Предзаказ</span>
+                      </div>
+                      <i class="product-card__like">
+                        <svg class="activelike" width="20" height="18" viewBox="0 0 20 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path fill-rule="evenodd" clip-rule="evenodd" d="M1.74163 2.13008C2.69464 1.19149 3.9848 0.666199 5.32771 0.666199C6.66597 0.666199 7.95186 1.18787 8.9039 2.12038L10.0005 3.12621L11.0971 2.12038C12.0491 1.18787 13.335 0.666199 14.6733 0.666199C16.0162 0.666199 17.3063 1.19149 18.2593 2.13008C19.2127 3.06906 19.7505 4.34504 19.7505 5.67796C19.7505 7.00999 19.2135 8.28515 18.2613 9.22394L18.2593 9.22584L10.0005 17.4763L1.73968 9.22392C0.787496 8.28512 0.250488 7.00998 0.250488 5.67796C0.250488 4.34504 0.78823 3.06906 1.74163 2.13008ZM5.32771 2.1662C4.37531 2.1662 3.46419 2.53892 2.79417 3.1988C2.12455 3.85829 1.75049 4.75031 1.75049 5.67796C1.75049 6.60562 2.12455 7.49764 2.79417 8.15713L2.79797 8.16087L10.0005 15.3561L17.2068 8.15712C17.8764 7.49762 18.2505 6.60562 18.2505 5.67796C18.2505 4.75031 17.8764 3.85829 17.2068 3.1988C16.5368 2.53892 15.6257 2.1662 14.6733 2.1662C13.7209 2.1662 12.8097 2.53892 12.1397 3.1988L12.1302 3.20814L10.0005 5.16165L7.87073 3.20814L7.86124 3.1988C7.19123 2.53892 6.2801 2.1662 5.32771 2.1662Z" fill="#232229"/>
+<path d="M2.79417 3.1988C3.46419 2.53892 4.37531 2.1662 5.32771 2.1662C6.2801 2.1662 7.19123 2.53892 7.86124 3.1988L7.87073 3.20814L10.0005 5.16165L12.1302 3.20814L12.1397 3.1988C12.8097 2.53892 13.7209 2.1662 14.6733 2.1662C15.6257 2.1662 16.5368 2.53892 17.2068 3.1988C17.8764 3.85829 18.2505 4.75031 18.2505 5.67796C18.2505 6.60562 17.8764 7.49762 17.2068 8.15712L10.0005 15.3561L2.79797 8.16087L2.79417 8.15713C2.12455 7.49764 1.75049 6.60562 1.75049 5.67796C1.75049 4.75031 2.12455 3.85829 2.79417 3.1988Z" fill="#232229"/>
+</svg>
+
+                        <svg class="deflike" width="21" height="18" viewBox="0 0 21 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                          <path fill-rule="evenodd" clip-rule="evenodd" d="M2.24212 1.96389C3.19513 1.02529 4.48529 0.5 5.8282 0.5C7.16646 0.5 8.45235 1.02167 9.40439 1.95418L10.501 2.96001L11.5976 1.95418C12.5496 1.02167 13.8355 0.5 15.1738 0.5C16.5167 0.5 17.8068 1.02529 18.7598 1.96389C19.7132 2.90286 20.251 4.17884 20.251 5.51177C20.251 6.84379 19.714 8.11895 18.7618 9.05774C18.7611 9.05838 18.7605 9.05901 18.7598 9.05964L10.501 17.3101L2.24017 9.05772C1.28798 8.11893 0.750977 6.84378 0.750977 5.51177C0.750977 4.17884 1.28872 2.90286 2.24212 1.96389ZM5.8282 2C4.8758 2 3.96467 2.37272 3.29466 3.0326C2.62504 3.69209 2.25098 4.58411 2.25098 5.51177C2.25098 6.43942 2.62504 7.33144 3.29466 7.99093L3.29846 7.99468L10.501 15.1899L17.7073 7.99092C18.3769 7.33143 18.751 6.43942 18.751 5.51177C18.751 4.58411 18.3769 3.69209 17.7073 3.0326C17.0373 2.37272 16.1262 2 15.1738 2C14.2214 2 13.3102 2.37272 12.6402 3.0326L12.6307 3.04194L10.501 4.99545L8.37122 3.04194L8.36173 3.0326C7.69172 2.37272 6.78059 2 5.8282 2Z" fill="#232229"/>
+                        </svg>                    
+                      </i>
+                    </div>
+                    <a href="#" class="product-card__info">
+                      <h3 class="product-card__title">Название товара</h3>
+                      <div class="product-card__price">
+                        <div class="product-card__price-current">
+                          <span>12 000₽</span>
+                          <div class="product-card__discount">-25%</div>
+                        </div>
+                        <span class="product-card__price-old">16 000₽</span>
+                      </div>
+                    </a>
+      
+                    <div class="product-card__footer">
+                      <div class="product-card__colors">
+                        <a href="" class="product-card__colors-item" style="background-color: #3B3465;"></a>
+                        <a href="" class="product-card__colors-item" style="background-color: #34654F;"></a>
+                        <a href="" class="product-card__colors-item" style="background-color: #BA6868;"></a>
+                        <a href="" class="product-card__colors-item" style="background-color: #232229;"></a>
+                        <a href="" class="product-card__colors-item" style="background-color: #FFFFFF;"></a>
+                      </div>
+                      <div class="product-card__sizes">
+                        <a href="" class="product-card__sizes-item">
+                          S
+                        </a>
+                        <a href="" class="product-card__sizes-item">
+                          M
+                        </a>
+                        <a href="" class="product-card__sizes-item">
+                          L
+                        </a>
+                        <a href="" class="product-card__sizes-item">
+                          XL
+                        </a>
+                        <a href="" class="product-card__sizes-item">
+                          2XL
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+            </div>
+            <div class="catalogpage__col">
+                <div class="product-card">
+                    <div class="product-card__image">
+                      <a href="#" class="product-card__slider">
+                        <div class="product-card__slider-track">
+                          <div class="product-card__slide">
+                            <img src="<%=require('@img/products/product1.jpg')%>" alt="Название товара">
+                          </div>
+                          <div class="product-card__slide">
+                            <img src="<%=require('@img/blog/blog1.jpg')%>" alt="Название товара">
+                          </div>
+                          <div class="product-card__slide">
+                            <img src="<%=require('@img/products/product1.jpg')%>" alt="Название товара">
+                          </div>
+                        </div>
+                        <div class="product-card__pagination">
+                          <span class="product-card__pagination-dot active"></span>
+                          <span class="product-card__pagination-dot"></span>
+                          <span class="product-card__pagination-dot"></span>
+                        </div>
+                      </a>
+                      <div class="product-card__tags">
+                        <span class="product-card__tag">Новинка</span>
+                        <span class="product-card__tag">Предзаказ</span>
+                      </div>
+                      <i class="product-card__like active">
+                        <svg class="activelike" width="20" height="18" viewBox="0 0 20 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path fill-rule="evenodd" clip-rule="evenodd" d="M1.74163 2.13008C2.69464 1.19149 3.9848 0.666199 5.32771 0.666199C6.66597 0.666199 7.95186 1.18787 8.9039 2.12038L10.0005 3.12621L11.0971 2.12038C12.0491 1.18787 13.335 0.666199 14.6733 0.666199C16.0162 0.666199 17.3063 1.19149 18.2593 2.13008C19.2127 3.06906 19.7505 4.34504 19.7505 5.67796C19.7505 7.00999 19.2135 8.28515 18.2613 9.22394L18.2593 9.22584L10.0005 17.4763L1.73968 9.22392C0.787496 8.28512 0.250488 7.00998 0.250488 5.67796C0.250488 4.34504 0.78823 3.06906 1.74163 2.13008ZM5.32771 2.1662C4.37531 2.1662 3.46419 2.53892 2.79417 3.1988C2.12455 3.85829 1.75049 4.75031 1.75049 5.67796C1.75049 6.60562 2.12455 7.49764 2.79417 8.15713L2.79797 8.16087L10.0005 15.3561L17.2068 8.15712C17.8764 7.49762 18.2505 6.60562 18.2505 5.67796C18.2505 4.75031 17.8764 3.85829 17.2068 3.1988C16.5368 2.53892 15.6257 2.1662 14.6733 2.1662C13.7209 2.1662 12.8097 2.53892 12.1397 3.1988L12.1302 3.20814L10.0005 5.16165L7.87073 3.20814L7.86124 3.1988C7.19123 2.53892 6.2801 2.1662 5.32771 2.1662Z" fill="#232229"/>
+<path d="M2.79417 3.1988C3.46419 2.53892 4.37531 2.1662 5.32771 2.1662C6.2801 2.1662 7.19123 2.53892 7.86124 3.1988L7.87073 3.20814L10.0005 5.16165L12.1302 3.20814L12.1397 3.1988C12.8097 2.53892 13.7209 2.1662 14.6733 2.1662C15.6257 2.1662 16.5368 2.53892 17.2068 3.1988C17.8764 3.85829 18.2505 4.75031 18.2505 5.67796C18.2505 6.60562 17.8764 7.49762 17.2068 8.15712L10.0005 15.3561L2.79797 8.16087L2.79417 8.15713C2.12455 7.49764 1.75049 6.60562 1.75049 5.67796C1.75049 4.75031 2.12455 3.85829 2.79417 3.1988Z" fill="#232229"/>
+</svg>
+
+                        <svg class="deflike" width="21" height="18" viewBox="0 0 21 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                          <path fill-rule="evenodd" clip-rule="evenodd" d="M2.24212 1.96389C3.19513 1.02529 4.48529 0.5 5.8282 0.5C7.16646 0.5 8.45235 1.02167 9.40439 1.95418L10.501 2.96001L11.5976 1.95418C12.5496 1.02167 13.8355 0.5 15.1738 0.5C16.5167 0.5 17.8068 1.02529 18.7598 1.96389C19.7132 2.90286 20.251 4.17884 20.251 5.51177C20.251 6.84379 19.714 8.11895 18.7618 9.05774C18.7611 9.05838 18.7605 9.05901 18.7598 9.05964L10.501 17.3101L2.24017 9.05772C1.28798 8.11893 0.750977 6.84378 0.750977 5.51177C0.750977 4.17884 1.28872 2.90286 2.24212 1.96389ZM5.8282 2C4.8758 2 3.96467 2.37272 3.29466 3.0326C2.62504 3.69209 2.25098 4.58411 2.25098 5.51177C2.25098 6.43942 2.62504 7.33144 3.29466 7.99093L3.29846 7.99468L10.501 15.1899L17.7073 7.99092C18.3769 7.33143 18.751 6.43942 18.751 5.51177C18.751 4.58411 18.3769 3.69209 17.7073 3.0326C17.0373 2.37272 16.1262 2 15.1738 2C14.2214 2 13.3102 2.37272 12.6402 3.0326L12.6307 3.04194L10.501 4.99545L8.37122 3.04194L8.36173 3.0326C7.69172 2.37272 6.78059 2 5.8282 2Z" fill="#232229"/>
+                        </svg>                    
+                      </i>
+                    </div>
+                    <a href="#" class="product-card__info">
+                      <h3 class="product-card__title">Название товара</h3>
+                      <div class="product-card__price">
+                        <div class="product-card__price-current">
+                          <span>12 000₽</span>
+                          <div class="product-card__discount">-25%</div>
+                        </div>
+                        <span class="product-card__price-old">16 000₽</span>
+                      </div>
+                    </a>
+      
+                    <div class="product-card__footer">
+                      <div class="product-card__colors">
+                        <a href="" class="product-card__colors-item" style="background-color: #3B3465;"></a>
+                        <a href="" class="product-card__colors-item" style="background-color: #34654F;"></a>
+                        <a href="" class="product-card__colors-item" style="background-color: #BA6868;"></a>
+                        <a href="" class="product-card__colors-item" style="background-color: #232229;"></a>
+                        <a href="" class="product-card__colors-item" style="background-color: #FFFFFF;"></a>
+                      </div>
+                      <div class="product-card__sizes">
+                        <a href="" class="product-card__sizes-item">
+                          S
+                        </a>
+                        <a href="" class="product-card__sizes-item">
+                          M
+                        </a>
+                        <a href="" class="product-card__sizes-item">
+                          L
+                        </a>
+                        <a href="" class="product-card__sizes-item">
+                          XL
+                        </a>
+                        <a href="" class="product-card__sizes-item">
+                          2XL
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+            </div>
+            <div class="catalogpage__col">
+                <div class="product-card">
+                    <div class="product-card__image">
+                      <a href="#" class="product-card__slider">
+                        <div class="product-card__slider-track">
+                          <div class="product-card__slide">
+                            <img src="<%=require('@img/products/product1.jpg')%>" alt="Название товара">
+                          </div>
+                          <div class="product-card__slide">
+                            <img src="<%=require('@img/blog/blog1.jpg')%>" alt="Название товара">
+                          </div>
+                          <div class="product-card__slide">
+                            <img src="<%=require('@img/products/product1.jpg')%>" alt="Название товара">
+                          </div>
+                        </div>
+                        <div class="product-card__pagination">
+                          <span class="product-card__pagination-dot active"></span>
+                          <span class="product-card__pagination-dot"></span>
+                          <span class="product-card__pagination-dot"></span>
+                        </div>
+                      </a>
+                      <div class="product-card__tags">
+                        <span class="product-card__tag">Новинка</span>
+                        <span class="product-card__tag">Предзаказ</span>
+                      </div>
+                      <i class="product-card__like active">
+                        <svg class="activelike" width="20" height="18" viewBox="0 0 20 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path fill-rule="evenodd" clip-rule="evenodd" d="M1.74163 2.13008C2.69464 1.19149 3.9848 0.666199 5.32771 0.666199C6.66597 0.666199 7.95186 1.18787 8.9039 2.12038L10.0005 3.12621L11.0971 2.12038C12.0491 1.18787 13.335 0.666199 14.6733 0.666199C16.0162 0.666199 17.3063 1.19149 18.2593 2.13008C19.2127 3.06906 19.7505 4.34504 19.7505 5.67796C19.7505 7.00999 19.2135 8.28515 18.2613 9.22394L18.2593 9.22584L10.0005 17.4763L1.73968 9.22392C0.787496 8.28512 0.250488 7.00998 0.250488 5.67796C0.250488 4.34504 0.78823 3.06906 1.74163 2.13008ZM5.32771 2.1662C4.37531 2.1662 3.46419 2.53892 2.79417 3.1988C2.12455 3.85829 1.75049 4.75031 1.75049 5.67796C1.75049 6.60562 2.12455 7.49764 2.79417 8.15713L2.79797 8.16087L10.0005 15.3561L17.2068 8.15712C17.8764 7.49762 18.2505 6.60562 18.2505 5.67796C18.2505 4.75031 17.8764 3.85829 17.2068 3.1988C16.5368 2.53892 15.6257 2.1662 14.6733 2.1662C13.7209 2.1662 12.8097 2.53892 12.1397 3.1988L12.1302 3.20814L10.0005 5.16165L7.87073 3.20814L7.86124 3.1988C7.19123 2.53892 6.2801 2.1662 5.32771 2.1662Z" fill="#232229"/>
+<path d="M2.79417 3.1988C3.46419 2.53892 4.37531 2.1662 5.32771 2.1662C6.2801 2.1662 7.19123 2.53892 7.86124 3.1988L7.87073 3.20814L10.0005 5.16165L12.1302 3.20814L12.1397 3.1988C12.8097 2.53892 13.7209 2.1662 14.6733 2.1662C15.6257 2.1662 16.5368 2.53892 17.2068 3.1988C17.8764 3.85829 18.2505 4.75031 18.2505 5.67796C18.2505 6.60562 17.8764 7.49762 17.2068 8.15712L10.0005 15.3561L2.79797 8.16087L2.79417 8.15713C2.12455 7.49764 1.75049 6.60562 1.75049 5.67796C1.75049 4.75031 2.12455 3.85829 2.79417 3.1988Z" fill="#232229"/>
+</svg>
+
+                        <svg class="deflike" width="21" height="18" viewBox="0 0 21 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                          <path fill-rule="evenodd" clip-rule="evenodd" d="M2.24212 1.96389C3.19513 1.02529 4.48529 0.5 5.8282 0.5C7.16646 0.5 8.45235 1.02167 9.40439 1.95418L10.501 2.96001L11.5976 1.95418C12.5496 1.02167 13.8355 0.5 15.1738 0.5C16.5167 0.5 17.8068 1.02529 18.7598 1.96389C19.7132 2.90286 20.251 4.17884 20.251 5.51177C20.251 6.84379 19.714 8.11895 18.7618 9.05774C18.7611 9.05838 18.7605 9.05901 18.7598 9.05964L10.501 17.3101L2.24017 9.05772C1.28798 8.11893 0.750977 6.84378 0.750977 5.51177C0.750977 4.17884 1.28872 2.90286 2.24212 1.96389ZM5.8282 2C4.8758 2 3.96467 2.37272 3.29466 3.0326C2.62504 3.69209 2.25098 4.58411 2.25098 5.51177C2.25098 6.43942 2.62504 7.33144 3.29466 7.99093L3.29846 7.99468L10.501 15.1899L17.7073 7.99092C18.3769 7.33143 18.751 6.43942 18.751 5.51177C18.751 4.58411 18.3769 3.69209 17.7073 3.0326C17.0373 2.37272 16.1262 2 15.1738 2C14.2214 2 13.3102 2.37272 12.6402 3.0326L12.6307 3.04194L10.501 4.99545L8.37122 3.04194L8.36173 3.0326C7.69172 2.37272 6.78059 2 5.8282 2Z" fill="#232229"/>
+                        </svg>                    
+                      </i>
+                    </div>
+                    <a href="#" class="product-card__info">
+                      <h3 class="product-card__title">Название товара</h3>
+                      <div class="product-card__price">
+                        <div class="product-card__price-current">
+                          <span>12 000₽</span>
+                          <div class="product-card__discount">-25%</div>
+                        </div>
+                        <span class="product-card__price-old">16 000₽</span>
+                      </div>
+                    </a>
+      
+                    <div class="product-card__footer">
+                      <div class="product-card__colors">
+                        <a href="" class="product-card__colors-item" style="background-color: #3B3465;"></a>
+                        <a href="" class="product-card__colors-item" style="background-color: #34654F;"></a>
+                        <a href="" class="product-card__colors-item" style="background-color: #BA6868;"></a>
+                        <a href="" class="product-card__colors-item" style="background-color: #232229;"></a>
+                        <a href="" class="product-card__colors-item" style="background-color: #FFFFFF;"></a>
+                      </div>
+                      <div class="product-card__sizes">
+                        <a href="" class="product-card__sizes-item">
+                          S
+                        </a>
+                        <a href="" class="product-card__sizes-item">
+                          M
+                        </a>
+                        <a href="" class="product-card__sizes-item">
+                          L
+                        </a>
+                        <a href="" class="product-card__sizes-item">
+                          XL
+                        </a>
+                        <a href="" class="product-card__sizes-item">
+                          2XL
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+            </div>
+            <div class="catalogpage__col">
+                <div class="product-card">
+                    <div class="product-card__image">
+                      <a href="#" class="product-card__slider">
+                        <div class="product-card__slider-track">
+                          <div class="product-card__slide">
+                            <img src="<%=require('@img/products/product1.jpg')%>" alt="Название товара">
+                          </div>
+                          <div class="product-card__slide">
+                            <img src="<%=require('@img/blog/blog1.jpg')%>" alt="Название товара">
+                          </div>
+                          <div class="product-card__slide">
+                            <img src="<%=require('@img/products/product1.jpg')%>" alt="Название товара">
+                          </div>
+                        </div>
+                        <div class="product-card__pagination">
+                          <span class="product-card__pagination-dot active"></span>
+                          <span class="product-card__pagination-dot"></span>
+                          <span class="product-card__pagination-dot"></span>
+                        </div>
+                      </a>
+                      <div class="product-card__tags">
+                        <span class="product-card__tag">Новинка</span>
+                        <span class="product-card__tag">Предзаказ</span>
+                      </div>
+                      <i class="product-card__like active">
+                        <svg class="activelike" width="20" height="18" viewBox="0 0 20 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path fill-rule="evenodd" clip-rule="evenodd" d="M1.74163 2.13008C2.69464 1.19149 3.9848 0.666199 5.32771 0.666199C6.66597 0.666199 7.95186 1.18787 8.9039 2.12038L10.0005 3.12621L11.0971 2.12038C12.0491 1.18787 13.335 0.666199 14.6733 0.666199C16.0162 0.666199 17.3063 1.19149 18.2593 2.13008C19.2127 3.06906 19.7505 4.34504 19.7505 5.67796C19.7505 7.00999 19.2135 8.28515 18.2613 9.22394L18.2593 9.22584L10.0005 17.4763L1.73968 9.22392C0.787496 8.28512 0.250488 7.00998 0.250488 5.67796C0.250488 4.34504 0.78823 3.06906 1.74163 2.13008ZM5.32771 2.1662C4.37531 2.1662 3.46419 2.53892 2.79417 3.1988C2.12455 3.85829 1.75049 4.75031 1.75049 5.67796C1.75049 6.60562 2.12455 7.49764 2.79417 8.15713L2.79797 8.16087L10.0005 15.3561L17.2068 8.15712C17.8764 7.49762 18.2505 6.60562 18.2505 5.67796C18.2505 4.75031 17.8764 3.85829 17.2068 3.1988C16.5368 2.53892 15.6257 2.1662 14.6733 2.1662C13.7209 2.1662 12.8097 2.53892 12.1397 3.1988L12.1302 3.20814L10.0005 5.16165L7.87073 3.20814L7.86124 3.1988C7.19123 2.53892 6.2801 2.1662 5.32771 2.1662Z" fill="#232229"/>
+<path d="M2.79417 3.1988C3.46419 2.53892 4.37531 2.1662 5.32771 2.1662C6.2801 2.1662 7.19123 2.53892 7.86124 3.1988L7.87073 3.20814L10.0005 5.16165L12.1302 3.20814L12.1397 3.1988C12.8097 2.53892 13.7209 2.1662 14.6733 2.1662C15.6257 2.1662 16.5368 2.53892 17.2068 3.1988C17.8764 3.85829 18.2505 4.75031 18.2505 5.67796C18.2505 6.60562 17.8764 7.49762 17.2068 8.15712L10.0005 15.3561L2.79797 8.16087L2.79417 8.15713C2.12455 7.49764 1.75049 6.60562 1.75049 5.67796C1.75049 4.75031 2.12455 3.85829 2.79417 3.1988Z" fill="#232229"/>
+</svg>
+
+                        <svg class="deflike" width="21" height="18" viewBox="0 0 21 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                          <path fill-rule="evenodd" clip-rule="evenodd" d="M2.24212 1.96389C3.19513 1.02529 4.48529 0.5 5.8282 0.5C7.16646 0.5 8.45235 1.02167 9.40439 1.95418L10.501 2.96001L11.5976 1.95418C12.5496 1.02167 13.8355 0.5 15.1738 0.5C16.5167 0.5 17.8068 1.02529 18.7598 1.96389C19.7132 2.90286 20.251 4.17884 20.251 5.51177C20.251 6.84379 19.714 8.11895 18.7618 9.05774C18.7611 9.05838 18.7605 9.05901 18.7598 9.05964L10.501 17.3101L2.24017 9.05772C1.28798 8.11893 0.750977 6.84378 0.750977 5.51177C0.750977 4.17884 1.28872 2.90286 2.24212 1.96389ZM5.8282 2C4.8758 2 3.96467 2.37272 3.29466 3.0326C2.62504 3.69209 2.25098 4.58411 2.25098 5.51177C2.25098 6.43942 2.62504 7.33144 3.29466 7.99093L3.29846 7.99468L10.501 15.1899L17.7073 7.99092C18.3769 7.33143 18.751 6.43942 18.751 5.51177C18.751 4.58411 18.3769 3.69209 17.7073 3.0326C17.0373 2.37272 16.1262 2 15.1738 2C14.2214 2 13.3102 2.37272 12.6402 3.0326L12.6307 3.04194L10.501 4.99545L8.37122 3.04194L8.36173 3.0326C7.69172 2.37272 6.78059 2 5.8282 2Z" fill="#232229"/>
+                        </svg>                    
+                      </i>
+                    </div>
+                    <a href="#" class="product-card__info">
+                      <h3 class="product-card__title">Название товара</h3>
+                      <div class="product-card__price">
+                        <div class="product-card__price-current">
+                          <span>12 000₽</span>
+                          <div class="product-card__discount">-25%</div>
+                        </div>
+                        <span class="product-card__price-old">16 000₽</span>
+                      </div>
+                    </a>
+      
+                    <div class="product-card__footer">
+                      <div class="product-card__colors">
+                        <a href="" class="product-card__colors-item" style="background-color: #3B3465;"></a>
+                        <a href="" class="product-card__colors-item" style="background-color: #34654F;"></a>
+                        <a href="" class="product-card__colors-item" style="background-color: #BA6868;"></a>
+                        <a href="" class="product-card__colors-item" style="background-color: #232229;"></a>
+                        <a href="" class="product-card__colors-item" style="background-color: #FFFFFF;"></a>
+                      </div>
+                      <div class="product-card__sizes">
+                        <a href="" class="product-card__sizes-item">
+                          S
+                        </a>
+                        <a href="" class="product-card__sizes-item">
+                          M
+                        </a>
+                        <a href="" class="product-card__sizes-item">
+                          L
+                        </a>
+                        <a href="" class="product-card__sizes-item">
+                          XL
+                        </a>
+                        <a href="" class="product-card__sizes-item">
+                          2XL
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+            </div>
+            <div class="catalogpage__col">
+                <div class="product-card">
+                    <div class="product-card__image">
+                      <a href="#" class="product-card__slider">
+                        <div class="product-card__slider-track">
+                          <div class="product-card__slide">
+                            <img src="<%=require('@img/products/product1.jpg')%>" alt="Название товара">
+                          </div>
+                          <div class="product-card__slide">
+                            <img src="<%=require('@img/blog/blog1.jpg')%>" alt="Название товара">
+                          </div>
+                          <div class="product-card__slide">
+                            <img src="<%=require('@img/products/product1.jpg')%>" alt="Название товара">
+                          </div>
+                        </div>
+                        <div class="product-card__pagination">
+                          <span class="product-card__pagination-dot active"></span>
+                          <span class="product-card__pagination-dot"></span>
+                          <span class="product-card__pagination-dot"></span>
+                        </div>
+                      </a>
+                      <div class="product-card__tags">
+                        <span class="product-card__tag">Новинка</span>
+                        <span class="product-card__tag">Предзаказ</span>
+                      </div>
+                      <i class="product-card__like active">
+                        <svg class="activelike" width="20" height="18" viewBox="0 0 20 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path fill-rule="evenodd" clip-rule="evenodd" d="M1.74163 2.13008C2.69464 1.19149 3.9848 0.666199 5.32771 0.666199C6.66597 0.666199 7.95186 1.18787 8.9039 2.12038L10.0005 3.12621L11.0971 2.12038C12.0491 1.18787 13.335 0.666199 14.6733 0.666199C16.0162 0.666199 17.3063 1.19149 18.2593 2.13008C19.2127 3.06906 19.7505 4.34504 19.7505 5.67796C19.7505 7.00999 19.2135 8.28515 18.2613 9.22394L18.2593 9.22584L10.0005 17.4763L1.73968 9.22392C0.787496 8.28512 0.250488 7.00998 0.250488 5.67796C0.250488 4.34504 0.78823 3.06906 1.74163 2.13008ZM5.32771 2.1662C4.37531 2.1662 3.46419 2.53892 2.79417 3.1988C2.12455 3.85829 1.75049 4.75031 1.75049 5.67796C1.75049 6.60562 2.12455 7.49764 2.79417 8.15713L2.79797 8.16087L10.0005 15.3561L17.2068 8.15712C17.8764 7.49762 18.2505 6.60562 18.2505 5.67796C18.2505 4.75031 17.8764 3.85829 17.2068 3.1988C16.5368 2.53892 15.6257 2.1662 14.6733 2.1662C13.7209 2.1662 12.8097 2.53892 12.1397 3.1988L12.1302 3.20814L10.0005 5.16165L7.87073 3.20814L7.86124 3.1988C7.19123 2.53892 6.2801 2.1662 5.32771 2.1662Z" fill="#232229"/>
+<path d="M2.79417 3.1988C3.46419 2.53892 4.37531 2.1662 5.32771 2.1662C6.2801 2.1662 7.19123 2.53892 7.86124 3.1988L7.87073 3.20814L10.0005 5.16165L12.1302 3.20814L12.1397 3.1988C12.8097 2.53892 13.7209 2.1662 14.6733 2.1662C15.6257 2.1662 16.5368 2.53892 17.2068 3.1988C17.8764 3.85829 18.2505 4.75031 18.2505 5.67796C18.2505 6.60562 17.8764 7.49762 17.2068 8.15712L10.0005 15.3561L2.79797 8.16087L2.79417 8.15713C2.12455 7.49764 1.75049 6.60562 1.75049 5.67796C1.75049 4.75031 2.12455 3.85829 2.79417 3.1988Z" fill="#232229"/>
+</svg>
+
+                        <svg class="deflike" width="21" height="18" viewBox="0 0 21 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                          <path fill-rule="evenodd" clip-rule="evenodd" d="M2.24212 1.96389C3.19513 1.02529 4.48529 0.5 5.8282 0.5C7.16646 0.5 8.45235 1.02167 9.40439 1.95418L10.501 2.96001L11.5976 1.95418C12.5496 1.02167 13.8355 0.5 15.1738 0.5C16.5167 0.5 17.8068 1.02529 18.7598 1.96389C19.7132 2.90286 20.251 4.17884 20.251 5.51177C20.251 6.84379 19.714 8.11895 18.7618 9.05774C18.7611 9.05838 18.7605 9.05901 18.7598 9.05964L10.501 17.3101L2.24017 9.05772C1.28798 8.11893 0.750977 6.84378 0.750977 5.51177C0.750977 4.17884 1.28872 2.90286 2.24212 1.96389ZM5.8282 2C4.8758 2 3.96467 2.37272 3.29466 3.0326C2.62504 3.69209 2.25098 4.58411 2.25098 5.51177C2.25098 6.43942 2.62504 7.33144 3.29466 7.99093L3.29846 7.99468L10.501 15.1899L17.7073 7.99092C18.3769 7.33143 18.751 6.43942 18.751 5.51177C18.751 4.58411 18.3769 3.69209 17.7073 3.0326C17.0373 2.37272 16.1262 2 15.1738 2C14.2214 2 13.3102 2.37272 12.6402 3.0326L12.6307 3.04194L10.501 4.99545L8.37122 3.04194L8.36173 3.0326C7.69172 2.37272 6.78059 2 5.8282 2Z" fill="#232229"/>
+                        </svg>                    
+                      </i>
+                    </div>
+                    <a href="#" class="product-card__info">
+                      <h3 class="product-card__title">Название товара</h3>
+                      <div class="product-card__price">
+                        <div class="product-card__price-current">
+                          <span>12 000₽</span>
+                          <div class="product-card__discount">-25%</div>
+                        </div>
+                        <span class="product-card__price-old">16 000₽</span>
+                      </div>
+                    </a>
+      
+                    <div class="product-card__footer">
+                      <div class="product-card__colors">
+                        <a href="" class="product-card__colors-item" style="background-color: #3B3465;"></a>
+                        <a href="" class="product-card__colors-item" style="background-color: #34654F;"></a>
+                        <a href="" class="product-card__colors-item" style="background-color: #BA6868;"></a>
+                        <a href="" class="product-card__colors-item" style="background-color: #232229;"></a>
+                        <a href="" class="product-card__colors-item" style="background-color: #FFFFFF;"></a>
+                      </div>
+                      <div class="product-card__sizes">
+                        <a href="" class="product-card__sizes-item">
+                          S
+                        </a>
+                        <a href="" class="product-card__sizes-item">
+                          M
+                        </a>
+                        <a href="" class="product-card__sizes-item">
+                          L
+                        </a>
+                        <a href="" class="product-card__sizes-item">
+                          XL
+                        </a>
+                        <a href="" class="product-card__sizes-item">
+                          2XL
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+            </div>
+            <div class="catalogpage__col">
+                <div class="product-card">
+                    <div class="product-card__image">
+                      <a href="#" class="product-card__slider">
+                        <div class="product-card__slider-track">
+                          <div class="product-card__slide">
+                            <img src="<%=require('@img/products/product1.jpg')%>" alt="Название товара">
+                          </div>
+                          <div class="product-card__slide">
+                            <img src="<%=require('@img/blog/blog1.jpg')%>" alt="Название товара">
+                          </div>
+                          <div class="product-card__slide">
+                            <img src="<%=require('@img/products/product1.jpg')%>" alt="Название товара">
+                          </div>
+                        </div>
+                        <div class="product-card__pagination">
+                          <span class="product-card__pagination-dot active"></span>
+                          <span class="product-card__pagination-dot"></span>
+                          <span class="product-card__pagination-dot"></span>
+                        </div>
+                      </a>
+                      <div class="product-card__tags">
+                        <span class="product-card__tag">Новинка</span>
+                        <span class="product-card__tag">Предзаказ</span>
+                      </div>
+                      <i class="product-card__like active">
+                        <svg class="activelike" width="20" height="18" viewBox="0 0 20 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path fill-rule="evenodd" clip-rule="evenodd" d="M1.74163 2.13008C2.69464 1.19149 3.9848 0.666199 5.32771 0.666199C6.66597 0.666199 7.95186 1.18787 8.9039 2.12038L10.0005 3.12621L11.0971 2.12038C12.0491 1.18787 13.335 0.666199 14.6733 0.666199C16.0162 0.666199 17.3063 1.19149 18.2593 2.13008C19.2127 3.06906 19.7505 4.34504 19.7505 5.67796C19.7505 7.00999 19.2135 8.28515 18.2613 9.22394L18.2593 9.22584L10.0005 17.4763L1.73968 9.22392C0.787496 8.28512 0.250488 7.00998 0.250488 5.67796C0.250488 4.34504 0.78823 3.06906 1.74163 2.13008ZM5.32771 2.1662C4.37531 2.1662 3.46419 2.53892 2.79417 3.1988C2.12455 3.85829 1.75049 4.75031 1.75049 5.67796C1.75049 6.60562 2.12455 7.49764 2.79417 8.15713L2.79797 8.16087L10.0005 15.3561L17.2068 8.15712C17.8764 7.49762 18.2505 6.60562 18.2505 5.67796C18.2505 4.75031 17.8764 3.85829 17.2068 3.1988C16.5368 2.53892 15.6257 2.1662 14.6733 2.1662C13.7209 2.1662 12.8097 2.53892 12.1397 3.1988L12.1302 3.20814L10.0005 5.16165L7.87073 3.20814L7.86124 3.1988C7.19123 2.53892 6.2801 2.1662 5.32771 2.1662Z" fill="#232229"/>
+<path d="M2.79417 3.1988C3.46419 2.53892 4.37531 2.1662 5.32771 2.1662C6.2801 2.1662 7.19123 2.53892 7.86124 3.1988L7.87073 3.20814L10.0005 5.16165L12.1302 3.20814L12.1397 3.1988C12.8097 2.53892 13.7209 2.1662 14.6733 2.1662C15.6257 2.1662 16.5368 2.53892 17.2068 3.1988C17.8764 3.85829 18.2505 4.75031 18.2505 5.67796C18.2505 6.60562 17.8764 7.49762 17.2068 8.15712L10.0005 15.3561L2.79797 8.16087L2.79417 8.15713C2.12455 7.49764 1.75049 6.60562 1.75049 5.67796C1.75049 4.75031 2.12455 3.85829 2.79417 3.1988Z" fill="#232229"/>
+</svg>
+
+                        <svg class="deflike" width="21" height="18" viewBox="0 0 21 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                          <path fill-rule="evenodd" clip-rule="evenodd" d="M2.24212 1.96389C3.19513 1.02529 4.48529 0.5 5.8282 0.5C7.16646 0.5 8.45235 1.02167 9.40439 1.95418L10.501 2.96001L11.5976 1.95418C12.5496 1.02167 13.8355 0.5 15.1738 0.5C16.5167 0.5 17.8068 1.02529 18.7598 1.96389C19.7132 2.90286 20.251 4.17884 20.251 5.51177C20.251 6.84379 19.714 8.11895 18.7618 9.05774C18.7611 9.05838 18.7605 9.05901 18.7598 9.05964L10.501 17.3101L2.24017 9.05772C1.28798 8.11893 0.750977 6.84378 0.750977 5.51177C0.750977 4.17884 1.28872 2.90286 2.24212 1.96389ZM5.8282 2C4.8758 2 3.96467 2.37272 3.29466 3.0326C2.62504 3.69209 2.25098 4.58411 2.25098 5.51177C2.25098 6.43942 2.62504 7.33144 3.29466 7.99093L3.29846 7.99468L10.501 15.1899L17.7073 7.99092C18.3769 7.33143 18.751 6.43942 18.751 5.51177C18.751 4.58411 18.3769 3.69209 17.7073 3.0326C17.0373 2.37272 16.1262 2 15.1738 2C14.2214 2 13.3102 2.37272 12.6402 3.0326L12.6307 3.04194L10.501 4.99545L8.37122 3.04194L8.36173 3.0326C7.69172 2.37272 6.78059 2 5.8282 2Z" fill="#232229"/>
+                        </svg>                    
+                      </i>
+                    </div>
+                    <a href="#" class="product-card__info">
+                      <h3 class="product-card__title">Название товара</h3>
+                      <div class="product-card__price">
+                        <div class="product-card__price-current">
+                          <span>12 000₽</span>
+                          <div class="product-card__discount">-25%</div>
+                        </div>
+                        <span class="product-card__price-old">16 000₽</span>
+                      </div>
+                    </a>
+      
+                    <div class="product-card__footer">
+                      <div class="product-card__colors">
+                        <a href="" class="product-card__colors-item" style="background-color: #3B3465;"></a>
+                        <a href="" class="product-card__colors-item" style="background-color: #34654F;"></a>
+                        <a href="" class="product-card__colors-item" style="background-color: #BA6868;"></a>
+                        <a href="" class="product-card__colors-item" style="background-color: #232229;"></a>
+                        <a href="" class="product-card__colors-item" style="background-color: #FFFFFF;"></a>
+                      </div>
+                      <div class="product-card__sizes">
+                        <a href="" class="product-card__sizes-item">
+                          S
+                        </a>
+                        <a href="" class="product-card__sizes-item">
+                          M
+                        </a>
+                        <a href="" class="product-card__sizes-item">
+                          L
+                        </a>
+                        <a href="" class="product-card__sizes-item">
+                          XL
+                        </a>
+                        <a href="" class="product-card__sizes-item">
+                          2XL
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+            </div>
+            <div class="catalogpage__col">
+                <div class="product-card">
+                    <div class="product-card__image">
+                      <a href="#" class="product-card__slider">
+                        <div class="product-card__slider-track">
+                          <div class="product-card__slide">
+                            <img src="<%=require('@img/products/product1.jpg')%>" alt="Название товара">
+                          </div>
+                          <div class="product-card__slide">
+                            <img src="<%=require('@img/blog/blog1.jpg')%>" alt="Название товара">
+                          </div>
+                          <div class="product-card__slide">
+                            <img src="<%=require('@img/products/product1.jpg')%>" alt="Название товара">
+                          </div>
+                        </div>
+                        <div class="product-card__pagination">
+                          <span class="product-card__pagination-dot active"></span>
+                          <span class="product-card__pagination-dot"></span>
+                          <span class="product-card__pagination-dot"></span>
+                        </div>
+                      </a>
+                      <div class="product-card__tags">
+                        <span class="product-card__tag">Новинка</span>
+                        <span class="product-card__tag">Предзаказ</span>
+                      </div>
+                      <i class="product-card__like active">
+                        <svg class="activelike" width="20" height="18" viewBox="0 0 20 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path fill-rule="evenodd" clip-rule="evenodd" d="M1.74163 2.13008C2.69464 1.19149 3.9848 0.666199 5.32771 0.666199C6.66597 0.666199 7.95186 1.18787 8.9039 2.12038L10.0005 3.12621L11.0971 2.12038C12.0491 1.18787 13.335 0.666199 14.6733 0.666199C16.0162 0.666199 17.3063 1.19149 18.2593 2.13008C19.2127 3.06906 19.7505 4.34504 19.7505 5.67796C19.7505 7.00999 19.2135 8.28515 18.2613 9.22394L18.2593 9.22584L10.0005 17.4763L1.73968 9.22392C0.787496 8.28512 0.250488 7.00998 0.250488 5.67796C0.250488 4.34504 0.78823 3.06906 1.74163 2.13008ZM5.32771 2.1662C4.37531 2.1662 3.46419 2.53892 2.79417 3.1988C2.12455 3.85829 1.75049 4.75031 1.75049 5.67796C1.75049 6.60562 2.12455 7.49764 2.79417 8.15713L2.79797 8.16087L10.0005 15.3561L17.2068 8.15712C17.8764 7.49762 18.2505 6.60562 18.2505 5.67796C18.2505 4.75031 17.8764 3.85829 17.2068 3.1988C16.5368 2.53892 15.6257 2.1662 14.6733 2.1662C13.7209 2.1662 12.8097 2.53892 12.1397 3.1988L12.1302 3.20814L10.0005 5.16165L7.87073 3.20814L7.86124 3.1988C7.19123 2.53892 6.2801 2.1662 5.32771 2.1662Z" fill="#232229"/>
+<path d="M2.79417 3.1988C3.46419 2.53892 4.37531 2.1662 5.32771 2.1662C6.2801 2.1662 7.19123 2.53892 7.86124 3.1988L7.87073 3.20814L10.0005 5.16165L12.1302 3.20814L12.1397 3.1988C12.8097 2.53892 13.7209 2.1662 14.6733 2.1662C15.6257 2.1662 16.5368 2.53892 17.2068 3.1988C17.8764 3.85829 18.2505 4.75031 18.2505 5.67796C18.2505 6.60562 17.8764 7.49762 17.2068 8.15712L10.0005 15.3561L2.79797 8.16087L2.79417 8.15713C2.12455 7.49764 1.75049 6.60562 1.75049 5.67796C1.75049 4.75031 2.12455 3.85829 2.79417 3.1988Z" fill="#232229"/>
+</svg>
+
+                        <svg class="deflike" width="21" height="18" viewBox="0 0 21 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                          <path fill-rule="evenodd" clip-rule="evenodd" d="M2.24212 1.96389C3.19513 1.02529 4.48529 0.5 5.8282 0.5C7.16646 0.5 8.45235 1.02167 9.40439 1.95418L10.501 2.96001L11.5976 1.95418C12.5496 1.02167 13.8355 0.5 15.1738 0.5C16.5167 0.5 17.8068 1.02529 18.7598 1.96389C19.7132 2.90286 20.251 4.17884 20.251 5.51177C20.251 6.84379 19.714 8.11895 18.7618 9.05774C18.7611 9.05838 18.7605 9.05901 18.7598 9.05964L10.501 17.3101L2.24017 9.05772C1.28798 8.11893 0.750977 6.84378 0.750977 5.51177C0.750977 4.17884 1.28872 2.90286 2.24212 1.96389ZM5.8282 2C4.8758 2 3.96467 2.37272 3.29466 3.0326C2.62504 3.69209 2.25098 4.58411 2.25098 5.51177C2.25098 6.43942 2.62504 7.33144 3.29466 7.99093L3.29846 7.99468L10.501 15.1899L17.7073 7.99092C18.3769 7.33143 18.751 6.43942 18.751 5.51177C18.751 4.58411 18.3769 3.69209 17.7073 3.0326C17.0373 2.37272 16.1262 2 15.1738 2C14.2214 2 13.3102 2.37272 12.6402 3.0326L12.6307 3.04194L10.501 4.99545L8.37122 3.04194L8.36173 3.0326C7.69172 2.37272 6.78059 2 5.8282 2Z" fill="#232229"/>
+                        </svg>                    
+                      </i>
+                    </div>
+                    <a href="#" class="product-card__info">
+                      <h3 class="product-card__title">Название товара</h3>
+                      <div class="product-card__price">
+                        <div class="product-card__price-current">
+                          <span>12 000₽</span>
+                          <div class="product-card__discount">-25%</div>
+                        </div>
+                        <span class="product-card__price-old">16 000₽</span>
+                      </div>
+                    </a>
+      
+                    <div class="product-card__footer">
+                      <div class="product-card__colors">
+                        <a href="" class="product-card__colors-item" style="background-color: #3B3465;"></a>
+                        <a href="" class="product-card__colors-item" style="background-color: #34654F;"></a>
+                        <a href="" class="product-card__colors-item" style="background-color: #BA6868;"></a>
+                        <a href="" class="product-card__colors-item" style="background-color: #232229;"></a>
+                        <a href="" class="product-card__colors-item" style="background-color: #FFFFFF;"></a>
+                      </div>
+                      <div class="product-card__sizes">
+                        <a href="" class="product-card__sizes-item">
+                          S
+                        </a>
+                        <a href="" class="product-card__sizes-item">
+                          M
+                        </a>
+                        <a href="" class="product-card__sizes-item">
+                          L
+                        </a>
+                        <a href="" class="product-card__sizes-item">
+                          XL
+                        </a>
+                        <a href="" class="product-card__sizes-item">
+                          2XL
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+            </div>
+            <div class="catalogpage__col">
+                <div class="product-card">
+                    <div class="product-card__image">
+                      <a href="#" class="product-card__slider">
+                        <div class="product-card__slider-track">
+                          <div class="product-card__slide">
+                            <img src="<%=require('@img/products/product1.jpg')%>" alt="Название товара">
+                          </div>
+                          <div class="product-card__slide">
+                            <img src="<%=require('@img/blog/blog1.jpg')%>" alt="Название товара">
+                          </div>
+                          <div class="product-card__slide">
+                            <img src="<%=require('@img/products/product1.jpg')%>" alt="Название товара">
+                          </div>
+                        </div>
+                        <div class="product-card__pagination">
+                          <span class="product-card__pagination-dot active"></span>
+                          <span class="product-card__pagination-dot"></span>
+                          <span class="product-card__pagination-dot"></span>
+                        </div>
+                      </a>
+                      <div class="product-card__tags">
+                        <span class="product-card__tag">Новинка</span>
+                        <span class="product-card__tag">Предзаказ</span>
+                      </div>
+                      <i class="product-card__like active">
+                        <svg class="activelike" width="20" height="18" viewBox="0 0 20 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path fill-rule="evenodd" clip-rule="evenodd" d="M1.74163 2.13008C2.69464 1.19149 3.9848 0.666199 5.32771 0.666199C6.66597 0.666199 7.95186 1.18787 8.9039 2.12038L10.0005 3.12621L11.0971 2.12038C12.0491 1.18787 13.335 0.666199 14.6733 0.666199C16.0162 0.666199 17.3063 1.19149 18.2593 2.13008C19.2127 3.06906 19.7505 4.34504 19.7505 5.67796C19.7505 7.00999 19.2135 8.28515 18.2613 9.22394L18.2593 9.22584L10.0005 17.4763L1.73968 9.22392C0.787496 8.28512 0.250488 7.00998 0.250488 5.67796C0.250488 4.34504 0.78823 3.06906 1.74163 2.13008ZM5.32771 2.1662C4.37531 2.1662 3.46419 2.53892 2.79417 3.1988C2.12455 3.85829 1.75049 4.75031 1.75049 5.67796C1.75049 6.60562 2.12455 7.49764 2.79417 8.15713L2.79797 8.16087L10.0005 15.3561L17.2068 8.15712C17.8764 7.49762 18.2505 6.60562 18.2505 5.67796C18.2505 4.75031 17.8764 3.85829 17.2068 3.1988C16.5368 2.53892 15.6257 2.1662 14.6733 2.1662C13.7209 2.1662 12.8097 2.53892 12.1397 3.1988L12.1302 3.20814L10.0005 5.16165L7.87073 3.20814L7.86124 3.1988C7.19123 2.53892 6.2801 2.1662 5.32771 2.1662Z" fill="#232229"/>
+<path d="M2.79417 3.1988C3.46419 2.53892 4.37531 2.1662 5.32771 2.1662C6.2801 2.1662 7.19123 2.53892 7.86124 3.1988L7.87073 3.20814L10.0005 5.16165L12.1302 3.20814L12.1397 3.1988C12.8097 2.53892 13.7209 2.1662 14.6733 2.1662C15.6257 2.1662 16.5368 2.53892 17.2068 3.1988C17.8764 3.85829 18.2505 4.75031 18.2505 5.67796C18.2505 6.60562 17.8764 7.49762 17.2068 8.15712L10.0005 15.3561L2.79797 8.16087L2.79417 8.15713C2.12455 7.49764 1.75049 6.60562 1.75049 5.67796C1.75049 4.75031 2.12455 3.85829 2.79417 3.1988Z" fill="#232229"/>
+</svg>
+
+                        <svg class="deflike" width="21" height="18" viewBox="0 0 21 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                          <path fill-rule="evenodd" clip-rule="evenodd" d="M2.24212 1.96389C3.19513 1.02529 4.48529 0.5 5.8282 0.5C7.16646 0.5 8.45235 1.02167 9.40439 1.95418L10.501 2.96001L11.5976 1.95418C12.5496 1.02167 13.8355 0.5 15.1738 0.5C16.5167 0.5 17.8068 1.02529 18.7598 1.96389C19.7132 2.90286 20.251 4.17884 20.251 5.51177C20.251 6.84379 19.714 8.11895 18.7618 9.05774C18.7611 9.05838 18.7605 9.05901 18.7598 9.05964L10.501 17.3101L2.24017 9.05772C1.28798 8.11893 0.750977 6.84378 0.750977 5.51177C0.750977 4.17884 1.28872 2.90286 2.24212 1.96389ZM5.8282 2C4.8758 2 3.96467 2.37272 3.29466 3.0326C2.62504 3.69209 2.25098 4.58411 2.25098 5.51177C2.25098 6.43942 2.62504 7.33144 3.29466 7.99093L3.29846 7.99468L10.501 15.1899L17.7073 7.99092C18.3769 7.33143 18.751 6.43942 18.751 5.51177C18.751 4.58411 18.3769 3.69209 17.7073 3.0326C17.0373 2.37272 16.1262 2 15.1738 2C14.2214 2 13.3102 2.37272 12.6402 3.0326L12.6307 3.04194L10.501 4.99545L8.37122 3.04194L8.36173 3.0326C7.69172 2.37272 6.78059 2 5.8282 2Z" fill="#232229"/>
+                        </svg>                    
+                      </i>
+                    </div>
+                    <a href="#" class="product-card__info">
+                      <h3 class="product-card__title">Название товара</h3>
+                      <div class="product-card__price">
+                        <div class="product-card__price-current">
+                          <span>12 000₽</span>
+                          <div class="product-card__discount">-25%</div>
+                        </div>
+                        <span class="product-card__price-old">16 000₽</span>
+                      </div>
+                    </a>
+      
+                    <div class="product-card__footer">
+                      <div class="product-card__colors">
+                        <a href="" class="product-card__colors-item" style="background-color: #3B3465;"></a>
+                        <a href="" class="product-card__colors-item" style="background-color: #34654F;"></a>
+                        <a href="" class="product-card__colors-item" style="background-color: #BA6868;"></a>
+                        <a href="" class="product-card__colors-item" style="background-color: #232229;"></a>
+                        <a href="" class="product-card__colors-item" style="background-color: #FFFFFF;"></a>
+                      </div>
+                      <div class="product-card__sizes">
+                        <a href="" class="product-card__sizes-item">
+                          S
+                        </a>
+                        <a href="" class="product-card__sizes-item">
+                          M
+                        </a>
+                        <a href="" class="product-card__sizes-item">
+                          L
+                        </a>
+                        <a href="" class="product-card__sizes-item">
+                          XL
+                        </a>
+                        <a href="" class="product-card__sizes-item">
+                          2XL
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+            </div>
+            <div class="catalogpage__col">
+                <div class="product-card">
+                    <div class="product-card__image">
+                      <a href="#" class="product-card__slider">
+                        <div class="product-card__slider-track">
+                          <div class="product-card__slide">
+                            <img src="<%=require('@img/products/product1.jpg')%>" alt="Название товара">
+                          </div>
+                          <div class="product-card__slide">
+                            <img src="<%=require('@img/blog/blog1.jpg')%>" alt="Название товара">
+                          </div>
+                          <div class="product-card__slide">
+                            <img src="<%=require('@img/products/product1.jpg')%>" alt="Название товара">
+                          </div>
+                        </div>
+                        <div class="product-card__pagination">
+                          <span class="product-card__pagination-dot active"></span>
+                          <span class="product-card__pagination-dot"></span>
+                          <span class="product-card__pagination-dot"></span>
+                        </div>
+                      </a>
+                      <div class="product-card__tags">
+                        <span class="product-card__tag">Новинка</span>
+                        <span class="product-card__tag">Предзаказ</span>
+                      </div>
+                      <i class="product-card__like active">
+                        <svg class="activelike" width="20" height="18" viewBox="0 0 20 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path fill-rule="evenodd" clip-rule="evenodd" d="M1.74163 2.13008C2.69464 1.19149 3.9848 0.666199 5.32771 0.666199C6.66597 0.666199 7.95186 1.18787 8.9039 2.12038L10.0005 3.12621L11.0971 2.12038C12.0491 1.18787 13.335 0.666199 14.6733 0.666199C16.0162 0.666199 17.3063 1.19149 18.2593 2.13008C19.2127 3.06906 19.7505 4.34504 19.7505 5.67796C19.7505 7.00999 19.2135 8.28515 18.2613 9.22394L18.2593 9.22584L10.0005 17.4763L1.73968 9.22392C0.787496 8.28512 0.250488 7.00998 0.250488 5.67796C0.250488 4.34504 0.78823 3.06906 1.74163 2.13008ZM5.32771 2.1662C4.37531 2.1662 3.46419 2.53892 2.79417 3.1988C2.12455 3.85829 1.75049 4.75031 1.75049 5.67796C1.75049 6.60562 2.12455 7.49764 2.79417 8.15713L2.79797 8.16087L10.0005 15.3561L17.2068 8.15712C17.8764 7.49762 18.2505 6.60562 18.2505 5.67796C18.2505 4.75031 17.8764 3.85829 17.2068 3.1988C16.5368 2.53892 15.6257 2.1662 14.6733 2.1662C13.7209 2.1662 12.8097 2.53892 12.1397 3.1988L12.1302 3.20814L10.0005 5.16165L7.87073 3.20814L7.86124 3.1988C7.19123 2.53892 6.2801 2.1662 5.32771 2.1662Z" fill="#232229"/>
+<path d="M2.79417 3.1988C3.46419 2.53892 4.37531 2.1662 5.32771 2.1662C6.2801 2.1662 7.19123 2.53892 7.86124 3.1988L7.87073 3.20814L10.0005 5.16165L12.1302 3.20814L12.1397 3.1988C12.8097 2.53892 13.7209 2.1662 14.6733 2.1662C15.6257 2.1662 16.5368 2.53892 17.2068 3.1988C17.8764 3.85829 18.2505 4.75031 18.2505 5.67796C18.2505 6.60562 17.8764 7.49762 17.2068 8.15712L10.0005 15.3561L2.79797 8.16087L2.79417 8.15713C2.12455 7.49764 1.75049 6.60562 1.75049 5.67796C1.75049 4.75031 2.12455 3.85829 2.79417 3.1988Z" fill="#232229"/>
+</svg>
+
+                        <svg class="deflike" width="21" height="18" viewBox="0 0 21 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                          <path fill-rule="evenodd" clip-rule="evenodd" d="M2.24212 1.96389C3.19513 1.02529 4.48529 0.5 5.8282 0.5C7.16646 0.5 8.45235 1.02167 9.40439 1.95418L10.501 2.96001L11.5976 1.95418C12.5496 1.02167 13.8355 0.5 15.1738 0.5C16.5167 0.5 17.8068 1.02529 18.7598 1.96389C19.7132 2.90286 20.251 4.17884 20.251 5.51177C20.251 6.84379 19.714 8.11895 18.7618 9.05774C18.7611 9.05838 18.7605 9.05901 18.7598 9.05964L10.501 17.3101L2.24017 9.05772C1.28798 8.11893 0.750977 6.84378 0.750977 5.51177C0.750977 4.17884 1.28872 2.90286 2.24212 1.96389ZM5.8282 2C4.8758 2 3.96467 2.37272 3.29466 3.0326C2.62504 3.69209 2.25098 4.58411 2.25098 5.51177C2.25098 6.43942 2.62504 7.33144 3.29466 7.99093L3.29846 7.99468L10.501 15.1899L17.7073 7.99092C18.3769 7.33143 18.751 6.43942 18.751 5.51177C18.751 4.58411 18.3769 3.69209 17.7073 3.0326C17.0373 2.37272 16.1262 2 15.1738 2C14.2214 2 13.3102 2.37272 12.6402 3.0326L12.6307 3.04194L10.501 4.99545L8.37122 3.04194L8.36173 3.0326C7.69172 2.37272 6.78059 2 5.8282 2Z" fill="#232229"/>
+                        </svg>                    
+                      </i>
+                    </div>
+                    <a href="#" class="product-card__info">
+                      <h3 class="product-card__title">Название товара</h3>
+                      <div class="product-card__price">
+                        <div class="product-card__price-current">
+                          <span>12 000₽</span>
+                          <div class="product-card__discount">-25%</div>
+                        </div>
+                        <span class="product-card__price-old">16 000₽</span>
+                      </div>
+                    </a>
+      
+                    <div class="product-card__footer">
+                      <div class="product-card__colors">
+                        <a href="" class="product-card__colors-item" style="background-color: #3B3465;"></a>
+                        <a href="" class="product-card__colors-item" style="background-color: #34654F;"></a>
+                        <a href="" class="product-card__colors-item" style="background-color: #BA6868;"></a>
+                        <a href="" class="product-card__colors-item" style="background-color: #232229;"></a>
+                        <a href="" class="product-card__colors-item" style="background-color: #FFFFFF;"></a>
+                      </div>
+                      <div class="product-card__sizes">
+                        <a href="" class="product-card__sizes-item">
+                          S
+                        </a>
+                        <a href="" class="product-card__sizes-item">
+                          M
+                        </a>
+                        <a href="" class="product-card__sizes-item">
+                          L
+                        </a>
+                        <a href="" class="product-card__sizes-item">
+                          XL
+                        </a>
+                        <a href="" class="product-card__sizes-item">
+                          2XL
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+            </div>
+            <div class="catalogpage__col">
+                <div class="product-card">
+                    <div class="product-card__image">
+                      <a href="#" class="product-card__slider">
+                        <div class="product-card__slider-track">
+                          <div class="product-card__slide">
+                            <img src="<%=require('@img/products/product1.jpg')%>" alt="Название товара">
+                          </div>
+                          <div class="product-card__slide">
+                            <img src="<%=require('@img/blog/blog1.jpg')%>" alt="Название товара">
+                          </div>
+                          <div class="product-card__slide">
+                            <img src="<%=require('@img/products/product1.jpg')%>" alt="Название товара">
+                          </div>
+                        </div>
+                        <div class="product-card__pagination">
+                          <span class="product-card__pagination-dot active"></span>
+                          <span class="product-card__pagination-dot"></span>
+                          <span class="product-card__pagination-dot"></span>
+                        </div>
+                      </a>
+                      <div class="product-card__tags">
+                        <span class="product-card__tag">Новинка</span>
+                        <span class="product-card__tag">Предзаказ</span>
+                      </div>
+                      <i class="product-card__like active">
+                        <svg class="activelike" width="20" height="18" viewBox="0 0 20 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path fill-rule="evenodd" clip-rule="evenodd" d="M1.74163 2.13008C2.69464 1.19149 3.9848 0.666199 5.32771 0.666199C6.66597 0.666199 7.95186 1.18787 8.9039 2.12038L10.0005 3.12621L11.0971 2.12038C12.0491 1.18787 13.335 0.666199 14.6733 0.666199C16.0162 0.666199 17.3063 1.19149 18.2593 2.13008C19.2127 3.06906 19.7505 4.34504 19.7505 5.67796C19.7505 7.00999 19.2135 8.28515 18.2613 9.22394L18.2593 9.22584L10.0005 17.4763L1.73968 9.22392C0.787496 8.28512 0.250488 7.00998 0.250488 5.67796C0.250488 4.34504 0.78823 3.06906 1.74163 2.13008ZM5.32771 2.1662C4.37531 2.1662 3.46419 2.53892 2.79417 3.1988C2.12455 3.85829 1.75049 4.75031 1.75049 5.67796C1.75049 6.60562 2.12455 7.49764 2.79417 8.15713L2.79797 8.16087L10.0005 15.3561L17.2068 8.15712C17.8764 7.49762 18.2505 6.60562 18.2505 5.67796C18.2505 4.75031 17.8764 3.85829 17.2068 3.1988C16.5368 2.53892 15.6257 2.1662 14.6733 2.1662C13.7209 2.1662 12.8097 2.53892 12.1397 3.1988L12.1302 3.20814L10.0005 5.16165L7.87073 3.20814L7.86124 3.1988C7.19123 2.53892 6.2801 2.1662 5.32771 2.1662Z" fill="#232229"/>
+<path d="M2.79417 3.1988C3.46419 2.53892 4.37531 2.1662 5.32771 2.1662C6.2801 2.1662 7.19123 2.53892 7.86124 3.1988L7.87073 3.20814L10.0005 5.16165L12.1302 3.20814L12.1397 3.1988C12.8097 2.53892 13.7209 2.1662 14.6733 2.1662C15.6257 2.1662 16.5368 2.53892 17.2068 3.1988C17.8764 3.85829 18.2505 4.75031 18.2505 5.67796C18.2505 6.60562 17.8764 7.49762 17.2068 8.15712L10.0005 15.3561L2.79797 8.16087L2.79417 8.15713C2.12455 7.49764 1.75049 6.60562 1.75049 5.67796C1.75049 4.75031 2.12455 3.85829 2.79417 3.1988Z" fill="#232229"/>
+</svg>
+
+                        <svg class="deflike" width="21" height="18" viewBox="0 0 21 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                          <path fill-rule="evenodd" clip-rule="evenodd" d="M2.24212 1.96389C3.19513 1.02529 4.48529 0.5 5.8282 0.5C7.16646 0.5 8.45235 1.02167 9.40439 1.95418L10.501 2.96001L11.5976 1.95418C12.5496 1.02167 13.8355 0.5 15.1738 0.5C16.5167 0.5 17.8068 1.02529 18.7598 1.96389C19.7132 2.90286 20.251 4.17884 20.251 5.51177C20.251 6.84379 19.714 8.11895 18.7618 9.05774C18.7611 9.05838 18.7605 9.05901 18.7598 9.05964L10.501 17.3101L2.24017 9.05772C1.28798 8.11893 0.750977 6.84378 0.750977 5.51177C0.750977 4.17884 1.28872 2.90286 2.24212 1.96389ZM5.8282 2C4.8758 2 3.96467 2.37272 3.29466 3.0326C2.62504 3.69209 2.25098 4.58411 2.25098 5.51177C2.25098 6.43942 2.62504 7.33144 3.29466 7.99093L3.29846 7.99468L10.501 15.1899L17.7073 7.99092C18.3769 7.33143 18.751 6.43942 18.751 5.51177C18.751 4.58411 18.3769 3.69209 17.7073 3.0326C17.0373 2.37272 16.1262 2 15.1738 2C14.2214 2 13.3102 2.37272 12.6402 3.0326L12.6307 3.04194L10.501 4.99545L8.37122 3.04194L8.36173 3.0326C7.69172 2.37272 6.78059 2 5.8282 2Z" fill="#232229"/>
+                        </svg>                    
+                      </i>
+                    </div>
+                    <a href="#" class="product-card__info">
+                      <h3 class="product-card__title">Название товара</h3>
+                      <div class="product-card__price">
+                        <div class="product-card__price-current">
+                          <span>12 000₽</span>
+                          <div class="product-card__discount">-25%</div>
+                        </div>
+                        <span class="product-card__price-old">16 000₽</span>
+                      </div>
+                    </a>
+      
+                    <div class="product-card__footer">
+                      <div class="product-card__colors">
+                        <a href="" class="product-card__colors-item" style="background-color: #3B3465;"></a>
+                        <a href="" class="product-card__colors-item" style="background-color: #34654F;"></a>
+                        <a href="" class="product-card__colors-item" style="background-color: #BA6868;"></a>
+                        <a href="" class="product-card__colors-item" style="background-color: #232229;"></a>
+                        <a href="" class="product-card__colors-item" style="background-color: #FFFFFF;"></a>
+                      </div>
+                      <div class="product-card__sizes">
+                        <a href="" class="product-card__sizes-item">
+                          S
+                        </a>
+                        <a href="" class="product-card__sizes-item">
+                          M
+                        </a>
+                        <a href="" class="product-card__sizes-item">
+                          L
+                        </a>
+                        <a href="" class="product-card__sizes-item">
+                          XL
+                        </a>
+                        <a href="" class="product-card__sizes-item">
+                          2XL
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+            </div>
+            <div class="catalogpage__col">
+                <div class="product-card">
+                    <div class="product-card__image">
+                      <a href="#" class="product-card__slider">
+                        <div class="product-card__slider-track">
+                          <div class="product-card__slide">
+                            <img src="<%=require('@img/products/product1.jpg')%>" alt="Название товара">
+                          </div>
+                          <div class="product-card__slide">
+                            <img src="<%=require('@img/blog/blog1.jpg')%>" alt="Название товара">
+                          </div>
+                          <div class="product-card__slide">
+                            <img src="<%=require('@img/products/product1.jpg')%>" alt="Название товара">
+                          </div>
+                        </div>
+                        <div class="product-card__pagination">
+                          <span class="product-card__pagination-dot active"></span>
+                          <span class="product-card__pagination-dot"></span>
+                          <span class="product-card__pagination-dot"></span>
+                        </div>
+                      </a>
+                      <div class="product-card__tags">
+                        <span class="product-card__tag">Новинка</span>
+                        <span class="product-card__tag">Предзаказ</span>
+                      </div>
+                      <i class="product-card__like active">
+                        <svg class="activelike" width="20" height="18" viewBox="0 0 20 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path fill-rule="evenodd" clip-rule="evenodd" d="M1.74163 2.13008C2.69464 1.19149 3.9848 0.666199 5.32771 0.666199C6.66597 0.666199 7.95186 1.18787 8.9039 2.12038L10.0005 3.12621L11.0971 2.12038C12.0491 1.18787 13.335 0.666199 14.6733 0.666199C16.0162 0.666199 17.3063 1.19149 18.2593 2.13008C19.2127 3.06906 19.7505 4.34504 19.7505 5.67796C19.7505 7.00999 19.2135 8.28515 18.2613 9.22394L18.2593 9.22584L10.0005 17.4763L1.73968 9.22392C0.787496 8.28512 0.250488 7.00998 0.250488 5.67796C0.250488 4.34504 0.78823 3.06906 1.74163 2.13008ZM5.32771 2.1662C4.37531 2.1662 3.46419 2.53892 2.79417 3.1988C2.12455 3.85829 1.75049 4.75031 1.75049 5.67796C1.75049 6.60562 2.12455 7.49764 2.79417 8.15713L2.79797 8.16087L10.0005 15.3561L17.2068 8.15712C17.8764 7.49762 18.2505 6.60562 18.2505 5.67796C18.2505 4.75031 17.8764 3.85829 17.2068 3.1988C16.5368 2.53892 15.6257 2.1662 14.6733 2.1662C13.7209 2.1662 12.8097 2.53892 12.1397 3.1988L12.1302 3.20814L10.0005 5.16165L7.87073 3.20814L7.86124 3.1988C7.19123 2.53892 6.2801 2.1662 5.32771 2.1662Z" fill="#232229"/>
+<path d="M2.79417 3.1988C3.46419 2.53892 4.37531 2.1662 5.32771 2.1662C6.2801 2.1662 7.19123 2.53892 7.86124 3.1988L7.87073 3.20814L10.0005 5.16165L12.1302 3.20814L12.1397 3.1988C12.8097 2.53892 13.7209 2.1662 14.6733 2.1662C15.6257 2.1662 16.5368 2.53892 17.2068 3.1988C17.8764 3.85829 18.2505 4.75031 18.2505 5.67796C18.2505 6.60562 17.8764 7.49762 17.2068 8.15712L10.0005 15.3561L2.79797 8.16087L2.79417 8.15713C2.12455 7.49764 1.75049 6.60562 1.75049 5.67796C1.75049 4.75031 2.12455 3.85829 2.79417 3.1988Z" fill="#232229"/>
+</svg>
+
+                        <svg class="deflike" width="21" height="18" viewBox="0 0 21 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                          <path fill-rule="evenodd" clip-rule="evenodd" d="M2.24212 1.96389C3.19513 1.02529 4.48529 0.5 5.8282 0.5C7.16646 0.5 8.45235 1.02167 9.40439 1.95418L10.501 2.96001L11.5976 1.95418C12.5496 1.02167 13.8355 0.5 15.1738 0.5C16.5167 0.5 17.8068 1.02529 18.7598 1.96389C19.7132 2.90286 20.251 4.17884 20.251 5.51177C20.251 6.84379 19.714 8.11895 18.7618 9.05774C18.7611 9.05838 18.7605 9.05901 18.7598 9.05964L10.501 17.3101L2.24017 9.05772C1.28798 8.11893 0.750977 6.84378 0.750977 5.51177C0.750977 4.17884 1.28872 2.90286 2.24212 1.96389ZM5.8282 2C4.8758 2 3.96467 2.37272 3.29466 3.0326C2.62504 3.69209 2.25098 4.58411 2.25098 5.51177C2.25098 6.43942 2.62504 7.33144 3.29466 7.99093L3.29846 7.99468L10.501 15.1899L17.7073 7.99092C18.3769 7.33143 18.751 6.43942 18.751 5.51177C18.751 4.58411 18.3769 3.69209 17.7073 3.0326C17.0373 2.37272 16.1262 2 15.1738 2C14.2214 2 13.3102 2.37272 12.6402 3.0326L12.6307 3.04194L10.501 4.99545L8.37122 3.04194L8.36173 3.0326C7.69172 2.37272 6.78059 2 5.8282 2Z" fill="#232229"/>
+                        </svg>                    
+                      </i>
+                    </div>
+                    <a href="#" class="product-card__info">
+                      <h3 class="product-card__title">Название товара</h3>
+                      <div class="product-card__price">
+                        <div class="product-card__price-current">
+                          <span>12 000₽</span>
+                          <div class="product-card__discount">-25%</div>
+                        </div>
+                        <span class="product-card__price-old">16 000₽</span>
+                      </div>
+                    </a>
+      
+                    <div class="product-card__footer">
+                      <div class="product-card__colors">
+                        <a href="" class="product-card__colors-item" style="background-color: #3B3465;"></a>
+                        <a href="" class="product-card__colors-item" style="background-color: #34654F;"></a>
+                        <a href="" class="product-card__colors-item" style="background-color: #BA6868;"></a>
+                        <a href="" class="product-card__colors-item" style="background-color: #232229;"></a>
+                        <a href="" class="product-card__colors-item" style="background-color: #FFFFFF;"></a>
+                      </div>
+                      <div class="product-card__sizes">
+                        <a href="" class="product-card__sizes-item">
+                          S
+                        </a>
+                        <a href="" class="product-card__sizes-item">
+                          M
+                        </a>
+                        <a href="" class="product-card__sizes-item">
+                          L
+                        </a>
+                        <a href="" class="product-card__sizes-item">
+                          XL
+                        </a>
+                        <a href="" class="product-card__sizes-item">
+                          2XL
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+            </div>
+            <div class="catalogpage__col">
+                <div class="product-card">
+                    <div class="product-card__image">
+                      <a href="#" class="product-card__slider">
+                        <div class="product-card__slider-track">
+                          <div class="product-card__slide">
+                            <img src="<%=require('@img/products/product1.jpg')%>" alt="Название товара">
+                          </div>
+                          <div class="product-card__slide">
+                            <img src="<%=require('@img/blog/blog1.jpg')%>" alt="Название товара">
+                          </div>
+                          <div class="product-card__slide">
+                            <img src="<%=require('@img/products/product1.jpg')%>" alt="Название товара">
+                          </div>
+                        </div>
+                        <div class="product-card__pagination">
+                          <span class="product-card__pagination-dot active"></span>
+                          <span class="product-card__pagination-dot"></span>
+                          <span class="product-card__pagination-dot"></span>
+                        </div>
+                      </a>
+                      <div class="product-card__tags">
+                        <span class="product-card__tag">Новинка</span>
+                        <span class="product-card__tag">Предзаказ</span>
+                      </div>
+                      <i class="product-card__like active">
+                        <svg class="activelike" width="20" height="18" viewBox="0 0 20 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path fill-rule="evenodd" clip-rule="evenodd" d="M1.74163 2.13008C2.69464 1.19149 3.9848 0.666199 5.32771 0.666199C6.66597 0.666199 7.95186 1.18787 8.9039 2.12038L10.0005 3.12621L11.0971 2.12038C12.0491 1.18787 13.335 0.666199 14.6733 0.666199C16.0162 0.666199 17.3063 1.19149 18.2593 2.13008C19.2127 3.06906 19.7505 4.34504 19.7505 5.67796C19.7505 7.00999 19.2135 8.28515 18.2613 9.22394L18.2593 9.22584L10.0005 17.4763L1.73968 9.22392C0.787496 8.28512 0.250488 7.00998 0.250488 5.67796C0.250488 4.34504 0.78823 3.06906 1.74163 2.13008ZM5.32771 2.1662C4.37531 2.1662 3.46419 2.53892 2.79417 3.1988C2.12455 3.85829 1.75049 4.75031 1.75049 5.67796C1.75049 6.60562 2.12455 7.49764 2.79417 8.15713L2.79797 8.16087L10.0005 15.3561L17.2068 8.15712C17.8764 7.49762 18.2505 6.60562 18.2505 5.67796C18.2505 4.75031 17.8764 3.85829 17.2068 3.1988C16.5368 2.53892 15.6257 2.1662 14.6733 2.1662C13.7209 2.1662 12.8097 2.53892 12.1397 3.1988L12.1302 3.20814L10.0005 5.16165L7.87073 3.20814L7.86124 3.1988C7.19123 2.53892 6.2801 2.1662 5.32771 2.1662Z" fill="#232229"/>
+<path d="M2.79417 3.1988C3.46419 2.53892 4.37531 2.1662 5.32771 2.1662C6.2801 2.1662 7.19123 2.53892 7.86124 3.1988L7.87073 3.20814L10.0005 5.16165L12.1302 3.20814L12.1397 3.1988C12.8097 2.53892 13.7209 2.1662 14.6733 2.1662C15.6257 2.1662 16.5368 2.53892 17.2068 3.1988C17.8764 3.85829 18.2505 4.75031 18.2505 5.67796C18.2505 6.60562 17.8764 7.49762 17.2068 8.15712L10.0005 15.3561L2.79797 8.16087L2.79417 8.15713C2.12455 7.49764 1.75049 6.60562 1.75049 5.67796C1.75049 4.75031 2.12455 3.85829 2.79417 3.1988Z" fill="#232229"/>
+</svg>
+
+                        <svg class="deflike" width="21" height="18" viewBox="0 0 21 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                          <path fill-rule="evenodd" clip-rule="evenodd" d="M2.24212 1.96389C3.19513 1.02529 4.48529 0.5 5.8282 0.5C7.16646 0.5 8.45235 1.02167 9.40439 1.95418L10.501 2.96001L11.5976 1.95418C12.5496 1.02167 13.8355 0.5 15.1738 0.5C16.5167 0.5 17.8068 1.02529 18.7598 1.96389C19.7132 2.90286 20.251 4.17884 20.251 5.51177C20.251 6.84379 19.714 8.11895 18.7618 9.05774C18.7611 9.05838 18.7605 9.05901 18.7598 9.05964L10.501 17.3101L2.24017 9.05772C1.28798 8.11893 0.750977 6.84378 0.750977 5.51177C0.750977 4.17884 1.28872 2.90286 2.24212 1.96389ZM5.8282 2C4.8758 2 3.96467 2.37272 3.29466 3.0326C2.62504 3.69209 2.25098 4.58411 2.25098 5.51177C2.25098 6.43942 2.62504 7.33144 3.29466 7.99093L3.29846 7.99468L10.501 15.1899L17.7073 7.99092C18.3769 7.33143 18.751 6.43942 18.751 5.51177C18.751 4.58411 18.3769 3.69209 17.7073 3.0326C17.0373 2.37272 16.1262 2 15.1738 2C14.2214 2 13.3102 2.37272 12.6402 3.0326L12.6307 3.04194L10.501 4.99545L8.37122 3.04194L8.36173 3.0326C7.69172 2.37272 6.78059 2 5.8282 2Z" fill="#232229"/>
+                        </svg>                    
+                      </i>
+                    </div>
+                    <a href="#" class="product-card__info">
+                      <h3 class="product-card__title">Название товара</h3>
+                      <div class="product-card__price">
+                        <div class="product-card__price-current">
+                          <span>12 000₽</span>
+                          <div class="product-card__discount">-25%</div>
+                        </div>
+                        <span class="product-card__price-old">16 000₽</span>
+                      </div>
+                    </a>
+      
+                    <div class="product-card__footer">
+                      <div class="product-card__colors">
+                        <a href="" class="product-card__colors-item" style="background-color: #3B3465;"></a>
+                        <a href="" class="product-card__colors-item" style="background-color: #34654F;"></a>
+                        <a href="" class="product-card__colors-item" style="background-color: #BA6868;"></a>
+                        <a href="" class="product-card__colors-item" style="background-color: #232229;"></a>
+                        <a href="" class="product-card__colors-item" style="background-color: #FFFFFF;"></a>
+                      </div>
+                      <div class="product-card__sizes">
+                        <a href="" class="product-card__sizes-item">
+                          S
+                        </a>
+                        <a href="" class="product-card__sizes-item">
+                          M
+                        </a>
+                        <a href="" class="product-card__sizes-item">
+                          L
+                        </a>
+                        <a href="" class="product-card__sizes-item">
+                          XL
+                        </a>
+                        <a href="" class="product-card__sizes-item">
+                          2XL
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+            </div>
+        </div>
+        <button class="catalogpage__more">
+            Показать ещё
+        </button>
+    </div>
+</main>
+
+
+<div class="catdrop">
+    <div class="catdrop__header">
+        <p class="catdrop__header-title">
+            Фильтры
+        </p>
+        <i class="catdrop__header-ico js--close">
+            <svg width="24" height="25" viewBox="0 0 24 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M18 20.6665L12 12.6665M6 4.6665L12 12.6665M12 12.6665L18 4.6665M12 12.6665L6 20.6665" stroke="#232229" stroke-width="1.5"/>
+            </svg>                
+        </i>
+    </div>
+
+    <div class="catdrop__main">
+        <div class="catdrop-block" data-type="Категория">
+            <button class="catdrop-block__open">
+                <span>Категории</span>
+                <i>
+                    <svg width="24" height="25" viewBox="0 0 24 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd" clip-rule="evenodd" d="M4.8 10.9165C8.28986 10.9165 11.25 14.0862 11.25 18.1665H12.75C12.75 14.0862 15.7101 10.9165 19.2 10.9165L21 10.9165V9.4165H19.2C15.9738 9.4165 13.2577 11.5034 12 14.4566C10.7423 11.5034 8.02617 9.4165 4.8 9.4165H3V10.9165L4.8 10.9165Z" fill="#232229"/>
+                        </svg>
+                        
+                </i>
+            </button>
+
+            <div class="catdrop-block__wrap">
+                <div class="catdrop-block__body">
+                    <div class="catdrop-block__radios">
+                        <div class="catdrop-block__radios-item">
+                            <input type="radio" value="верхняя одежда" name="categories" id="categories-1">
+                            <label for="categories-1">
+                                верхняя одежда
+                            </label>
+                        </div>
+                        <div class="catdrop-block__radios-item">
+                            <input type="radio" value="верхняя одежда1" name="categories" id="categories-2">
+                            <label for="categories-2">
+                                верхняя одежда1
+                            </label>
+                        </div>
+                        <div class="catdrop-block__radios-item">
+                            <input type="radio" value="верхняя одежда2" name="categories" id="categories-3">
+                            <label for="categories-3">
+                                верхняя одежда2
+                            </label>
+                        </div>
+                        <div class="catdrop-block__radios-item">
+                            <input type="radio" value="верхняя одежда3" name="categories" id="categories-4">
+                            <label for="categories-4">
+                                верхняя одежда3
+                            </label>
+                        </div>
+                        <div class="catdrop-block__radios-item">
+                            <input type="radio" value="верхняя одежда4" name="categories" id="categories-5">
+                            <label for="categories-5">
+                                верхняя одежда4
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="catdrop-block" data-type="Размер">
+            <button class="catdrop-block__open">
+                <span>Размер</span>
+                <i>
+                    <svg width="24" height="25" viewBox="0 0 24 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd" clip-rule="evenodd" d="M4.8 10.9165C8.28986 10.9165 11.25 14.0862 11.25 18.1665H12.75C12.75 14.0862 15.7101 10.9165 19.2 10.9165L21 10.9165V9.4165H19.2C15.9738 9.4165 13.2577 11.5034 12 14.4566C10.7423 11.5034 8.02617 9.4165 4.8 9.4165H3V10.9165L4.8 10.9165Z" fill="#232229"/>
+                        </svg>
+                        
+                </i>
+            </button>
+
+            <div class="catdrop-block__wrap">
+                <div class="catdrop-block__body">
+                    <div class="catdrop-block__checks">
+                        <div class="catdrop-block__checks-item">
+                            <input type="checkbox" value="32" name="size" id="size-1">
+                            <label for="size-1">
+                                верхняя одежда
+                            </label>
+                        </div>
+                        <div class="catdrop-block__checks-item">
+                            <input type="checkbox" value="321" name="size" id="size-2">
+                            <label for="size-2">
+                                верхняя одежда1
+                            </label>
+                        </div>
+                        <div class="catdrop-block__checks-item">
+                            <input type="checkbox" value="323" name="size" id="size-3">
+                            <label for="size-3">
+                                верхняя одежда2
+                            </label>
+                        </div>
+                        <div class="catdrop-block__checks-item">
+                            <input type="checkbox" value="324" name="size" id="size-4">
+                            <label for="size-4">
+                                верхняя одежда3
+                            </label>
+                        </div>
+                        <div class="catdrop-block__checks-item">
+                            <input type="checkbox" value="325" name="size" id="size-5">
+                            <label for="size-5">
+                                верхняя одежда4
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="catdrop-block" data-type="Цвет">
+            <button class="catdrop-block__open">
+                <span>Цвет</span>
+                <i>
+                    <svg width="24" height="25" viewBox="0 0 24 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd" clip-rule="evenodd" d="M4.8 10.9165C8.28986 10.9165 11.25 14.0862 11.25 18.1665H12.75C12.75 14.0862 15.7101 10.9165 19.2 10.9165L21 10.9165V9.4165H19.2C15.9738 9.4165 13.2577 11.5034 12 14.4566C10.7423 11.5034 8.02617 9.4165 4.8 9.4165H3V10.9165L4.8 10.9165Z" fill="#232229"/>
+                        </svg>
+                        
+                </i>
+            </button>
+
+            <div class="catdrop-block__wrap">
+                <div class="catdrop-block__body">
+                    <div class="catdrop-block__color">
+                        <div class="catdrop-block__color-item">
+                            <input type="checkbox" name="color" value="Черный" id="color-1">
+                            <label for="color-1">
+                                <span style="background: #000;">
+
+                                </span>
+                            </label>
+                        </div>
+                        <div class="catdrop-block__color-item">
+                            <input type="checkbox" name="color"  value="Черный1" id="color-2">
+                            <label for="color-2">
+                                <span style="background: #000;">
+
+                                </span>
+                            </label>
+                        </div>
+                        <div class="catdrop-block__color-item">
+                            <input type="checkbox" name="color" value="Черный2" id="color-3">
+                            <label for="color-3">
+                                <span style="background: #000;">
+
+                                </span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="catdrop-block" data-type="Материалы">
+            <button class="catdrop-block__open">
+                <span>Материалы</span>
+                <i>
+                    <svg width="24" height="25" viewBox="0 0 24 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd" clip-rule="evenodd" d="M4.8 10.9165C8.28986 10.9165 11.25 14.0862 11.25 18.1665H12.75C12.75 14.0862 15.7101 10.9165 19.2 10.9165L21 10.9165V9.4165H19.2C15.9738 9.4165 13.2577 11.5034 12 14.4566C10.7423 11.5034 8.02617 9.4165 4.8 9.4165H3V10.9165L4.8 10.9165Z" fill="#232229"/>
+                        </svg>
+                        
+                </i>
+            </button>
+
+            <div class="catdrop-block__wrap">
+                <div class="catdrop-block__body">
+                    <div class="catdrop-block__checks">
+                        <div class="catdrop-block__checks-item">
+                            <input type="checkbox" value="Черный1" name="material" id="material-1">
+                            <label for="material-1">
+                                Черный
+                            </label>
+                        </div>
+                        <div class="catdrop-block__checks-item">
+                            <input type="checkbox" value="Черный2" name="material" id="material-2">
+                            <label for="material-2">
+                                Черный
+                            </label>
+                        </div>
+                        <div class="catdrop-block__checks-item">
+                            <input type="checkbox" value="Черный" name="material" id="material-3">
+                            <label for="material-3">
+                                Черный
+                            </label>
+                        </div>
+                        <div class="catdrop-block__checks-item">
+                            <input type="checkbox" value="Черный3" name="material" id="material-4">
+                            <label for="material-4">
+                                Черный
+                            </label>
+                        </div>
+                        <div class="catdrop-block__checks-item">
+                            <input type="checkbox" value="Черный4" name="material" id="material-5">
+                            <label for="material-5">
+                                Черный
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="catdrop-block" data-type="Коллекции">
+            <button class="catdrop-block__open">
+                <span>Коллекции</span>
+                <i>
+                    <svg width="24" height="25" viewBox="0 0 24 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd" clip-rule="evenodd" d="M4.8 10.9165C8.28986 10.9165 11.25 14.0862 11.25 18.1665H12.75C12.75 14.0862 15.7101 10.9165 19.2 10.9165L21 10.9165V9.4165H19.2C15.9738 9.4165 13.2577 11.5034 12 14.4566C10.7423 11.5034 8.02617 9.4165 4.8 9.4165H3V10.9165L4.8 10.9165Z" fill="#232229"/>
+                        </svg>
+                        
+                </i>
+            </button>
+
+            <div class="catdrop-block__wrap">
+                <div class="catdrop-block__body">
+                    <div class="catdrop-block__checks">
+                        <div class="catdrop-block__checks-item">
+                            <input type="checkbox" value="Черный1" name="collections" id="collections-1">
+                            <label for="collections-1">
+                                Черный
+                            </label>
+                        </div>
+                        <div class="catdrop-block__checks-item">
+                            <input type="checkbox" value="Черный2" name="collections" id="collections-2">
+                            <label for="collections-2">
+                                Черный
+                            </label>
+                        </div>
+                        <div class="catdrop-block__checks-item">
+                            <input type="checkbox" value="Черный3" name="collections" id="collections-3">
+                            <label for="collections-3">
+                                Черный
+                            </label>
+                        </div>
+                        <div class="catdrop-block__checks-item">
+                            <input type="checkbox" value="Черный4" name="collections" id="collections-4">
+                            <label for="collections-4">
+                                Черный
+                            </label>
+                        </div>
+                        <div class="catdrop-block__checks-item">
+                            <input type="checkbox" value="Черный5" name="collections" id="collections-5">
+                            <label for="collections-5">
+                                Черный
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="catdrop__footer">
+        <button class="catdrop__reset">
+            Сбросить всё
+        </button>
+        <button class="catdrop__apply js--close">
+            Показать (54)
+        </button>
+    </div>
+</div>
+
+
+
+<div class="mobsort">
+    <button class="mobsort__close js--close">
+        <span>
+            сортировать
+        </span>
+        <i>
+            <svg width="16" height="17" viewBox="0 0 16 17" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M12 13.9997L8 8.66634M4 3.33301L8 8.66634M8 8.66634L12 3.33301M8 8.66634L4 13.9997" stroke="#232229" stroke-width="1.5"/>
+            </svg>                
+        </i>
+    </button>
+    <div class="mobsort__list">
+        <div class="mobsort__list-item">
+            <input type="radio" name="sortmob" id="sort-1">
+            <label for="sort-1">
+                по умолчанию
+            </label>
+        </div>
+        <div class="mobsort__list-item">
+            <input type="radio" name="sortmob" id="sort-2">
+            <label for="sort-2">
+                сначала новые
+            </label>
+        </div>
+        <div class="mobsort__list-item">
+            <input type="radio" name="sortmob" id="sort-3">
+            <label for="sort-3">
+                цена по убыванию
+            </label>
+        </div>
+        <div class="mobsort__list-item">
+            <input type="radio" name="sortmob" id="sort-4">
+            <label for="sort-4">
+                цена по возрастанию
+            </label>
+        </div>
+    </div>
+
+    <div class="mobsort__footer">
+        <button class="mobsort__submit js--close">
+            Применить
+        </button>
+    </div>
+</div>
+
+<%= require('@parts/footer.ejs')() %>

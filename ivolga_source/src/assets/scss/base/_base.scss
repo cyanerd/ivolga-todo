@@ -1,0 +1,16 @@
+html {
+    overflow-x: hidden;
+    font-size: 1px; /* 1px = 1rem на 1920px */
+
+    &.locked {
+        overflow: hidden;
+    }
+
+    @media (max-width: $breakpoint-desktop) {
+        font-size: calc(100vw / 1920); /* Адаптивный размер для других разрешений */
+    }
+
+    @media (max-width: $breakpoint-tablet) {
+        font-size: 1px; /* Фиксированный размер на мобильных */
+    }
+}

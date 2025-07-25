@@ -1,0 +1,105 @@
+<%= require('@parts/header.ejs')({title: 'IVOLGA - Авторские украшения и одежда' }) %>
+
+<main class="homepage" id="root">
+
+
+    <section class="infopage lk">
+        <div class="infopage__wrap">
+            <div class="container">
+                <div class="infopage__row">
+                    <div class="infopage__aside">
+                        <p class="infopage__aside-title">
+                            Личный кабинет
+                        </p>
+                        <ul class="infopage__aside-list">
+                            <li>
+                                <a href="" class="active">
+                                    Профиль
+                                </a>
+                            </li>
+                            <li>
+                                <a href="">
+                                    История заказов
+                                </a>
+                            </li>
+                            <li>
+                                <a href="">
+                                    Адреса
+                                </a>
+                            </li>
+                            <li>
+                                <a href="">
+                                    Выйти
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="infopage__main">
+                        <h1 class="lk__title">
+                            Персональная информация
+                        </h1>
+                        <div class="lk-main">
+                            <div class="lk-main__row">
+                                <div class="lk-main__col">
+                                    <div class="inputel">
+                                        <input type="text" placeholder="1" id="name">
+                                        <label for="name">Имя</label>
+                                    </div>
+                                </div>
+                                <div class="lk-main__col">
+                                    <div class="inputel">
+                                        <input type="text" placeholder="1" id="name2">
+                                        <label for="name2">Фамилия</label>
+                                    </div>
+                                </div>
+                                <div class="lk-main__col">
+                                    <div class="inputel">
+                                        <input type="text" placeholder="1" id="date">
+                                        <label for="date">Дата рождения</label>
+                                    </div>
+                                </div>
+                                <div class="lk-main__col">
+                                    <div class="inputel">
+                                        <input type="tel" placeholder="1" id="tel">
+                                        <label for="tel">Телефон</label>
+                                    </div>
+                                </div>
+                                <div class="lk-main__col lk-main__col_12">
+                                    <div class="inputel">
+                                        <input type="email" placeholder="1" id="email">
+                                        <label for="email">Email для подписки</label>
+                                    </div>
+                                </div>
+                                <div class="lk-main__col lk-main__col_12">
+                                    <div class="wantget">
+                                        <input type="checkbox" id="want">
+                                        <label for="want">
+                                            Я хочу получать новости от Ivolga на свой Email
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="lk-main__col lk-main__col_12">
+                                    <button class="lk-main__submit">
+                                        СОхранить
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="lk-main__password">
+                                <p class="lk-main__password-txt">
+                                    Пароль
+                                </p>
+                                <button class="lk-main__password-change js--modal" data-modal="changepass">
+                                    Изменить
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+</main>
+
+
+<%= require('@parts/footer.ejs')() %>

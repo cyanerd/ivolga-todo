@@ -1,0 +1,31 @@
+$accent: transparent;
+
+$color-black: #232229;
+$color-black-05: rgba(35, 34, 41, 0.5);
+$color-white: #ffffff;
+$color-grey: #F6F5F3;
+$color-light-gray: #FAFAFA;
+$color-dark-grey: #4A4855;
+$color-yellow: #FDF16A;
+$color-red: #F95F5F;
+
+$font-steinbeck: 'Steinbeck', sans-serif;
+$font-pragmatica: 'Pragmatica', sans-serif;
+
+$container-width: 1840px;
+$container-padding: 40px;
+
+$font-size-xl: 8rem;   
+$font-size-l: 4rem;     
+$font-size-m: 2.8rem;   
+$font-size-base: 2.1rem; 
+$font-size-s: 1.8rem; 
+$font-size-xs: 1.6rem;  
+
+$breakpoint-desktop: 1920px;
+$breakpoint-laptop: 1440px;
+$breakpoint-tablet: 991px;
+$breakpoint-mobile: 767px;
+$breakpoint-small: 576px;
+
+$transition: all 0.3s ease;

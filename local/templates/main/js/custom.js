@@ -971,57 +971,33 @@ window.closeAlert = () => {
 
 $(document).on('click', '#logout-btn', function (e) {
   e.preventDefault();
-  $.ajax({
-    url: '/ajax/logout.php',
-    type: 'POST',
-    dataType: 'json',
-    success: function (response) {
-      if (response.result === 'ok') {
-        window.location.href = '/';
-      } else {
-        alert('Вы уже не авторизованы');
-        window.location.reload();
-      }
-    },
-    error: function () {
-      alert('Ошибка при выходе');
-    }
-  });
+  openModal('logout-modal');
 });
 
 $(document).ready(function () {
-  // Модалка подтверждения выхода
-  if ($('.logout-confirm').length && $('#logout-modal').length === 0) {
-    // Добавляем разметку модалки в конец body, если её ещё нет
-    $('body').append(`
-      <div class="lkmodal" id="logout-modal" style="display:none; position:fixed; z-index:1001; left:0; top:0; width:100vw; height:100vh; background:rgba(0,0,0,0.5); align-items:center; justify-content:center;">
-        <div style="background:#fff; border-radius:8px; max-width:90vw; width:350px; margin:auto; padding:32px 24px; text-align:center; position:relative;">
-          <div style="font-size:20px; font-weight:600; margin-bottom:16px;">Вы уверены, что хотите выйти?</div>
-          <div style="display:flex; gap:16px; justify-content:center; margin-top:24px;">
-            <button id="logout-yes" class="primary-button" style="min-width:90px;">Да</button>
-            <button id="logout-no" class="primary-button" style="background:#eee; color:#232229; min-width:90px;">Нет</button>
-          </div>
-        </div>
-      </div>
-    `);
-  }
+  $('#logout-yes').on('click', function () {
 
-  $(document).on('click', '.logout-confirm', function (e) {
-    e.preventDefault();
-    $('#logout-modal').fadeIn(120);
-    const logoutHref = $(this).attr('href');
-    $('#logout-yes').off('click').on('click', function () {
-      window.location.href = logoutHref;
-    });
-    $('#logout-no').off('click').on('click', function () {
-      $('#logout-modal').fadeOut(120);
-    });
-    // Закрытие по клику вне окна
-    $('#logout-modal').off('click').on('click', function (event) {
-      if (event.target === this) {
-        $(this).fadeOut(120);
+    $.ajax({
+      url: '/ajax/logout.php',
+      type: 'POST',
+      dataType: 'json',
+      success: function (response) {
+        if (response.result === 'ok') {
+          window.location.href = '/';
+        } else {
+          alert('Вы уже не авторизованы');
+          window.location.reload();
+        }
+      },
+      error: function () {
+        alert('Ошибка при выходе');
       }
     });
+
+  });
+
+  $('#logout-no').on('click', function () {
+    closeModal('logout-modal');
   });
 });
 
@@ -1171,6 +1147,7 @@ $(function () {
 
   // Закрытие модалки по клику на оверлей
   $(document).on('click', '.backdrop', function (e) {
+    $('.lkmodal').removeClass('open');
     $('#editadress').removeClass('open');
     $('#editadress_ok').removeClass('open');
     $('.catdrop').removeClass('open');

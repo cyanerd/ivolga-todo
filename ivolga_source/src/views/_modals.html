@@ -1,0 +1,71 @@
+<%= require('@parts/header.ejs')({title: 'IVOLGA - Авторские украшения и одежда' }) %>
+
+<main class="homepage" id="root">
+
+
+    <ul class="modals">
+        <li class="js--modal" data-modal="cart">
+            Корзина
+        </li>
+        <li class="js--modal" data-modal="modalguide">
+            Таблица размеров
+        </li>
+
+        <li class="js--modal" data-modal="changepass">
+            Изменение пароля
+        </li>
+        <li class="js--modal" data-modal="changepass_ok">
+            Изменение пароля -- успех
+        </li>
+
+        <li class="js--modal" data-modal="resetpass">
+            Сброс пароля
+        </li>
+        <li class="js--modal" data-modal="resetpass_code">
+            Сброс пароля код
+        </li>
+        <li class="js--modal" data-modal="resetpass_new">
+            Сброс пароля новый
+        </li>
+        <li class="js--modal" data-modal="resetpass_ok">
+            Сброс пароля -- успех
+        </li>
+
+        <li class="js--modal" data-modal="newadress">
+            Добавить адрес
+        </li>
+        <li class="js--modal" data-modal="newadress_ok">
+            Добавить адрес -- успех
+        </li>
+
+        <li class="js--modal" data-modal="editadress">
+            Редактировать адрес
+        </li>
+        <li class="js--modal" data-modal="editadress_ok">
+            Редактировать адрес -- успех
+        </li>
+
+        <li class="js--modal" data-modal="deleteadress">
+            Удалить адрес
+        </li>
+        <li class="js--modal" data-modal="deleteadress_ok">
+            Удалить адрес -- успех
+        </li>
+
+
+        <li class="js--modal" data-modal="cancel">
+            Удалить заказ
+        </li>
+        <li class="js--modal" data-modal="cancel_ok">
+            Удалить заказ -- успех
+        </li>
+        <li onclick="openAlert()">
+            Товар добавлен
+        </li>
+        
+    </ul>
+
+</main>
+
+
+<%= require('@parts/footer.ejs')() %>

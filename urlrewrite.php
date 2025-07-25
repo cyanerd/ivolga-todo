@@ -32,22 +32,6 @@ $arUrlRewrite = [
       'PATH' => '/broadcasts/index.php',
       'SORT' => 100,
     ],
-  4 =>
-    [
-      'CONDITION' => '#^/personal/#',
-      'RULE' => '',
-      'ID' => 'cabinet:personal',
-      'PATH' => '/personal/index.php',
-      'SORT' => 100,
-    ],
-  10 =>
-    [
-      'CONDITION' => '#^/checkout/#',
-      'RULE' => '',
-      'ID' => 'cabinet:cart',
-      'PATH' => '/checkout/index.php',
-      'SORT' => 100,
-    ],
   6 =>
     [
       'CONDITION' => '#^/product/([a-zA-Z0-9-_]+)/?.*#',

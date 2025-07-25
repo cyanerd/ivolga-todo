@@ -1,0 +1,106 @@
+%btn-accent {
+    color: $accent;
+}
+
+.btn {
+  display: inline-block;
+  font-family: $font-pragmatica;
+  font-size: $font-size-base;
+  font-weight: 700;
+  text-align: center;
+  vertical-align: middle;
+  cursor: pointer;
+  user-select: none;
+  border: 2px solid transparent;
+  padding: 12px 24px;
+  transition: color 0.3s ease, background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+  
+  &:focus {
+    outline: none;
+  }
+  
+  &--primary {
+    color: $color-white;
+    background-color: $color-black;
+    border-color: $color-black;
+    
+    &:hover {
+      background-color: rgba($color-black, 0.9);
+      border-color: rgba($color-black, 0.9);
+    }
+  }
+  
+  &--secondary {
+    color: $color-black;
+    background-color: transparent;
+    border-color: $color-black;
+    
+    &:hover {
+      color: $color-white;
+      background-color: $color-black;
+    }
+  }
+  
+  &--dark {
+    color: $color-white;
+    background-color: $color-black;
+    border-color: $color-black;
+    
+    &:hover {
+      color: $color-black;
+      background-color: transparent;
+    }
+  }
+  
+  &--light {
+    color: $color-black;
+    background-color: $color-white;
+    border-color: $color-white;
+    
+    &:hover {
+      color: $color-white;
+      background-color: transparent;
+    }
+  }
+  
+  &--yellow {
+    color: $color-black;
+    background-color: $color-yellow;
+    border-color: $color-yellow;
+    
+    &:hover {
+      background-color: darken($color-yellow, 10%);
+      border-color: darken($color-yellow, 10%);
+    }
+  }
+  
+  &--red {
+    color: $color-white;
+    background-color: $color-red;
+    border-color: $color-red;
+    
+    &:hover {
+      background-color: darken($color-red, 10%);
+      border-color: darken($color-red, 10%);
+    }
+  }
+  
+  &--lg {
+    font-size: $font-size-m;
+    padding: 16px 32px;
+  }
+  
+  &--sm {
+    font-size: $font-size-s;
+    padding: 8px 16px;
+  }
+  
+  &--block {
+    display: block;
+    width: 100%;
+  }
+  
+  &--rounded {
+    border-radius: 30px;
+  }
+}

@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title><%= title %></title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css" />
+</head>
+
+<body>
+    <!-- Верхняя плашка с бесплатной доставкой -->
+    <div class="topblock">
+        <div class="alert-main" id="alert-main">
+            <span class="alert-main__text">Бесплатная доставка заказов от 40 000₽</span>
+            <button class="alert-main__close" id="alert-close">
+                <svg width="14" height="18" viewBox="0 0 14 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M13 17.1665L7 9.1665M1 1.1665L7 9.1665M7 9.1665L13 1.1665M7 9.1665L1 17.1665" stroke="#232229" stroke-width="1.5"/>
+                    </svg>
+                    
+            </button>
+        </div>
+    
+        <header class="header">
+            <div class="header__container container">
+                <div class="header__menu">
+                    <div class="header__menu-mob mobheader">
+                        <button class="header__menu-burger">
+                            <span></span><span></span>
+                        </button>
+                        <button class="header__button header__button--search">
+                            <svg width="24" height="25" viewBox="0 0 24 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd" clip-rule="evenodd" d="M13.0001 6.4165C10.1006 6.4165 7.75006 8.76701 7.75006 11.6665C7.75006 13.1165 8.33686 14.4279 9.28775 15.3788C10.2386 16.3297 11.5501 16.9165 13.0001 16.9165C15.8996 16.9165 18.2501 14.566 18.2501 11.6665C18.2501 8.76701 15.8996 6.4165 13.0001 6.4165ZM6.25006 11.6665C6.25006 7.93858 9.27213 4.9165 13.0001 4.9165C16.728 4.9165 19.7501 7.93858 19.7501 11.6665C19.7501 15.3944 16.728 18.4165 13.0001 18.4165C11.4066 18.4165 9.94124 17.8636 8.78683 16.9404L5.53039 20.1968L4.46973 19.1362L7.72617 15.8797C6.80292 14.7253 6.25006 13.26 6.25006 11.6665Z" fill="#232229"/>
+                                </svg>
+                                
+                        </button>
+                    </div>
+                    <div class="header__menu-left">
+                        <a href="#" class="header__menu-link header__menu-link--dropdown">Каталог
+                            <i><svg width="24" height="25" viewBox="0 0 24 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path fill-rule="evenodd" clip-rule="evenodd" d="M12.75 11.9165V6.6665H11.25V11.9165H3V13.4165H11.25V18.6665H12.75V13.4165H21V11.9165H12.75Z" fill="#232229"/>
+    </svg>
+    
+    
+                            </i>
+                        </a>
+                        <a href="#" class="header__menu-link">Образы</a>
+                        <a href="#" class="header__menu-link">Коллекции</a>
+                        <a href="#" class="header__menu-link header__menu-link--live">Прямые эфиры
+                            <i>
+                                <svg width="12" height="13" viewBox="0 0 12 13" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <circle cx="6" cy="6.6665" r="6" fill="#F95F5F"/>
+                                    </svg>                                
+                            </i>
+                        </a>
+                    </div>
+                    <a href="/" class="header__logo">
+                        <img src="<%=require('@img/logo.svg')%>" alt="">
+                    </a>
+                    <div class="header__menu-right">
+                        <a href="#" class="header__menu-link">О нас</a>
+                        <a href="#" class="header__menu-link">Покупателям</a>
+                        <div class="header__buttons">
+                            <button class="header__button header__button--search descheader">
+                                <svg width="24" height="25" viewBox="0 0 24 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path fill-rule="evenodd" clip-rule="evenodd" d="M13.0001 6.4165C10.1006 6.4165 7.75006 8.76701 7.75006 11.6665C7.75006 13.1165 8.33686 14.4279 9.28775 15.3788C10.2386 16.3297 11.5501 16.9165 13.0001 16.9165C15.8996 16.9165 18.2501 14.566 18.2501 11.6665C18.2501 8.76701 15.8996 6.4165 13.0001 6.4165ZM6.25006 11.6665C6.25006 7.93858 9.27213 4.9165 13.0001 4.9165C16.728 4.9165 19.7501 7.93858 19.7501 11.6665C19.7501 15.3944 16.728 18.4165 13.0001 18.4165C11.4066 18.4165 9.94124 17.8636 8.78683 16.9404L5.53039 20.1968L4.46973 19.1362L7.72617 15.8797C6.80292 14.7253 6.25006 13.26 6.25006 11.6665Z" fill="#232229"/>
+                                    </svg>
+                                    
+                            </button>
+                            <a href="#" class="header__button">
+                                <svg width="24" height="25" viewBox="0 0 24 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path fill-rule="evenodd" clip-rule="evenodd" d="M12 6.4165C9.65279 6.4165 7.75 8.31929 7.75 10.6665C7.75 13.0137 9.65279 14.9165 12 14.9165C14.3472 14.9165 16.25 13.0137 16.25 10.6665C16.25 8.31929 14.3472 6.4165 12 6.4165ZM6.25 10.6665C6.25 7.49087 8.82436 4.9165 12 4.9165C15.1756 4.9165 17.75 7.49087 17.75 10.6665C17.75 13.8421 15.1756 16.4165 12 16.4165C8.82436 16.4165 6.25 13.8421 6.25 10.6665Z" fill="#232229"/>
+                                    <path fill-rule="evenodd" clip-rule="evenodd" d="M12 16.5415C9.841 16.5415 7.84726 18.2292 6.69517 21.0731L6.41357 21.7682L5.02332 21.205L5.30492 20.5099C6.57408 17.377 8.97783 15.0415 12 15.0415C15.0223 15.0415 17.426 17.377 18.6952 20.5099L18.9768 21.205L17.5865 21.7682L17.3049 21.0731C16.1528 18.2292 14.1591 16.5415 12 16.5415Z" fill="#232229"/>
+                                    </svg>
+                                    
+                            </a>
+                            <a href="#" class="header__button">
+                                <svg width="24" height="25" viewBox="0 0 24 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path fill-rule="evenodd" clip-rule="evenodd" d="M3.74175 6.63008C4.69476 5.69149 5.98492 5.16619 7.32783 5.16619C8.6661 5.16619 9.95199 5.68786 10.904 6.62037L12.0006 7.62621L13.0972 6.62038C14.0492 5.68787 15.3351 5.16619 16.6734 5.16619C18.0163 5.16619 19.3065 5.69149 20.2595 6.63008C21.2129 7.56906 21.7506 8.84504 21.7506 10.178C21.7506 11.51 21.2136 12.7851 20.2614 13.7239C20.2608 13.7246 20.2601 13.7252 20.2595 13.7258L12.0006 21.9763L3.7398 13.7239C2.78762 12.7851 2.25061 11.51 2.25061 10.178C2.25061 8.84504 2.78835 7.56906 3.74175 6.63008ZM7.32783 6.66619C6.37543 6.66619 5.46431 7.03892 4.7943 7.69879C4.12467 8.35829 3.75061 9.2503 3.75061 10.178C3.75061 11.1056 4.12467 11.9976 4.7943 12.6571L4.7981 12.6609L12.0006 19.8561L19.2069 12.6571C19.8765 11.9976 20.2506 11.1056 20.2506 10.178C20.2506 9.2503 19.8765 8.35829 19.2069 7.69879C18.5369 7.03892 17.6258 6.66619 16.6734 6.66619C15.721 6.66619 14.8099 7.03892 14.1399 7.69879L14.1304 7.70814L12.0006 9.66165L9.87085 7.70814L9.86136 7.69879C9.19135 7.03892 8.28022 6.66619 7.32783 6.66619Z" fill="#232229"/>
+                                    </svg>
+                                    
+                            </a>
+                            <a href="#" class="header__button">
+                                <svg width="24" height="25" viewBox="0 0 24 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path fill-rule="evenodd" clip-rule="evenodd" d="M7.75 8.6665C7.75 9.52846 8.09241 10.3551 8.7019 10.9646C9.3114 11.5741 10.138 11.9165 11 11.9165H12V13.4165H11C9.74022 13.4165 8.53204 12.9161 7.64124 12.0253C6.75045 11.1345 6.25 9.92628 6.25 8.6665H7.75Z" fill="#232229"/>
+                                    <path fill-rule="evenodd" clip-rule="evenodd" d="M15.2981 10.9646C15.9076 10.3551 16.25 9.52846 16.25 8.6665H17.75C17.75 9.92628 17.2496 11.1345 16.3588 12.0253C15.468 12.9161 14.2598 13.4165 13 13.4165H12V11.9165H13C13.862 11.9165 14.6886 11.5741 15.2981 10.9646Z" fill="#232229"/>
+                                    <path fill-rule="evenodd" clip-rule="evenodd" d="M2.25 4.9165H21.75V20.4165H2.25V4.9165ZM3.75 6.4165V18.9165H20.25V6.4165H3.75Z" fill="#232229"/>
+                                    </svg>
+                                    
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+    </div>
