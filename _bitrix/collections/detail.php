@@ -1,5 +1,5 @@
 <?php
-require ($_SERVER['DOCUMENT_ROOT'] . '/bitrix/header.php');
+require($_SERVER['DOCUMENT_ROOT'] . '/bitrix/header.php');
 $APPLICATION->SetTitle('Коллекции');
 ?>
 <?
@@ -7,12 +7,12 @@ $code = $_REQUEST['CODE'];
 $APPLICATION->IncludeComponent(
   'bitrix:news.detail',
   'collections-detail',
-  array(
+  [
     'IBLOCK_TYPE' => 'content',
     'IBLOCK_ID' => '21',
     'ELEMENT_CODE' => $code,
-    'FIELD_CODE' => array('ID', 'NAME', 'PREVIEW_TEXT', 'DETAIL_TEXT', 'PREVIEW_PICTURE', 'DETAIL_PICTURE'),
-    'PROPERTY_CODE' => array('SUBTITLE', 'PICTURE', 'ITEMS', 'GALLERY', 'IMAGES'),
+    'FIELD_CODE' => ['ID', 'NAME', 'PREVIEW_TEXT', 'DETAIL_TEXT', 'PREVIEW_PICTURE', 'DETAIL_PICTURE'],
+    'PROPERTY_CODE' => ['SUBTITLE', 'PICTURE', 'ITEMS', 'GALLERY', 'IMAGES'],
     'SET_TITLE' => 'Y',
     'SET_CANONICAL_URL' => 'N',
     'SET_BROWSER_TITLE' => 'Y',
@@ -29,9 +29,9 @@ $APPLICATION->IncludeComponent(
     'SET_STATUS_404' => 'Y',
     'SHOW_404' => 'Y',
     'MESSAGE_404' => 'Коллекция не найдена',
-  ),
+  ],
   false
 );
 ?>
 
-<? require ($_SERVER['DOCUMENT_ROOT'] . '/bitrix/footer.php'); ?>
+<? require($_SERVER['DOCUMENT_ROOT'] . '/bitrix/footer.php'); ?>

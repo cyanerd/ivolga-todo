@@ -1,18 +1,18 @@
 <?
-$aMenuLinks = Array(
-	Array(
-		"Связаться с нами", 
-		"/contacts/", 
-		Array(), 
-		Array(), 
-		"" 
-	),
-	Array(
-		"Адреса магазинов", 
-		"/stores/", 
-		Array(), 
-		Array(), 
-		"" 
-	)
-);
+$aMenuLinks = [
+  [
+    "Связаться с нами",
+    "/contacts/",
+    [],
+    [],
+    ""
+  ],
+  [
+    "Адреса магазинов",
+    "/stores/",
+    [],
+    [],
+    ""
+  ]
+];
 ?>

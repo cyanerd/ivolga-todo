@@ -27,7 +27,7 @@ $APPLICATION->SetTitle("Правила возврата");
         </div>
         <div class="infopage__main">
           <h1 class="infopage__title">
-            <?$APPLICATION->ShowTitle(); ?>
+            <? $APPLICATION->ShowTitle(); ?>
           </h1>
           <div class="infopage__content">
             <? $axi->GT('exchange') ?>

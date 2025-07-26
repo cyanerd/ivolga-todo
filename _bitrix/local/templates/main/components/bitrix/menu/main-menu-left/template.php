@@ -18,7 +18,7 @@ if (!empty($arResult)) {
     $class = $arItem['LINK'] === '/catalog/' ? 'header__menu-link--dropdown' : '';
 
     $out .= '
-      <a class="header__menu-link '.$class.'" href="' . $arItem["LINK"] . '">
+      <a class="header__menu-link ' . $class . '" href="' . $arItem["LINK"] . '">
         ' . $arItem["TEXT"];
 
     if ($arItem['LINK'] === '/catalog/') {

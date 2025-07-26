@@ -1,4 +1,4 @@
-<?if(!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED!==true)die();
+<? if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED !== true) die();
 $MESS["T_IBLOCK_DESC_NEWS_DATE"] = "Показывать дату элемента";
 $MESS["T_IBLOCK_DESC_NEWS_NAME"] = "Показывать название элемента";
 $MESS["T_IBLOCK_DESC_NEWS_PICTURE"] = "Показывать детальное изображение";
@@ -18,4 +18,4 @@ $MESS["T_IBLOCK_DESC_NEWS_SHARE_SYSTEM_TWITTER"] = "Twitter";
 $MESS["T_IBLOCK_DESC_NEWS_SHARE_SYSTEM_VKONTAKTE"] = "ВКонтакте";
 $MESS["T_IBLOCK_DESC_NEWS_SHARE_SHORTEN_URL_LOGIN"] = "Логин для bit.ly";
 $MESS["T_IBLOCK_DESC_NEWS_SHARE_SHORTEN_URL_KEY"] = "Ключ API для bit.ly";
-?> 
+?>

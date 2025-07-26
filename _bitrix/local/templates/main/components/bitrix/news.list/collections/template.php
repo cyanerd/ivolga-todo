@@ -1,20 +1,20 @@
-<?if(!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED!==true)die();
+<? if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED !== true) die();
 $this->setFrameMode(true);
 ?>
 <div class="categories__row" id="collections-list">
-  <?foreach($arResult["ITEMS"] as $arItem):
+  <? foreach ($arResult["ITEMS"] as $arItem):
     $img = $arItem["PREVIEW_PICTURE"]["SRC"] ?: $arItem["DETAIL_PICTURE"]["SRC"] ?: CFile::GetPath($arItem["PROPERTIES"]["PICTURE"]["VALUE"]);
     $title = $arItem["NAME"];
     $subtitle = $arItem["PROPERTIES"]["SUBTITLE"]["VALUE"];
     $url = $arItem["DETAIL_PAGE_URL"]; // $arItem["PROPERTIES"]["URL"]["VALUE"] ?:
-  ?>
-    <a href="<?=$url?>" class="category-card" data-id="<?=$arItem['ID']?>">
+    ?>
+    <a href="<?= $url ?>" class="category-card" data-id="<?= $arItem['ID'] ?>">
       <div class="category-card__image">
-        <?if($img):?><img src="<?=$img?>" alt="<?=$title?>" class="category-card__img"><?endif;?>
+        <? if ($img):?><img src="<?= $img ?>" alt="<?= $title ?>" class="category-card__img"><? endif; ?>
         <div class="category-card__overlay"></div>
       </div>
       <div class="category-card__content">
-        <h3 class="category-card__title"><?=$title?></h3>
+        <h3 class="category-card__title"><?= $title ?></h3>
         <svg width="24" height="25" viewBox="0 0 24 25" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path fill-rule="evenodd" clip-rule="evenodd"
                 d="M11 6.4165L12 6.4165C13.7949 6.4165 15.25 4.96143 15.25 3.1665L16.75 3.1665C16.75 5.78986 14.6234 7.9165 12 7.9165L11 7.9165L11 6.4165Z"
@@ -27,22 +27,22 @@ $this->setFrameMode(true);
         </svg>
       </div>
     </a>
-  <?endforeach;?>
+  <? endforeach; ?>
 </div>
-<?if($arParams["DISPLAY_BOTTOM_PAGER"] && $arResult["NAV_STRING"]):?>
+<? if ($arParams["DISPLAY_BOTTOM_PAGER"] && $arResult["NAV_STRING"]): ?>
   <script>
     window.collectionsTotal = <?=intval($arResult["NAV_RESULT"]->NavRecordCount)?>;
   </script>
   <div class="container">
-    <button class="pagecollect__btn" id="collections-more" data-navnum="<?=$arResult["NAV_RESULT"]->NavNum?>">
+    <button class="pagecollect__btn" id="collections-more" data-navnum="<?= $arResult["NAV_RESULT"]->NavNum ?>">
       Показать ещё
     </button>
     <div style="display:none;">
-      <?=$arResult["NAV_STRING"]?>
+      <?= $arResult["NAV_STRING"] ?>
     </div>
   </div>
   <script>
-    document.getElementById('collections-more').addEventListener('click', function() {
+    document.getElementById('collections-more').addEventListener('click', function () {
       var nav = document.querySelector('div[style*="display:none;"]');
       if (!nav) return;
       var next = nav.querySelector('a[rel="next"], a[title=\"Следующая страница\"], a');
@@ -56,7 +56,7 @@ $this->setFrameMode(true);
           var newItems = temp.querySelectorAll('#collections-list .category-card');
           var list = document.getElementById('collections-list');
           var added = 0;
-          newItems.forEach(function(card) {
+          newItems.forEach(function (card) {
             if (!list.querySelector('a.category-card[data-id="' + card.getAttribute('data-id') + '"]')) {
               list.appendChild(card);
               added++;
@@ -64,14 +64,14 @@ $this->setFrameMode(true);
           });
           // Обновить навигацию
           var newNav = temp.querySelector('div[style*="display:none;"]');
-          if(newNav) nav.parentNode.replaceChild(newNav, nav);
+          if (newNav) nav.parentNode.replaceChild(newNav, nav);
           // Скрыть кнопку если больше нет страниц, не добавлено ни одной новой карточки,
           // или общее количество карточек на странице >= общего количества коллекций
           var hasNext = newNav && newNav.querySelector('a[rel="next"], a[title="Следующая страница"], a');
-          if(!hasNext || added === 0 || (window.collectionsTotal && list.querySelectorAll('a.category-card').length >= window.collectionsTotal)) {
+          if (!hasNext || added === 0 || (window.collectionsTotal && list.querySelectorAll('a.category-card').length >= window.collectionsTotal)) {
             document.getElementById('collections-more').style.display = 'none';
           }
         });
     });
   </script>
-<?endif;?>
+<? endif; ?>

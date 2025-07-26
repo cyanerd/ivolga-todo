@@ -1,39 +1,39 @@
 <?
-$aMenuLinks = Array(
-	Array(
-		"Доставка", 
-		"/delivery/", 
-		Array(), 
-		Array(), 
-		"" 
-	),
-	Array(
-		"Оплата", 
-		"/payment/", 
-		Array(), 
-		Array(), 
-		"" 
-	),
-	Array(
-		"Обмен и возврат", 
-		"/exchange/", 
-		Array(), 
-		Array(), 
-		"" 
-	),
-	Array(
-		"Уход за одеждой", 
-		"/care/", 
-		Array(), 
-		Array(), 
-		"" 
-	),
-	Array(
-		"Политика", 
-		"/privacy/", 
-		Array(), 
-		Array(), 
-		"" 
-	)
-);
+$aMenuLinks = [
+  [
+    "Доставка",
+    "/delivery/",
+    [],
+    [],
+    ""
+  ],
+  [
+    "Оплата",
+    "/payment/",
+    [],
+    [],
+    ""
+  ],
+  [
+    "Обмен и возврат",
+    "/exchange/",
+    [],
+    [],
+    ""
+  ],
+  [
+    "Уход за одеждой",
+    "/care/",
+    [],
+    [],
+    ""
+  ],
+  [
+    "Политика",
+    "/privacy/",
+    [],
+    [],
+    ""
+  ]
+];
 ?>

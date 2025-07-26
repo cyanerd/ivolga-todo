@@ -1,16 +1,5 @@
 .catalogpage__sort form {
     display: flex;
-    align-items: center;
-    gap: 4px;
-}
-
-.catalogpage__sort form input[name="order"] + .sort-order-btn svg {
-    transform: rotate(-90deg);
-}
-
-.catalogpage__sort form input[name="order"][value="desc"] + .sort-order-btn svg {
-    position: relative;
-    top: -4px;
 }
 
 ._cart .btn,
@@ -179,8 +168,8 @@ h1.faq-info__title {
 }
 
 .input-error {
-  border: 1px solid #e74c3c !important;
-  background: #fff0f0;
+    border: 1px solid #e74c3c !important;
+    background: #fff0f0;
 }
 
 .catalogpage__nav {
@@ -286,6 +275,10 @@ body .catalogpage__heading {
 }
 
 @keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
 }

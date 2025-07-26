@@ -13,10 +13,10 @@
 $this->setFrameMode(true);
 ?>
 <div class="search-modal-recommendations">
-    <p>Рекомендации</p>
-    <ul>
-        <?foreach ($arResult['ITEMS'] as $arItem):?>
-        <li><a class="primary-button" href="/search/?q=<?=urlencode($arItem['NAME'])?>"><?=$arItem['NAME']?></a></li>
-        <?endforeach;?>
-    </ul>
+  <p>Рекомендации</p>
+  <ul>
+    <? foreach ($arResult['ITEMS'] as $arItem): ?>
+      <li><a class="primary-button" href="/search/?q=<?= urlencode($arItem['NAME']) ?>"><?= $arItem['NAME'] ?></a></li>
+    <? endforeach; ?>
+  </ul>
 </div>

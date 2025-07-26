@@ -1,3 +1,3 @@
 <?
-$sSectionName="Коллекции";
+$sSectionName = "Коллекции";
 ?>

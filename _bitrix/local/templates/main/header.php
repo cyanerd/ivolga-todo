@@ -248,22 +248,27 @@ if ($APPLICATION->GetCurPage() === '/policy/') {
     <div class="lkmodal__body">
       <!-- Шаг 1: выбор действия -->
       <div class="lkmodal__form profile-modal__step profile-modal__step--1 mode-initial">
-        <p class="lkmodal__form-descr">Зарегистрируйтесь или войдите в свой аккаунт, чтобы воспользоваться программой лояльности</p>
+        <p class="lkmodal__form-descr">Зарегистрируйтесь или войдите в свой аккаунт, чтобы воспользоваться программой
+          лояльности</p>
         <div class="lkmodal__form-el">
-          <button class="lkmodal__form-submit primary-button-active" type="button" id="enter-as-guest">Войти / Зарегистрироваться</button>
+          <button class="lkmodal__form-submit primary-button-active" type="button" id="enter-as-guest">Войти /
+            Зарегистрироваться
+          </button>
         </div>
-        <?/*
+        <? /*
         <div class="lkmodal__form-el">
           <button class="lkmodal__form-submit primary-button" type="button" id="enter-as-guest">Продолжить как гость</button>
         </div>
-        */?>
+        */ ?>
       </div>
       <!-- Шаг 2: ввод телефона -->
-      <form class="lkmodal__form profile-modal__step profile-modal__step--2 hide mode-guest" id="form--send--sms" autocomplete="off">
+      <form class="lkmodal__form profile-modal__step profile-modal__step--2 hide mode-guest" id="form--send--sms"
+            autocomplete="off">
         <p class="lkmodal__form-descr">Мы отправим на номер SMS-сообщение с кодом подтверждения.</p>
         <div class="lkmodal__form-el">
           <div class="inputel">
-            <input class="input mobile-phone-input js_phone" id="phone" name="phone" placeholder="+7 (___) ___-__-__" type="tel" required>
+            <input class="input mobile-phone-input js_phone" id="phone" name="phone" placeholder="+7 (___) ___-__-__" type="tel"
+                   required>
             <label for="phone">Ваш номер телефона</label>
           </div>
         </div>
@@ -272,7 +277,8 @@ if ($APPLICATION->GetCurPage() === '/policy/') {
         </div>
       </form>
       <!-- Шаг 3: ввод кода -->
-      <form class="lkmodal__form profile-modal__step profile-modal__step--3 hide mode-code" id="form--verify--sms" autocomplete="off">
+      <form class="lkmodal__form profile-modal__step profile-modal__step--3 hide mode-code" id="form--verify--sms"
+            autocomplete="off">
         <div class="lkmodal__form-el">
           <button class="lkmodal__back back-button" type="button">
             <svg width="24" height="25" viewBox="0 0 24 25" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -300,5 +306,17 @@ if ($APPLICATION->GetCurPage() === '/policy/') {
     </div>
   </div>
 </div>
+
+<!-- Мобильное меню -->
+<nav class="mobile-header__nav">
+  <ul class="mobile-header__list">
+    <li><a class="nav-link" href="/catalog/">Каталог</a></li>
+    <li><a class="nav-link" href="/looks/">Образы</a></li>
+    <li><a class="nav-link" href="/collections/">Коллекции</a></li>
+    <li><a class="nav-link" href="/broadcasts/">Прямые эфиры</a></li>
+    <li><a class="nav-link" href="/about/">О нас</a></li>
+    <li><a class="nav-link" href="/contacts/">Контакты</a></li>
+  </ul>
+</nav>
 
 <main class="homepage" id="root">

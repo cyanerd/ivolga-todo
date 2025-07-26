@@ -10192,3 +10192,67 @@ body {
         width: 100%
     }
 }
+
+/* Стили для анимации кнопки бургер-меню */
+.header__menu-burger.active span:nth-child(1) {
+    transform: rotate(45deg) translate(5px, 5px);
+}
+
+.header__menu-burger.active span:nth-child(2) {
+    opacity: 0;
+}
+
+.header__menu-burger.active span:nth-child(3) {
+    transform: rotate(-45deg) translate(7px, -6px);
+}
+
+.header__menu-burger span {
+    transition: all 0.3s ease;
+}
+
+/* Дополнительные стили для мобильного меню */
+.mobile-header__nav {
+    background: #fbfbf6;
+    height: 100vh;
+    left: 0;
+    position: fixed;
+    top: -100vh;
+    transition: all 0.9s ease-in;
+    width: 100vw;
+    z-index: 9999;
+}
+
+.mobile-header__nav.active {
+    top: var(--padding-top, 0);
+    transition: all 0.9s ease-out;
+}
+
+.mobile-header__list {
+    border-top: 1px solid #8c8c8c;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.mobile-header__list li {
+    border-bottom: 1px solid #8c8c8c;
+    padding: 20px 10px;
+}
+
+.mobile-header__list .nav-link {
+    color: #232229;
+    text-decoration: none;
+    font-size: 16px;
+    display: block;
+    padding: 10px 0;
+    transition: color 0.3s ease;
+}
+
+.mobile-header__list .nav-link:hover {
+    color: #666;
+}
+
+/* Стили для body при открытом мобильном меню */
+body.modal-open {
+    overflow: hidden;
+}

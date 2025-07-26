@@ -25,21 +25,21 @@ $order = $arResult;
       <? if (!empty($order["BASKET"])): ?>
         <? foreach ($order["BASKET"] as $item): ?>
           <?php
-            $detailUrl = '#';
-            $skuId = $item['PRODUCT_ID'];
-            $parent = CCatalogSku::GetProductInfo($skuId);
-            if ($parent && $parent['ID']) {
-                $rs = CIBlockElement::GetList(
-                    [],
-                    ['ID' => $parent['ID']],
-                    false,
-                    false,
-                    ['ID', 'CODE']
-                );
-                if ($ar = $rs->GetNext()) {
-                    $detailUrl = '/product/' . $ar['CODE'] . '/';
-                }
+          $detailUrl = '#';
+          $skuId = $item['PRODUCT_ID'];
+          $parent = CCatalogSku::GetProductInfo($skuId);
+          if ($parent && $parent['ID']) {
+            $rs = CIBlockElement::GetList(
+              [],
+              ['ID' => $parent['ID']],
+              false,
+              false,
+              ['ID', 'CODE']
+            );
+            if ($ar = $rs->GetNext()) {
+              $detailUrl = '/product/' . $ar['CODE'] . '/';
             }
+          }
           ?>
           <a href="<?= $detailUrl ?>" class="singleorder-prod">
             <div class="singleorder-prod__left">
@@ -88,7 +88,8 @@ $order = $arResult;
       <div class="singleorder-info__info">
         <div class="singleorder-info__info-item">
           <p>
-            <?= count($order["BASKET"] ?? []) ?> <?= pluralForm(count($order["BASKET"] ?? []), ["товар", "товара", "товаров"]) ?> на сумму
+            <?= count($order["BASKET"] ?? []) ?> <?= pluralForm(count($order["BASKET"] ?? []), ["товар", "товара", "товаров"]) ?>
+            на сумму
           </p>
           <p>
             <?= $order["PRICE_FORMATED"] ?? '-'; ?>
@@ -151,23 +152,33 @@ $order = $arResult;
 </div>
 
 <!-- Support Modal -->
-<div class="support-modal" id="support-modal" style="display:none;position:fixed;top:0;right:0;width:400px;max-width:100vw;height:100vh;background:#fff;z-index:9999;box-shadow:-2px 0 16px rgba(0,0,0,0.15);transition:transform 0.3s;transform:translateX(100%);">
+<div class="support-modal" id="support-modal"
+     style="display:none;position:fixed;top:0;right:0;width:400px;max-width:100vw;height:100vh;background:#fff;z-index:9999;box-shadow:-2px 0 16px rgba(0,0,0,0.15);transition:transform 0.3s;transform:translateX(100%);">
   <div style="padding:24px 24px 16px 24px;display:flex;justify-content:space-between;align-items:center;">
     <span style="font-size:20px;font-weight:bold;">Связаться с поддержкой</span>
     <button id="support-modal-close" style="background:none;border:none;font-size:24px;cursor:pointer;">&times;</button>
   </div>
   <form id="support-form" style="padding:0 24px 24px 24px;display:flex;flex-direction:column;gap:16px;">
-    <textarea name="message" id="support-message" rows="6" placeholder="Опишите вашу проблему..." style="width:100%;padding:12px;font-size:16px;resize:vertical;"></textarea>
-    <input type="hidden" name="order_id" value="<?=htmlspecialcharsbx($order['ID'])?>">
-    <button type="submit" style="background:#232229;color:#fff;padding:12px 0;font-size:16px;border:none;border-radius:4px;cursor:pointer;">Отправить</button>
+    <textarea name="message" id="support-message" rows="6" placeholder="Опишите вашу проблему..."
+              style="width:100%;padding:12px;font-size:16px;resize:vertical;"></textarea>
+    <input type="hidden" name="order_id" value="<?= htmlspecialcharsbx($order['ID']) ?>">
+    <button type="submit"
+            style="background:#232229;color:#fff;padding:12px 0;font-size:16px;border:none;border-radius:4px;cursor:pointer;">
+      Отправить
+    </button>
     <div id="support-form-success" style="display:none;color:green;font-size:15px;">Сообщение отправлено!</div>
     <div id="support-form-error" style="display:none;color:red;font-size:15px;"></div>
   </form>
 </div>
 
 <style>
-.support-modal {box-sizing:border-box;}
-@media (max-width: 500px) {
-  .support-modal {width:100vw;}
-}
+    .support-modal {
+        box-sizing: border-box;
+    }
+
+    @media (max-width: 500px) {
+        .support-modal {
+            width: 100vw;
+        }
+    }
 </style>

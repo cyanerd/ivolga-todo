@@ -1,3 +1,3 @@
 <?
-$sSectionName="Обмен и возврат";
+$sSectionName = "Обмен и возврат";
 ?>

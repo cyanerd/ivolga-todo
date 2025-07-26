@@ -5,7 +5,7 @@ $APPLICATION->SetTitle("Ivolga Blog");
 
 <div class="_blog">
   <div class="container">
-    <h1 class="blog__title"><?$APPLICATION->ShowTitle();?></h1>
+    <h1 class="blog__title"><? $APPLICATION->ShowTitle(); ?></h1>
   </div>
 </div>
 

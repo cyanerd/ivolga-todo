@@ -7,13 +7,13 @@ $APPLICATION->SetTitle("Коллекции");
   <div class="pagecollect__wrap">
     <div class="container">
       <h1 class="pagecollect__title">
-        <?$APPLICATION->ShowTitle();?>
+        <? $APPLICATION->ShowTitle(); ?>
       </h1>
     </div>
-    <?$APPLICATION->IncludeComponent(
+    <? $APPLICATION->IncludeComponent(
       "bitrix:news.list",
       "collections",
-      array(
+      [
         "IBLOCK_TYPE" => "content",
         "IBLOCK_ID" => "21",
         "NEWS_COUNT" => "4",
@@ -21,8 +21,8 @@ $APPLICATION->SetTitle("Коллекции");
         "SORT_ORDER1" => "ASC",
         "SORT_BY2" => "ID",
         "SORT_ORDER2" => "DESC",
-        "FIELD_CODE" => array("ID", "NAME", "PREVIEW_PICTURE", "DETAIL_PICTURE"),
-        "PROPERTY_CODE" => array("SUBTITLE", "URL", "PICTURE", "ITEMS"),
+        "FIELD_CODE" => ["ID", "NAME", "PREVIEW_PICTURE", "DETAIL_PICTURE"],
+        "PROPERTY_CODE" => ["SUBTITLE", "URL", "PICTURE", "ITEMS"],
         "DISPLAY_PANEL" => "N",
         "SET_TITLE" => "N",
         "SET_BROWSER_TITLE" => "N",
@@ -46,9 +46,9 @@ $APPLICATION->SetTitle("Коллекции");
         "SET_STATUS_404" => "N",
         "SHOW_404" => "N",
         "MESSAGE_404" => "",
-      ),
+      ],
       false
-    );?>
+    ); ?>
   </div>
 </section>
 

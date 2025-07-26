@@ -1,3 +1,3 @@
 <?
-$sSectionName="order";
+$sSectionName = "order";
 ?>

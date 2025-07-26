@@ -13,19 +13,19 @@
 $this->setFrameMode(true);
 ?>
 <main class="collection-content">
-    <div class="collection-content__title">
-        <p><?=$arResult['NAME']?></p>
-    </div>
-    <ul class="collection-list container">
-        <li class="collection-item--vertical">
-            <img src="<?=$arResult['DETAIL_PICTURE']['SRC']?>" alt="collection" />
+  <div class="collection-content__title">
+    <p><?= $arResult['NAME'] ?></p>
+  </div>
+  <ul class="collection-list container">
+    <li class="collection-item--vertical">
+      <img src="<?= $arResult['DETAIL_PICTURE']['SRC'] ?>" alt="collection"/>
 
-        </li>
-        <li class="collection-item--horizontal">
-            <?=$arResult['FIELDS']['DETAIL_TEXT']?>
-        </li>
-    </ul>
-    <?/*
+    </li>
+    <li class="collection-item--horizontal">
+      <?= $arResult['FIELDS']['DETAIL_TEXT'] ?>
+    </li>
+  </ul>
+  <? /*
     <h2 class="collections-list__title">Ещё больше коллекций</h2>
     <ul class="collections-list container">
         <li class="collections-item">
@@ -56,5 +56,5 @@ $this->setFrameMode(true);
             >
         </li>
     </ul>
-    */?>
+    */ ?>
 </main>

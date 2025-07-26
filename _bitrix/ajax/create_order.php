@@ -26,118 +26,118 @@ $agreement = $request->getPost('agreement');
 
 // Проверяем обязательные поля
 if (!$firstName || !$lastName || !$email || !$phone || !$address || !$deliveryType || !$paymentType || !$agreement) {
-    echo \Bitrix\Main\Web\Json::encode([
-        'success' => false,
-        'message' => 'Пожалуйста, заполните все обязательные поля'
-    ]);
-    return;
+  echo \Bitrix\Main\Web\Json::encode([
+    'success' => false,
+    'message' => 'Пожалуйста, заполните все обязательные поля'
+  ]);
+  return;
 }
 
 try {
-    // Получаем корзину
-    $basket = MyTools::getBasket();
+  // Получаем корзину
+  $basket = MyTools::getBasket();
 
-    if (empty($basket['BASKET_ITEMS'])) {
-        echo \Bitrix\Main\Web\Json::encode([
-            'success' => false,
-            'message' => 'Корзина пуста'
-        ]);
-        return;
-    }
-
-    // Создаем заказ
-    $order = Sale\Order::create(SITE_ID);
-
-    // Добавляем товары в заказ
-    foreach ($basket['BASKET_ITEMS'] as $basketItem) {
-        $order->getBasket()->addItem($basketItem);
-    }
-
-    // Устанавливаем свойства заказа
-    $propertyCollection = $order->getPropertyCollection();
-
-    // Имя
-    $nameProperty = $propertyCollection->getItemByOrderPropertyCode('FIO');
-    if ($nameProperty) {
-        $nameProperty->setValue($firstName . ' ' . $lastName);
-    }
-
-    // Email
-    $emailProperty = $propertyCollection->getItemByOrderPropertyCode('EMAIL');
-    if ($emailProperty) {
-        $emailProperty->setValue($email);
-    }
-
-    // Телефон
-    $phoneProperty = $propertyCollection->getItemByOrderPropertyCode('PHONE');
-    if ($phoneProperty) {
-        $phoneProperty->setValue($phone);
-    }
-
-    // Адрес
-    $addressProperty = $propertyCollection->getItemByOrderPropertyCode('ADDRESS');
-    if ($addressProperty) {
-        $addressProperty->setValue($address);
-    }
-
-    // Комментарий
-    if ($comment) {
-        $commentProperty = $propertyCollection->getItemByOrderPropertyCode('COMMENT');
-        if ($commentProperty) {
-            $commentProperty->setValue($comment);
-        }
-    }
-
-    // Устанавливаем способ доставки
-    $shipmentCollection = $order->getShipmentCollection();
-    $shipment = $shipmentCollection->createItem();
-    $shipment->setFields([
-        'DELIVERY_ID' => $deliveryType,
-        'DELIVERY_NAME' => 'Доставка'
+  if (empty($basket['BASKET_ITEMS'])) {
+    echo \Bitrix\Main\Web\Json::encode([
+      'success' => false,
+      'message' => 'Корзина пуста'
     ]);
+    return;
+  }
 
-    // Устанавливаем способ оплаты
-    $paymentCollection = $order->getPaymentCollection();
-    $payment = $paymentCollection->createItem();
-    $payment->setFields([
-        'PAY_SYSTEM_ID' => $paymentType,
-        'PAY_SYSTEM_NAME' => 'Оплата'
-    ]);
+  // Создаем заказ
+  $order = Sale\Order::create(SITE_ID);
 
-    // Сохраняем заказ
-    $result = $order->save();
+  // Добавляем товары в заказ
+  foreach ($basket['BASKET_ITEMS'] as $basketItem) {
+    $order->getBasket()->addItem($basketItem);
+  }
 
-    if ($result->isSuccess()) {
-        $orderId = $order->getId();
+  // Устанавливаем свойства заказа
+  $propertyCollection = $order->getPropertyCollection();
 
-        // Очищаем корзину
-        $basket->clearAll();
-        $basket->save();
+  // Имя
+  $nameProperty = $propertyCollection->getItemByOrderPropertyCode('FIO');
+  if ($nameProperty) {
+    $nameProperty->setValue($firstName . ' ' . $lastName);
+  }
 
-        // Логируем создание заказа
-        projectDebugLog('Order created: ID=' . $orderId . ', User=' . $USER->GetID(), 'order_creation');
+  // Email
+  $emailProperty = $propertyCollection->getItemByOrderPropertyCode('EMAIL');
+  if ($emailProperty) {
+    $emailProperty->setValue($email);
+  }
 
-        echo \Bitrix\Main\Web\Json::encode([
-            'success' => true,
-            'orderId' => $orderId,
-            'message' => 'Заказ успешно создан'
-        ]);
-    } else {
-        $errors = $result->getErrorMessages();
-        projectDebugLog('Order creation failed: ' . implode(', ', $errors), 'order_creation');
+  // Телефон
+  $phoneProperty = $propertyCollection->getItemByOrderPropertyCode('PHONE');
+  if ($phoneProperty) {
+    $phoneProperty->setValue($phone);
+  }
 
-        echo \Bitrix\Main\Web\Json::encode([
-            'success' => false,
-            'message' => 'Ошибка при создании заказа: ' . implode(', ', $errors)
-        ]);
+  // Адрес
+  $addressProperty = $propertyCollection->getItemByOrderPropertyCode('ADDRESS');
+  if ($addressProperty) {
+    $addressProperty->setValue($address);
+  }
+
+  // Комментарий
+  if ($comment) {
+    $commentProperty = $propertyCollection->getItemByOrderPropertyCode('COMMENT');
+    if ($commentProperty) {
+      $commentProperty->setValue($comment);
     }
+  }
 
-} catch (Exception $e) {
-    projectDebugLog('Order creation exception: ' . $e->getMessage(), 'order_creation');
+  // Устанавливаем способ доставки
+  $shipmentCollection = $order->getShipmentCollection();
+  $shipment = $shipmentCollection->createItem();
+  $shipment->setFields([
+    'DELIVERY_ID' => $deliveryType,
+    'DELIVERY_NAME' => 'Доставка'
+  ]);
+
+  // Устанавливаем способ оплаты
+  $paymentCollection = $order->getPaymentCollection();
+  $payment = $paymentCollection->createItem();
+  $payment->setFields([
+    'PAY_SYSTEM_ID' => $paymentType,
+    'PAY_SYSTEM_NAME' => 'Оплата'
+  ]);
+
+  // Сохраняем заказ
+  $result = $order->save();
+
+  if ($result->isSuccess()) {
+    $orderId = $order->getId();
+
+    // Очищаем корзину
+    $basket->clearAll();
+    $basket->save();
+
+    // Логируем создание заказа
+    projectDebugLog('Order created: ID=' . $orderId . ', User=' . $USER->GetID(), 'order_creation');
 
     echo \Bitrix\Main\Web\Json::encode([
-        'success' => false,
-        'message' => 'Ошибка при создании заказа: ' . $e->getMessage()
+      'success' => true,
+      'orderId' => $orderId,
+      'message' => 'Заказ успешно создан'
     ]);
+  } else {
+    $errors = $result->getErrorMessages();
+    projectDebugLog('Order creation failed: ' . implode(', ', $errors), 'order_creation');
+
+    echo \Bitrix\Main\Web\Json::encode([
+      'success' => false,
+      'message' => 'Ошибка при создании заказа: ' . implode(', ', $errors)
+    ]);
+  }
+
+} catch (Exception $e) {
+  projectDebugLog('Order creation exception: ' . $e->getMessage(), 'order_creation');
+
+  echo \Bitrix\Main\Web\Json::encode([
+    'success' => false,
+    'message' => 'Ошибка при создании заказа: ' . $e->getMessage()
+  ]);
 }
 ?>

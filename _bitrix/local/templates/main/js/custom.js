@@ -12,15 +12,18 @@ $(document).ready(function () {
     if (colors.length) params.color = colors.join(',');
     const materials = $("input[name='material']:checked").map(function () {return this.value;}).get();
     if (materials.length) params.material = materials.join(',');
-    const collections = $("input[name='collections']:checked").map(function () {return this.value;}).get();
+    const collections = $("input[name='collection']:checked").map(function () {return this.value;}).get();
     if (collections.length) params.collection = collections.join(',');
-    
+
     // Добавляем параметры сортировки
     const sortValue = $('select[name="sort"]').val();
     const orderValue = $('input[name="order"]').val();
     if (sortValue) params.sort = sortValue;
     if (orderValue) params.order = orderValue;
-    
+
+    console.log('getCatalogParams - found collections:', collections);
+    console.log('getCatalogParams - final params:', params);
+
     return Object.keys(params).map(key => encodeURIComponent(key) + '=' + encodeURIComponent(params[key])).join('&');
   }
 
@@ -41,13 +44,20 @@ $(document).ready(function () {
       console.log('AJAX response received');
       const $container = $(data).filter('#catalog-ajax-container');
       const html = $container.length ? $container.html() : $(data).find('#catalog-ajax-container').html();
+      console.log('HTML to update:', html.substring(0, 500) + '...'); // Показываем первые 500 символов
       $('#catalog-ajax-container').html(html);
       $("#catalog-ajax-container").removeClass('loading');
       // window.scrollTo({top: $("#catalog-ajax-container").offset().top - 50, behavior: 'smooth'});
       $(html).removeClass('locked');
       initFilters();
       initSortHandlers(); // Переинициализируем обработчики сортировки
-    }).fail(function(xhr, status, error) {
+
+      // Проверяем, обновился ли класс сортировки
+      const $sortContainer = $('.catalogpage__sort');
+      console.log('Sort container classes after update:', $sortContainer.attr('class'));
+      console.log('Sort container has desc class:', $sortContainer.hasClass('desc'));
+      console.log('Sort container has asc class:', $sortContainer.hasClass('asc'));
+    }).fail(function (xhr, status, error) {
       console.error('AJAX request failed:', status, error);
       $("#catalog-ajax-container").removeClass('loading');
     });
@@ -57,7 +67,9 @@ $(document).ready(function () {
 
   // Фильтрация каталога по выбранным фильтрам (AJAX или обычная перезагрузка)
   $(document).on('click', '.catdrop__apply', function (e) {
+    console.log('catdrop__apply clicked');
     const search = getCatalogParams();
+    console.log('catdrop__apply - search params:', search);
 
     if (window.USE_CATALOG_AJAX) {
       e.preventDefault();
@@ -76,7 +88,7 @@ $(document).ready(function () {
   });
 
   // Функция для сброса фильтров
-  window.resetFilters = function() {
+  window.resetFilters = function () {
     $('.catdrop').find('input[type=checkbox], input[type=radio]').prop('checked', false);
     if (window.USE_CATALOG_AJAX) {
       updateCatalogAjax('');
@@ -89,39 +101,39 @@ $(document).ready(function () {
   function updateRelatedFilters() {
     const currentParams = getCatalogParams();
     if (!currentParams) return; // Если нет параметров, не обновляем
-    
+
     // Добавляем индикатор загрузки
     $('.catdrop-block').addClass('loading');
-    
-    $.get(window.location.pathname + '?' + currentParams + '&ajax=Y&update_filters=Y', function(data) {
+
+    $.get(window.location.pathname + '?' + currentParams + '&ajax=Y&update_filters=Y', function (data) {
       const $html = $('<div>').html(data);
       const $newFilters = $html.find('.catdrop-block');
-      
+
       // Обновляем каждый блок фильтров
-      $newFilters.each(function() {
+      $newFilters.each(function () {
         const filterType = $(this).data('type');
         const $currentFilter = $('.catdrop-block[data-type="' + filterType + '"]');
-        
+
         if ($currentFilter.length) {
           // Сохраняем выбранные значения
           const selectedValues = [];
-          $currentFilter.find('input:checked').each(function() {
+          $currentFilter.find('input:checked').each(function () {
             selectedValues.push($(this).val());
           });
-          
+
           // Обновляем содержимое
           $currentFilter.find('.catdrop-block__body').html($(this).find('.catdrop-block__body').html());
-          
+
           // Восстанавливаем выбранные значения
-          selectedValues.forEach(function(value) {
+          selectedValues.forEach(function (value) {
             $currentFilter.find('input[value="' + value + '"]').prop('checked', true);
           });
         }
       });
-      
+
       // Убираем индикатор загрузки
       $('.catdrop-block').removeClass('loading');
-    }).fail(function() {
+    }).fail(function () {
       // Убираем индикатор загрузки в случае ошибки
       $('.catdrop-block').removeClass('loading');
     });
@@ -134,21 +146,21 @@ $(document).ready(function () {
   });
 
   // Обработка сортировки
-  $(document).on('change', 'select[name="sort"]', function() {
+  $(document).on('change', 'select[name="sort"]', function () {
     console.log('Sort select changed:', $(this).val());
     const form = $(this).closest('form');
     const sortValue = $(this).val();
     const orderValue = form.find('input[name="order"]').val();
-    
+
     console.log('Sort value:', sortValue, 'Order value:', orderValue);
-    
+
     // Обновляем URL с новыми параметрами сортировки
     const urlParams = new URLSearchParams(window.location.search);
     urlParams.set('sort', sortValue);
     urlParams.set('order', orderValue);
-    
+
     console.log('URL params:', urlParams.toString());
-    
+
     if (window.USE_CATALOG_AJAX) {
       console.log('Using AJAX for sorting');
       updateCatalogAjax(urlParams.toString());
@@ -163,18 +175,24 @@ $(document).ready(function () {
     console.log('Initializing sort handlers');
     const $sortSelect = $('select[name="sort"]');
     console.log('Found sort select:', $sortSelect.length);
-    
+
     if ($sortSelect.length) {
-      $sortSelect.off('change').on('change', function() {
+      $sortSelect.off('change').on('change', function () {
         console.log('Direct handler: Sort select changed:', $(this).val());
         const form = $(this).closest('form');
         const sortValue = $(this).val();
         const orderValue = form.find('input[name="order"]').val();
-        
+
+        console.log('Form found:', form.length);
+        console.log('Sort value:', sortValue);
+        console.log('Order value:', orderValue);
+
         const urlParams = new URLSearchParams(window.location.search);
         urlParams.set('sort', sortValue);
         urlParams.set('order', orderValue);
-        
+
+        console.log('URL params:', urlParams.toString());
+
         if (window.USE_CATALOG_AJAX) {
           updateCatalogAjax(urlParams.toString());
         } else {
@@ -188,17 +206,30 @@ $(document).ready(function () {
   initSortHandlers();
 
   // Функция для изменения направления сортировки
-  window.toggleSortOrder = function() {
+  window.toggleSortOrder = function () {
+    console.log('toggleSortOrder called');
     const form = document.querySelector('.catalogpage__sort form');
+    console.log('Found form:', form);
+
+    if (!form) {
+      console.error('Form not found');
+      return;
+    }
+
     const orderInput = form.querySelector('input[name="order"]');
     const sortInput = form.querySelector('select[name="sort"]');
-    
+
+    console.log('Current order:', orderInput.value);
+    console.log('Current sort:', sortInput.value);
+
     orderInput.value = orderInput.value === 'asc' ? 'desc' : 'asc';
-    
+    console.log('New order:', orderInput.value);
+
     if (window.USE_CATALOG_AJAX) {
       const urlParams = new URLSearchParams(window.location.search);
       urlParams.set('sort', sortInput.value);
       urlParams.set('order', orderInput.value);
+      console.log('URL params for AJAX:', urlParams.toString());
       updateCatalogAjax(urlParams.toString());
     } else {
       form.submit();
@@ -206,7 +237,7 @@ $(document).ready(function () {
   };
 
   let catalogPaginationLoading = false;
-  $(document).on('click', '.catalogpage__more', function(e) {
+  $(document).on('click', '.catalogpage__more', function (e) {
 
     console.log('click');
     e.preventDefault();
@@ -218,7 +249,7 @@ $(document).ready(function () {
     params.set('ajax', 'Y');
     params.set('PAGEN_1', page);
 
-    $.get(window.location.pathname + '?' + params.toString(), function(data) {
+    $.get(window.location.pathname + '?' + params.toString(), function (data) {
       const $html = $('<div>').html(data);
       const $newItems = $html.find('.catalogpage__items > div').children();
       console.log('$newItems.length', $newItems.length);
@@ -353,7 +384,7 @@ $(document).ready(function () {
   }
 
   // --- Модалки open/close ---
-  window.openModal = function(id, bySelector = false) {
+  window.openModal = function (id, bySelector = false) {
     let modal;
     if (!bySelector) modal = document.getElementById(id);
     else modal = document.querySelector(id);
@@ -363,7 +394,7 @@ $(document).ready(function () {
       if ($('.backdrop').length) $('.backdrop').addClass('open');
     }
   }
-  window.closeModal = function(id, bySelector = false) {
+  window.closeModal = function (id, bySelector = false) {
 
     let modal;
     if (!bySelector) modal = document.getElementById(id);
@@ -410,7 +441,7 @@ $(document).ready(function () {
   // --- Маска телефона ---
   if (window.IMask) {
     const phoneInputs = document.querySelectorAll('input[type="tel"]');
-    const maskOptions = { mask: '+7 (000) 000-00-00' };
+    const maskOptions = {mask: '+7 (000) 000-00-00'};
     phoneInputs.forEach(input => {
       IMask(input, maskOptions);
     });
@@ -1064,7 +1095,7 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
   // AJAX-сохранение профиля
-  $('#profile-form').on('submit', function(e) {
+  $('#profile-form').on('submit', function (e) {
     e.preventDefault();
     const $form = $(this);
 
@@ -1388,6 +1419,7 @@ $(function () {
     $('#editadress').removeClass('open');
     $('#editadress_ok').removeClass('open');
     $('.catdrop').removeClass('open');
+    $('html').removeClass('locked');
     $(this).removeClass('open');
   });
 });
@@ -1406,5 +1438,69 @@ $(document).on('click', '.catalogpage__main .product-card__image', function (e) 
 $(document).on('click', '.catalogpage__togfilter1', function (e) {
   e.preventDefault();
   openModal('.catdrop', true);
+});
+
+// ====== МОБИЛЬНОЕ МЕНЮ ======
+$(document).ready(function () {
+  // Обработчик для кнопки мобильного меню
+  $(document).on('click', '.header__menu-burger', function (e) {
+    e.preventDefault();
+    e.stopPropagation();
+
+    const $body = $('body');
+    const $mobileNav = $('.mobile-header__nav');
+
+    if ($mobileNav.length) {
+      if ($mobileNav.hasClass('active')) {
+        // Закрываем меню
+        $mobileNav.removeClass('active');
+        $body.removeClass('modal-open');
+        $(this).removeClass('active');
+      } else {
+        // Открываем меню
+        $mobileNav.addClass('active');
+        $body.addClass('modal-open');
+        $(this).addClass('active');
+      }
+    }
+  });
+
+  // Закрытие мобильного меню по клику на оверлей
+  $(document).on('click', function (e) {
+    const $mobileNav = $('.mobile-header__nav');
+    const $burger = $('.header__menu-burger');
+
+    if ($mobileNav.hasClass('active') &&
+      !$(e.target).closest('.mobile-header__nav').length &&
+      !$(e.target).closest('.header__menu-burger').length) {
+      $mobileNav.removeClass('active');
+      $('body').removeClass('modal-open');
+      $burger.removeClass('active');
+    }
+  });
+
+  // Закрытие мобильного меню по клику на ссылки в меню
+  $(document).on('click', '.mobile-header__nav a', function () {
+    const $mobileNav = $('.mobile-header__nav');
+    const $burger = $('.header__menu-burger');
+
+    $mobileNav.removeClass('active');
+    $('body').removeClass('modal-open');
+    $burger.removeClass('active');
+  });
+
+  // Закрытие мобильного меню по нажатию Escape
+  $(document).on('keydown', function (e) {
+    if (e.key === 'Escape') {
+      const $mobileNav = $('.mobile-header__nav');
+      const $burger = $('.header__menu-burger');
+
+      if ($mobileNav.hasClass('active')) {
+        $mobileNav.removeClass('active');
+        $('body').removeClass('modal-open');
+        $burger.removeClass('active');
+      }
+    }
+  });
 });
 

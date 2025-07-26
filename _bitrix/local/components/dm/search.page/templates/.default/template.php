@@ -6,9 +6,6 @@ $q = $arResult['q'];
     <div>
       <div class="products-card-container__content">
         <div class="container">
-          <div class="products-card-head--space-between container">
-            <h2 class="title">Поиск</h2>
-          </div>
           <form class="form" action="/search/index.php" style="margin-bottom: 2em">
             <div class="search-container">
               <div class="search-container">

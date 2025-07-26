@@ -94,6 +94,12 @@ if ($_GET['update_filters'] === 'Y') {
         // Получаем текущие параметры сортировки
         $currentSort = $_REQUEST["sort"] ?: "sort";
         $currentOrder = $_REQUEST["order"] ?: "asc";
+
+        // Отладочная информация для сортировки
+        error_log("Sort debug - REQUEST sort: " . ($_REQUEST["sort"] ?? 'not set'));
+        error_log("Sort debug - REQUEST order: " . ($_REQUEST["order"] ?? 'not set'));
+        error_log("Sort debug - currentSort: " . $currentSort);
+        error_log("Sort debug - currentOrder: " . $currentOrder);
         ?>
         <div class="catalogpage__sort <?= $currentOrder == 'desc' ? 'desc' : 'asc' ?>">
           <p>Сортировать</p>
@@ -119,28 +125,28 @@ if ($_GET['update_filters'] === 'Y') {
             <? if ($_REQUEST["collection"]): ?>
               <input type="hidden" name="collection" value="<?= htmlspecialcharsbx($_REQUEST["collection"]) ?>">
             <? endif; ?>
-                          <div class="catalogpage__sort-select">
-                <select name="sort">
+            <div class="catalogpage__sort-select">
+              <select name="sort">
                 <option value="sort" <?= $currentSort == "sort" ? 'selected' : '' ?>>по умолчанию</option>
                 <option value="name" <?= $currentSort == "name" ? 'selected' : '' ?>>по названию</option>
-                <option value="price" <?= $currentSort == "price" || $currentSort == "catalog_PRICE_1" || $currentSort == "catalog_PRICE_7" ? 'selected' : '' ?>>по цене</option>
+                <option
+                  value="price" <?= $currentSort == "price" || $currentSort == "catalog_PRICE_1" || $currentSort == "catalog_PRICE_7" ? 'selected' : '' ?>>
+                  по цене
+                </option>
                 <option value="date" <?= $currentSort == "date" ? 'selected' : '' ?>>по дате</option>
               </select>
             </div>
             <input type="hidden" name="order" value="<?= $currentOrder ?>">
             <button type="button" class="sort-order-btn" onclick="toggleSortOrder()" title="Изменить направление сортировки">
-              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M8 2L14 8L8 14" stroke="#232229" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                      transform="<?= $currentOrder == 'desc' ? 'rotate(180 8 8)' : '' ?>"/>
-              </svg>
+              <i>
+                <svg width="20" height="20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"
+                     style="transform: <?= $currentOrder == 'desc' ? 'none' : 'rotate(180deg)' ?>">
+                  <path fill-rule="evenodd" clip-rule="evenodd" d="M15 11.375H5V9.875H15V11.375Z" fill="#232229"/>
+                  <path fill-rule="evenodd" clip-rule="evenodd" d="M18.125 7.625H1.875V6.125H18.125V7.625Z" fill="#232229"/>
+                  <path fill-rule="evenodd" clip-rule="evenodd" d="M11.875 15.125H8.125V13.625H11.875V15.125Z" fill="#232229"/>
+                </svg>
+              </i>
             </button>
-            <i>
-              <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path fill-rule="evenodd" clip-rule="evenodd" d="M15 11.375H5V9.875H15V11.375Z" fill="#232229"/>
-                <path fill-rule="evenodd" clip-rule="evenodd" d="M18.125 7.625H1.875V6.125H18.125V7.625Z" fill="#232229"/>
-                <path fill-rule="evenodd" clip-rule="evenodd" d="M11.875 15.125H8.125V13.625H11.875V15.125Z" fill="#232229"/>
-              </svg>
-            </i>
           </form>
         </div>
       </div>
@@ -175,6 +181,15 @@ if ($_GET['update_filters'] === 'Y') {
                   <? endif; ?>
                 </div>
               </a>
+              <div class="product-card__pagination">
+                <? if (!empty($arItem["PROPERTIES"]["MORE_PHOTO"]["VALUE"])): ?>
+                  <? foreach ($arItem["PROPERTIES"]["MORE_PHOTO"]["VALUE"] as $index => $imageId): ?>
+                    <span class="product-card__pagination-dot<?= $index === 0 ? ' active' : '' ?>"></span>
+                  <? endforeach; ?>
+                <? else: ?>
+                  <span class="product-card__pagination-dot active"></span>
+                <? endif; ?>
+              </div>
               <div class="product-card__tags">
                 <? if ($arItem["PROPERTIES"]["NEW"]["VALUE"]): ?>
                   <span class="product-card__tag">Новинка</span>
@@ -323,9 +338,15 @@ if ($_GET['update_filters'] === 'Y') {
         <div class="catalogpage__no-results-content">
           <div class="catalogpage__no-results-icon">
             <svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M32 8C18.745 8 8 18.745 8 32C8 45.255 18.745 56 32 56C45.255 56 56 45.255 56 32C56 18.745 45.255 8 32 8ZM32 52C21.514 52 12 42.486 12 32C12 21.514 21.514 12 32 12C42.486 12 52 21.514 52 32C52 42.486 42.486 52 32 52Z" fill="#232229"/>
-              <path d="M32 20C30.895 20 30 20.895 30 22V30C30 31.105 30.895 32 32 32C33.105 32 34 31.105 34 30V22C34 20.895 33.105 20 32 20Z" fill="#232229"/>
-              <path d="M32 36C30.895 36 30 36.895 30 38V42C30 43.105 30.895 44 32 44C33.105 44 34 43.105 34 42V38C34 36.895 33.105 36 32 36Z" fill="#232229"/>
+              <path
+                d="M32 8C18.745 8 8 18.745 8 32C8 45.255 18.745 56 32 56C45.255 56 56 45.255 56 32C56 18.745 45.255 8 32 8ZM32 52C21.514 52 12 42.486 12 32C12 21.514 21.514 12 32 12C42.486 12 52 21.514 52 32C52 42.486 42.486 52 32 52Z"
+                fill="#232229"/>
+              <path
+                d="M32 20C30.895 20 30 20.895 30 22V30C30 31.105 30.895 32 32 32C33.105 32 34 31.105 34 30V22C34 20.895 33.105 20 32 20Z"
+                fill="#232229"/>
+              <path
+                d="M32 36C30.895 36 30 36.895 30 38V42C30 43.105 30.895 44 32 44C33.105 44 34 43.105 34 42V38C34 36.895 33.105 36 32 36Z"
+                fill="#232229"/>
             </svg>
           </div>
           <h3 class="catalogpage__no-results-title">
@@ -354,6 +375,7 @@ if ($_GET['update_filters'] === 'Y') {
 
 <?php
 // Получаем категории (разделы)
+/*
 $categories = [];
 $rsSections = CIBlockSection::GetList([
   'SORT' => 'ASC'
@@ -366,6 +388,9 @@ $rsSections = CIBlockSection::GetList([
 while ($arSection = $rsSections->GetNext()) {
   $categories[] = $arSection;
 }
+*/
+$categories = [];
+
 // Получаем уникальные размеры для текущего раздела
 $sizes = [];
 $arInfo = CCatalogSKU::GetInfoByProductIBlock(29);
@@ -373,27 +398,27 @@ if ($arInfo && !empty($arInfo['IBLOCK_ID'])) {
   // Сначала получаем ID товаров из текущего раздела
   $productIds = [];
   $sectionFilter = ['IBLOCK_ID' => 29, 'ACTIVE' => 'Y'];
-  
+
   // Если мы в конкретном разделе, добавляем фильтр по разделу
   if (!empty($_REQUEST["SECTION_ID"])) {
     $sectionFilter['SECTION_ID'] = $_REQUEST["SECTION_ID"];
   } elseif (!empty($_REQUEST["SECTION_CODE"])) {
     $sectionFilter['SECTION_CODE'] = $_REQUEST["SECTION_CODE"];
   }
-  
+
   $rsProducts = CIBlockElement::GetList([], $sectionFilter, false, false, ['ID']);
   while ($arProduct = $rsProducts->GetNext()) {
     $productIds[] = $arProduct['ID'];
   }
-  
+
   // Теперь получаем размеры только для этих товаров
   if (!empty($productIds)) {
     $rsOffers = CIBlockElement::GetList([], [
-      'IBLOCK_ID' => $arInfo['IBLOCK_ID'], 
+      'IBLOCK_ID' => $arInfo['IBLOCK_ID'],
       'ACTIVE' => 'Y',
       'PROPERTY_CML2_LINK' => $productIds
     ], false, false, ['ID', 'IBLOCK_ID', 'PROPERTY_RAZMER']);
-    
+
     while ($arOffer = $rsOffers->GetNext()) {
       $size = trim($arOffer['PROPERTY_RAZMER_VALUE']);
       if ($size && !in_array($size, $sizes)) {
@@ -421,9 +446,25 @@ while ($arEl = $rsElements->GetNext()) {
   }
 }
 
+// Если цвета не найдены через элементы, попробуем получить их из справочника свойств
+if (empty($colors)) {
+  error_log("No colors found in elements, trying property enum...");
+  $property_enums = CIBlockPropertyEnum::GetList(
+    ["SORT" => "ASC"],
+    ["IBLOCK_ID" => 29, "CODE" => "TSVET"]
+  );
+  while ($enum_fields = $property_enums->GetNext()) {
+    $colors[] = $enum_fields["VALUE"];
+  }
+  error_log("Colors from property enum: " . print_r($colors, true));
+}
+
 // Отладочная информация
 if (empty($colors)) {
   error_log("No colors found for section: " . ($_REQUEST["SECTION_ID"] ?? $_REQUEST["SECTION_CODE"] ?? 'all'));
+} else {
+  error_log("Colors found: " . print_r($colors, true));
+  error_log("Selected colors: " . print_r($selectedColors ?? [], true));
 }
 // Получаем уникальные материалы для текущего раздела
 $materials = [];
@@ -435,6 +476,19 @@ while ($arEl = $rsElements->GetNext()) {
   }
 }
 
+// Если материалы не найдены через элементы, попробуем получить их из справочника свойств
+if (empty($materials)) {
+  error_log("No materials found in elements, trying property enum...");
+  $property_enums = CIBlockPropertyEnum::GetList(
+    ["SORT" => "ASC"],
+    ["IBLOCK_ID" => 29, "CODE" => "MATERIAL"]
+  );
+  while ($enum_fields = $property_enums->GetNext()) {
+    $materials[] = $enum_fields["VALUE"];
+  }
+  error_log("Materials from property enum: " . print_r($materials, true));
+}
+
 // Получаем уникальные коллекции для текущего раздела
 $collections = [];
 $rsElements = CIBlockElement::GetList([], $sectionFilter, false, false, ['ID', 'PROPERTY_KOLLEKTSIYA']);
@@ -443,6 +497,19 @@ while ($arEl = $rsElements->GetNext()) {
   if ($coll && !in_array($coll, $collections)) {
     $collections[] = $coll;
   }
+}
+
+// Если коллекции не найдены через элементы, попробуем получить их из справочника свойств
+if (empty($collections)) {
+  error_log("No collections found in elements, trying property enum...");
+  $property_enums = CIBlockPropertyEnum::GetList(
+    ["SORT" => "ASC"],
+    ["IBLOCK_ID" => 29, "CODE" => "KOLLEKTSIYA"]
+  );
+  while ($enum_fields = $property_enums->GetNext()) {
+    $collections[] = $enum_fields["VALUE"];
+  }
+  error_log("Collections from property enum: " . print_r($collections, true));
 }
 ?>
 <div class="catdrop">
@@ -498,6 +565,12 @@ while ($arEl = $rsElements->GetNext()) {
         </div>
       </div>
     <?php endif; ?>
+    <?php
+    $selectedColors = [];
+    if (!empty($_GET['color'])) {
+      $selectedColors = explode(',', $_GET['color']);
+    }
+    ?>
     <?php if (!empty($colors)): ?>
       <div class="catdrop-block" data-type="Цвет">
         <button class="catdrop-block__open"><span>Цвет</span><i>...</i></button>
@@ -506,8 +579,10 @@ while ($arEl = $rsElements->GetNext()) {
             <div class="catdrop-block__color">
               <?php foreach ($colors as $i => $color): ?>
                 <div class="catdrop-block__color-item">
-                  <input type="checkbox" name="color" value="<?= htmlspecialchars($color) ?>" id="color-<?= $i ?>">
-                  <label for="color-<?= $i ?>"><span style="background-image: url(<?= MyTools::getColor($color) ?>)"></span></label>
+                  <input type="checkbox" name="color" value="<?= htmlspecialchars($color) ?>"
+                         id="color-<?= $i ?>" <?= in_array($color, $selectedColors) ? 'checked' : '' ?>>
+                  <label for="color-<?= $i ?>"><span
+                      style="background-image: url(<?= MyTools::getColor($color) ?>)"></span></label>
                 </div>
               <?php endforeach; ?>
             </div>
@@ -515,6 +590,12 @@ while ($arEl = $rsElements->GetNext()) {
         </div>
       </div>
     <?php endif; ?>
+    <?php
+    $selectedMaterials = [];
+    if (!empty($_GET['material'])) {
+      $selectedMaterials = explode(',', $_GET['material']);
+    }
+    ?>
     <?php if (!empty($materials)): ?>
       <div class="catdrop-block" data-type="Материалы">
         <button class="catdrop-block__open"><span>Материалы</span><i>...</i></button>
@@ -523,7 +604,8 @@ while ($arEl = $rsElements->GetNext()) {
             <div class="catdrop-block__checks">
               <?php foreach ($materials as $i => $mat): ?>
                 <div class="catdrop-block__checks-item">
-                  <input type="checkbox" value="<?= htmlspecialchars($mat) ?>" name="material" id="material-<?= $i ?>">
+                  <input type="checkbox" value="<?= htmlspecialchars($mat) ?>" name="material"
+                         id="material-<?= $i ?>" <?= in_array($mat, $selectedMaterials) ? 'checked' : '' ?>>
                   <label for="material-<?= $i ?>"><?= htmlspecialchars($mat) ?></label>
                 </div>
               <?php endforeach; ?>
@@ -532,6 +614,12 @@ while ($arEl = $rsElements->GetNext()) {
         </div>
       </div>
     <?php endif; ?>
+    <?php
+    $selectedCollections = [];
+    if (!empty($_GET['collection'])) {
+      $selectedCollections = explode(',', $_GET['collection']);
+    }
+    ?>
     <?php if (!empty($collections)): ?>
       <div class="catdrop-block" data-type="Коллекции">
         <button class="catdrop-block__open"><span>Коллекции</span><i>...</i></button>
@@ -540,7 +628,8 @@ while ($arEl = $rsElements->GetNext()) {
             <div class="catdrop-block__checks">
               <?php foreach ($collections as $i => $coll): ?>
                 <div class="catdrop-block__checks-item">
-                  <input type="checkbox" value="<?= htmlspecialchars($coll) ?>" name="collections" id="collections-<?= $i ?>">
+                  <input type="checkbox" value="<?= htmlspecialchars($coll) ?>" name="collection"
+                         id="collections-<?= $i ?>" <?= in_array($coll, $selectedCollections) ? 'checked' : '' ?>>
                   <label for="collections-<?= $i ?>"><?= htmlspecialchars($coll) ?></label>
                 </div>
               <?php endforeach; ?>

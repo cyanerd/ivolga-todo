@@ -11,18 +11,15 @@ $this->setFrameMode(true);
     // Способ 1: через NAV_RESULT
     if (is_object($arResult["NAV_RESULT"]) && method_exists($arResult["NAV_RESULT"], "NavRecordCount")) {
       $totalElements = $arResult["NAV_RESULT"]->NavRecordCount;
-    }
-    // Способ 2: через секции
+    } // Способ 2: через секции
     elseif ($arResult["SECTIONS"]) {
       foreach ($arResult["SECTIONS"] as $arSection) {
         $totalElements += $arSection["ELEMENT_CNT"];
       }
-    }
-    // Способ 3: через ELEMENT_CNT
+    } // Способ 3: через ELEMENT_CNT
     elseif ($arResult["ELEMENT_CNT"]) {
       $totalElements = $arResult["ELEMENT_CNT"];
-    }
-    // Способ 4: через количество товаров в текущем результате
+    } // Способ 4: через количество товаров в текущем результате
     elseif ($arResult["ITEMS"]) {
       $totalElements = count($arResult["ITEMS"]);
     }
@@ -37,10 +34,11 @@ $this->setFrameMode(true);
     <? foreach ($arResult["SECTIONS"] as $arSection): ?>
       <?
       $this->AddEditAction($arSection['ID'], $arSection['EDIT_LINK'], CIBlock::GetArrayByID($arSection["IBLOCK_ID"], "SECTION_EDIT"));
-      $this->AddDeleteAction($arSection['ID'], $arSection['DELETE_LINK'], CIBlock::GetArrayByID($arSection["IBLOCK_ID"], "SECTION_DELETE"), array("CONFIRM" => GetMessage('CT_BCSL_ELEMENT_DELETE_CONFIRM')));
+      $this->AddDeleteAction($arSection['ID'], $arSection['DELETE_LINK'], CIBlock::GetArrayByID($arSection["IBLOCK_ID"], "SECTION_DELETE"), ["CONFIRM" => GetMessage('CT_BCSL_ELEMENT_DELETE_CONFIRM')]);
       ?>
       <li id="<?= $this->GetEditAreaId($arSection['ID']); ?>">
-        <a href="<?= $arSection["SECTION_PAGE_URL"] ?>" class="<?= $_REQUEST['SECTION_CODE'] == $arSection["CODE"] ? 'active' : '' ?>">
+        <a href="<?= $arSection["SECTION_PAGE_URL"] ?>"
+           class="<?= $_REQUEST['SECTION_CODE'] == $arSection["CODE"] ? 'active' : '' ?>">
           <?= $arSection["NAME"] ?>
           <span>(<?= $arSection["ELEMENT_CNT"] ?>)</span>
         </a>

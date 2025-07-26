@@ -27,7 +27,7 @@
 </div>
 <script>
   // Подсвечиваем активный пункт меню
-  (function() {
+  (function () {
     const path = window.location.pathname;
     if (path === '/personal/' || path === '/personal/index.php') {
       document.getElementById('menu-profile-link').classList.add('active');
@@ -37,4 +37,4 @@
       document.getElementById('menu-addresses-link').classList.add('active');
     }
   })();
-</script> 
+</script>

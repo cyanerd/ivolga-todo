@@ -1,4 +1,4 @@
-<?if(!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED!==true)die();
+<? if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED !== true) die();
 /** @var array $arParams */
 /** @var array $arResult */
 /** @global CMain $APPLICATION */
@@ -17,20 +17,20 @@ $this->setFrameMode(true);
   <div class="categories__row">
     <?
     $count = 0;
-    foreach($arResult["SECTIONS"] as $arSection):
-      if(empty($arSection["PICTURE"]["SRC"])) continue;
+    foreach ($arResult["SECTIONS"] as $arSection):
+      if (empty($arSection["PICTURE"]["SRC"])) continue;
       $count++;
-      if($count > 2) break;
+      if ($count > 2) break;
       $this->AddEditAction($arSection['ID'], $arSection['EDIT_LINK'], CIBlock::GetArrayByID($arSection["IBLOCK_ID"], "SECTION_EDIT"));
-      $this->AddDeleteAction($arSection['ID'], $arSection['DELETE_LINK'], CIBlock::GetArrayByID($arSection["IBLOCK_ID"], "SECTION_DELETE"), array("CONFIRM" => GetMessage('CT_BCSL_ELEMENT_DELETE_CONFIRM')));
-    ?>
-      <a href="<?=$arSection["SECTION_PAGE_URL"]?>" class="category-card" id="<?=$this->GetEditAreaId($arSection['ID']);?>">
+      $this->AddDeleteAction($arSection['ID'], $arSection['DELETE_LINK'], CIBlock::GetArrayByID($arSection["IBLOCK_ID"], "SECTION_DELETE"), ["CONFIRM" => GetMessage('CT_BCSL_ELEMENT_DELETE_CONFIRM')]);
+      ?>
+      <a href="<?= $arSection["SECTION_PAGE_URL"] ?>" class="category-card" id="<?= $this->GetEditAreaId($arSection['ID']); ?>">
         <div class="category-card__image">
-          <img src="<?=$arSection["PICTURE"]["SRC"]?>" alt="<?=$arSection["NAME"]?>" class="category-card__img">
+          <img src="<?= $arSection["PICTURE"]["SRC"] ?>" alt="<?= $arSection["NAME"] ?>" class="category-card__img">
           <div class="category-card__overlay"></div>
         </div>
         <div class="category-card__content">
-          <h3 class="category-card__title"><?=$arSection["NAME"]?></h3>
+          <h3 class="category-card__title"><?= $arSection["NAME"] ?></h3>
           <svg width="24" height="25" viewBox="0 0 24 25" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path fill-rule="evenodd" clip-rule="evenodd"
                   d="M11 6.4165L12 6.4165C13.7949 6.4165 15.25 4.96143 15.25 3.1665L16.75 3.1665C16.75 5.78986 14.6234 7.9165 12 7.9165L11 7.9165L11 6.4165Z"
@@ -43,6 +43,6 @@ $this->setFrameMode(true);
           </svg>
         </div>
       </a>
-    <?endforeach;?>
+    <? endforeach; ?>
   </div>
-</section> 
+</section>

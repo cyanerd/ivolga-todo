@@ -16,41 +16,42 @@ document.addEventListener("DOMContentLoaded", () => {
   document.querySelector('body').style.paddingTop = document.querySelector('.topblock').offsetHeight + 'px'
 });
 
-const jsClose = document.querySelectorAll('.js--close')
-if (jsClose) {
-  jsClose.forEach(el => {
-    el.addEventListener('click', () => {
-      if (document.querySelector('.catdrop')) {
-        document.querySelector('.catdrop').classList.remove('open')
-      }
-      document.querySelector('.backdrop').classList.remove('open')
-      document.querySelector('html').classList.remove('locked')
-      if (document.querySelector('.mobsort')) {
-        document.querySelector('.mobsort').classList.remove('open')
-      }
-      document.querySelector('.modalcart').classList.remove('open')
-      document.querySelector('.modalguide').classList.remove('open')
-      document.querySelector('#changepass').classList.remove('open')
-      document.querySelector('#changepass_ok').classList.remove('open')
-      document.querySelector('#resetpass').classList.remove('open')
-      document.querySelector('#resetpass_code').classList.remove('open')
-      document.querySelector('#resetpass_new').classList.remove('open')
-      document.querySelector('#resetpass_ok').classList.remove('open')
-      document.querySelector('#newadress').classList.remove('open')
-      document.querySelector('#newadress_ok').classList.remove('open')
+const setOnCloseHandler = () => {
+  const jsClose = document.querySelectorAll('.js--close')
+  if (jsClose) {
+    jsClose.forEach(el => {
+      el.addEventListener('click', () => {
+        if (document.querySelector('.catdrop')) {
+          document.querySelector('.catdrop').classList.remove('open')
+        }
+        document.querySelector('.backdrop').classList.remove('open')
+        document.querySelector('html').classList.remove('locked')
+        if (document.querySelector('.mobsort')) {
+          document.querySelector('.mobsort').classList.remove('open')
+        }
+        document.querySelector('.modalcart').classList.remove('open')
+        document.querySelector('.modalguide').classList.remove('open')
+        document.querySelector('#changepass').classList.remove('open')
+        document.querySelector('#changepass_ok').classList.remove('open')
+        document.querySelector('#resetpass').classList.remove('open')
+        document.querySelector('#resetpass_code').classList.remove('open')
+        document.querySelector('#resetpass_new').classList.remove('open')
+        document.querySelector('#resetpass_ok').classList.remove('open')
+        document.querySelector('#newadress').classList.remove('open')
+        document.querySelector('#newadress_ok').classList.remove('open')
 
-      document.querySelector('#editadress').classList.remove('open')
-      document.querySelector('#editadress_ok').classList.remove('open')
-      document.querySelector('#deleteadress').classList.remove('open')
-      document.querySelector('#deleteadress_ok').classList.remove('open')
+        document.querySelector('#editadress').classList.remove('open')
+        document.querySelector('#editadress_ok').classList.remove('open')
+        document.querySelector('#deleteadress').classList.remove('open')
+        document.querySelector('#deleteadress_ok').classList.remove('open')
 
-      document.querySelector('#cancel').classList.remove('open')
-      document.querySelector('#cancel_ok').classList.remove('open')
-      document.querySelector('.cartaler').classList.remove('open')
+        document.querySelector('#cancel').classList.remove('open')
+        document.querySelector('#cancel_ok').classList.remove('open')
+        document.querySelector('.cartaler').classList.remove('open')
 
+      })
     })
-  })
-
+  }
 }
 
 
@@ -213,8 +214,6 @@ const updateFilters = () => {
         }
       });
     });
-  } else {
-    console.error("Нет элементов с классом .catdrop-block__open");
   }
 }
 
@@ -303,6 +302,7 @@ const initFilters = () => {
   console.log('initFilters');
   updateFilters();
   initProductCardsSlider();
+  setOnCloseHandler();
   customSelect('select');
 
   const catdropBlocks = document.querySelectorAll('.catdrop-block');
@@ -310,7 +310,7 @@ const initFilters = () => {
   const selectedFiltersContainer = document.createElement('div');
   selectedFiltersContainer.className = 'selected-filters';
   const header = document.querySelector('.catdrop__header');
-  header.insertAdjacentElement('afterend', selectedFiltersContainer);
+  if (header) header.insertAdjacentElement('afterend', selectedFiltersContainer);
 
   // Создаем второй контейнер для дублирования фильтров
   const duplicateFiltersContainer = document.createElement('div');

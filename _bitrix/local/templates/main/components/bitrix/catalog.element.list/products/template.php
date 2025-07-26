@@ -1,4 +1,4 @@
-<?if(!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED!==true)die();
+<? if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED !== true) die();
 /** @var array $arParams */
 /** @var array $arResult */
 /** @global CMain $APPLICATION */
@@ -35,32 +35,32 @@ $this->setFrameMode(true);
     <div class="swiper new-products__swiper">
       <div class="swiper-wrapper">
 
-        <?foreach($arResult["ITEMS"] as $arItem):?>
+        <? foreach ($arResult["ITEMS"] as $arItem): ?>
           <?
           $this->AddEditAction($arItem['ID'], $arItem['EDIT_LINK'], CIBlock::GetArrayByID($arItem["IBLOCK_ID"], "ELEMENT_EDIT"));
-          $this->AddDeleteAction($arItem['ID'], $arItem['DELETE_LINK'], CIBlock::GetArrayByID($arItem["IBLOCK_ID"], "ELEMENT_DELETE"), array("CONFIRM" => GetMessage('CT_BCE_ELEMENT_DELETE_CONFIRM')));
+          $this->AddDeleteAction($arItem['ID'], $arItem['DELETE_LINK'], CIBlock::GetArrayByID($arItem["IBLOCK_ID"], "ELEMENT_DELETE"), ["CONFIRM" => GetMessage('CT_BCE_ELEMENT_DELETE_CONFIRM')]);
           ?>
-          <div class="swiper-slide" id="<?=$this->GetEditAreaId($arItem['ID']);?>">
+          <div class="swiper-slide" id="<?= $this->GetEditAreaId($arItem['ID']); ?>">
             <div class="product-card" data-product-id="<?= $arItem['ID'] ?>">
               <div class="product-card__image">
                 <div class="product-card__slider">
                   <div class="product-card__slider-track">
                     <div class="product-card__slide">
-                      <?if($arItem["PREVIEW_PICTURE"]["SRC"]):?>
-                        <img src="<?=$arItem["PREVIEW_PICTURE"]["SRC"]?>" alt="<?=$arItem["NAME"]?>">
-                      <?else:?>
-                        <img src="/html/assets/img/products/product1.792483bfa9ffa5cf727d.jpg" alt="<?=$arItem["NAME"]?>">
-                      <?endif;?>
+                      <? if ($arItem["PREVIEW_PICTURE"]["SRC"]): ?>
+                        <img src="<?= $arItem["PREVIEW_PICTURE"]["SRC"] ?>" alt="<?= $arItem["NAME"] ?>">
+                      <? else: ?>
+                        <img src="/html/assets/img/products/product1.792483bfa9ffa5cf727d.jpg" alt="<?= $arItem["NAME"] ?>">
+                      <? endif; ?>
                     </div>
                     <div class="product-card__slide">
-                      <img src="/html/assets/img/blog/blog1.86d699f6545e7e1d9215.jpg" alt="<?=$arItem["NAME"]?>">
+                      <img src="/html/assets/img/blog/blog1.86d699f6545e7e1d9215.jpg" alt="<?= $arItem["NAME"] ?>">
                     </div>
                     <div class="product-card__slide">
-                      <?if($arItem["PREVIEW_PICTURE"]["SRC"]):?>
-                        <img src="<?=$arItem["PREVIEW_PICTURE"]["SRC"]?>" alt="<?=$arItem["NAME"]?>">
-                      <?else:?>
-                        <img src="/html/assets/img/products/product1.792483bfa9ffa5cf727d.jpg" alt="<?=$arItem["NAME"]?>">
-                      <?endif;?>
+                      <? if ($arItem["PREVIEW_PICTURE"]["SRC"]): ?>
+                        <img src="<?= $arItem["PREVIEW_PICTURE"]["SRC"] ?>" alt="<?= $arItem["NAME"] ?>">
+                      <? else: ?>
+                        <img src="/html/assets/img/products/product1.792483bfa9ffa5cf727d.jpg" alt="<?= $arItem["NAME"] ?>">
+                      <? endif; ?>
                     </div>
                   </div>
                   <div class="product-card__pagination">
@@ -81,8 +81,8 @@ $this->setFrameMode(true);
                   </svg>
                 </i>
               </div>
-              <a href="<?=$arItem["DETAIL_PAGE_URL"]?>" class="product-card__info">
-                <h3 class="product-card__title"><?=$arItem["NAME"]?></h3>
+              <a href="<?= $arItem["DETAIL_PAGE_URL"] ?>" class="product-card__info">
+                <h3 class="product-card__title"><?= $arItem["NAME"] ?></h3>
                 <div class="product-card__price">
                   <div class="product-card__price-current">
                     <span>12 000₽</span>
@@ -120,7 +120,7 @@ $this->setFrameMode(true);
               </div>
             </div>
           </div>
-        <?endforeach;?>
+        <? endforeach; ?>
 
       </div>
 

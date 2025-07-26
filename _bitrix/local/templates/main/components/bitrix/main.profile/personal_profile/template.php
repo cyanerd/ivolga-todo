@@ -46,7 +46,7 @@ $this->setFrameMode(true);
         <?
         $date = $arResult["arUser"]["PERSONAL_BIRTHDAY"];
         if ($date && preg_match('/^(\d{2})\.(\d{2})\.(\d{4})$/', $date, $matches)) {
-            $date = $matches[3] . '-' . $matches[2] . '-' . $matches[1];
+          $date = $matches[3] . '-' . $matches[2] . '-' . $matches[1];
         }
         ?>
         <div class="inputel">

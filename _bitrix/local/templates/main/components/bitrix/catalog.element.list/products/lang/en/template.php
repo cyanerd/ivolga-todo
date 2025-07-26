@@ -1,4 +1,4 @@
-<?if(!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED!==true)die();
+<? if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED !== true) die();
 $MESS["T_IBLOCK_DESC_NEWS_COMPARE"] = "Show compare button";
 $MESS["T_IBLOCK_DESC_NEWS_COMPARE_PATH"] = "Path to compare page";
 $MESS["CPSL_SHOW_DISCOUNT_PERCENT"] = "Show discount percent";
@@ -13,4 +13,4 @@ $MESS["CPSL_SHOW_DISCOUNT_PERCENT_NUMBER_OLD"] = "Show old discount percent numb
 $MESS["CPSL_SHOW_DISCOUNT_PERCENT_NUMBER_NEW"] = "Show new discount percent number";
 $MESS["CPSL_SHOW_DISCOUNT_PERCENT_NUMBER_OLD_ABS"] = "Show absolute old discount percent number";
 $MESS["CPSL_SHOW_DISCOUNT_PERCENT_NUMBER_NEW_ABS"] = "Show absolute new discount percent number";
-?> 
+?>

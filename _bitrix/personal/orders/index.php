@@ -1,5 +1,5 @@
 <?
-require ($_SERVER['DOCUMENT_ROOT'] . '/bitrix/header.php');
+require($_SERVER['DOCUMENT_ROOT'] . '/bitrix/header.php');
 $APPLICATION->SetTitle('История заказов');
 ?>
 
@@ -52,4 +52,4 @@ $APPLICATION->SetTitle('История заказов');
   </div>
 </section>
 
-<? require ($_SERVER['DOCUMENT_ROOT'] . '/bitrix/footer.php'); ?>
+<? require($_SERVER['DOCUMENT_ROOT'] . '/bitrix/footer.php'); ?>

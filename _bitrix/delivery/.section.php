@@ -1,3 +1,3 @@
 <?
-$sSectionName="Доставка";
+$sSectionName = "Доставка";
 ?>

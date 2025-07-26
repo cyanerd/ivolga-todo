@@ -18,77 +18,77 @@ $this->setFrameMode(true);
 </section>
 
 <script>
-// Функция для загрузки данных товаров
-async function loadFavouriteProducts() {
-  const favourites = getFavouriteProducts();
+  // Функция для загрузки данных товаров
+  async function loadFavouriteProducts() {
+    const favourites = getFavouriteProducts();
 
-  if (favourites.length === 0) {
-    document.getElementById('favourite-products').innerHTML = '<div class="empty-favourites"><p>В избранном пока ничего нет</p></div>';
-    updateFavouriteCounter();
-    return;
-  }
-
-  try {
-    // Отправляем запрос на сервер для получения данных товаров
-    const response = await fetch('/ajax/get_favourite_products.php', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ product_ids: favourites })
-    });
-
-    if (response.ok) {
-      const products = await response.json();
-      renderFavouriteProducts(products);
-    } else {
-      console.error('Ошибка загрузки товаров');
+    if (favourites.length === 0) {
+      document.getElementById('favourite-products').innerHTML = '<div class="empty-favourites"><p>В избранном пока ничего нет</p></div>';
+      updateFavouriteCounter();
+      return;
     }
-  } catch (error) {
-    console.error('Ошибка:', error);
+
+    try {
+      // Отправляем запрос на сервер для получения данных товаров
+      const response = await fetch('/ajax/get_favourite_products.php', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({product_ids: favourites})
+      });
+
+      if (response.ok) {
+        const products = await response.json();
+        renderFavouriteProducts(products);
+      } else {
+        console.error('Ошибка загрузки товаров');
+      }
+    } catch (error) {
+      console.error('Ошибка:', error);
+    }
   }
-}
 
-// Функция для отрисовки товаров
-function renderFavouriteProducts(products) {
-  const container = document.getElementById('favourite-products');
+  // Функция для отрисовки товаров
+  function renderFavouriteProducts(products) {
+    const container = document.getElementById('favourite-products');
 
-  if (!products || products.length === 0) {
-    container.innerHTML = '<div class="empty-favourites"><p>В избранном пока ничего нет</p></div>';
-    return;
-  }
+    if (!products || products.length === 0) {
+      container.innerHTML = '<div class="empty-favourites"><p>В избранном пока ничего нет</p></div>';
+      return;
+    }
 
-  let html = '';
+    let html = '';
 
-  products.forEach(product => {
-    const price = product.price || 0;
-    const oldPrice = product.old_price || 0;
-    const discount = oldPrice > price ? Math.round(((oldPrice - price) / oldPrice) * 100) : 0;
+    products.forEach(product => {
+      const price = product.price || 0;
+      const oldPrice = product.old_price || 0;
+      const discount = oldPrice > price ? Math.round(((oldPrice - price) / oldPrice) * 100) : 0;
 
-    html += `
+      html += `
       <div class="catalogpage__col">
         <div class="product-card" data-product-id="${product.id}">
           <a href="${product.detail_url}" class="product-card__image">
             <div class="product-card__slider">
               <div class="product-card__slider-track">
                 ${product.images && product.images.length > 0 ?
-                  product.images.map((image, index) => `
+        product.images.map((image, index) => `
                     <div class="product-card__slide">
                       <img src="${image}" alt="${product.name}">
                     </div>
                   `).join('') :
-                  `<div class="product-card__slide">
+        `<div class="product-card__slide">
                     <img src="/assets/img/no-photo.jpg" alt="${product.name}">
                   </div>`
-                }
+      }
               </div>
               <div class="product-card__pagination">
                 ${product.images && product.images.length > 0 ?
-                  product.images.map((_, index) => `
+        product.images.map((_, index) => `
                     <span class="product-card__pagination-dot ${index === 0 ? 'active' : ''}"></span>
                   `).join('') :
-                  '<span class="product-card__pagination-dot active"></span>'
-                }
+        '<span class="product-card__pagination-dot active"></span>'
+      }
               </div>
             </div>
             <div class="product-card__tags">
@@ -142,14 +142,14 @@ function renderFavouriteProducts(products) {
         </div>
       </div>
     `;
+    });
+
+    container.innerHTML = html;
+    updateFavouriteCounter();
+  }
+
+  // Загружаем товары при загрузке страницы
+  document.addEventListener('DOMContentLoaded', function () {
+    loadFavouriteProducts();
   });
-
-  container.innerHTML = html;
-  updateFavouriteCounter();
-}
-
-// Загружаем товары при загрузке страницы
-document.addEventListener('DOMContentLoaded', function() {
-  loadFavouriteProducts();
-});
 </script>

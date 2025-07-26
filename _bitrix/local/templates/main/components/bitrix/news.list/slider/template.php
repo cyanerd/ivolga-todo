@@ -1,4 +1,4 @@
-<?if(!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED!==true)die();
+<? if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED !== true) die();
 /** @var array $arParams */
 /** @var array $arResult */
 /** @global CMain $APPLICATION */
@@ -17,25 +17,25 @@ $this->setFrameMode(true);
   <div class="swiper main-banner__swiper">
     <div class="swiper-wrapper">
 
-      <?foreach($arResult["ITEMS"] as $arItem):?>
+      <? foreach ($arResult["ITEMS"] as $arItem): ?>
         <?
         $this->AddEditAction($arItem['ID'], $arItem['EDIT_LINK'], CIBlock::GetArrayByID($arItem["IBLOCK_ID"], "ELEMENT_EDIT"));
-        $this->AddDeleteAction($arItem['ID'], $arItem['DELETE_LINK'], CIBlock::GetArrayByID($arItem["IBLOCK_ID"], "ELEMENT_DELETE"), array("CONFIRM" => GetMessage('CT_BNL_ELEMENT_DELETE_CONFIRM')));
+        $this->AddDeleteAction($arItem['ID'], $arItem['DELETE_LINK'], CIBlock::GetArrayByID($arItem["IBLOCK_ID"], "ELEMENT_DELETE"), ["CONFIRM" => GetMessage('CT_BNL_ELEMENT_DELETE_CONFIRM')]);
         ?>
-        <div class="swiper-slide main-banner__slide" id="<?=$this->GetEditAreaId($arItem['ID']);?>">
+        <div class="swiper-slide main-banner__slide" id="<?= $this->GetEditAreaId($arItem['ID']); ?>">
           <div class="main-banner__image">
-            <?if($arItem["PREVIEW_PICTURE"]["SRC"]):?>
-              <img src="<?=$arItem["PREVIEW_PICTURE"]["SRC"]?>" alt="<?=$arItem["NAME"]?>">
-            <?endif;?>
+            <? if ($arItem["PREVIEW_PICTURE"]["SRC"]): ?>
+              <img src="<?= $arItem["PREVIEW_PICTURE"]["SRC"] ?>" alt="<?= $arItem["NAME"] ?>">
+            <? endif; ?>
             <div class="main-banner__overlay"></div>
           </div>
           <div class="main-banner__content">
-            <?if($arItem["PROPERTIES"]["DESC"]["VALUE"]):?>
-              <h2 class="main-banner__title"><?=$arItem["PROPERTIES"]["DESC"]["VALUE"]?></h2>
-            <?endif;?>
-            <?if($arItem["PROPERTIES"]["LINK"]["VALUE"]):?>
-              <a href="<?=$arItem["PROPERTIES"]["LINK"]["VALUE"]?>" class="main-banner__link">
-                <span><?=$arItem["NAME"]?></span>
+            <? if ($arItem["PROPERTIES"]["DESC"]["VALUE"]): ?>
+              <h2 class="main-banner__title"><?= $arItem["PROPERTIES"]["DESC"]["VALUE"] ?></h2>
+            <? endif; ?>
+            <? if ($arItem["PROPERTIES"]["LINK"]["VALUE"]): ?>
+              <a href="<?= $arItem["PROPERTIES"]["LINK"]["VALUE"] ?>" class="main-banner__link">
+                <span><?= $arItem["NAME"] ?></span>
                 <svg width="24" height="25" viewBox="0 0 24 25" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <path fill-rule="evenodd" clip-rule="evenodd"
                         d="M11 6.4165L12 6.4165C13.7949 6.4165 15.25 4.96143 15.25 3.1665L16.75 3.1665C16.75 5.78986 14.6234 7.9165 12 7.9165L11 7.9165L11 6.4165Z"
@@ -48,9 +48,9 @@ $this->setFrameMode(true);
                         fill="white"/>
                 </svg>
               </a>
-            <?else:?>
+            <? else: ?>
               <div class="main-banner__link">
-                <span><?=$arItem["NAME"]?></span>
+                <span><?= $arItem["NAME"] ?></span>
                 <svg width="24" height="25" viewBox="0 0 24 25" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <path fill-rule="evenodd" clip-rule="evenodd"
                         d="M11 6.4165L12 6.4165C13.7949 6.4165 15.25 4.96143 15.25 3.1665L16.75 3.1665C16.75 5.78986 14.6234 7.9165 12 7.9165L11 7.9165L11 6.4165Z"
@@ -63,10 +63,10 @@ $this->setFrameMode(true);
                         fill="white"/>
                 </svg>
               </div>
-            <?endif;?>
+            <? endif; ?>
           </div>
         </div>
-      <?endforeach;?>
+      <? endforeach; ?>
 
     </div>
     <div class="swiper-pagination main-banner__pagination"></div>

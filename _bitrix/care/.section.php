@@ -1,3 +1,3 @@
 <?
-$sSectionName="Уход за одеждой";
+$sSectionName = "Уход за одеждой";
 ?>

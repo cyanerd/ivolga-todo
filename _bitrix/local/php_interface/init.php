@@ -255,7 +255,7 @@ function send_sms($host, $port, $login, $password, $phone, $text, $sender = fals
     $response .= fread($fp, 1);
   }
   fclose($fp);
-  list($other, $responseBody) = explode("\r\n\r\n", $response, 2);
+  [$other, $responseBody] = explode("\r\n\r\n", $response, 2);
   return $responseBody;
 }
 
@@ -647,12 +647,12 @@ class MyTools
             <p><?= $amount_text ?></p>
             <p><?= number_format($price, 0, '', ' ') ?>&nbsp;₽</p>
           </li>
-          <? if ($delivery_id > 0):?>
+          <? if ($delivery_id > 0): ?>
             <li class="order-info__item">
               <p>Доставка</p>
               <p><?= $delivery_summ == 0 ? 'бесплатно' : $delivery_summ . '&nbsp;₽' ?></p>
             </li>
-          <?endif; ?>
+          <? endif; ?>
           <li class="basket-modal-order__item">
             <p>Итого</p>
             <p><?= number_format($price + $delivery_summ, 0, '', ' ') ?>&nbsp;₽</p>

@@ -13,18 +13,18 @@
 $this->setFrameMode(true);
 ?>
 <div style="opacity: 1; transform: none;">
-    <div class="contacts-info-container">
-        <div class="contacts-info">
-            <ul class="faq-info__contacts">
-                <?foreach ($arResult['ITEMS'] as $arItem):?>
-                <li>
-                    <div class="faq-info__contact">
-                        <p><?=$arItem['NAME']?></p>
-                        <p><?=$arItem['PROPERTIES']['EMAIL']['VALUE']?></p>
-                    </div>
-                </li>
-                <?endforeach;?>
-            </ul>
-        </div>
+  <div class="contacts-info-container">
+    <div class="contacts-info">
+      <ul class="faq-info__contacts">
+        <? foreach ($arResult['ITEMS'] as $arItem): ?>
+          <li>
+            <div class="faq-info__contact">
+              <p><?= $arItem['NAME'] ?></p>
+              <p><?= $arItem['PROPERTIES']['EMAIL']['VALUE'] ?></p>
+            </div>
+          </li>
+        <? endforeach; ?>
+      </ul>
     </div>
+  </div>
 </div>

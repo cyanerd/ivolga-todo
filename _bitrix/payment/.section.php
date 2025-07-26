@@ -1,3 +1,3 @@
 <?
-$sSectionName="Оплата";
+$sSectionName = "Оплата";
 ?>

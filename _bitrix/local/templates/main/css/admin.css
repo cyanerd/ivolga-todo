@@ -2,11 +2,11 @@ td.ws-project-settings.field-name {
     line-height: 27px;
 }
 
-td.ws-project-settings.field-name + td > input[type=text]{
+td.ws-project-settings.field-name + td > input[type=text] {
     margin-bottom: 10px;
 }
 
-td.ws-project-settings.field-name + td input[type=text]{
+td.ws-project-settings.field-name + td input[type=text] {
     width: 500px;
     margin-left: 10px;
 }
