@@ -10227,6 +10227,28 @@ body {
     transition: all 0.9s ease-out;
 }
 
+.mobile-header__header {
+    display: flex;
+    justify-content: flex-end;
+    padding: 20px;
+    border-bottom: 1px solid #8c8c8c;
+}
+
+.mobile-header__close {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: opacity 0.3s ease;
+}
+
+.mobile-header__close:hover {
+    opacity: 0.7;
+}
+
 .mobile-header__list {
     border-top: 1px solid #8c8c8c;
     list-style: none;

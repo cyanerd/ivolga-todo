@@ -282,3 +282,77 @@ body .catalogpage__heading {
         transform: rotate(360deg);
     }
 }
+
+body .mobile-header__list {
+    border-top: 0;
+}
+
+body .mobile-header__nav {
+    transition: all 0.3s ease-in;
+}
+
+body .mobile-header__nav.active {
+    transition: all 0.3s ease-out;
+}
+
+body .mobile-header__list li {
+    border-bottom: 1px solid #dadada;
+    padding: 10px;
+}
+
+body .mobile-header__header {
+    border-bottom: none;
+}
+
+@media (max-width: 767px) {
+    body .looks-posters {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    body .pagecollect__wrap {
+        margin-top: 40px;
+        padding-bottom: 40px;
+    }
+
+    body .pagecollect__title {
+        margin-bottom: 20px;
+    }
+
+    body .lk-main__col {
+        width: 100%;
+    }
+
+    body .infopage__wrap {
+        padding-top: 40px;
+        padding-bottom: 40px;
+    }
+
+    body .infopage__aside {
+        position: relative;
+        top: 0;
+        left: 0;
+    }
+
+    body .lk-orders__header {
+        flex-direction: column;
+        gap: 10px;
+        align-items: flex-start;
+    }
+
+    body .breadcrumbs {
+        margin-top: 40px;
+    }
+}
+
+button {
+    -webkit-tap-highlight-color: transparent;
+}
+
+.back-button {
+    color: #000;
+}
+
+body .lkmodal__form-submit {
+    margin-top: 0;
+}

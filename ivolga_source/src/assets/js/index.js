@@ -39,6 +39,8 @@ const setOnCloseHandler = () => {
         document.querySelector('#resetpass_ok').classList.remove('open')
         document.querySelector('#newadress').classList.remove('open')
         document.querySelector('#newadress_ok').classList.remove('open')
+        document.querySelector('#logout-modal').classList.remove('open')
+        document.querySelector('.lkmodal').classList.remove('open')
 
         document.querySelector('#editadress').classList.remove('open')
         document.querySelector('#editadress_ok').classList.remove('open')

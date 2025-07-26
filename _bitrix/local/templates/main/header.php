@@ -309,6 +309,13 @@ if ($APPLICATION->GetCurPage() === '/policy/') {
 
 <!-- Мобильное меню -->
 <nav class="mobile-header__nav">
+  <div class="mobile-header__header">
+    <button class="mobile-header__close" type="button">
+      <svg width="24" height="25" viewBox="0 0 24 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M18 20.5L12 12.5M6 4.5L12 12.5M12 12.5L18 4.5M12 12.5L6 20.5" stroke="#232229" stroke-width="1.5"/>
+      </svg>
+    </button>
+  </div>
   <ul class="mobile-header__list">
     <li><a class="nav-link" href="/catalog/">Каталог</a></li>
     <li><a class="nav-link" href="/looks/">Образы</a></li>

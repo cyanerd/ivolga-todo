@@ -1441,21 +1441,30 @@ $(document).on('click', '.catalogpage__togfilter1', function (e) {
 });
 
 // ====== МОБИЛЬНОЕ МЕНЮ ======
-$(document).ready(function () {
-  // Обработчик для кнопки мобильного меню
-  $(document).on('click', '.header__menu-burger', function (e) {
-    e.preventDefault();
-    e.stopPropagation();
-
+$(document).ready(function() {
+  // Функция для закрытия мобильного меню
+  function closeMobileMenu() {
     const $body = $('body');
     const $mobileNav = $('.mobile-header__nav');
+    const $burgerBtn = $('.header__menu-burger');
+    
+    $mobileNav.removeClass('active');
+    $body.removeClass('modal-open');
+    $burgerBtn.removeClass('active');
+  }
 
+  // Обработчик для кнопки мобильного меню
+  $(document).on('click', '.header__menu-burger', function(e) {
+    e.preventDefault();
+    e.stopPropagation();
+    
+    const $body = $('body');
+    const $mobileNav = $('.mobile-header__nav');
+    
     if ($mobileNav.length) {
       if ($mobileNav.hasClass('active')) {
         // Закрываем меню
-        $mobileNav.removeClass('active');
-        $body.removeClass('modal-open');
-        $(this).removeClass('active');
+        closeMobileMenu();
       } else {
         // Открываем меню
         $mobileNav.addClass('active');
@@ -1465,41 +1474,29 @@ $(document).ready(function () {
     }
   });
 
-  // Закрытие мобильного меню по клику на оверлей
-  $(document).on('click', function (e) {
-    const $mobileNav = $('.mobile-header__nav');
-    const $burger = $('.header__menu-burger');
+  // Обработчик для кнопки закрытия мобильного меню
+  $(document).on('click', '.mobile-header__close', function(e) {
+    e.preventDefault();
+    e.stopPropagation();
+    closeMobileMenu();
+  });
 
-    if ($mobileNav.hasClass('active') &&
-      !$(e.target).closest('.mobile-header__nav').length &&
-      !$(e.target).closest('.header__menu-burger').length) {
-      $mobileNav.removeClass('active');
-      $('body').removeClass('modal-open');
-      $burger.removeClass('active');
+  // Закрытие мобильного меню по клику на оверлей
+  $(document).on('click', '.mobile-header__nav', function(e) {
+    if (e.target === this) {
+      closeMobileMenu();
     }
   });
 
-  // Закрытие мобильного меню по клику на ссылки в меню
-  $(document).on('click', '.mobile-header__nav a', function () {
-    const $mobileNav = $('.mobile-header__nav');
-    const $burger = $('.header__menu-burger');
-
-    $mobileNav.removeClass('active');
-    $('body').removeClass('modal-open');
-    $burger.removeClass('active');
+  // Закрытие мобильного меню по клику на ссылки
+  $(document).on('click', '.mobile-header__nav .nav-link', function() {
+    closeMobileMenu();
   });
 
   // Закрытие мобильного меню по нажатию Escape
-  $(document).on('keydown', function (e) {
-    if (e.key === 'Escape') {
-      const $mobileNav = $('.mobile-header__nav');
-      const $burger = $('.header__menu-burger');
-
-      if ($mobileNav.hasClass('active')) {
-        $mobileNav.removeClass('active');
-        $('body').removeClass('modal-open');
-        $burger.removeClass('active');
-      }
+  $(document).on('keydown', function(e) {
+    if (e.key === 'Escape' && $('.mobile-header__nav').hasClass('active')) {
+      closeMobileMenu();
     }
   });
 });
