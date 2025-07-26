@@ -80,6 +80,11 @@ $APPLICATION->SetTitle("Каталог");
   if ($_GET['ajax'] === 'Y') {
     $APPLICATION->RestartBuffer();
   }
+  
+  // Отладочная информация для сортировки
+  if ($_REQUEST["sort"] === "price") {
+    error_log("Sorting by price: " . $_REQUEST["sort"] . ", order: " . $_REQUEST["order"]);
+  }
   ?>
   <div id="catalog-ajax-container">
     <? $APPLICATION->IncludeComponent(
@@ -89,6 +94,11 @@ $APPLICATION->SetTitle("Каталог");
         "IBLOCK_TYPE" => "CRM_PRODUCT_CATALOG",
         "IBLOCK_ID" => "29",
         "PRICE_CODE" => ["Розничная цена"],
+        "USE_PRICE_COUNT" => "Y",
+        "SHOW_PRICE_COUNT" => "1",
+        "CONVERT_CURRENCY" => "Y",
+        "CURRENCY_ID" => "RUB",
+        "PRICE_VAT_INCLUDE" => "Y",
         "ELEMENT_SORT_FIELD2" => "id",
         "ELEMENT_SORT_ORDER2" => "desc",
         "PROPERTY_CODE" => ["PRICE", "OLD_PRICE", "MORE_PHOTO", "NEW", "PREORDER", "FAVORITE", "COLORS", "SIZES"],
@@ -112,7 +122,7 @@ $APPLICATION->SetTitle("Каталог");
         "SECTION_ID" => $_REQUEST["SECTION_ID"],
         "SECTION_CODE" => $_REQUEST["SECTION_CODE"],
         "SECTION_CODE_PATH" => $_REQUEST["SECTION_CODE_PATH"],
-        "ELEMENT_SORT_FIELD" => $_REQUEST["sort"] ?: "sort",
+        "ELEMENT_SORT_FIELD" => $_REQUEST["sort"] === "price" ? "catalog_PRICE_7" : ($_REQUEST["sort"] ?: "sort"),
         "ELEMENT_SORT_ORDER" => $_REQUEST["order"] ?: "asc",
       ],
       false

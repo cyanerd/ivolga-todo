@@ -194,3 +194,98 @@ h1.faq-info__title {
 .catdrop {
     z-index: 1000;
 }
+
+._link {
+    color: #232229;
+}
+
+._link:hover {
+    color: #232229;
+    text-decoration: none;
+}
+
+body .catalogpage__heading {
+    transition: none;
+}
+
+/* Стили для блока "Результатов не найдено" */
+.catalogpage__no-results {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 400px;
+    padding: 40px 20px;
+    margin: 0 auto;
+}
+
+.catalogpage__no-results-content {
+    text-align: center;
+    max-width: 500px;
+}
+
+.catalogpage__no-results-icon {
+    margin-bottom: 24px;
+}
+
+.catalogpage__no-results-icon svg {
+    width: 64px;
+    height: 64px;
+    opacity: 0.6;
+}
+
+.catalogpage__no-results-title {
+    font-size: 24px;
+    font-weight: 500;
+    color: #232229;
+    margin-bottom: 12px;
+    font-family: Pragmatica, sans-serif;
+}
+
+.catalogpage__no-results-text {
+    font-size: 16px;
+    color: #666;
+    margin-bottom: 24px;
+    line-height: 1.5;
+}
+
+.catalogpage__no-results-reset {
+    background: #232229;
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 4px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    font-family: Pragmatica, sans-serif;
+}
+
+.catalogpage__no-results-reset:hover {
+    background: #404040;
+}
+
+/* Стили для индикатора загрузки фильтров */
+.catdrop-block.loading {
+    opacity: 0.6;
+    pointer-events: none;
+}
+
+.catdrop-block.loading::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 20px;
+    height: 20px;
+    margin: -10px 0 0 -10px;
+    border: 2px solid #f3f3f3;
+    border-top: 2px solid #232229;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    z-index: 10;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}

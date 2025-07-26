@@ -265,12 +265,14 @@ const initProductCardsSlider = () => {
       });
     });
 
-    clearButton.addEventListener('click', () => {
-      radios.forEach(radio => {
-        radio.checked = false;
+    if (clearButton) {
+      clearButton.addEventListener('click', () => {
+        radios.forEach(radio => {
+          radio.checked = false;
+        });
+        clearButton.classList.remove('active');
       });
-      clearButton.classList.remove('active');
-    });
+    }
   });
 }
 

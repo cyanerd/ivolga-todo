@@ -462,6 +462,25 @@ class MyTools
     return 'none';
   }
 
+  static public function getAllColors()
+  {
+    if (empty(self::$arColors)) {
+      $hlblockId = 2;
+      $hlblock = HL\HighloadBlockTable::getById($hlblockId)->fetch();
+      $entity = HL\HighloadBlockTable::compileEntity($hlblock);
+      $entity_data_class = $entity->getDataClass();
+
+      $rsData = $entity_data_class::getList([
+        'select' => ['UF_NAME', 'UF_COLOR_FILE'],
+        'order' => ['ID' => 'ASC'],
+      ]);
+      while ($arData = $rsData->Fetch()) {
+        self::$arColors[$arData['UF_NAME']] = CFile::GetPath($arData['UF_COLOR_FILE']);
+      }
+    }
+    return array_keys(self::$arColors);
+  }
+
   static public function getBasket()
   {
     $basket = Sale\Basket::loadItemsForFUser(Sale\Fuser::getId(), Bitrix\Main\Context::getCurrent()->getSite());

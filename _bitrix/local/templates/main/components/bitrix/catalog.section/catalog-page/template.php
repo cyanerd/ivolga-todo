@@ -9,6 +9,13 @@ $isNotCatalog = substr_count($APPLICATION->GetCurPage(), '/collections/')
   || substr_count($APPLICATION->GetCurPage(), '/search/');
 ?>
 
+<?php
+// Если запрос только для обновления фильтров, возвращаем только их
+if ($_GET['update_filters'] === 'Y') {
+  $APPLICATION->RestartBuffer();
+}
+?>
+
 <? if (!$isNotCatalog) { ?>
   <div class="container">
     <? if ($arResult["SECTIONS"]): ?>
@@ -88,7 +95,7 @@ $isNotCatalog = substr_count($APPLICATION->GetCurPage(), '/collections/')
         $currentSort = $_REQUEST["sort"] ?: "sort";
         $currentOrder = $_REQUEST["order"] ?: "asc";
         ?>
-        <div class="catalogpage__sort desc">
+        <div class="catalogpage__sort <?= $currentOrder == 'desc' ? 'desc' : 'asc' ?>">
           <p>Сортировать</p>
           <form method="GET" action="">
             <? if ($_REQUEST["SECTION_CODE"]): ?>
@@ -97,11 +104,26 @@ $isNotCatalog = substr_count($APPLICATION->GetCurPage(), '/collections/')
             <? if ($_REQUEST["SECTION_ID"]): ?>
               <input type="hidden" name="SECTION_ID" value="<?= htmlspecialcharsbx($_REQUEST["SECTION_ID"]) ?>">
             <? endif; ?>
-            <div class="catalogpage__sort-select">
-              <select name="sort" onchange="this.form.submit()">
+            <? if ($_REQUEST["SECTION_CODE_PATH"]): ?>
+              <input type="hidden" name="SECTION_CODE_PATH" value="<?= htmlspecialcharsbx($_REQUEST["SECTION_CODE_PATH"]) ?>">
+            <? endif; ?>
+            <? if ($_REQUEST["size"]): ?>
+              <input type="hidden" name="size" value="<?= htmlspecialcharsbx($_REQUEST["size"]) ?>">
+            <? endif; ?>
+            <? if ($_REQUEST["color"]): ?>
+              <input type="hidden" name="color" value="<?= htmlspecialcharsbx($_REQUEST["color"]) ?>">
+            <? endif; ?>
+            <? if ($_REQUEST["material"]): ?>
+              <input type="hidden" name="material" value="<?= htmlspecialcharsbx($_REQUEST["material"]) ?>">
+            <? endif; ?>
+            <? if ($_REQUEST["collection"]): ?>
+              <input type="hidden" name="collection" value="<?= htmlspecialcharsbx($_REQUEST["collection"]) ?>">
+            <? endif; ?>
+                          <div class="catalogpage__sort-select">
+                <select name="sort">
                 <option value="sort" <?= $currentSort == "sort" ? 'selected' : '' ?>>по умолчанию</option>
                 <option value="name" <?= $currentSort == "name" ? 'selected' : '' ?>>по названию</option>
-                <option value="price" <?= $currentSort == "price" ? 'selected' : '' ?>>по цене</option>
+                <option value="price" <?= $currentSort == "price" || $currentSort == "catalog_PRICE_1" || $currentSort == "catalog_PRICE_7" ? 'selected' : '' ?>>по цене</option>
                 <option value="date" <?= $currentSort == "date" ? 'selected' : '' ?>>по дате</option>
               </select>
             </div>
@@ -292,6 +314,33 @@ $isNotCatalog = substr_count($APPLICATION->GetCurPage(), '/collections/')
           </div>
         </div>
       <? endforeach; ?>
+    <? else: ?>
+      <?php
+      // Проверяем, есть ли активные фильтры
+      $hasActiveFilters = !empty($_GET['size']) || !empty($_GET['color']) || !empty($_GET['material']) || !empty($_GET['collection']);
+      ?>
+      <div class="catalogpage__no-results">
+        <div class="catalogpage__no-results-content">
+          <div class="catalogpage__no-results-icon">
+            <svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M32 8C18.745 8 8 18.745 8 32C8 45.255 18.745 56 32 56C45.255 56 56 45.255 56 32C56 18.745 45.255 8 32 8ZM32 52C21.514 52 12 42.486 12 32C12 21.514 21.514 12 32 12C42.486 12 52 21.514 52 32C52 42.486 42.486 52 32 52Z" fill="#232229"/>
+              <path d="M32 20C30.895 20 30 20.895 30 22V30C30 31.105 30.895 32 32 32C33.105 32 34 31.105 34 30V22C34 20.895 33.105 20 32 20Z" fill="#232229"/>
+              <path d="M32 36C30.895 36 30 36.895 30 38V42C30 43.105 30.895 44 32 44C33.105 44 34 43.105 34 42V38C34 36.895 33.105 36 32 36Z" fill="#232229"/>
+            </svg>
+          </div>
+          <h3 class="catalogpage__no-results-title">
+            <?= $hasActiveFilters ? 'По вашему запросу ничего не найдено' : 'В данной категории пока нет товаров' ?>
+          </h3>
+          <p class="catalogpage__no-results-text">
+            <?= $hasActiveFilters ? 'Попробуйте изменить параметры фильтрации или сбросить фильтры' : 'Попробуйте выбрать другую категорию или загляните позже' ?>
+          </p>
+          <?php if ($hasActiveFilters): ?>
+            <button class="catalogpage__no-results-reset" onclick="resetFilters()">
+              Сбросить фильтры
+            </button>
+          <?php endif; ?>
+        </div>
+      </div>
     <? endif; ?>
   </div>
 </div>
@@ -301,14 +350,7 @@ $isNotCatalog = substr_count($APPLICATION->GetCurPage(), '/collections/')
   </button>
 <? } ?>
 
-<script>
-  function toggleSortOrder() {
-    const form = document.querySelector('.catalogpage__sort form');
-    const orderInput = form.querySelector('input[name="order"]');
-    orderInput.value = orderInput.value === 'asc' ? 'desc' : 'asc';
-    form.submit();
-  }
-</script>
+
 
 <?php
 // Получаем категории (разделы)
@@ -324,39 +366,78 @@ $rsSections = CIBlockSection::GetList([
 while ($arSection = $rsSections->GetNext()) {
   $categories[] = $arSection;
 }
-// Получаем уникальные размеры из торговых предложений
+// Получаем уникальные размеры для текущего раздела
 $sizes = [];
 $arInfo = CCatalogSKU::GetInfoByProductIBlock(29);
 if ($arInfo && !empty($arInfo['IBLOCK_ID'])) {
-  $rsOffers = CIBlockElement::GetList([], ['IBLOCK_ID' => $arInfo['IBLOCK_ID'], 'ACTIVE' => 'Y'], false, false, ['ID', 'IBLOCK_ID', 'PROPERTY_RAZMER']);
-  while ($arOffer = $rsOffers->GetNext()) {
-    $size = trim($arOffer['PROPERTY_RAZMER_VALUE']);
-    if ($size && !in_array($size, $sizes)) {
-      $sizes[] = $size;
+  // Сначала получаем ID товаров из текущего раздела
+  $productIds = [];
+  $sectionFilter = ['IBLOCK_ID' => 29, 'ACTIVE' => 'Y'];
+  
+  // Если мы в конкретном разделе, добавляем фильтр по разделу
+  if (!empty($_REQUEST["SECTION_ID"])) {
+    $sectionFilter['SECTION_ID'] = $_REQUEST["SECTION_ID"];
+  } elseif (!empty($_REQUEST["SECTION_CODE"])) {
+    $sectionFilter['SECTION_CODE'] = $_REQUEST["SECTION_CODE"];
+  }
+  
+  $rsProducts = CIBlockElement::GetList([], $sectionFilter, false, false, ['ID']);
+  while ($arProduct = $rsProducts->GetNext()) {
+    $productIds[] = $arProduct['ID'];
+  }
+  
+  // Теперь получаем размеры только для этих товаров
+  if (!empty($productIds)) {
+    $rsOffers = CIBlockElement::GetList([], [
+      'IBLOCK_ID' => $arInfo['IBLOCK_ID'], 
+      'ACTIVE' => 'Y',
+      'PROPERTY_CML2_LINK' => $productIds
+    ], false, false, ['ID', 'IBLOCK_ID', 'PROPERTY_RAZMER']);
+    
+    while ($arOffer = $rsOffers->GetNext()) {
+      $size = trim($arOffer['PROPERTY_RAZMER_VALUE']);
+      if ($size && !in_array($size, $sizes)) {
+        $sizes[] = $size;
+      }
     }
   }
 }
-// Получаем уникальные цвета
+// Получаем уникальные цвета для текущего раздела
 $colors = [];
-$rsElements = CIBlockElement::GetList([], ['IBLOCK_ID' => 29, 'ACTIVE' => 'Y'], false, false, ['ID', 'PROPERTY_TSVET']);
+$sectionFilter = ['IBLOCK_ID' => 29, 'ACTIVE' => 'Y'];
+
+// Если мы в конкретном разделе, добавляем фильтр по разделу
+if (!empty($_REQUEST["SECTION_ID"])) {
+  $sectionFilter['SECTION_ID'] = $_REQUEST["SECTION_ID"];
+} elseif (!empty($_REQUEST["SECTION_CODE"])) {
+  $sectionFilter['SECTION_CODE'] = $_REQUEST["SECTION_CODE"];
+}
+
+$rsElements = CIBlockElement::GetList([], $sectionFilter, false, false, ['ID', 'PROPERTY_TSVET']);
 while ($arEl = $rsElements->GetNext()) {
   $color = trim($arEl['PROPERTY_TSVET_VALUE']);
   if ($color && !in_array($color, $colors)) {
     $colors[] = $color;
   }
 }
-// Получаем уникальные материалы
+
+// Отладочная информация
+if (empty($colors)) {
+  error_log("No colors found for section: " . ($_REQUEST["SECTION_ID"] ?? $_REQUEST["SECTION_CODE"] ?? 'all'));
+}
+// Получаем уникальные материалы для текущего раздела
 $materials = [];
-$rsElements = CIBlockElement::GetList([], ['IBLOCK_ID' => 29, 'ACTIVE' => 'Y'], false, false, ['ID', 'PROPERTY_MATERIAL']);
+$rsElements = CIBlockElement::GetList([], $sectionFilter, false, false, ['ID', 'PROPERTY_MATERIAL']);
 while ($arEl = $rsElements->GetNext()) {
   $mat = trim($arEl['PROPERTY_MATERIAL_VALUE']);
   if ($mat && !in_array($mat, $materials)) {
     $materials[] = $mat;
   }
 }
-// Получаем уникальные коллекции
+
+// Получаем уникальные коллекции для текущего раздела
 $collections = [];
-$rsElements = CIBlockElement::GetList([], ['IBLOCK_ID' => 29, 'ACTIVE' => 'Y'], false, false, ['ID', 'PROPERTY_KOLLEKTSIYA']);
+$rsElements = CIBlockElement::GetList([], $sectionFilter, false, false, ['ID', 'PROPERTY_KOLLEKTSIYA']);
 while ($arEl = $rsElements->GetNext()) {
   $coll = trim($arEl['PROPERTY_KOLLEKTSIYA_VALUE']);
   if ($coll && !in_array($coll, $collections)) {
@@ -426,7 +507,7 @@ while ($arEl = $rsElements->GetNext()) {
               <?php foreach ($colors as $i => $color): ?>
                 <div class="catdrop-block__color-item">
                   <input type="checkbox" name="color" value="<?= htmlspecialchars($color) ?>" id="color-<?= $i ?>">
-                  <label for="color-<?= $i ?>"><span style="background: #000;"></span><?= htmlspecialchars($color) ?></label>
+                  <label for="color-<?= $i ?>"><span style="background-image: url(<?= MyTools::getColor($color) ?>)"></span></label>
                 </div>
               <?php endforeach; ?>
             </div>
@@ -474,4 +555,12 @@ while ($arEl = $rsElements->GetNext()) {
     <button class="catdrop__apply js--close">Показать</button>
   </div>
 </div>
+
+<?php
+// Если запрос только для обновления фильтров, завершаем выполнение
+if ($_GET['update_filters'] === 'Y') {
+  die();
+}
+?>
+
 <div class="backdrop"></div>
