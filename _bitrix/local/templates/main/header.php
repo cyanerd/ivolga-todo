@@ -45,7 +45,7 @@ use Bitrix\Main\Page\Asset;
   $APPLICATION->SetAdditionalCSS(TP . 'css/app.css');
   $APPLICATION->SetAdditionalCSS(TP . 'css/style.css');
   $APPLICATION->SetAdditionalCSS(TP . 'css/custom.css?v=2');
-  $APPLICATION->SetAdditionalCSS('/assets/css/favourite.css?v=1');
+  $APPLICATION->SetAdditionalCSS('/assets/css/favourite.css?v=2');
   ?>
   <title><? $APPLICATION->ShowTitle(); ?></title>
 </head>
@@ -101,7 +101,7 @@ if ($APPLICATION->GetCurPage() === '/policy/') {
 
 ?>
 <? $APPLICATION->ShowPanel() ?>
-<body class="<?= implode(' ', $bodyClasses) ?>">
+<body class="<?= implode(' ', $bodyClasses) ?>" style="padding-top: 64px;">
 
 <div class="topblock">
   <? if ($siteSettings['alert']) { ?>

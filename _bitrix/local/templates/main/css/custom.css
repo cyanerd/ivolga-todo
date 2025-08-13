@@ -380,3 +380,26 @@ body .lkmodal__form-submit {
     opacity: 1;
     visibility: visible;
 }
+
+body .prodpar__block-size label {
+    width: 36px;
+    height: 36px;
+}
+
+body .header__menu-burger {
+    height: 40px;
+    width: 40px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+    margin-right: 0;
+}
+
+body .header__button--search:not(.descheader) {
+    height: 40px;
+    width: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}

@@ -3462,7 +3462,7 @@ footer {
 
 .modalcart__body {
     background: #fff;
-    height: calc(100vh - 209rem);
+    height: calc(100svh - 209rem);
     overflow: auto
 }
 
@@ -5847,7 +5847,7 @@ body {
 
 .catalogpage {
     margin-bottom: 200rem;
-    padding-top: 164rem
+    padding-top: 60px;
 }
 
 .catalogpage__nav {
@@ -6172,7 +6172,7 @@ body {
 
 .breadcrumbs {
     margin-bottom: 22rem;
-    margin-top: 116px
+    margin-top: 60px
 }
 
 .breadcrumbs__row {
@@ -7702,7 +7702,7 @@ body {
 }
 
 .pagecollect__wrap {
-    margin-top: 153px;
+    margin-top: 60px;
     padding-bottom: 200rem
 }
 
@@ -8272,7 +8272,7 @@ body {
 
 .infopage__wrap {
     padding-bottom: 200rem;
-    padding-top: 184rem
+    padding-top: 80px;
 }
 
 .infopage__row {
@@ -10172,7 +10172,7 @@ body {
     }
 
     .modalcart__body {
-        height: calc(100vh - 222rem)
+        height: calc(100svh - 222rem)
     }
 
     .modalguide {

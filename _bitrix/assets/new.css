@@ -231,7 +231,7 @@ body .catalog-collection .modal-top-content.modal-right-content {
 }
 
 .App {
-    min-height: calc(100vh - var(--padding-top));
+    min-height: calc(100svh - var(--padding-top));
 }
 
 .products-card-container__content .container,
@@ -240,11 +240,11 @@ body .catalog-collection .modal-top-content.modal-right-content {
 }
 
 .App > div:last-of-type {
-    min-height: calc(100vh - var(--padding-top));
+    min-height: calc(100svh - var(--padding-top));
 }
 
 .App > div:last-of-type > div:last-of-type {
-    min-height: calc(100vh - var(--padding-top));
+    min-height: calc(100svh - var(--padding-top));
     display: flex;
     flex-direction: column;
     justify-content: space-between;

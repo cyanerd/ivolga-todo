@@ -358,7 +358,7 @@ foreach ($basketItems as $item) {
     <div class="modal__wrapper">
       <div class="modal__map">
         <div id="map">
-          <img src="/_bitrix/html/assets/img/map.png" alt="">
+          <img src="/html/assets/img/map.png" alt="">
         </div>
       </div>
       <div class="modal__content">
@@ -375,9 +375,15 @@ foreach ($basketItems as $item) {
             <h3>Выберите службу выдачи</h3>
             <div class="modal-address__select">
               <select>
-                <option value="Сдэк">СДЭК</option>
-                <option value="Почта России">Почта России</option>
-                <option value="Boxberry">Boxberry</option>
+                <?php
+                // Получаем активные службы доставки
+                $deliveryServices = \Bitrix\Sale\Delivery\Services\Manager::getActiveList();
+                foreach ($deliveryServices as $service) {
+                  if ($service['ACTIVE'] == 'Y') {
+                    echo '<option value="' . htmlspecialchars($service['ID']) . '">' . htmlspecialchars($service['NAME']) . '</option>';
+                  }
+                }
+                ?>
               </select>
             </div>
           </div>

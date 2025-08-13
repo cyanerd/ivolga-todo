@@ -29,7 +29,7 @@ input[type=number] {
 }
 
 .body-container {
-    min-height: calc(100vh - var(--padding-top));
+    min-height: calc(100svh - var(--padding-top));
     margin: 0 auto;
     max-width: 1680px;
     width: 100vw

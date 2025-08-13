@@ -11,7 +11,7 @@ $APPLICATION->SetTitle("Оформление заказа");
       </h1>
       <? $APPLICATION->IncludeComponent(
         "bitrix:sale.order.ajax",
-        "new",
+        ".default",
         [
           "ALLOW_AUTO_REGISTER" => "Y",
           "ALLOW_NEW_PROFILE" => "Y",
