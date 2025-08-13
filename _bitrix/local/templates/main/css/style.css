@@ -283,6 +283,7 @@ input[type=radio]:checked::after {
     text-align: center;
     background-color: transparent;
     border: 1rem solid #232229;
+    transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
 }
 .order-alert > p {
     margin-bottom: 12rem;
@@ -1435,4 +1436,164 @@ input[type=radio]:checked::after {
     line-height: 1.2;
     color: #8C8C8C;
     text-align: right;
+}
+
+/* Стили для пустой корзины на странице checkout */
+.cart-empty-message {
+  text-align: center;
+  padding: 20px;
+  color: #666;
+  font-style: italic;
+  border: 1px dashed #ddd;
+  border-radius: 8px;
+  background: #f9f9f9;
+  margin: 10px 0;
+}
+
+/* Стили для списка адресов */
+.address-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 20px;
+  border: 1px solid #eee;
+  margin-bottom: 16px;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.address-item:hover {
+  border-color: #ddd;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.address-item__content {
+  flex: 1;
+  margin-right: 16px;
+}
+
+.address-item__title {
+  margin: 0 0 8px 0;
+  font-size: 16px;
+  font-weight: 600;
+  color: #232229;
+}
+
+.address-item__address {
+  margin: 0 0 8px 0;
+  font-size: 14px;
+  color: #666;
+  line-height: 1.4;
+}
+
+.address-item__comment {
+  margin: 0;
+  font-size: 13px;
+  color: #999;
+  font-style: italic;
+}
+
+.address-item__select {
+  background: #232229;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  transition: background-color 0.2s;
+  white-space: nowrap;
+}
+
+.address-item__select:hover {
+  background: #404040;
+}
+
+.address-empty {
+  text-align: center;
+  padding: 40px 20px;
+  color: #999;
+  font-style: italic;
+}
+
+/* Стили для условного отображения блоков доставки */
+.order-alert--area,
+.order-methods,
+.order-methods__card,
+.order-methods__button,
+.order-alert--action,
+.order-controls,
+.order-saving {
+    transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
+}
+
+.order-alert--area.hidden,
+.order-methods.hidden,
+.order-methods__card.hidden,
+.order-methods__button.hidden,
+.order-alert--action.hidden,
+.order-controls.hidden,
+.order-saving.hidden {
+    display: none !important;
+}
+
+/* Плавное появление блоков */
+.order-alert--area:not(.hidden),
+.order-methods:not(.hidden),
+.order-methods__card:not(.hidden),
+.order-methods__button:not(.hidden),
+.order-alert--action:not(.hidden),
+.order-controls:not(.hidden),
+.order-saving:not(.hidden) {
+    display: block;
+}
+
+/* Специальные стили для блоков методов доставки */
+.order-methods:not(.hidden) {
+    display: block;
+}
+
+.order-methods__row:not(.hidden) {
+    display: grid;
+}
+
+/* Стили для скрытых блоков */
+.order-methods.hidden .order-methods__row,
+.order-methods.hidden .order-methods__card,
+.order-methods.hidden .order-methods__button {
+    display: none !important;
+}
+
+/* Стили для блоков адреса */
+.order-controls:not(.hidden) {
+    display: flex;
+}
+
+.order-alert--action:not(.hidden) {
+    display: block;
+}
+
+.order-saving:not(.hidden) {
+    display: block;
+}
+
+/* Скрываем блоки адреса по умолчанию */
+.order-controls,
+.order-alert--action,
+.order-saving {
+    display: none;
+}
+
+/* Основная сетка методов доставки всегда видна, если не скрыта */
+.order-methods:not(.hidden) .order-methods__row {
+    display: grid;
+}
+
+/* Скрываем кнопку выбора пункта выдачи по умолчанию */
+.order-methods__button[data-modal="#modal-pickup"] {
+    display: none;
+}
+
+/* Показываем кнопку только когда не скрыта */
+.order-methods__button[data-modal="#modal-pickup"]:not(.hidden) {
+    display: block;
 }

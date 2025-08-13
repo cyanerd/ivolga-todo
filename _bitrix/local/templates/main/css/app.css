@@ -3389,7 +3389,7 @@ footer {
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
-    height: 63rem;
+    height: 64px;
     justify-content: space-between;
     padding: 20rem
 }
@@ -3901,7 +3901,7 @@ input::-webkit-inner-spin-button, input::-webkit-outer-spin-button {
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
-    height: 65rem;
+    height: 64px;
     justify-content: space-between;
     padding: 20rem
 }

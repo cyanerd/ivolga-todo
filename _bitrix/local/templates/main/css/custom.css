@@ -368,3 +368,15 @@ body .lkmodal__form-submit {
 .catalogpage__sort.desc {
     display: flex;
 }
+
+.modal.open {
+    opacity: 1;
+    visibility: visible;
+    z-index: 9999;
+    pointer-events: auto;
+}
+
+.modal.open .modal__dialog {
+    opacity: 1;
+    visibility: visible;
+}
