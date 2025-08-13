@@ -1,0 +1,68 @@
+$md0: 1500px;
+$md1: 1200px;
+$md2: 991px;
+$md3: 767px;
+$md4: 575.98px;
+
+$font-family: "Pragmatica", sans-serif;
+$font-steinbeck: "Steinbeck", sans-serif;
+
+$primary: #232229;
+$white: #fff;
+$yellow: #fdf16a;
+
+$transition: 0.25s ease-in-out;
+
+.modals-section {
+   padding: 60rem 0;
+   &__list {
+      list-style: none;
+      padding-left: 0;
+      margin-bottom: 0;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20rem;
+      @media (max-width: $md3) {
+         grid-template-columns: repeat(2, 1fr);
+      }
+      & > * {
+         min-width: 0;
+      }
+   }
+}
+
+// Inputs
+@import "_inputs";
+
+// Order alert
+@import "_order-alert";
+
+// Order select
+@import "_order-select";
+
+// Order methods
+@import "_order-methods";
+
+// Order controls
+@import "_order-controls";
+
+// Order saving
+@import "_order-saving";
+
+// Order promo
+@import "_order-promo";
+
+// Order submit
+@import "_order-submit";
+
+// Order aside
+@import "_order-aside";
+
+// Order
+@import "_order";
+
+// Offcanvas
+@import "_offcanvas";
+
+// Modal
+@import "_modal";

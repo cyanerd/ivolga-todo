@@ -21,30 +21,22 @@ $(document).ready(function () {
     if (sortValue) params.sort = sortValue;
     if (orderValue) params.order = orderValue;
 
-    console.log('getCatalogParams - found collections:', collections);
-    console.log('getCatalogParams - final params:', params);
-
     return Object.keys(params).map(key => encodeURIComponent(key) + '=' + encodeURIComponent(params[key])).join('&');
   }
 
   window.getCatalogParams = getCatalogParams;
 
   function updateCatalogAjax(params) {
-    console.log('updateCatalogAjax called with params:', params);
     const url = window.location.pathname + (params ? ('?' + params) : '');
-    console.log('Full URL:', url);
     window.history.pushState({}, '', url);
     $("#catalog-ajax-container").addClass('loading');
     closeModal('.catdrop', true);
 
     const ajaxUrl = url + (params ? '&' : '?') + 'ajax=Y';
-    console.log('AJAX URL:', ajaxUrl);
 
     $.get(ajaxUrl, function (data) {
-      console.log('AJAX response received');
       const $container = $(data).filter('#catalog-ajax-container');
       const html = $container.length ? $container.html() : $(data).find('#catalog-ajax-container').html();
-      console.log('HTML to update:', html.substring(0, 500) + '...'); // Показываем первые 500 символов
       $('#catalog-ajax-container').html(html);
       $("#catalog-ajax-container").removeClass('loading');
       // window.scrollTo({top: $("#catalog-ajax-container").offset().top - 50, behavior: 'smooth'});
@@ -54,9 +46,6 @@ $(document).ready(function () {
 
       // Проверяем, обновился ли класс сортировки
       const $sortContainer = $('.catalogpage__sort');
-      console.log('Sort container classes after update:', $sortContainer.attr('class'));
-      console.log('Sort container has desc class:', $sortContainer.hasClass('desc'));
-      console.log('Sort container has asc class:', $sortContainer.hasClass('asc'));
     }).fail(function (xhr, status, error) {
       console.error('AJAX request failed:', status, error);
       $("#catalog-ajax-container").removeClass('loading');
@@ -67,9 +56,7 @@ $(document).ready(function () {
 
   // Фильтрация каталога по выбранным фильтрам (AJAX или обычная перезагрузка)
   $(document).on('click', '.catdrop__apply', function (e) {
-    console.log('catdrop__apply clicked');
     const search = getCatalogParams();
-    console.log('catdrop__apply - search params:', search);
 
     if (window.USE_CATALOG_AJAX) {
       e.preventDefault();
@@ -147,51 +134,35 @@ $(document).ready(function () {
 
   // Обработка сортировки
   $(document).on('change', 'select[name="sort"]', function () {
-    console.log('Sort select changed:', $(this).val());
     const form = $(this).closest('form');
     const sortValue = $(this).val();
     const orderValue = form.find('input[name="order"]').val();
-
-    console.log('Sort value:', sortValue, 'Order value:', orderValue);
 
     // Обновляем URL с новыми параметрами сортировки
     const urlParams = new URLSearchParams(window.location.search);
     urlParams.set('sort', sortValue);
     urlParams.set('order', orderValue);
 
-    console.log('URL params:', urlParams.toString());
-
     if (window.USE_CATALOG_AJAX) {
-      console.log('Using AJAX for sorting');
       updateCatalogAjax(urlParams.toString());
     } else {
-      console.log('Using form submit for sorting');
       form.submit();
     }
   });
 
   // Дополнительная проверка инициализации обработчиков сортировки
   function initSortHandlers() {
-    console.log('Initializing sort handlers');
     const $sortSelect = $('select[name="sort"]');
-    console.log('Found sort select:', $sortSelect.length);
 
     if ($sortSelect.length) {
       $sortSelect.off('change').on('change', function () {
-        console.log('Direct handler: Sort select changed:', $(this).val());
         const form = $(this).closest('form');
         const sortValue = $(this).val();
         const orderValue = form.find('input[name="order"]').val();
 
-        console.log('Form found:', form.length);
-        console.log('Sort value:', sortValue);
-        console.log('Order value:', orderValue);
-
         const urlParams = new URLSearchParams(window.location.search);
         urlParams.set('sort', sortValue);
         urlParams.set('order', orderValue);
-
-        console.log('URL params:', urlParams.toString());
 
         if (window.USE_CATALOG_AJAX) {
           updateCatalogAjax(urlParams.toString());
@@ -207,9 +178,7 @@ $(document).ready(function () {
 
   // Функция для изменения направления сортировки
   window.toggleSortOrder = function () {
-    console.log('toggleSortOrder called');
     const form = document.querySelector('.catalogpage__sort form');
-    console.log('Found form:', form);
 
     if (!form) {
       console.error('Form not found');
@@ -219,17 +188,12 @@ $(document).ready(function () {
     const orderInput = form.querySelector('input[name="order"]');
     const sortInput = form.querySelector('select[name="sort"]');
 
-    console.log('Current order:', orderInput.value);
-    console.log('Current sort:', sortInput.value);
-
     orderInput.value = orderInput.value === 'asc' ? 'desc' : 'asc';
-    console.log('New order:', orderInput.value);
 
     if (window.USE_CATALOG_AJAX) {
       const urlParams = new URLSearchParams(window.location.search);
       urlParams.set('sort', sortInput.value);
       urlParams.set('order', orderInput.value);
-      console.log('URL params for AJAX:', urlParams.toString());
       updateCatalogAjax(urlParams.toString());
     } else {
       form.submit();
@@ -239,7 +203,6 @@ $(document).ready(function () {
   let catalogPaginationLoading = false;
   $(document).on('click', '.catalogpage__more', function (e) {
 
-    console.log('click');
     e.preventDefault();
     if (catalogPaginationLoading) return;
     catalogPaginationLoading = true;
@@ -252,7 +215,6 @@ $(document).ready(function () {
     $.get(window.location.pathname + '?' + params.toString(), function (data) {
       const $html = $('<div>').html(data);
       const $newItems = $html.find('.catalogpage__items > div').children();
-      console.log('$newItems.length', $newItems.length);
       if ($newItems.length) {
         $('.catalogpage__items > div').append($newItems);
       }
@@ -607,26 +569,23 @@ function updateFavouriteCounter() {
 // Функция для обновления всех кнопок избранного на странице
 function updateFavouriteButtons() {
   const buttons = document.querySelectorAll('.product-card__like');
-  console.log('Found', buttons.length, 'favourite buttons');
 
   buttons.forEach((button, index) => {
-    const productCard = button.closest('.product-card');
-    console.log(`Button ${index}:`, button);
-    console.log(`Button ${index} classes:`, button.classList);
-    console.log(`Button ${index} dataset:`, button.dataset);
 
-    if (productCard) {
-      const productId = productCard.dataset.productId;
-      console.log(`Button ${index} productId:`, productId);
+    let productId;
+    if (button.dataset.productId) productId = button.dataset.productId;
+    else {
+      const productCard = button.closest('.product-card');
+      if (productCard) {
+        productId = productCard.dataset.productId;
+      }
+    }
 
-      if (productId) {
-        if (isFavourite(productId)) {
-          console.log(`Button ${index}: adding active class`);
-          button.classList.add('active');
-        } else {
-          console.log(`Button ${index}: removing active class`);
-          button.classList.remove('active');
-        }
+    if (productId) {
+      if (isFavourite(productId)) {
+        button.classList.add('active');
+      } else {
+        button.classList.remove('active');
       }
     }
   });
@@ -635,17 +594,56 @@ function updateFavouriteButtons() {
 // Обработчик кликов на кнопки избранного
 function initFavouriteButtons() {
   // Проверяем, не добавлен ли уже обработчик
+  console.log('initFavouriteButtons');
   if (window.favouriteButtonsInitialized) {
     return;
   }
+  console.log('initFavouriteButtons 2');
 
+  // Обработчик для десктопа
   document.addEventListener('click', function (e) {
+    console.log('q1');
     // Проверяем, кликнули ли мы на кнопку избранного или её содержимое
     const likeButton = e.target.closest('.product-card__like');
     if (likeButton) {
-      console.log('Favourite button clicked!');
-      console.log('Like button classes:', likeButton.classList);
-      console.log('Like button dataset:', likeButton.dataset);
+      e.preventDefault();
+      e.stopPropagation();
+      console.log('q2');
+
+      // Ищем родительскую карточку товара
+      const productCard = likeButton.closest('.product-card');
+
+      // Пробуем получить ID из разных мест
+      let productId = likeButton.dataset.productId;
+      console.log('productId', productId);
+      if (!productId && productCard) {
+        productId = productCard.dataset.productId;
+      }
+
+      if (productId) {
+        if (isFavourite(productId)) {
+          removeFromFavourite(productId);
+        } else {
+          addToFavourite(productId);
+        }
+      } else {
+        console.error('Product ID not found!');
+      }
+    }
+  });
+
+  // Обработчик для мобильных устройств
+  document.addEventListener('touchstart', function (e) {
+    const likeButton = e.target.closest('.product-card__like');
+    if (likeButton) {
+      e.preventDefault();
+      e.stopPropagation();
+    }
+  }, { passive: false });
+
+  document.addEventListener('touchend', function (e) {
+    const likeButton = e.target.closest('.product-card__like');
+    if (likeButton) {
       e.preventDefault();
       e.stopPropagation();
 
@@ -660,24 +658,21 @@ function initFavouriteButtons() {
 
       if (productId) {
         if (isFavourite(productId)) {
-          console.log('Removing from favourite:', productId);
           removeFromFavourite(productId);
         } else {
-          console.log('Adding to favourite:', productId);
           addToFavourite(productId);
         }
       } else {
         console.error('Product ID not found!');
       }
     }
-  });
+  }, { passive: false });
 
   window.favouriteButtonsInitialized = true;
 }
 
 // Инициализация при загрузке страницы
 document.addEventListener('DOMContentLoaded', function () {
-  console.log('Initializing favourite functionality');
   initFavouriteButtons();
   updateFavouriteButtons();
   updateFavouriteCounter();
@@ -732,7 +727,6 @@ function updateAddToCartButtonState() {
 // Функция для добавления товара в корзину
 async function addToCart(productId, quantity = 1) {
   try {
-    console.log('Adding to cart:', productId);
     const response = await fetch('/ajax/sale.php', {
       method: 'POST',
       headers: {
@@ -742,7 +736,6 @@ async function addToCart(productId, quantity = 1) {
     });
 
     const result = await response.json();
-    console.log('Add to cart result:', result);
 
     if (result.result === 'ok') {
       // Обновляем информацию о товаре в модальном окне
@@ -829,20 +822,17 @@ async function getCartCount() {
 // Функция для загрузки содержимого корзины
 async function loadCartContent() {
   try {
-    console.log('Loading cart content...');
     const response = await fetch('/ajax/get_cart_modal.php', {
       method: 'GET'
     });
 
     const result = await response.json();
-    console.log('Cart response:', result);
 
     if (result.success) {
       const cartContent = document.getElementById('cart-content');
       if (cartContent) {
         cartContent.innerHTML = result.html;
         initCartEventListeners();
-        console.log('Cart content updated, count:', result.count);
       }
     }
   } catch (error) {
@@ -979,12 +969,9 @@ function initAddToCartButtons() {
         const sizeOfferId = selectedSize.id.replace('size-', '');
         if (sizeOfferId) {
           itemIdToAdd = sizeOfferId;
-          console.log('Adding offer to cart:', sizeOfferId);
         } else {
-          console.log('Adding product to cart:', productId);
         }
       } else {
-        console.log('Adding product to cart:', productId);
       }
 
       addToCart(itemIdToAdd);
@@ -994,7 +981,6 @@ function initAddToCartButtons() {
 
 // Инициализация при загрузке страницы
 document.addEventListener('DOMContentLoaded', function () {
-  console.log('Initializing cart functionality');
   initAddToCartButtons();
   updateCartCounter(); // Загружаем счетчик корзины при загрузке страницы
 
@@ -1322,10 +1308,12 @@ $(function () {
     const entrance = $(this).data('entrance');
     const apartment = $(this).data('apartment');
     const floor = $(this).data('floor');
+    const city = $(this).data('city');
     const comment = $(this).data('comment');
     $('#editadress-title').text('Редактировать адрес');
     $('#editadress-submit').text('Редактировать');
     $('#editadress').data('id', id);
+    $('#editadress input#city').val(city);
     $('#editadress input#street').val(address);
     $('#editadress input#home').val(house);
     $('#editadress input#podesz').val(entrance);
@@ -1342,6 +1330,7 @@ $(function () {
     const id = $('#editadress').data('id');
     const address = $('#editadress input#street').val();
     const house = $('#editadress input#home').val();
+    const city = $('#editadress input#city').val();
     const entrance = $('#editadress input#podesz').val();
     const apartment = $('#editadress input#room').val();
     const floor = $('#editadress input#floor').val();
@@ -1360,7 +1349,8 @@ $(function () {
           entrance: entrance,
           apartment: apartment,
           floor: floor,
-          comment: comment
+          comment: comment,
+          city
         },
         dataType: 'json'
       });
@@ -1447,7 +1437,7 @@ $(document).ready(function() {
     const $body = $('body');
     const $mobileNav = $('.mobile-header__nav');
     const $burgerBtn = $('.header__menu-burger');
-    
+
     $mobileNav.removeClass('active');
     $body.removeClass('modal-open');
     $burgerBtn.removeClass('active');
@@ -1457,10 +1447,10 @@ $(document).ready(function() {
   $(document).on('click', '.header__menu-burger', function(e) {
     e.preventDefault();
     e.stopPropagation();
-    
+
     const $body = $('body');
     const $mobileNav = $('.mobile-header__nav');
-    
+
     if ($mobileNav.length) {
       if ($mobileNav.hasClass('active')) {
         // Закрываем меню

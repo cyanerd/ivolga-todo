@@ -356,3 +356,15 @@ button {
 body .lkmodal__form-submit {
     margin-top: 0;
 }
+
+.catalogpage__mobsort {
+    display: none !important;
+}
+
+.catalogpage__sort i svg {
+    height: 20rem;
+}
+
+.catalogpage__sort.desc {
+    display: flex;
+}

@@ -1,0 +1,42 @@
+.order-promo {
+   padding: 20rem;
+   background-color: rgba($primary, 0.05);
+   margin-bottom: 60rem;
+   &__title {
+      margin-bottom: 12rem;
+      font-size: 21rem;
+      line-height: 1.2;
+      text-transform: uppercase;
+   }
+   &__form {
+      display: flex;
+      margin-bottom: 20rem;
+   }
+   &__group {
+      flex-grow: 1;
+      min-width: 0;
+   }
+   &__button {
+      font-size: 21rem;
+      line-height: 1.2;
+      font-weight: 400;
+      text-transform: uppercase;
+      padding: 20rem;
+      text-align: center;
+      border: 1px solid $primary;
+      transition: background-color $transition, color $transition;
+      white-space: nowrap;
+      @media (hover: hover) {
+         &:hover {
+            background-color: $primary;
+            color: $white;
+         }
+      }
+   }
+   &__result {
+      font-size: 21rem;
+      line-height: 1.2;
+      text-transform: uppercase;
+      color: rgba($primary, 0.5);
+   }
+}

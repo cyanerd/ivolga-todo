@@ -1,0 +1,462 @@
+.modal {
+   position: fixed;
+   top: 0;
+   left: 0;
+   width: 100%;
+   height: 100%;
+   z-index: 100;
+   background-color: rgba($primary, 0.5);
+   opacity: 0;
+   visibility: hidden;
+   pointer-events: none;
+   display: flex;
+   flex-direction: column;
+   &.loaded {
+      transition: opacity $transition, visibility $transition;
+      transition-delay: 0.25s;
+   }
+   &.show {
+      opacity: 1;
+      visibility: visible;
+      transition-delay: 0s;
+      pointer-events: auto;
+   }
+	&__dialog {
+      flex-grow: 1;
+      min-height: 0;
+      display: flex;
+      flex-direction: column;
+      opacity: 0;
+      visibility: hidden;
+      // transform: scale(0.8);
+      transition: opacity $transition, visibility $transition, transform $transition;
+   }
+   &.show &__dialog {
+      opacity: 1;
+      visibility: visible;
+      transform: scale(1);
+      transition-delay: 0.25s;
+   }
+	&__wrapper {
+      display: grid;
+      grid-template-columns: 8fr 4fr;
+      background-color: $white;
+      flex-grow: 1;
+      min-height: 0;
+      @media (max-width: $md3) {
+         grid-template-columns: 1fr;
+         grid-template-rows: repeat(2, 1fr);
+      }
+      & > * {
+         min-width: 0;
+         min-height: 0;
+      }
+   }
+	&__map {
+      position: relative;
+      & > * {
+         position: absolute;
+         top: 0;
+         left: 0;
+         width: 100%;
+         height: 100%;
+         & > img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+         }
+      }
+   }
+	&__content {
+      display: flex;
+      flex-direction: column;
+      border-left: 1rem solid rgba($primary, .1);
+   }
+	&__header {
+      border-bottom: 1rem solid rgba($primary, .1);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 28rem;
+      column-gap: 32rem;
+      @media (max-width: $md3) {
+         padding: 28rem;
+      }
+   }
+	&__title {
+      color: $primary;
+      font-family: $font-steinbeck;
+      font-size: 21rem;
+      font-weight: 400;
+      line-height: 1.2;
+      text-transform: uppercase;
+      @media (max-width: $md3) {
+         font-size: 24rem;
+      }
+   }
+	&__back {
+      display: flex;
+      align-items: center;
+      column-gap: 6rem;
+      font-size: 16rem;
+      line-height: 1.3;
+      fill: $primary;
+      color: $primary;
+      transition: fill $transition, color $transition;
+      cursor: pointer;
+      & > svg {
+         flex: 0 0 24rem;
+         width: 24rem;
+         height: auto;
+         overflow: initial;
+      }
+      @media (hover: hover) {
+         &:hover {
+            fill: rgba($primary, 0.5);
+            color: rgba($primary, 0.5);
+         }
+      }
+   }
+	&__close {
+      position: initial;
+      flex: 0 0 24rem;
+      width: 24rem;
+      height: 24rem;
+      @media (max-width: $md3) {
+         flex: 0 0 32rem;
+         width: 32rem;
+         height: 32rem;
+      }
+      & > svg {
+         width: 100%;
+         height: 100%;
+         overflow: initial;
+      }
+   }
+	&__body {
+      flex-grow: 1;
+      min-height: 0;
+      overflow-y: auto;
+      overflow-x: hidden;
+      padding: 28rem;
+   }
+	&__item {
+      margin-bottom: 40rem;
+      &:last-child {
+         margin-bottom: 0;
+      }
+      & > h3 {
+         font-size: 24rem;
+         line-height: 1.2;
+         margin-bottom: 20rem;
+      }
+   }
+}
+.modal-address {
+	&__select {
+      position: relative;
+      & > .custom-select-container {
+         outline: none;
+         & * {
+            outline: none;
+         }
+         & > .custom-select-opener {
+            border-bottom: 1rem solid rgba($primary, 0.2);
+            height: 71rem;
+            display: flex;
+            align-items: center;
+            color: $primary;
+            font-family: $font-family;
+            font-size: 21rem;
+            line-height: 1.2;
+            &::after {
+               content: "";
+               position: absolute;
+               top: 50%;
+               left: auto;
+               transform: translateY(-50%) rotate(90deg);
+               right: 20rem;
+               width: 24rem;
+               height: 24rem;
+               background-color: transparent;
+               background-image: url("data:image/svg+xml,%3Csvg width='24' height='24' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M9.5 6L15.5 12L9.5 18' stroke='%2300010D' stroke-linejoin='bevel'/%3E%3C/svg%3E%0A");
+               background-repeat: no-repeat;
+               background-size: contain;
+               background-position: center;
+               transition: transform $transition;
+            }
+            & > span {}
+         }
+         & > .custom-select-panel {
+            box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+            & > .custom-select-option {
+               color: $primary;
+               background-color: $white;
+               transition: background-color $transition;
+               cursor: pointer;
+               padding: 10rem 16rem;
+               font-size: 18rem;
+               @media (max-width: $md4) {
+                  padding: 16rem;
+               }
+               &.is-selected {
+                  &::before {
+                     display: none;
+                  }
+               }
+               &.has-focus {
+                  background-color: $yellow;
+               }
+            }
+         }
+         &.is-open {
+            & > .custom-select-opener {
+               &::after {
+                  transform: translateY(-50%) rotate(270deg);
+               }
+            }
+            & > .custom-select-panel {
+               max-height: 240rem;
+            }
+         }
+      }
+   }
+	&__action {
+      position: relative;
+      font-size: 16rem;
+      line-height: 1.2;
+      font-weight: 400;
+      font-family: $font-family;
+      color: $primary;
+      background-color: rgba($primary, 0.05);
+      padding: 21rem 44rem 21rem 20rem;
+      cursor: pointer;
+      transition: background-color $transition;
+      margin-bottom: 20rem;
+      @media (hover: hover) {
+         &:hover {
+            background-color: rgba($primary, 0.1);
+         }
+      }
+      &::after {
+         content: "";
+         position: absolute;
+         top: 50%;
+         transform: translateY(-50%);
+         right: 20rem;
+         width: 24rem;
+         height: 24rem;
+         background-image: url("data:image/svg+xml,%3Csvg width='24' height='24' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M9.5 6L15.5 12L9.5 18' stroke='%2300010D' stroke-linejoin='bevel'/%3E%3C/svg%3E%0A");
+         background-repeat: no-repeat;
+         background-size: contain;
+         background-position: center;
+      }
+   }
+	&__list {}
+	&__search {}
+}
+.spoiler-address {
+   margin-bottom: 10rem;
+   border: 1px solid #D7D7D7;
+   background-color: $white;
+   transition: border-color $transition;
+   &:last-child {
+      margin-bottom: 0;
+   }
+	&__head {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      column-gap: 12rem;
+      padding: 20rem;
+      cursor: pointer;
+   }
+   @media (hover: hover) {
+      &:has(.spoiler-address__head:hover) {
+         border-color: $primary;
+      }
+   }
+	&__title {
+      font-size: 16rem;
+      line-height: 1.2;
+      color: $primary;
+   }
+	&__excerpt {
+      font-size: 16rem;
+      line-height: 1.2;
+      color: #8C8C8C;
+      text-align: right;
+   }
+	&__body {
+      padding: 0 20rem 20rem;
+      display: none;
+   }
+   &.active &__body {
+      display: block;
+   }
+	&__table {
+      margin-bottom: 20rem;
+      width: 100%;
+      & > tbody {
+         & > tr {
+            & > td {
+               padding: 0rem 0rem 14rem 0;
+               vertical-align: top;
+               color: #8C8C8C;
+               line-height: 1.3;
+               &:last-child {
+                  color: $primary;
+                  text-align: right;
+               }
+            }
+            &:last-child {
+               & > td {
+                  padding: 0;
+               }
+            }
+         }
+      }
+   }
+	&__button {
+      width: 100%;
+      font-size: 16rem;
+      line-height: 1.2;
+      font-weight: 400;
+      padding: 20rem;
+      text-align: center;
+      border: 1px solid $primary;
+      transition: background-color $transition, color $transition;
+      @media (hover: hover) {
+         &:hover {
+            background-color: $primary;
+            color: $white;
+         }
+      }
+   }
+}
+.search-address {
+   position: relative;
+	&__group {
+      position: relative;
+      & > .form-control {
+         padding: 20rem 52rem;
+         &::placeholder {
+            opacity: 1;
+         }
+         &::-webkit-search-cancel-button {
+            appearance: none;
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            width: 52rem;
+            height: 70rem;
+            background-image: url("data:image/svg+xml,%3Csvg width='19' height='20' viewBox='0 0 19 20' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1.70713 0.83681C1.3166 0.446342 0.683569 0.446305 0.293064 0.83681C-0.0973849 1.22732 -0.0973849 1.86036 0.293064 2.25087L8.07138 10.0292L0.293064 17.8075C-0.0972447 18.198 -0.0973375 18.8311 0.293064 19.2216C0.683522 19.612 1.31658 19.6119 1.70713 19.2216L9.48544 11.4433L17.2637 19.2216C17.6543 19.612 18.2873 19.612 18.6778 19.2216C19.0683 18.8311 19.0683 18.198 18.6778 17.8075L10.8995 10.0292L18.6778 2.25087C19.0683 1.86035 19.0683 1.22733 18.6778 0.83681C18.2873 0.446343 17.6543 0.446305 17.2637 0.83681L9.48544 8.61513L1.70713 0.83681Z' fill='%23232229'/%3E%3C/svg%3E%0A");
+            background-repeat: no-repeat;
+            background-size: 20rem 20rem;
+            background-position: center;
+            transition: background-image $transition, opacity $transition, visibility $transition;
+            cursor: pointer;
+            @media (max-width: $md2) {
+            }
+            @media (max-width: $md3) {
+            }
+         }
+      }
+   }
+	&__button {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 52rem;
+      height: 70rem;
+      fill: $primary;
+      transition: fill $transition;
+      & > svg {
+         width: 28rem;
+         height: 28rem;
+         overflow: initial;
+      }
+   }
+	&__results {
+      padding: 0;
+      position: absolute;
+      top: 100%;
+      left: 0;
+      right: 0;
+      max-width: 100%;
+      max-height: 240rem;
+      overflow-y: auto;
+      background-color: $white;
+      box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+      display: none;
+      & > li {
+         position: relative;
+         color: $primary;
+         background-color: $white;
+         transition: background-color $transition;
+         cursor: pointer;
+         padding: 10rem 16rem;
+         font-size: 18rem;
+         @media (max-width: $md4) {
+            padding: 16rem;
+         }
+         &::after {
+            content: "";
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            right: 12rem;
+            width: 24rem;
+            height: 24rem;
+            background-image: url("data:image/svg+xml,%3Csvg width='24' height='24' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M9.5 6L15.5 12L9.5 18' stroke='%2300010D' stroke-linejoin='bevel'/%3E%3C/svg%3E%0A");
+            background-repeat: no-repeat;
+            background-size: contain;
+            background-position: center;
+         }
+         @media (hover: hover) {
+            &:hover {
+               background-color: $yellow;
+            }
+         }
+      }
+   }
+   &:has(.form-control:focus) &__results {
+      display: block;
+   }
+}
+.result-address {
+   margin-bottom: 10rem;
+   border: 1px solid #D7D7D7;
+   background-color: $white;
+   transition: border-color $transition;
+   display: flex;
+   align-items: flex-start;
+   justify-content: space-between;
+   column-gap: 12rem;
+   padding: 20rem;
+   cursor: pointer;
+   @media (hover: hover) {
+      &:hover {
+         border-color: $primary;
+      }
+   }
+   &:last-child {
+      margin-bottom: 0;
+   }
+	&__title {
+      font-size: 16rem;
+      line-height: 1.2;
+      color: $primary;
+   }
+	&__excerpt {
+      font-size: 16rem;
+      line-height: 1.2;
+      color: #8C8C8C;
+      text-align: right;
+   }
+}

@@ -1,0 +1,24 @@
+.order-submit {
+   &__accept {
+      margin-bottom: 15rem;
+   }
+   &__button {
+      margin-top: 30rem;
+      width: 100%;
+      font-size: 21rem;
+      line-height: 1.2;
+      font-weight: 400;
+      text-transform: uppercase;
+      padding: 20rem;
+      text-align: center;
+      color: $primary;
+      background-color: $yellow;
+      transition: background-color $transition, color $transition;
+      @media (hover: hover) {
+         &:hover {
+            background-color: $primary;
+            color: $white;
+         }
+      }
+   }
+}

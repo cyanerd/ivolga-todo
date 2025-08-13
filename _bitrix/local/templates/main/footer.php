@@ -44,8 +44,8 @@
         </div>
         <div class="footer__bottomgroup">
           <div class="footer__social">
-            <? if ($siteSettings['vk']) { ?>
-              <a href="<?= $siteSettings['vk'] ?>" target="_blank" class="footer__social-link">
+            <? if ($siteSettings['tg']) { ?>
+              <a href="<?= $siteSettings['tg'] ?>" target="_blank" class="footer__social-link">
                 <svg width="24" height="25" viewBox="0 0 24 25" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <path fill-rule="evenodd" clip-rule="evenodd"
                         d="M19.7769 4.92948C20.024 4.82547 20.2945 4.7896 20.5602 4.82559C20.8259 4.86159 21.0771 4.96815 21.2876 5.13416C21.4981 5.30018 21.6603 5.51959 21.7573 5.76956C21.8542 6.01953 21.8824 6.29092 21.8389 6.55548L19.5709 20.3125C19.3509 21.6395 17.8949 22.4005 16.6779 21.7395C15.6599 21.1865 14.1479 20.3345 12.7879 19.4455C12.1079 19.0005 10.0249 17.5755 10.2809 16.5615C10.5009 15.6945 14.0009 12.4365 16.0009 10.4995C16.7859 9.73848 16.4279 9.29948 15.5009 9.99948C13.1989 11.7375 9.5029 14.3805 8.2809 15.1245C7.2029 15.7805 6.6409 15.8925 5.9689 15.7805C4.7429 15.5765 3.6059 15.2605 2.6779 14.8755C1.4239 14.3555 1.4849 12.6315 2.6769 12.1295L19.7769 4.92948Z"
@@ -53,8 +53,8 @@
                 </svg>
               </a>
             <? } ?>
-            <? if ($siteSettings['tg']) { ?>
-              <a href="<?= $siteSettings['tg'] ?>" target="_blank" class="footer__social-link">
+            <? if ($siteSettings['vk']) { ?>
+              <a href="<?= $siteSettings['vk'] ?>" target="_blank" class="footer__social-link">
                 <svg width="24" height="25" viewBox="0 0 24 25" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <path
                     d="M4.26 4.75951C3 6.03151 3 8.06551 3 12.1395V12.8595C3 16.9275 3 18.9615 4.26 20.2395C5.532 21.4995 7.566 21.4995 11.64 21.4995H12.36C16.428 21.4995 18.462 21.4995 19.74 20.2395C21 18.9675 21 16.9335 21 12.8595V12.1395C21 8.07151 21 6.03751 19.74 4.75951C18.468 3.49951 16.434 3.49951 12.36 3.49951H11.64C7.572 3.49951 5.538 3.49951 4.26 4.75951ZM6.036 8.97751H8.1C8.166 12.4095 9.678 13.8615 10.878 14.1615V8.97751H12.816V11.9355C13.998 11.8095 15.246 10.4595 15.666 8.97151H17.598C17.4404 9.74173 17.1256 10.4712 16.6735 11.1143C16.2213 11.7575 15.6414 12.3005 14.97 12.7095C15.7194 13.0824 16.3813 13.6099 16.9118 14.2574C17.4424 14.9048 17.8297 15.6574 18.048 16.4655H15.918C15.462 15.0435 14.322 13.9395 12.816 13.7895V16.4655H12.576C8.472 16.4655 6.132 13.6575 6.036 8.97751Z"
@@ -478,7 +478,13 @@
   </div>
   <div class="lkmodal__body">
     <div class="lkmodal__form">
-      <div class="lkmodal__form-el">
+      <div class="lkmodal__form-el lkmodal__form-el_6">
+        <div class="inputel">
+          <input placeholder="1" id="city">
+          <label for="street">Город</label>
+        </div>
+      </div>
+      <div class="lkmodal__form-el lkmodal__form-el_6">
         <div class="inputel">
           <input placeholder="1" id="street">
           <label for="street">Улица</label>

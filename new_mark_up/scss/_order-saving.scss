@@ -1,0 +1,28 @@
+.order-saving {
+   padding: 20rem;
+   background-color: rgba($primary, 0.05);
+   margin-top: 60rem;
+   &__checkbox {
+      margin-bottom: 12rem;
+   }
+   &__group {
+      margin-bottom: 20rem;
+   }
+   &__button {
+      width: 100%;
+      font-size: 21rem;
+      line-height: 1.2;
+      font-weight: 400;
+      text-transform: uppercase;
+      padding: 20rem;
+      text-align: center;
+      border: 1px solid $primary;
+      transition: background-color $transition, color $transition;
+      @media (hover: hover) {
+         &:hover {
+            background-color: $primary;
+            color: $white;
+         }
+      }
+   }
+}

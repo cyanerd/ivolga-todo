@@ -6880,11 +6880,11 @@ body {
     width: 60rem
 }
 
-.pageprod__buy-like .check, .pageprod__buy-like.checked .default {
+.pageprod__buy-like .check, .pageprod__buy-like.active .default {
     display: none
 }
 
-.pageprod__buy-like.checked .check {
+.pageprod__buy-like.active .check {
     display: inline-block
 }
 

@@ -1,0 +1,49 @@
+.order-alert {
+   position: relative;
+   font-size: 18rem;
+   line-height: 1.2;
+   font-weight: 400;
+   text-transform: uppercase;
+   font-family: $font-family;
+   color: rgba($primary, 0.5);
+   padding: 21rem 20rem;
+   background-color: rgba($primary, 0.05);
+   &--action {
+      padding: 21rem 44rem 21rem 20rem;
+      cursor: pointer;
+      transition: background-color $transition;
+      @media (hover: hover) {
+         &:hover {
+            background-color: rgba($primary, 0.1);
+         }
+      }
+      &::after {
+         content: "";
+         position: absolute;
+         top: 50%;
+         transform: translateY(-50%);
+         right: 20rem;
+         width: 24rem;
+         height: 24rem;
+         background-image: url("data:image/svg+xml,%3Csvg width='24' height='24' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M9.5 6L15.5 12L9.5 18' stroke='%2300010D' stroke-linejoin='bevel'/%3E%3C/svg%3E%0A");
+         background-repeat: no-repeat;
+         background-size: contain;
+         background-position: center;
+      }
+   }
+   &--area {
+      padding: 48rem 20rem;
+      text-align: center;
+      background-color: transparent;
+      border: 1rem solid $primary;
+   }
+   & > p {
+      margin-bottom: 12rem;
+      & > span {
+         color: $primary;
+      }
+      &:last-child {
+         margin-bottom: 0;
+      }
+   }
+}

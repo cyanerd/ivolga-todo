@@ -105,10 +105,13 @@ if ($command == 'edit_addr') {
   $entrance = $request['entrance'];
   $apartment = $request['apartment'];
   $floor = $request['floor'];
+  $city = $request['city'];
   $comment = $request['comment'];
 
   // Формируем полный адрес для NAME
-  $fullName = $address;
+  $fullName = '';
+  if ($city) $fullName .= 'г. ' . $city;
+  if ($address) $fullName .= ', ул. ' . $address;
   if ($house) $fullName .= ', д. ' . $house;
   if ($entrance) $fullName .= ', подъезд ' . $entrance;
   if ($apartment) $fullName .= ', кв. ' . $apartment;
@@ -124,6 +127,7 @@ if ($command == 'edit_addr') {
       'APARTMENT' => $apartment,
       'FLOOR' => $floor,
       'COMMENT' => $comment,
+      'CITY' => $city
     ];
     CIBlockElement::SetPropertyValuesEx($id, false, $arProps);
     // Обновляем NAME (полный адрес)
@@ -180,10 +184,13 @@ if ($command == 'add_addr') {
   $entrance = $request['entrance'];
   $apartment = $request['apartment'];
   $floor = $request['floor'];
+  $city = $request['city'];
   $comment = $request['comment'];
 
   // Формируем полный адрес для NAME
-  $fullName = $address;
+  $fullName = '';
+  if ($city) $fullName .= 'г. ' . $city;
+  if ($address) $fullName .= ', ул. ' . $address;
   if ($house) $fullName .= ', д. ' . $house;
   if ($entrance) $fullName .= ', подъезд ' . $entrance;
   if ($apartment) $fullName .= ', кв. ' . $apartment;
@@ -204,6 +211,7 @@ if ($command == 'add_addr') {
       'APARTMENT' => $apartment,
       'FLOOR' => $floor,
       'COMMENT' => $comment,
+      'CITY' => $city
     ],
   ];
   $newId = $el->Add($arFields);

@@ -1,7 +1,4 @@
 <?php
-
-use local\php_interface\MyTools;
-
 require($_SERVER["DOCUMENT_ROOT"] . "/bitrix/header.php");
 $APPLICATION->SetTitle("Адреса доставки");
 ?>
@@ -34,6 +31,7 @@ $APPLICATION->SetTitle("Адреса доставки");
                       <a class="lk-locations__item-edit js-edit-address"
                          href="#"
                          data-id="<?= $address['ID'] ?>"
+                         data-city="<?= htmlspecialchars($address['CITY']) ?>"
                          data-name="<?= htmlspecialchars($address['NAME']) ?>"
                          data-address="<?= htmlspecialchars($address['ADDRESS']) ?>"
                          data-house="<?= htmlspecialchars($address['HOUSE']) ?>"
@@ -75,106 +73,5 @@ $APPLICATION->SetTitle("Адреса доставки");
     </div>
   </div>
 </section>
-
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script>
-  function del_addr(id) {
-    if (confirm('Вы уверены, что хотите удалить этот адрес?')) {
-      $.ajax({
-        url: '/ajax/sale.php',
-        type: 'POST',
-        data: {
-          command: 'del_addr',
-          id: id
-        },
-        success: function (response) {
-          var data = JSON.parse(response);
-          if (data.result === 'ok') {
-            $('#addr' + id).remove();
-            if ($('.lk-locations__item').length === 0) {
-              location.reload();
-            }
-          } else {
-            alert('Ошибка при удалении адреса');
-          }
-        },
-        error: function () {
-          alert('Ошибка при удалении адреса');
-        }
-      });
-    }
-  }
-
-  $(document).on('click', '.js-edit-address', function (e) {
-    e.preventDefault();
-    const id = $(this).data('id');
-    const name = $(this).data('name');
-    const address = $(this).data('address');
-    const house = $(this).data('house');
-    const entrance = $(this).data('entrance');
-    const apartment = $(this).data('apartment');
-    const floor = $(this).data('floor');
-    const comment = $(this).data('comment');
-    // Заполнение полей модалки
-    $('#editadress input#street').val(address);
-    $('#editadress input#home').val(house);
-    $('#editadress input#podesz').val(entrance);
-    $('#editadress input#room').val(apartment);
-    $('#editadress input#floor').val(floor);
-    $('#editadress input#comment').val(comment);
-    $('#editadress').data('id', id); // для отправки формы
-    // Меняем текст кнопки
-    $('#editadress .lkmodal__form-submit').text('Редактировать').removeClass('js--modal').removeAttr('data-modal');
-    // Открытие модалки
-    $('#editadress').addClass('open');
-    if ($('.backdrop').length) $('.backdrop').addClass('open');
-    return false;
-  });
-
-  // Обработка нажатия на кнопку "Редактировать" в модалке
-  $(document).on('click', '#editadress .lkmodal__form-submit', async function (e) {
-    e.preventDefault();
-    const id = $('#editadress').data('id');
-    const address = $('#editadress input#street').val();
-    const house = $('#editadress input#home').val();
-    const entrance = $('#editadress input#podesz').val();
-    const apartment = $('#editadress input#room').val();
-    const floor = $('#editadress input#floor').val();
-    const comment = $('#editadress input#comment').val();
-    if (!id) return;
-    try {
-      const response = await $.ajax({
-        url: '/ajax/sale.php',
-        type: 'POST',
-        data: {
-          command: 'edit_addr',
-          id: id,
-          address: address,
-          house: house,
-          entrance: entrance,
-          apartment: apartment,
-          floor: floor,
-          comment: comment
-        },
-        dataType: 'json'
-      });
-      if (response.result === 'ok') {
-        $('#editadress').removeClass('open');
-        if ($('.backdrop').length) $('.backdrop').removeClass('open');
-        // Меняем текст и действие кнопки в модалке подтверждения
-        $('#editadress_ok .lkmodal__form-submit').text('Закрыть').off('click').on('click', function (e) {
-          e.preventDefault();
-          $('#editadress_ok').removeClass('open');
-          if ($('.backdrop').length) $('.backdrop').removeClass('open');
-        });
-        $('#editadress_ok').addClass('open');
-      } else {
-        alert(response.message || 'Ошибка при редактировании адреса');
-      }
-    } catch (err) {
-      alert('Ошибка соединения');
-    }
-  });
-</script>
 
 <? require($_SERVER["DOCUMENT_ROOT"] . "/bitrix/footer.php"); ?>

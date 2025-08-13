@@ -43,6 +43,7 @@ use Bitrix\Main\Page\Asset;
   # Stylesheets
   $APPLICATION->SetAdditionalCSS('https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css');
   $APPLICATION->SetAdditionalCSS(TP . 'css/app.css');
+  $APPLICATION->SetAdditionalCSS(TP . 'css/style.css');
   $APPLICATION->SetAdditionalCSS(TP . 'css/custom.css?v=2');
   $APPLICATION->SetAdditionalCSS('/assets/css/favourite.css?v=1');
   ?>
