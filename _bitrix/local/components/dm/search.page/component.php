@@ -47,13 +47,13 @@ $arResult['AMOUNT'] = $obSearch->AffectedRowsCount();
 //результаты распределяем по категориям (товар, раздел, бренд, новость)
 $arItems = [];
 $arSections = [];
-while ($arSearchResult = $obSearch->GetNext()):
+while ($arSearchResult = $obSearch->GetNext()) {
   //различаем товар от секции
-  if ($arSearchResult['PARAM1'] == 'CRM_PRODUCT_CATALOG' and (intval($arSearchResult['ITEM_ID']))):
+  if ($arSearchResult['PARAM1'] == 'CRM_PRODUCT_CATALOG' and (intval($arSearchResult['ITEM_ID']))) {
     $arSearchResult['TYPE'] = 'ITEM';
     $arItems[] = $arSearchResult;
-  endif;
-endwhile;
+  }
+}
 
 $arResult['q'] = htmlspecialchars($q);
 $arResult['ITEMS'] = array_merge($arItems);

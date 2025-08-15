@@ -27,6 +27,7 @@ use Bitrix\Main\Page\Asset;
   <link href="<?= TP ?>fonts/Steinbeck-Regular.5a451630a016d4e2df07.woff" rel="preload" as="font" crossorigin="">
   <script defer="defer" src="/local/templates/main/js/app.js?v=<?= time() ?>"></script>
   <script defer="defer" src="/local/templates/main/js/productCard.js"></script>
+  <script src="https://unpkg.com/imask"></script>
 
   <?
   global $APPLICATION;

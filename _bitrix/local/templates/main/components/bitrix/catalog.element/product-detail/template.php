@@ -20,7 +20,7 @@ $this->setFrameMode(true);
         <?= $arResult["NAME"] ?>
       </span>
     </div>
-    <a href="javascript:history.back()" class="breadcrumbs__back mob">
+    <a href="/catalog/" class="breadcrumbs__back mob">
       <i>
         <svg width="16" height="17" viewBox="0 0 16 17" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path fill-rule="evenodd" clip-rule="evenodd"

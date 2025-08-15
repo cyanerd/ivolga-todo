@@ -463,25 +463,6 @@
   </div>
 </div>
 
-<!-- Модалка для выбора адреса -->
-<div class="lkmodal" id="address-selection-modal">
-  <div class="lkmodal__header">
-    <p class="lkmodal__title">
-      <span id="editadress-title">Выберите адрес доставки</span>
-    </p>
-    <button class="lkmodal__close js--close">
-      <svg width="24" height="25" viewBox="0 0 24 25" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M18 20.5L12 12.5M6 4.5L12 12.5M12 12.5L18 4.5M12 12.5L6 20.5" stroke="#232229" stroke-width="1.5"/>
-      </svg>
-    </button>
-  </div>
-  <div class="lkmodal__body">
-    <div class="addresses-list" id="addresses-list">
-      <!-- Адреса будут загружены через AJAX -->
-    </div>
-  </div>
-</div>
-
 <!-- Универсальная модалка для добавления и редактирования адреса -->
 <div class="lkmodal" id="editadress">
   <div class="lkmodal__header">

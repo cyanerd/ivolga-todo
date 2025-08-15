@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Тест доставки</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .test-section {
+            margin: 20px 0;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        select, button {
+            padding: 10px;
+            margin: 10px;
+            font-size: 16px;
+        }
+        .result {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #f9f9f9;
+            border-radius: 5px;
+        }
+        .error {
+            background-color: #ffe6e6;
+            color: #cc0000;
+        }
+        .success {
+            background-color: #e6ffe6;
+            color: #006600;
+        }
+    </style>
+</head>
+<body>
+    <h1>Тест динамической загрузки вариантов доставки</h1>
+    
+    <div class="test-section">
+        <h2>Выбор города</h2>
+        <select id="city-select">
+            <option value="0">Выберите город</option>
+            <option value="Москва">Москва</option>
+            <option value="Санкт-Петербург">Санкт-Петербург</option>
+            <option value="Казань">Казань</option>
+            <option value="Краснодар">Краснодар</option>
+        </select>
+        
+        <div>
+            <label>Сумма заказа: <input type="number" id="basket-total" value="5000" min="0"></label>
+        </div>
+        
+        <button onclick="testDelivery()">Тестировать доставку</button>
+    </div>
+    
+    <div class="test-section">
+        <h2>Результат</h2>
+        <div id="result"></div>
+    </div>
+    
+    <div class="test-section">
+        <h2>Варианты доставки</h2>
+        <div id="delivery-methods"></div>
+    </div>
+
+    <script>
+        function testDelivery() {
+            const city = $('#city-select').val();
+            const basketTotal = parseFloat($('#basket-total').val()) || 0;
+            
+            if (city === '0') {
+                $('#result').html('<div class="error">Пожалуйста, выберите город</div>');
+                return;
+            }
+            
+            $('#result').html('<div>Загружаем варианты доставки для города: ' + city + '</div>');
+            
+            $.ajax({
+                url: '/ajax/get_delivery_options.php',
+                method: 'GET',
+                data: {
+                    city: city,
+                    basket_total: basketTotal
+                },
+                success: function(response) {
+                    if (response.success) {
+                        $('#result').html('<div class="success">Варианты доставки успешно загружены!</div>');
+                        $('#delivery-methods').html(response.delivery_html);
+                        
+                        // Добавляем обработчики для радио-кнопок
+                        $('input[name="method-delivery"]').on('change', function() {
+                            const method = $(this).val();
+                            const price = $(this).data('price');
+                            const deliveryTime = $(this).data('delivery-time');
+                            
+                            $('#result').html(`
+                                <div class="success">
+                                    Выбран метод: ${method}<br>
+                                    Цена: ${price > 0 ? price + ' ₽' : 'Бесплатно'}<br>
+                                    Время доставки: ${deliveryTime}
+                                </div>
+                            `);
+                        });
+                        
+                    } else {
+                        $('#result').html('<div class="error">Ошибка: ' + (response.error || 'Неизвестная ошибка') + '</div>');
+                    }
+                },
+                error: function(xhr, status, error) {
+                    $('#result').html('<div class="error">Ошибка AJAX: ' + error + '</div>');
+                    console.error('Error:', error);
+                }
+            });
+        }
+        
+        // Автоматический тест при изменении города
+        $('#city-select').on('change', function() {
+            if ($(this).val() !== '0') {
+                testDelivery();
+            } else {
+                $('#result').html('');
+                $('#delivery-methods').html('');
+            }
+        });
+    </script>
+</body>
+</html>

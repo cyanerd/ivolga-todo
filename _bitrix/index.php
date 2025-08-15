@@ -62,6 +62,9 @@ $APPLICATION->SetTitle("IVOLGA - Авторские украшения и оде
 ); ?>
 
 <?
+global $indexSliderFilter;
+$indexSliderFilter = ["!PROPERTY_SHOW_ON_MAIN_PAGE" => false];
+
 $APPLICATION->IncludeComponent(
   "bitrix:catalog.section",
   "products",
@@ -75,7 +78,7 @@ $APPLICATION->IncludeComponent(
     "ELEMENT_SORT_ORDER" => "ASC",
     "ELEMENT_SORT_FIELD2" => "ID",
     "ELEMENT_SORT_ORDER2" => "DESC",
-    "FILTER_NAME" => "",
+    "FILTER_NAME" => "indexSliderFilter",
     "INCLUDE_SUBSECTIONS" => "Y",
     "SHOW_ALL_WO_SECTION" => "Y",
     "PAGE_ELEMENT_COUNT" => "20",

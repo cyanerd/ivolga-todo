@@ -301,7 +301,6 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 const initFilters = () => {
-  console.log('initFilters');
   updateFilters();
   initProductCardsSlider();
   setOnCloseHandler();
@@ -318,7 +317,7 @@ const initFilters = () => {
   const duplicateFiltersContainer = document.createElement('div');
   duplicateFiltersContainer.className = 'duplicate-selected-filters';
   const catalogHeadingLeft = document.querySelector('.catalogpage__heading-left');
-  catalogHeadingLeft.appendChild(duplicateFiltersContainer);
+  if (catalogHeadingLeft) catalogHeadingLeft.appendChild(duplicateFiltersContainer);
 
   catdropBlocks.forEach(block => {
     const radios = block.querySelectorAll('input[type="radio"]');
@@ -349,17 +348,19 @@ const initFilters = () => {
 
 // Кнопка сброса
   const resetButton = document.querySelector('.catdrop__reset');
-  resetButton.addEventListener('click', () => {
-    catdropBlocks.forEach(block => {
-      block.querySelectorAll('input[type="radio"]:checked, input[type="checkbox"]:checked').forEach(input => {
-        input.checked = false;
+  if (resetButton) {
+    resetButton.addEventListener('click', () => {
+      catdropBlocks.forEach(block => {
+        block.querySelectorAll('input[type="radio"]:checked, input[type="checkbox"]:checked').forEach(input => {
+          input.checked = false;
+        });
+        block.classList.remove('has_checked');
       });
-      block.classList.remove('has_checked');
+      selectedFiltersContainer.innerHTML = '';
+      duplicateFiltersContainer.innerHTML = '';
+      toggleSelectedFiltersVisibility(); // Это вызовет обновление класса current_filtered
     });
-    selectedFiltersContainer.innerHTML = '';
-    duplicateFiltersContainer.innerHTML = '';
-    toggleSelectedFiltersVisibility(); // Это вызовет обновление класса current_filtered
-  });
+  }
 
 // Обновление выбранных фильтров
   function updateSelectedFilters(value, isRadio) {
@@ -452,10 +453,12 @@ const initFilters = () => {
     duplicateFiltersContainer.style.display = hasFilters ? 'flex' : 'none';
 
     // Управляем классом current_filtered
-    if (hasFilters) {
-      togfilterElement.classList.add('current_filtered');
-    } else {
-      togfilterElement.classList.remove('current_filtered');
+    if (togfilterElement) {
+      if (hasFilters) {
+        togfilterElement.classList.add('current_filtered');
+      } else {
+        togfilterElement.classList.remove('current_filtered');
+      }
     }
   }
 

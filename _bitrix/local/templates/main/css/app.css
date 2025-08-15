@@ -1758,7 +1758,7 @@ html.with-fancybox body.hide-scrollbar {
 }
 
 .custom-select-container.is-open .custom-select-panel {
-    max-height: 10.7em;
+    max-height: 200px;
     overflow-y: auto
 }
 
@@ -4026,7 +4026,8 @@ input::-webkit-inner-spin-button, input::-webkit-outer-spin-button {
     transform: translateX(130%);
     -webkit-transition: all 1s ease;
     transition: all 1s ease;
-    width: 600px
+    width: 600px;
+    z-index: 5;
 }
 
 .cartaler.open {
@@ -7146,11 +7147,9 @@ body {
     display: flex;
     -ms-flex-wrap: wrap;
     flex-wrap: wrap;
-    margin-bottom: 20rem
-}
-
-.prodpar__block-size {
-    margin-right: 10rem
+    margin-bottom: 20rem;
+    gap: 10rem;
+    justify-content: flex-start;
 }
 
 .prodpar__block-size label {
@@ -7484,7 +7483,7 @@ body {
     }
 
     .catalogpage {
-        padding-top: 215rem
+        padding-top: 60px;
     }
 
     .catalogpage__nav li a span {
@@ -9725,7 +9724,7 @@ body {
 
     .catalogpage {
         margin-bottom: 80px;
-        padding-top: 170rem
+        padding-top: 30px;
     }
 
     .catalogpage__nav li {
@@ -9892,7 +9891,6 @@ body {
     .prodpar__block-size label {
         font-size: 12px;
         height: 32px;
-        margin-right: 12px;
         width: 32px
     }
 

@@ -15,7 +15,7 @@ window.onload = function() {
    }
 
    // Textarea autoheight
-   if ( document.querySelector('.textarea') ){
+   if (document.querySelector('.textarea') ){
       let textareas = document.querySelectorAll('.textarea')
       textareas.forEach(textarea => {
          textarea.style.height = textarea.height + 2 + 'px'

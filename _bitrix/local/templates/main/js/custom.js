@@ -1,4 +1,40 @@
+// Функция для форматирования чисел
+function number_format(number, decimals, dec_point, thousands_sep) {
+  number = (number + '').replace(/[^0-9+\-Ee.]/g, '');
+  const n = !isFinite(+number) ? 0 : +number;
+  const prec = !isFinite(+decimals) ? 0 : Math.abs(decimals);
+  const sep = (typeof thousands_sep === 'undefined') ? ',' : thousands_sep;
+  const dec = (typeof dec_point === 'undefined') ? '.' : dec_point;
+  let s = '';
+
+  const toFixedFix = function (n, prec) {
+    const k = Math.pow(10, prec);
+    return '' + Math.round(n * k) / k;
+  };
+
+  s = (prec ? toFixedFix(n, prec) : '' + Math.round(n)).split('.');
+  if ((sep.length > 0) && (s[0].length > 3)) {
+    s[0] = s[0].replace(/\B(?=(?:\d{3})+(?!\d))/g, sep);
+  }
+  if ((prec > 0) && (s[1].length < prec)) {
+    s[1] = s[1] + '0'.repeat(prec - s[1].length);
+  }
+  return s.join(dec);
+}
+
+const formatPrice = (price) => {
+  return Math.floor(price).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
+}
+
 $(document).ready(function () {
+
+  const phoneInputs = document.querySelectorAll('input[type="tel"]');
+  const maskOptions = {
+    mask: '+7 (000) 000-00-00'
+  };
+  phoneInputs.forEach(input => {
+    IMask(input, maskOptions);
+  });
 
   loadCartContent();
 
@@ -365,6 +401,17 @@ $(document).ready(function () {
       if ($('.backdrop').length) $('.backdrop').addClass('open');
     }
   }
+
+  $(document).on('click', '.js--close', function (e) {
+    closeModals();
+  });
+
+  window.closeModals = function () {
+    $('html').removeClass('locked');
+    $('.lkmodal.open').removeClass('open');
+    if ($('.backdrop').length) $('.backdrop').removeClass('open');
+  }
+
   window.closeModal = function (id, bySelector = false) {
 
     let modal;
@@ -603,11 +650,9 @@ function updateFavouriteButtons() {
 // Обработчик кликов на кнопки избранного
 function initFavouriteButtons() {
   // Проверяем, не добавлен ли уже обработчик
-  console.log('initFavouriteButtons');
   if (window.favouriteButtonsInitialized) {
     return;
   }
-  console.log('initFavouriteButtons 2');
 
   // Обработчик для десктопа
   document.addEventListener('click', function (e) {
@@ -622,7 +667,6 @@ function initFavouriteButtons() {
 
       // Пробуем получить ID из разных мест
       let productId = likeButton.dataset.productId;
-      console.log('productId', productId);
       if (!productId && productCard) {
         productId = productCard.dataset.productId;
       }
@@ -646,7 +690,7 @@ function initFavouriteButtons() {
       e.preventDefault();
       e.stopPropagation();
     }
-  }, { passive: false });
+  }, {passive: false});
 
   document.addEventListener('touchend', function (e) {
     const likeButton = e.target.closest('.product-card__like');
@@ -673,7 +717,7 @@ function initFavouriteButtons() {
         console.error('Product ID not found!');
       }
     }
-  }, { passive: false });
+  }, {passive: false});
 
   window.favouriteButtonsInitialized = true;
 }
@@ -810,7 +854,6 @@ async function removeFromCart(cartId) {
 // Функция для получения количества товаров в корзине
 async function getCartCount() {
 
-  console.log('q1');
   try {
     const response = await fetch('/ajax/get_cart_modal.php', {
       method: 'GET'
@@ -831,17 +874,14 @@ async function getCartCount() {
 // Функция для загрузки содержимого корзины
 async function loadCartContent() {
   try {
-    console.log('q2');
     const response = await fetch('/ajax/get_cart_modal.php', {
       method: 'GET'
     });
 
     const result = await response.json();
 
-    console.log('result.success', result.success);
     if (result.success) {
       const cartContent = document.getElementById('cart-content');
-      console.log('cartContent', !!cartContent);
       if (cartContent) {
         cartContent.innerHTML = result.html;
         initCartEventListeners();
@@ -924,7 +964,7 @@ function initCartEventListeners() {
   if (cartModal) {
     const closeButtons = cartModal.querySelectorAll('.js--close');
     closeButtons.forEach(button => {
-      button.addEventListener('click', function() {
+      button.addEventListener('click', function () {
         // Если мы на странице checkout, обновляем её
         if (window.location.pathname.includes('/checkout/')) {
           setTimeout(() => {
@@ -937,7 +977,7 @@ function initCartEventListeners() {
     // Обработчик для backdrop (фона модального окна)
     const backdrop = document.querySelector('.backdrop');
     if (backdrop) {
-      backdrop.addEventListener('click', function() {
+      backdrop.addEventListener('click', function () {
         // Если мы на странице checkout, обновляем её
         if (window.location.pathname.includes('/checkout/')) {
           setTimeout(() => {
@@ -948,7 +988,7 @@ function initCartEventListeners() {
     }
 
     // Обработчик для клавиши Escape
-    document.addEventListener('keydown', function(e) {
+    document.addEventListener('keydown', function (e) {
       if (e.key === 'Escape') {
         const cartModal = document.getElementById('cart');
         if (cartModal && (cartModal.style.display === 'block' || cartModal.style.display === 'flex')) {
@@ -1251,7 +1291,6 @@ async function updateCheckoutPage() {
         }
 
 
-
         // Обновляем скидку
         const discountElement = document.querySelector('.order-aside__table tbody tr:nth-child(4) td:last-child');
         if (discountElement) {
@@ -1369,6 +1408,52 @@ $(document).on('click', '#logout-btn', function (e) {
 });
 
 $(document).ready(function () {
+
+  if ($('._order').length) {
+    let added = false;
+
+    setInterval(function () {
+      if ($('#loading_screen').length && $('#loading_screen').attr('style') !== 'display: none;') return;
+
+      const e1 = $('div[data-property-id-row="25"] input.bx-ui-sls-fake').val();
+      const e2 = $('div[data-property-id-row="25"] input.bx-ui-sls-route').val();
+
+      if (!added) {
+        $('#_styles').remove();
+        $('#bx-soa-delivery .order-methods').before(
+          `<div class="order-alert order-alert--area" style="display: none;">
+            <p><span>Для отображения опций доставки выберите город</span></p>
+          </div>`
+        );
+        added = true;
+      }
+
+      if (e1 && e2) {
+        $('#bx-soa-delivery .order-methods').show();
+        $('.order-alert--area').hide();
+        const index = $('.order-methods__row .order-methods__item.bx-selected').index();
+
+        if (index === 1) {
+          $('#hehe1').show();
+        } else {
+          $('#hehe1').hide();
+        }
+
+        if (index === 0) {
+          $('#_order-address').show();
+        } else {
+          $('#_order-address').hide();
+        }
+      } else {
+        $('#bx-soa-delivery .order-methods').hide();
+        $('.order-alert--area').show();
+        $('#bx-soa-pickup').hide();
+        $('#hehe1').hide();
+        $('#_order-address').hide();
+      }
+    }, 100);
+  }
+
   $('#logout-yes').on('click', function () {
 
     $.ajax({
@@ -1571,7 +1656,7 @@ $(document).on('click', '.catalogpage__togfilter1', function (e) {
 });
 
 // ====== МОБИЛЬНОЕ МЕНЮ ======
-$(document).ready(function() {
+$(document).ready(function () {
   // Функция для закрытия мобильного меню
   function closeMobileMenu() {
     const $body = $('body');
@@ -1584,7 +1669,7 @@ $(document).ready(function() {
   }
 
   // Обработчик для кнопки мобильного меню
-  $(document).on('click', '.header__menu-burger', function(e) {
+  $(document).on('click', '.header__menu-burger', function (e) {
     e.preventDefault();
     e.stopPropagation();
 
@@ -1605,26 +1690,26 @@ $(document).ready(function() {
   });
 
   // Обработчик для кнопки закрытия мобильного меню
-  $(document).on('click', '.mobile-header__close', function(e) {
+  $(document).on('click', '.mobile-header__close', function (e) {
     e.preventDefault();
     e.stopPropagation();
     closeMobileMenu();
   });
 
   // Закрытие мобильного меню по клику на оверлей
-  $(document).on('click', '.mobile-header__nav', function(e) {
+  $(document).on('click', '.mobile-header__nav', function (e) {
     if (e.target === this) {
       closeMobileMenu();
     }
   });
 
   // Закрытие мобильного меню по клику на ссылки
-  $(document).on('click', '.mobile-header__nav .nav-link', function() {
+  $(document).on('click', '.mobile-header__nav .nav-link', function () {
     closeMobileMenu();
   });
 
   // Закрытие мобильного меню по нажатию Escape
-  $(document).on('keydown', function(e) {
+  $(document).on('keydown', function (e) {
     if (e.key === 'Escape' && $('.mobile-header__nav').hasClass('active')) {
       closeMobileMenu();
     }
@@ -1632,54 +1717,51 @@ $(document).ready(function() {
 });
 
 // ====== АВТОРИЗАЦИЯ НА СТРАНИЦЕ CHECKOUT ======
-console.log('custom.js загружен, jQuery доступен:', typeof $ !== 'undefined');
-
-$(document).ready(function() {
-  console.log('DOM готов, настраиваем обработчики');
-  // Обработчик клика на блоки .order-alert--action
-  $(document).on('click', '.order-alert--action', function(e) {
-    const $span = $(this).find('span');
-    if ($span.length) {
-      const spanText = $span.text();
-
-      // Проверяем, содержит ли блок текст "Авторизуйтесь"
-      if (spanText.includes('Авторизуйтесь')) {
-        e.preventDefault();
-        e.stopPropagation();
-
-        // Открываем модалку авторизации
-        const $modal = $('#profile-modal-auth');
-        if ($modal.length) {
-          $modal.addClass('open');
-          $('body').addClass('modal-open');
-
-          // Сбрасываем состояние модалки к начальному шагу
-          $modal.find('.profile-modal__step').addClass('hide');
-          const $step1 = $modal.find('.profile-modal__step--1');
-          if ($step1.length) $step1.removeClass('hide');
-        }
-      }
-
-      // Проверяем, содержит ли блок текст "Заполнить автоматически"
-      if (spanText.includes('Заполнить автоматически')) {
-        e.preventDefault();
-        e.stopPropagation();
-
-        // Заполняем форму данными из профиля
-        fillCheckoutFormFromProfile();
-      }
-
-      // Проверяем, содержит ли блок текст "выбрать из использовавшихся адресов"
-      if (spanText.includes('выбрать из использовавшихся адресов')) {
-        e.preventDefault();
-        e.stopPropagation();
-
-        // Открываем модалку выбора адреса
-        openAddressSelectionModal();
-      }
-    }
-  });
-});
+// $(document).ready(function() {
+//   // Обработчик клика на блоки .order-alert--action
+//   $(document).on('click', '.order-alert--action', function(e) {
+//     const $span = $(this).find('span');
+//     if ($span.length) {
+//       const spanText = $span.text();
+//
+//       // Проверяем, содержит ли блок текст "Авторизуйтесь"
+//       if (spanText.includes('Авторизуйтесь')) {
+//         e.preventDefault();
+//         e.stopPropagation();
+//
+//         // Открываем модалку авторизации
+//         const $modal = $('#profile-modal-auth');
+//         if ($modal.length) {
+//           $modal.addClass('open');
+//           $('body').addClass('modal-open');
+//
+//           // Сбрасываем состояние модалки к начальному шагу
+//           $modal.find('.profile-modal__step').addClass('hide');
+//           const $step1 = $modal.find('.profile-modal__step--1');
+//           if ($step1.length) $step1.removeClass('hide');
+//         }
+//       }
+//
+//       // Проверяем, содержит ли блок текст "Заполнить автоматически"
+//       if (spanText.includes('Заполнить автоматически')) {
+//         e.preventDefault();
+//         e.stopPropagation();
+//
+//         // Заполняем форму данными из профиля
+//         fillCheckoutFormFromProfile();
+//       }
+//
+//       // Проверяем, содержит ли блок текст "выбрать из использовавшихся адресов"
+//       if (spanText.includes('выбрать из использовавшихся адресов')) {
+//         e.preventDefault();
+//         e.stopPropagation();
+//
+//         // Открываем модалку выбора адреса
+//         openAddressSelectionModal();
+//       }
+//     }
+//   });
+// });
 
 // Функция для заполнения формы checkout данными из профиля
 function fillCheckoutFormFromProfile() {
@@ -1688,7 +1770,7 @@ function fillCheckoutFormFromProfile() {
     url: '/ajax/get_user_profile.php',
     type: 'GET',
     dataType: 'json',
-    success: function(data) {
+    success: function (data) {
       if (data.success && data.userData) {
         const userData = data.userData;
 
@@ -1704,14 +1786,14 @@ function fillCheckoutFormFromProfile() {
         showNotification('Не удалось загрузить данные профиля', 'error');
       }
     },
-    error: function() {
+    error: function () {
       showNotification('Ошибка при загрузке данных профиля', 'error');
     }
   });
 }
 
 // Функция для показа уведомлений
-function showNotification(message, type = 'info') {
+const showNotification = (message, type = 'info') => {
   // Создаем элемент уведомления
   const $notification = $(`
     <div class="notification notification--${type}" style="
@@ -1719,7 +1801,7 @@ function showNotification(message, type = 'info') {
       top: 20px;
       right: 20px;
       padding: 15px 20px;
-      background: ${type === 'success' ? '#4CAF50' : type === 'error' ? '#f44336' : '#2196F3'};
+      background: ${type === 'success' ? '#4caf50' : type === 'error' ? '#f44336' : '#2196f3'};
       color: white;
       border-radius: 5px;
       z-index: 10000;
@@ -1734,20 +1816,19 @@ function showNotification(message, type = 'info') {
   $('body').append($notification);
 
   // Убираем через 3 секунды
-  setTimeout(function() {
-    $notification.fadeOut(300, function() {
+  setTimeout(function () {
+    $notification.fadeOut(300, function () {
       $(this).remove();
     });
   }, 3000);
 }
+window.showNotification = showNotification;
 
 // ====== МОДАЛКА ВЫБОРА АДРЕСА ======
 // Функция для открытия модалки выбора адреса
 function openAddressSelectionModal() {
-  console.log('openAddressSelectionModal вызвана');
 
   const $modal = $('#address-selection-modal');
-  console.log('Модалка найдена:', $modal.length);
 
   if ($modal.length) {
     // Загружаем адреса пользователя
@@ -1757,7 +1838,6 @@ function openAddressSelectionModal() {
     $modal.addClass('open');
     $('body').addClass('modal-open');
 
-    console.log('Модалка открыта');
   } else {
     console.error('Модалка #address-selection-modal не найдена');
   }
@@ -1765,27 +1845,18 @@ function openAddressSelectionModal() {
 
 // Функция для загрузки адресов пользователя
 function loadUserAddresses() {
-  console.log('loadUserAddresses вызвана');
-
   $.ajax({
     url: '/ajax/get_user_addresses.php',
     type: 'GET',
     dataType: 'json',
-    success: function(data) {
-      console.log('AJAX успешен:', data);
-
+    success: function (data) {
       if (data.success) {
         const $addressesList = $('#addresses-list');
-        console.log('Контейнер адресов найден:', $addressesList.length);
-
         if ($addressesList.length) {
           $addressesList.html(data.addressesHtml);
-          console.log('HTML адресов загружен');
 
           // Добавляем обработчики для кнопок выбора адреса
-          $('.address-item__select').on('click', function() {
-            console.log('Клик по кнопке выбора адреса');
-
+          $('.address-item__select').on('click', function () {
             const $addressItem = $(this).closest('.address-item');
             const addressData = JSON.parse($addressItem.attr('data-address'));
 
@@ -1805,7 +1876,7 @@ function loadUserAddresses() {
         showNotification('Не удалось загрузить адреса', 'error');
       }
     },
-    error: function(xhr, status, error) {
+    error: function (xhr, status, error) {
       console.error('AJAX ошибка:', status, error);
       console.error('Ответ сервера:', xhr.responseText);
       showNotification('Ошибка при загрузке адресов', 'error');
@@ -1813,11 +1884,8 @@ function loadUserAddresses() {
   });
 }
 
-// Функция для заполнения формы адреса
-function fillAddressForm(addressData) {
-  // Заполняем поля формы адреса
-  // Ищем селектор города по содержимому опций
-  const $citySelect = $('select').filter(function() {
+const fillAddressForm = (addressData) => {
+  const $citySelect = $('select').filter(function () {
     return $(this).find('option[value="' + addressData.CITY + '"]').length > 0;
   });
   if ($citySelect.length) {
@@ -1842,25 +1910,27 @@ function fillAddressForm(addressData) {
   }
 }
 
+window.fillAddressForm = fillAddressForm;
+
 // ====== ЛОГИКА ДОСТАВКИ НА СТРАНИЦЕ CHECKOUT ======
-$(document).ready(function() {
+$(document).ready(function () {
   // Инициализируем логику доставки при загрузке страницы
   initDeliveryLogic();
 });
 
 // Также инициализируем при полной загрузке страницы
-$(window).on('load', function() {
+$(window).on('load', function () {
   // Повторная инициализация для случаев, когда DOM может быть изменен
-  setTimeout(function() {
+  setTimeout(function () {
     initDeliveryLogic();
   }, 200);
 });
 
 // Инициализируем при изменении содержимого страницы (для AJAX)
-$(document).on('DOMNodeInserted', function() {
+$(document).on('DOMNodeInserted', function () {
   // Проверяем, есть ли новые элементы доставки
   if ($('.order-alert--area, .order-methods').length > 0) {
-    setTimeout(function() {
+    setTimeout(function () {
       initDeliveryLogic();
     }, 100);
   }
@@ -1868,7 +1938,7 @@ $(document).on('DOMNodeInserted', function() {
 
 // Функция для инициализации логики доставки
 function initDeliveryLogic() {
-  const $citySelect = $('select').filter(function() {
+  const $citySelect = $('select').filter(function () {
     return $(this).find('option[value="0"]').length > 0;
   });
 
@@ -1880,17 +1950,16 @@ function initDeliveryLogic() {
     initializeDeliveryBlocks();
 
     // Обработчик изменения города
-    $citySelect.on('change', function() {
+    $citySelect.on('change', function () {
       const currentCity = $(this).val();
       const previousCity = $(this).data('previous-city');
 
       // Если город изменился на "Выберите город", сбрасываем формы
       if (currentCity === '0' && previousCity && previousCity !== '0') {
         resetAddressForm();
-        // Сбрасываем выбор метода доставки
-        $('input[name="method-delivery"]').prop('checked', false);
-        // Устанавливаем первый метод как выбранный по умолчанию
-        $('input[name="method-delivery"]').first().prop('checked', true);
+        // Скрываем варианты доставки
+        $('#delivery-methods-container').html('<!-- Варианты доставки будут загружены динамически -->');
+        updateDeliveryVisibility();
       }
 
       // Если город изменился на другой город (не на "Выберите город"),
@@ -1902,34 +1971,52 @@ function initDeliveryLogic() {
       // Сохраняем текущий город для следующего сравнения
       $(this).data('previous-city', currentCity);
 
-      updateDeliveryVisibility();
+      // Загружаем варианты доставки для выбранного города
+      if (currentCity !== '0') {
+        loadDeliveryOptions(currentCity);
+      } else {
+        updateDeliveryVisibility();
+      }
     });
 
     // Обработчик изменения метода доставки
-    $(document).on('change', 'input[name="method-delivery"]', function() {
-      const currentMethod = $(this).closest('label').find('h2').text().trim();
+    $(document).on('change', 'input[name="method-delivery"]', function () {
+      const currentMethod = $(this).val();
+      const currentMethodText = $(this).closest('label').find('h2').text().trim();
       const previousMethod = $citySelect.data('previous-delivery-method');
 
       // Если метод изменился и предыдущий был курьером, сбрасываем форму адреса
-      if (previousMethod && previousMethod !== currentMethod && previousMethod === 'Курьер') {
+      if (previousMethod && previousMethod !== currentMethod && previousMethod === 'courier') {
         resetAddressForm();
+      }
+
+      // Обновляем информацию о доставке
+      const deliveryPrice = $(this).data('price');
+      const deliveryTime = $(this).data('delivery-time');
+
+      if (deliveryPrice !== undefined) {
+        const $deliveryPriceElement = $('.order-controls__preprice');
+        if ($deliveryPriceElement.length) {
+          const priceText = deliveryPrice > 0 ? number_format(deliveryPrice, 0, '.', ' ') + ' ₽' : 'Бесплатно';
+          $deliveryPriceElement.text('Цена доставки: ' + priceText);
+        }
       }
 
       updateDeliveryVisibility();
     });
 
     // Обработчик клика по label для метода доставки
-    $(document).on('click', 'input[name="method-delivery"]', function() {
+    $(document).on('click', 'input[name="method-delivery"]', function () {
       // Небольшая задержка для корректного обновления состояния
-      setTimeout(function() {
+      setTimeout(function () {
         updateDeliveryVisibility();
       }, 50);
     });
 
     // Обработчик клика по label элементам
-    $(document).on('click', '.order-methods__item', function() {
+    $(document).on('click', '.order-methods__item', function () {
       // Небольшая задержка для корректного обновления состояния
-      setTimeout(function() {
+      setTimeout(function () {
         updateDeliveryVisibility();
       }, 50);
     });
@@ -1938,7 +2025,7 @@ function initDeliveryLogic() {
     updateDeliveryVisibility();
 
     // Добавляем небольшую задержку для корректной инициализации
-    setTimeout(function() {
+    setTimeout(function () {
       updateDeliveryVisibility();
     }, 100);
   }
@@ -1952,7 +2039,7 @@ function initializeDeliveryBlocks() {
   $('.order-methods__button').addClass('hidden');
 
   // Находим и скрываем блок с формой адреса
-  const $addressAlert = $('.order-alert--action').filter(function() {
+  const $addressAlert = $('.order-alert--action').filter(function () {
     return $(this).find('span').text().includes('выбрать из использовавшихся адресов');
   });
   const $orderControls = $('.order-controls--address');
@@ -1969,7 +2056,7 @@ function initializeDeliveryBlocks() {
   }
 
   // Скрываем все карточки методов доставки по умолчанию
-  $('.order-methods__card').each(function() {
+  $('.order-methods__card').each(function () {
     const $card = $(this);
     const cardTitle = $card.find('h2').text().trim();
 
@@ -1980,14 +2067,91 @@ function initializeDeliveryBlocks() {
   });
 }
 
+// Функция для загрузки вариантов доставки
+function loadDeliveryOptions(city, basketTotal = 0) {
+  if (!city || city === '0') {
+    return;
+  }
+
+  // Показываем индикатор загрузки
+  const $container = $('#delivery-methods-container');
+  $container.html('<div class="delivery-loading">Загрузка вариантов доставки...</div>');
+
+  // Получаем сумму корзины, если не передана
+  if (basketTotal === 0) {
+    const $basketTotalField = $('#basket-total');
+    if ($basketTotalField.length) {
+      basketTotal = parseFloat($basketTotalField.val()) || 0;
+    } else {
+      // Fallback: пытаемся получить из элемента с ценой доставки
+      const $priceElement = $('.order-controls__preprice');
+      if ($priceElement.length) {
+        const priceText = $priceElement.text();
+        const priceMatch = priceText.match(/(\d+)/);
+        if (priceMatch) {
+          basketTotal = parseInt(priceMatch[1]);
+        }
+      }
+    }
+  }
+
+  $.ajax({
+    url: '/ajax/get_delivery_options.php',
+    method: 'GET',
+    data: {
+      city: city,
+      basket_total: basketTotal
+    },
+    success: function (response) {
+      if (response.success) {
+        // Обновляем варианты доставки
+        $container.html(response.delivery_html);
+
+        // Устанавливаем первый метод как выбранный по умолчанию
+        $('input[name="method-delivery"]').first().prop('checked', true);
+
+        // Обновляем информацию о доставке
+        updateDeliveryInfo(response.delivery_info);
+
+        // Обновляем видимость блоков
+        updateDeliveryVisibility();
+      } else {
+        $container.html('<div class="delivery-error">Ошибка загрузки вариантов доставки: ' + (response.error || 'Неизвестная ошибка') + '</div>');
+      }
+    },
+    error: function (xhr, status, error) {
+      $container.html('<div class="delivery-error">Ошибка загрузки вариантов доставки. Попробуйте обновить страницу.</div>');
+      console.error('Error loading delivery options:', error);
+    }
+  });
+}
+
+// Функция для обновления информации о доставке
+function updateDeliveryInfo(deliveryInfo) {
+  // Обновляем цену доставки в форме
+  const $deliveryPriceElement = $('.order-controls__preprice');
+  if ($deliveryPriceElement.length && deliveryInfo.methods) {
+    const selectedMethod = $('input[name="method-delivery"]:checked');
+    if (selectedMethod.length) {
+      const methodValue = selectedMethod.val();
+      const methodData = deliveryInfo.methods[methodValue];
+      if (methodData) {
+        const price = methodData.price > 0 ? methodData.price_formatted : 'Бесплатно';
+        $deliveryPriceElement.text('Цена доставки: ' + price);
+      }
+    }
+  }
+}
+
 // Функция для обновления видимости блоков доставки
 function updateDeliveryVisibility() {
-  const $citySelect = $('select').filter(function() {
+  const $citySelect = $('select').filter(function () {
     return $(this).find('option[value="0"]').length > 0;
   });
 
   const selectedCity = $citySelect.val();
-  const selectedDeliveryMethod = $('input[name="method-delivery"]:checked').closest('label').find('h2').text().trim();
+  const selectedDeliveryMethod = $('input[name="method-delivery"]:checked').val();
+  const selectedDeliveryMethodText = $('input[name="method-delivery"]:checked').closest('label').find('h2').text().trim();
 
   // Сохраняем предыдущий метод доставки для сравнения
   const previousMethod = $citySelect.data('previous-delivery-method');
@@ -2000,9 +2164,6 @@ function updateDeliveryVisibility() {
 
       // Сбрасываем выбор метода доставки
       $('input[name="method-delivery"]').prop('checked', false);
-
-      // Устанавливаем первый метод как выбранный по умолчанию
-      $('input[name="method-delivery"]').first().prop('checked', true);
     }
   }
 
@@ -2030,11 +2191,11 @@ function updateDeliveryVisibility() {
   }
 
   // 3. Блок "Адрес шоурума" - показываем только для самовывоза
-  const $showroomCard = $('.order-methods__card').filter(function() {
+  const $showroomCard = $('.order-methods__card').filter(function () {
     return $(this).find('h2').text().includes('Адрес шоурума');
   });
   if ($showroomCard.length) {
-    if (selectedDeliveryMethod === 'Самовывоз из шоурума') {
+    if (selectedDeliveryMethod === 'pickup') {
       $showroomCard.removeClass('hidden');
     } else {
       $showroomCard.addClass('hidden');
@@ -2043,12 +2204,12 @@ function updateDeliveryVisibility() {
 
   // 4. Блоки СДЭК - показываем только для метода СДЭК
   const $cdekButton = $('.order-methods__button[data-modal="modal-pickup"]');
-  const $cdekCard = $('.order-methods__card').filter(function() {
+  const $cdekCard = $('.order-methods__card').filter(function () {
     return $(this).find('table tbody tr:first-child td:first-child').text().includes('СДЭК');
   });
 
   if ($cdekButton.length && $cdekCard.length) {
-    if (selectedDeliveryMethod === 'пункт выдачи СДЭК или почта России') {
+    if (selectedDeliveryMethod === 'cdek') {
       $cdekButton.removeClass('hidden');
       $cdekCard.removeClass('hidden');
     } else {
@@ -2058,7 +2219,7 @@ function updateDeliveryVisibility() {
   }
 
   // 5. Блоки адреса и формы - показываем только для курьера
-  const $addressAlert = $('.order-alert--action').filter(function() {
+  const $addressAlert = $('.order-alert--action').filter(function () {
     return $(this).find('span').text().includes('выбрать из использовавшихся адресов');
   });
   const $orderControls = $('.order-controls--address');
@@ -2076,7 +2237,7 @@ function updateDeliveryVisibility() {
   }
 
   // Показываем блоки адреса только для курьера
-  if (selectedDeliveryMethod === 'Курьер' && selectedCity !== '0') {
+  if (selectedDeliveryMethod === 'courier' && selectedCity !== '0') {
     if ($addressAlert.length) {
       $addressAlert.removeClass('hidden');
     }
@@ -2088,7 +2249,7 @@ function updateDeliveryVisibility() {
     }
   } else {
     // Если метод доставки изменился и предыдущий был курьером, сбрасываем форму адреса
-    if (previousMethod && previousMethod !== selectedDeliveryMethod && previousMethod === 'Курьер') {
+    if (previousMethod && previousMethod !== selectedDeliveryMethod && previousMethod === 'courier') {
       resetAddressForm();
     }
   }
@@ -2122,7 +2283,7 @@ function resetAddressForm() {
 
 // Функция для валидации формы заказа
 function validateCheckoutForm() {
-  const $citySelect = $('select').filter(function() {
+  const $citySelect = $('select').filter(function () {
     return $(this).find('option[value="0"]').length > 0;
   });
 
@@ -2187,7 +2348,7 @@ function validateCheckoutForm() {
 }
 
 // Обработчик отправки формы заказа
-$(document).on('submit', 'form', function(e) {
+$(document).on('submit', 'form', function (e) {
   // Проверяем, находимся ли мы на странице checkout
   if (window.location.pathname.includes('/checkout/')) {
     if (!validateCheckoutForm()) {

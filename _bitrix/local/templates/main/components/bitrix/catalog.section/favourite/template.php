@@ -116,10 +116,10 @@ $this->setFrameMode(true);
             <h3 class="product-card__title">${product.name}</h3>
             <div class="product-card__price">
               <div class="product-card__price-current">
-                <span>${price.toLocaleString()}₽</span>
+                <span>${formatPrice(price)} ₽</span>
                 ${discount > 0 ? `<div class="product-card__discount">-${discount}%</div>` : ''}
               </div>
-              ${oldPrice > price ? `<span class="product-card__price-old">${oldPrice.toLocaleString()}₽</span>` : ''}
+              ${oldPrice > price ? `<span class="product-card__price-old">${formatPrice(oldPrice)} ₽</span>` : ''}
             </div>
           </a>
 
