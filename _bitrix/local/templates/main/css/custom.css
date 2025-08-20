@@ -26,6 +26,10 @@
     border: none;
 }
 
+.cartaler {
+    box-shadow: -1px 2px 15px 5px rgba(0, 0, 0, 0.17);
+}
+
 ._cart .bx-soa-editstep {
     color: #232229;
 }
@@ -516,7 +520,7 @@ body .header__button--search:not(.descheader) {
 ._order .bx-soa-tooltip .tooltip-inner {
     display: inline-block;
     padding: 4px 12px;
-    margin-bottom: 16px;
+    margin: 16px 0;
     max-width: 100%;
 }
 
@@ -583,4 +587,15 @@ input {
 
 .lk-main__password {
     display: none;
+}
+
+#bx-soa-delivery .alert-warning {
+    margin-bottom: 20px;
+}
+
+._order .bx-soa-price-not-calc {
+    color: inherit;
+    text-decoration: none;
+    opacity: 0.6;
+    font-size: 16px;
 }

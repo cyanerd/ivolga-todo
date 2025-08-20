@@ -5199,15 +5199,19 @@ BX.namespace('BX.Sale.OrderAjaxComponent');
         '3': {
           par: 'Дизайн-завод Флакон',
           h3: 'Бесплатно',
-        }
+        },
+        '265': {
+          par: '',
+          h3: 'Цена в зависимости от расположения',
+        },
       }
 
       const par = BX.create('p', {
-        text: deliveryInfo[item.ID].par
+        text: deliveryInfo[item.ID]?.par || ''
       });
 
       const h3 = BX.create('h3', {
-        text: deliveryInfo[item.ID].h3
+        text: deliveryInfo[item.ID]?.h3 || ''
       });
 
       itemNode = BX.create('DIV', {

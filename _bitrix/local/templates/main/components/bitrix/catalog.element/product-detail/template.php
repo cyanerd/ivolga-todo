@@ -124,7 +124,7 @@ $this->setFrameMode(true);
                   Цвет
                 </p>
                 <div class="prodpar__block-colors">
-                  <? foreach ($colors_list as $color => $detail_page): ?>
+                  <? foreach ($colors_list as $color => $detail_page) { ?>
                     <div class="prodpar__block-color">
                       <input type="radio" name="color" id="color-<?= $color ?>" value="<?= $color ?>">
                       <label for="color-<?= $color ?>">
@@ -132,7 +132,7 @@ $this->setFrameMode(true);
                         <p><?= $color ?></p>
                       </label>
                     </div>
-                  <? endforeach; ?>
+                  <? } ?>
                 </div>
               </div>
             <? endif; ?>

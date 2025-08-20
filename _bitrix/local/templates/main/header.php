@@ -104,6 +104,14 @@ if ($APPLICATION->GetCurPage() === '/policy/') {
 <? $APPLICATION->ShowPanel() ?>
 <body class="<?= implode(' ', $bodyClasses) ?>" style="padding-top: 64px;">
 
+<script type="text/javascript">
+  var digiScript = document.createElement ('script');
+  digiScript.src = '//aq.dolyame.ru/site id/client.js?ts=' + Date.now();
+  digiScript.defer = true;
+  digiScript.async = true;
+  document.body.appendChild (digiScript);
+</script>
+
 <div class="topblock">
   <? if ($siteSettings['alert']) { ?>
     <div class="alert-main" id="alert-main" style="display: none;">
