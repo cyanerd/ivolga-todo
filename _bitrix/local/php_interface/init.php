@@ -284,6 +284,7 @@ class MyTools
       'DETAIL_PAGE_URL',
     ];
     $rsElement = \CIBlockElement::GetList($sort, $filter, false, [], $select);
+    $arItems = [];
     while ($arElement = $rsElement->GetNext()) {
       $arItems[$arElement['PROPERTY_TSVET_VALUE']] = $arElement['DETAIL_PAGE_URL'];
     }

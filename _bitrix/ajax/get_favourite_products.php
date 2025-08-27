@@ -56,6 +56,13 @@ foreach ($productIds as $productId) {
       $arProps['TSVET'] = ['VALUE' => ''];
     }
 
+    $rsPropsName = CIBlockElement::GetProperty($arElement['IBLOCK_ID'], $productId, ["sort" => "asc"], ["CODE" => "NAIMENOVANIE_TOVARA_NA_SAYTE_ETIKETKE"]);
+    if ($arProp = $rsPropsName->GetNext()) {
+      $arProps['NAIMENOVANIE_TOVARA_NA_SAYTE_ETIKETKE'] = $arProp;
+    } else {
+      $arProps['NAIMENOVANIE_TOVARA_NA_SAYTE_ETIKETKE'] = ['VALUE' => ''];
+    }
+
     // Получаем изображения
     $arImages = [];
     if (isset($arProps['MORE_PHOTO']['VALUE']) && $arProps['MORE_PHOTO']['VALUE']) {
@@ -132,7 +139,7 @@ foreach ($productIds as $productId) {
 
     $arProducts[] = [
       'id' => $productId,
-      'name' => $arElement['NAME'],
+      'name' => $arProps['NAIMENOVANIE_TOVARA_NA_SAYTE_ETIKETKE']['VALUE'] ?: $arElement['NAME'],
       'detail_url' => $arElement['DETAIL_PAGE_URL'],
       'images' => $arImages,
       'price' => $price,

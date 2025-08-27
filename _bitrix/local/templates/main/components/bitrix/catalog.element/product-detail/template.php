@@ -17,7 +17,7 @@ $this->setFrameMode(true);
         </a>
       <? endif; ?>
       <span>
-        <?= $arResult["NAME"] ?>
+        <?= $arResult["PROPERTIES"]["NAIMENOVANIE_TOVARA_NA_SAYTE_ETIKETKE"]["VALUE"] ?: $arResult["NAME"] ?>
       </span>
     </div>
     <a href="/catalog/" class="breadcrumbs__back mob">
@@ -118,7 +118,7 @@ $this->setFrameMode(true);
             <?
             // Получаем цвета через функцию MyTools::getVariantColors
             $colors_list = MyTools::getVariantColors($arResult["PROPERTIES"]["CML2_ARTICLE"]["VALUE"]);
-            if ($colors_list): ?>
+            if ($colors_list) { ?>
               <div class="prodpar__block prodpar__block_color">
                 <p class="prodpar__block-title">
                   Цвет
@@ -126,7 +126,14 @@ $this->setFrameMode(true);
                 <div class="prodpar__block-colors">
                   <? foreach ($colors_list as $color => $detail_page) { ?>
                     <div class="prodpar__block-color">
-                      <input type="radio" name="color" id="color-<?= $color ?>" value="<?= $color ?>">
+                      <input
+                        data-url="<?= $detail_page ?>"
+                        type="radio"
+                        name="color"
+                        id="color-<?= $color ?>"
+                        value="<?= $color ?>"
+                        <?= (basename($detail_page) === basename($_SERVER['REQUEST_URI'])) ? 'checked' : '' ?>
+                      >
                       <label for="color-<?= $color ?>">
                         <span style="background-image: url(<?= MyTools::getColor($color) ?>)"></span>
                         <p><?= $color ?></p>
@@ -135,7 +142,7 @@ $this->setFrameMode(true);
                   <? } ?>
                 </div>
               </div>
-            <? endif; ?>
+            <? } ?>
 
             <?
             // Получаем размеры из торговых предложений
@@ -177,7 +184,8 @@ $this->setFrameMode(true);
               <button class="pageprod__buy-cart" data-product-id="<?= $arResult["ID"] ?>" data-offer-id="">
                 В корзину
               </button>
-              <button class="pageprod__buy-like product-card__like" data-product-id="<?= $arResult["ID"] ?>" style="position: relative; top: auto; left: auto; bottom: auto; right: auto; opacity: 1;">
+              <button class="pageprod__buy-like product-card__like" data-product-id="<?= $arResult["ID"] ?>"
+                      style="position: relative; top: auto; left: auto; bottom: auto; right: auto; opacity: 1;">
                 <svg width="24" height="25" viewBox="0 0 24 25" fill="none" xmlns="http://www.w3.org/2000/svg" class="default">
                   <path fill-rule="evenodd" clip-rule="evenodd"
                         d="M3.74114 6.13008C4.69415 5.19149 5.98431 4.6662 7.32722 4.6662C8.66549 4.6662 9.95138 5.18787 10.9034 6.12038L12 7.12621L13.0966 6.12038C14.0486 5.18787 15.3345 4.6662 16.6728 4.6662C18.0157 4.6662 19.3058 5.19149 20.2589 6.13008C21.2123 7.06906 21.75 8.34504 21.75 9.67796C21.75 11.01 21.213 12.2851 20.2608 13.2239C20.2601 13.2246 20.2595 13.2252 20.2589 13.2258L12 21.4763L3.73919 13.2239C2.78701 12.2851 2.25 11.01 2.25 9.67796C2.25 8.34504 2.78774 7.06906 3.74114 6.13008ZM7.32722 6.1662C6.37482 6.1662 5.4637 6.53892 4.79369 7.1988C4.12406 7.85829 3.75 8.75031 3.75 9.67796C3.75 10.6056 4.12406 11.4976 4.79369 12.1571L4.79749 12.1609L12 19.3561L19.2063 12.1571C19.8759 11.4976 20.25 10.6056 20.25 9.67796C20.25 8.75031 19.8759 7.85829 19.2063 7.1988C18.5363 6.53892 17.6252 6.1662 16.6728 6.1662C15.7204 6.1662 14.8093 6.53892 14.1392 7.1988L14.1298 7.20814L12 9.16165L9.87024 7.20814L9.86075 7.1988C9.19074 6.53892 8.27961 6.1662 7.32722 6.1662Z"
@@ -253,6 +261,12 @@ $this->setFrameMode(true);
               </p>
             <? endif; ?>
 
+            <? if ($arResult["DETAIL_TEXT"]): ?>
+              <p class="pageprod__info-artikul">
+                <?= $arResult["DETAIL_TEXT"] ?>
+              </p>
+            <? endif; ?>
+
             <div class="pageprod-accords">
               <? if ($arResult["PROPERTIES"]["UKHOD"]["VALUE"]): ?>
                 <div class="pageprod-accords__item">
@@ -299,10 +313,10 @@ $this->setFrameMode(true);
                 <div class="pageprod-accords__wrap">
                   <div class="pageprod-accords__body">
                     <p>
-                      <a href="">Online-чат</a> <br><br>
-                      <a href="">Whatsapp</a> <br><br>
-                      <a href="">Telegram</a> <br><br>
-                      <a href="">vk.com</a>
+<!--                      <a href="">Online-чат</a> <br><br>-->
+<!--                      <a href="">Whatsapp</a> <br><br>-->
+                      <a href="https://t.me/ivolgafashion" target="_blank">Telegram</a> <br><br>
+                      <a href="https://vk.com/ivolgamoscow" target="_blank">vk.com</a>
                     </p>
                   </div>
                 </div>

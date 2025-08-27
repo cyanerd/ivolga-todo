@@ -6,6 +6,13 @@ $APPLICATION->SetTitle("Каталог");
 <div class="catalogpage">
   <div class="container">
     <? // Навигация по категориям ?>
+    <?
+    // Фильтр для подсчета только товаров с остатками в навигации
+    $GLOBALS['sectionsFilter'] = [
+      'ACTIVE' => 'Y',
+      '>CATALOG_QUANTITY' => 0
+    ];
+    ?>
     <? $APPLICATION->IncludeComponent(
       "bitrix:catalog.section.list",
       "categories-nav",
@@ -15,6 +22,9 @@ $APPLICATION->SetTitle("Каталог");
         "SECTION_ID" => $_REQUEST["SECTION_ID"],
         "SECTION_URL" => "/catalog/#SECTION_CODE#/",
         "COUNT_ELEMENTS" => "Y",
+        "COUNT_ELEMENTS_FILTER" => "CNT_AVAILABLE",
+        "HIDE_SECTIONS_WITH_ZERO_COUNT_ELEMENTS" => "N",
+        "FILTER_NAME" => "sectionsFilter",
         "TOP_DEPTH" => "2",
         "CACHE_TYPE" => "A",
         "CACHE_TIME" => "36000000",
@@ -28,6 +38,9 @@ $APPLICATION->SetTitle("Каталог");
   <?php
   // Фильтрация каталога по GET-параметрам
   $GLOBALS['arrFilter'] = [];
+
+  // Фильтр по наличию товарных остатков
+  $GLOBALS['arrFilter']['>CATALOG_QUANTITY'] = 0;
   if (!empty($_GET['size'])) {
     $sizeValues = explode(',', $_GET['size']);
     $enumIds = [];
@@ -265,7 +278,7 @@ $APPLICATION->SetTitle("Каталог");
         "PRICE_VAT_INCLUDE" => "Y",
         "ELEMENT_SORT_FIELD2" => "id",
         "ELEMENT_SORT_ORDER2" => "desc",
-        "PROPERTY_CODE" => ["PRICE", "OLD_PRICE", "MORE_PHOTO", "NEW", "PREORDER", "FAVORITE", "COLORS", "SIZES"],
+        "PROPERTY_CODE" => ["PRICE", "OLD_PRICE", "MORE_PHOTO", "NEW", "PREORDER", "FAVORITE", "COLORS", "SIZES", "NAIMENOVANIE_TOVARA_NA_SAYTE_ETIKETKE"],
         "PAGE_ELEMENT_COUNT" => "20",
         "LINE_ELEMENT_COUNT" => "3",
         "CACHE_TYPE" => "A",
@@ -283,6 +296,10 @@ $APPLICATION->SetTitle("Каталог");
         "SHOW_ALL_WO_SECTION" => "N",
         "HIDE_NOT_AVAILABLE" => "Y",
         "HIDE_NOT_AVAILABLE_OFFERS" => "Y",
+        "QUANTITY_FILTER" => array(
+          "PROPERTY_CODE" => array("QUANTITY"),
+          "FILTER_VALUE" => ">0"
+        ),
         "SECTION_ID" => $_REQUEST["SECTION_ID"],
         "SECTION_CODE" => $_REQUEST["SECTION_CODE"],
         "SECTION_CODE_PATH" => $_REQUEST["SECTION_CODE_PATH"],

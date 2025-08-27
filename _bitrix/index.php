@@ -63,7 +63,7 @@ $APPLICATION->SetTitle("IVOLGA - Авторские украшения и оде
 
 <?
 global $indexSliderFilter;
-$indexSliderFilter = ["!PROPERTY_SHOW_ON_MAIN_PAGE" => false];
+$indexSliderFilter = ["!PROPERTY_SHOW_ON_MAIN_PAGE" => false, '>CATALOG_QUANTITY' => 0];
 
 $APPLICATION->IncludeComponent(
   "bitrix:catalog.section",
@@ -83,7 +83,7 @@ $APPLICATION->IncludeComponent(
     "SHOW_ALL_WO_SECTION" => "Y",
     "PAGE_ELEMENT_COUNT" => "20",
     "LINE_ELEMENT_COUNT" => "4",
-    "PROPERTY_CODE" => ["MORE_PHOTO"],
+    "PROPERTY_CODE" => ["MORE_PHOTO", "NAIMENOVANIE_TOVARA_NA_SAYTE_ETIKETKE"],
     "OFFERS_LIMIT" => "0",
     "TEMPLATE_THEME" => "",
     "PRICE_CODE" => ["Розничная цена"],

@@ -50,8 +50,16 @@ $arSections = [];
 while ($arSearchResult = $obSearch->GetNext()) {
   //различаем товар от секции
   if ($arSearchResult['PARAM1'] == 'CRM_PRODUCT_CATALOG' and (intval($arSearchResult['ITEM_ID']))) {
-    $arSearchResult['TYPE'] = 'ITEM';
-    $arItems[] = $arSearchResult;
+
+//    d($arSearchResult['TITLE']);
+//    d($q);
+//    d(mb_stripos($arSearchResult['TITLE'], $q) !== false);
+//    echo '<br>===========<br>';
+
+    if (mb_stripos($arSearchResult['TITLE'], $q) !== false) {
+      $arSearchResult['TYPE'] = 'ITEM';
+      $arItems[] = $arSearchResult;
+    }
   }
 }
 

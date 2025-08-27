@@ -5,6 +5,51 @@ $APPLICATION->SetTitle("Оформление заказа");
 
 <section class="pagecollect">
   <div>
+
+    <?
+    global $USER;
+    if ($USER->IsAuthorized()) {
+      $userId = $USER->GetID();
+      $addresses = MyTools::getAddresses($userId);
+      if ($addresses && count($addresses)) {
+        ?>
+
+        <script>
+          window._hasAddress = true;
+        </script>
+        <div class="modal-backdrop"></div>
+        <div class="offcanvas" id="choose-address">
+          <div class="offcanvas__header">
+            <h2 class="offcanvas__title">Выберите один из имеющихся у вас адресов</h2>
+            <button class="offcanvas__close" offcanvas-close>
+              <svg width="24" height="25" viewBox="0 0 24 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M18 20.5L12 12.5M6 4.5L12 12.5M12 12.5L18 4.5M12 12.5L6 20.5" stroke="#232229" stroke-width="1.5"/>
+              </svg>
+            </button>
+          </div>
+          <div class="offcanvas__body">
+            <div class="offcanvas__list">
+              <? foreach ($addresses as $address) { ?>
+                <label class="item-address">
+                  <input type="radio" name="address-modal"
+                         data-address="<?= htmlspecialchars(json_encode($address), ENT_QUOTES) ?>">
+                  <p><?= $address['NAME'] ?>
+                    <? if ($address['COMMENT']) { ?>
+                      <br><span><?= $address['COMMENT'] ?></span>
+                    <? } ?>
+                  </p>
+                </label>
+              <? } ?>
+            </div>
+          </div>
+          <div class="offcanvas__footer">
+            <button class="offcanvas__button" offcanvas-close>Применить</button>
+          </div>
+        </div>
+
+      <? }
+    } ?>
+
     <div class="_order order">
       <div class="_container">
         <? $APPLICATION->IncludeComponent(
@@ -58,7 +103,7 @@ $APPLICATION->SetTitle("Оформление заказа");
             "PROPS_FADE_LIST_1" => ["17", "19"],
             "SERVICES_IMAGES_SCALING" => "standard",
             "SHOW_BASKET_HEADERS" => "N",
-            "SHOW_COUPONS" => "Y",
+            "SHOW_COUPONS" => "N",
             "SHOW_COUPONS_BASKET" => "Y",
             "SHOW_COUPONS_DELIVERY" => "Y",
             "SHOW_COUPONS_PAY_SYSTEM" => "Y",
@@ -88,43 +133,6 @@ $APPLICATION->SetTitle("Оформление заказа");
       </div>
     </div>
   </div>
-
-  <?
-  global $USER;
-  if ($USER->IsAuthorized()) {
-    $userId = $USER->GetID();
-    $addresses = MyTools::getAddresses($userId);
-    ?>
-
-    <div class="offcanvas" id="choose-address">
-      <div class="offcanvas__header">
-        <h2 class="offcanvas__title">Выберите один из имеющихся у вас адресов</h2>
-        <button class="offcanvas__close" offcanvas-close>
-          <svg width="24" height="25" viewBox="0 0 24 25" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M18 20.5L12 12.5M6 4.5L12 12.5M12 12.5L18 4.5M12 12.5L6 20.5" stroke="#232229" stroke-width="1.5"/>
-          </svg>
-        </button>
-      </div>
-      <div class="offcanvas__body">
-        <div class="offcanvas__list">
-          <? foreach ($addresses as $address) { ?>
-            <label class="item-address">
-              <input type="radio" name="address-modal" data-address="<?= htmlspecialchars(json_encode($address), ENT_QUOTES) ?>">
-              <p><?= $address['NAME'] ?>
-                <? if ($address['COMMENT']) { ?>
-                  <br><span><?= $address['COMMENT'] ?></span>
-                <? } ?>
-              </p>
-            </label>
-          <? } ?>
-        </div>
-      </div>
-      <div class="offcanvas__footer">
-        <button class="offcanvas__button" offcanvas-close>Применить</button>
-      </div>
-    </div>
-
-  <? } ?>
 
   <style id="_styles">
       ._order #bx-soa-delivery .order-methods,

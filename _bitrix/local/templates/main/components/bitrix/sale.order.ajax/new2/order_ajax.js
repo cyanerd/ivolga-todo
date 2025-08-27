@@ -318,6 +318,7 @@ BX.namespace('BX.Sale.OrderAjaxComponent');
         BX.saleOrderAjax && BX.saleOrderAjax.initDeferredControl();
       }
 
+      BX.onCustomEvent('OnMindboxUpdatePromocode');
       return true;
     },
 
@@ -4502,6 +4503,9 @@ BX.namespace('BX.Sale.OrderAjaxComponent');
 
       itemNode = BX.create('DIV', {
         props: {className: 'bx-soa-pp-company order-methods__item'},
+        attrs: {
+          'data-payment-name': item.NAME
+        },
         children: [label, title],
         events: {
           click: BX.proxy(this.selectPaySystem, this)
@@ -4861,11 +4865,13 @@ BX.namespace('BX.Sale.OrderAjaxComponent');
         },
       });
 
+      const chooseAddressBlock = this.result.IS_AUTHORIZED && window._hasAddress ? `<div class="order-alert order-alert--action" data-modal="#choose-address">
+          <p><span>Выбрать из использовавшихся адресов</span></p>
+        </div>` : '';
+
       const address = BX.create('DIV', {
         props: {id: '_order-address'}, html: `
-        <div class="order-alert order-alert--action" data-offcanvas="#choose-address">
-          <p><span>выбрать из использовавшихся адресов</span></p>
-        </div>
+        ${chooseAddressBlock}
         <div class="order-controls">
         <div class="order-controls__group w-50">
           <div class="form-group">
@@ -5189,7 +5195,7 @@ BX.namespace('BX.Sale.OrderAjaxComponent');
 
       const deliveryInfo = {
         '260': {
-          par: 'С примеркой 15 мин.',
+          par: '',
           h3: 'Цена в зависимости от расположения'
         },
         '261': {
@@ -5204,7 +5210,16 @@ BX.namespace('BX.Sale.OrderAjaxComponent');
           par: '',
           h3: 'Цена в зависимости от расположения',
         },
+        '269': {
+          par: 'С примеркой 15 мин.',
+          h3: 'В пределах МКАД, 560 ₽',
+        },
+        '264': {
+          par: '',
+          h3: 'Зависит от размера',
+        },
       }
+
 
       const par = BX.create('p', {
         text: deliveryInfo[item.ID]?.par || ''
@@ -5215,7 +5230,12 @@ BX.namespace('BX.Sale.OrderAjaxComponent');
       });
 
       itemNode = BX.create('DIV', {
-        props: {className: 'bx-soa-pp-company order-methods__item'},
+        props: {
+          className: 'bx-soa-pp-company order-methods__item',
+        },
+        attrs: {
+          'data-delivery-name': item.NAME
+        },
         children: [title, par, h3, label],
         events: {click: BX.proxy(this.selectDelivery, this)}
       });
@@ -5468,6 +5488,8 @@ BX.namespace('BX.Sale.OrderAjaxComponent');
 
         if (selectedPickUp.DESCRIPTION)
           html += '<br><strong>' + BX.message('SOA_PICKUP_DESC') + ':</strong> ' + BX.util.htmlspecialchars(selectedPickUp.DESCRIPTION);
+
+        console.log('selectedPickUp', selectedPickUp);
 
         pickUpContainer.innerHTML = html;
 

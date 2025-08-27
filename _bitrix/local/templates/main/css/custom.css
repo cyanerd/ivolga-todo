@@ -452,10 +452,6 @@ body .header__button--search:not(.descheader) {
     display: none;
 }
 
-._order .bx-soa-pp-desc-container {
-    display: none;
-}
-
 ._order #bx-soa-delivery .bx-soa-section-title-container {
     display: none;
 }
@@ -598,4 +594,96 @@ input {
     text-decoration: none;
     opacity: 0.6;
     font-size: 16px;
+}
+
+body .product-card__like {
+    opacity: 1;
+}
+
+.mindbox-promocode-container {
+    background: rgba(35, 34, 41, 0.05);
+    padding: 20rem;
+    margin-bottom: 60rem;
+}
+
+.mindbox-coupon-block-field {
+    padding-right: 0;
+}
+
+.mindbox-coupon-section {
+    margin-bottom: 20rem;
+}
+
+.mindbox-coupon-section .form {
+    display: flex;
+}
+
+.mindbox-coupon-section .form .form-group {
+    flex-grow: 1;
+    min-width: 0;
+}
+
+.mindbox-coupon-btn {
+    position: relative;
+    font-size: 21rem;
+    line-height: 1.2;
+    font-weight: 400;
+    text-transform: uppercase;
+    padding: 20rem;
+    text-align: center;
+    border: 1px solid #232229;
+    transition: background-color 0.25s ease-in-out, color 0.25s ease-in-out;
+    white-space: nowrap;
+    transform: none;
+    cursor: pointer;
+}
+
+.mindbox-coupon-btn:hover {
+    background-color: #232229;
+    color: #fff;
+}
+
+._order .bx-soa-pp-desc-container {
+    display: none;
+}
+
+._order #bx-soa-delivery .bx-soa-pp-desc-container {
+    display: block;
+}
+
+._order #bx-soa-delivery .bx-soa-pp-desc-container .bx-soa-pp-company-subTitle {
+    display: none;
+}
+
+._order #bx-soa-delivery .bx-soa-pp-desc-container .bx-soa-pp-company-desc {
+    color: transparent;
+}
+
+#russianpost_btn_openmap {
+    background: #f6f5f3 !important;
+    font-family: Pragmatica, sans-serif !important;
+    color: #222 !important;
+    font-size: 21rem !important;
+    line-height: 1.2 !important;
+    font-weight: 400 !important;
+    text-transform: uppercase !important;
+    padding: 20rem !important;
+    text-align: center !important;
+    border: 1rem solid rgb(35, 34, 41) !important;
+    transition: background-color 0.25s ease-in-out, color 0.25s ease-in-out;
+    text-decoration: none;
+}
+
+#russianpost_btn_openmap:hover {
+    background-color: #232229 !important;
+    color: #fff !important;
+}
+
+#bx-soa-delivery .alert-danger {
+    margin-bottom: 20px;
+}
+
+#bx-soa-main-notifications {
+    color: red;
+    margin-bottom: 20px;
 }

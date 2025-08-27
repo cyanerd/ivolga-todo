@@ -171,12 +171,12 @@ if ($_GET['update_filters'] === 'Y') {
                   <? if (!empty($arItem["PROPERTIES"]["MORE_PHOTO"]["VALUE"])): ?>
                     <? foreach ($arItem["PROPERTIES"]["MORE_PHOTO"]["VALUE"] as $imageId): ?>
                       <div class="product-card__slide">
-                        <img src="<?= CFile::GetPath($imageId) ?>" alt="<?= $arItem["NAME"] ?>">
+                        <img src="<?= CFile::GetPath($imageId) ?>" alt="<?= $arItem['PROPERTIES']['NAIMENOVANIE_TOVARA_NA_SAYTE_ETIKETKE']['VALUE'] ?: $arItem["NAME"] ?>">
                       </div>
                     <? endforeach; ?>
                   <? else: ?>
                     <div class="product-card__slide">
-                      <img src="/assets/img/no-photo.jpg" alt="<?= $arItem["NAME"] ?>">
+                      <img src="/assets/img/no-photo.jpg" alt="<?= $arItem['PROPERTIES']['NAIMENOVANIE_TOVARA_NA_SAYTE_ETIKETKE']['VALUE'] ?: $arItem["NAME"] ?>">
                     </div>
                   <? endif; ?>
                 </div>
@@ -217,7 +217,7 @@ if ($_GET['update_filters'] === 'Y') {
               </i>
             </div>
             <a href="<?= $arItem["DETAIL_PAGE_URL"] ?>" class="product-card__info">
-              <h3 class="product-card__title"><?= $arItem["NAME"] ?></h3>
+              <h3 class="product-card__title"><?= $arItem['PROPERTIES']['NAIMENOVANIE_TOVARA_NA_SAYTE_ETIKETKE']['VALUE'] ?: $arItem["NAME"] ?></h3>
               <?php
               // --- Цена ---
               $price = null;

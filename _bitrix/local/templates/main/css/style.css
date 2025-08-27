@@ -414,42 +414,50 @@ input[type=radio]:checked::after,
 }
 
 .order-methods__row {
-    display: grid;
+    display: flex;
     border: 1rem solid #232229;
-}
 
-.order-methods__row:has(> *:nth-child(2)) {
-    grid-template-columns: repeat(2, 1fr);
-}
-
-@media (max-width: 575.98px) {
-    .order-methods__row:has(> *:nth-child(2)) {
-        grid-template-columns: 1fr;
-        grid-template-rows: repeat(2, 1fr);
+    @media (max-width: 575.98px) {
+        flex-direction: column;
     }
 }
 
-.order-methods__row:has(> *:nth-child(3)) {
-    grid-template-columns: repeat(3, 1fr);
+.order-methods__row > * {
+    flex: 1;
 }
 
-@media (max-width: 575.98px) {
-    .order-methods__row:has(> *:nth-child(3)) {
-        grid-template-columns: 1fr;
-        grid-template-rows: repeat(3, 1fr);
-    }
-}
+/*.order-methods__row:has(> *:nth-child(2)) {*/
+/*    grid-template-columns: repeat(2, 1fr);*/
+/*}*/
 
-.order-methods__row:has(> *:nth-child(4)) {
-    grid-template-columns: repeat(4, 1fr);
-}
+/*@media (max-width: 575.98px) {*/
+/*    .order-methods__row:has(> *:nth-child(2)) {*/
+/*        grid-template-columns: 1fr;*/
+/*        grid-template-rows: repeat(2, 1fr);*/
+/*    }*/
+/*}*/
 
-@media (max-width: 575.98px) {
-    .order-methods__row:has(> *:nth-child(4)) {
-        grid-template-columns: 1fr;
-        grid-template-rows: repeat(4, 1fr);
-    }
-}
+/*.order-methods__row:has(> *:nth-child(3)) {*/
+/*    grid-template-columns: repeat(3, 1fr);*/
+/*}*/
+
+/*@media (max-width: 575.98px) {*/
+/*    .order-methods__row:has(> *:nth-child(3)) {*/
+/*        grid-template-columns: 1fr;*/
+/*        grid-template-rows: repeat(3, 1fr);*/
+/*    }*/
+/*}*/
+
+/*.order-methods__row:has(> *:nth-child(4)) {*/
+/*    grid-template-columns: repeat(4, 1fr);*/
+/*}*/
+
+/*@media (max-width: 575.98px) {*/
+/*    .order-methods__row:has(> *:nth-child(4)) {*/
+/*        grid-template-columns: 1fr;*/
+/*        grid-template-rows: repeat(4, 1fr);*/
+/*    }*/
+/*}*/
 
 .order-methods__row > * {
     min-width: 0;
@@ -1813,7 +1821,7 @@ input[type=radio]:checked::after,
 
 /* Основная сетка методов доставки всегда видна, если не скрыта */
 .order-methods:not(.hidden) .order-methods__row {
-    display: grid;
+    display: flex;
 }
 
 /* Скрываем кнопку выбора пункта выдачи по умолчанию */

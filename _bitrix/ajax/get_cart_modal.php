@@ -7,7 +7,6 @@ CModule::IncludeModule("iblock");
 CModule::IncludeModule("sale");
 
 use Bitrix\Sale;
-use local\php_interface\MyTools;
 
 global $USER;
 
@@ -46,16 +45,32 @@ ob_start();
         $qty = $arItem->getQuantity();
         $cart_id = $arItem->getId();
 
-        $rsElement = \CIBlockElement::GetList([], ['ACTIVE' => 'Y', '=ID' => $product_id], false, [], ['ID', 'NAME', 'CATALOG_PRICE_7',]);
+        $rsElement = \CIBlockElement::GetList(
+          [],
+          ['ACTIVE' => 'Y', '=ID' => $product_id],
+          false,
+          [],
+          ['ID', 'NAME', 'CATALOG_PRICE_7', 'PREVIEW_PICTURE']
+        );
         $arElement = $rsElement->GetNext();
         $parent_product = CCatalogSku::GetProductInfo($arElement['ID']);
-        $rsParentProduct = \CIBlockElement::GetList([], ['ACTIVE' => 'Y', '=ID' => $parent_product['ID']], false, [], ['ID', 'NAME', 'DETAIL_PICTURE', 'DETAIL_PAGE_URL', 'PROPERTY_TSVET']);
+        $rsParentProduct = \CIBlockElement::GetList(
+          [],
+          ['ACTIVE' => 'Y', '=ID' => $parent_product['ID']],
+          false,
+          [], ['ID', 'NAME', 'DETAIL_PICTURE', 'PROPERTY_MORE_PHOTO', 'PREVIEW_PICTURE', 'DETAIL_PAGE_URL', 'PROPERTY_TSVET', 'PROPERTY_NAIMENOVANIE_TOVARA_NA_SAYTE_ETIKETKE']
+        );
         $arParentProduct = $rsParentProduct->GetNext();
 
         $DETAIL_PAGE_URL = $arParentProduct['DETAIL_PAGE_URL'];
-        $img_src = isset($arParentProduct['~DETAIL_PICTURE']) ?
+
+        $image = $arParentProduct['PROPERTY_MORE_PHOTO_VALUE'];
+        if ($arParentProduct['DETAIL_PICTURE']) $image = $arParentProduct['DETAIL_PICTURE'];
+        if ($arParentProduct['PREVIEW_PICTURE']) $image = $arParentProduct['PREVIEW_PICTURE'];
+
+        $img_src = isset($image) ?
           \CFile::ResizeImageGet(
-            $arParentProduct['~DETAIL_PICTURE'],
+            $image,
             ["width" => 326, "height" => 517],
             BX_RESIZE_IMAGE_EXACT
           )['src']
@@ -71,7 +86,7 @@ ob_start();
             </a>
             <div class="modalcart-item__content">
               <a href="<?= $DETAIL_PAGE_URL ?>" class="modalcart-item__title">
-                <?= $arElement['NAME'] ?>
+                <?= $arParentProduct["PROPERTY_NAIMENOVANIE_TOVARA_NA_SAYTE_ETIKETKE_VALUE"] ?: $arElement["NAME"] ?>
               </a>
               <p class="modalcart-item__meta">
                 <? if ($color): ?>
