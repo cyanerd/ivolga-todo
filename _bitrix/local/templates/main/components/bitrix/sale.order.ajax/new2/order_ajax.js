@@ -316,6 +316,12 @@ BX.namespace('BX.Sale.OrderAjaxComponent');
         this.editOrder();
         this.mapsReady && this.initMaps();
         BX.saleOrderAjax && BX.saleOrderAjax.initDeferredControl();
+        
+        // Восстанавливаем сохраненные данные адресных полей после обновления всех блоков
+        var self = this;
+        setTimeout(function() {
+          self.restoreAddressValues();
+        }, 10);
       }
 
       BX.onCustomEvent('OnMindboxUpdatePromocode');
@@ -4804,6 +4810,9 @@ BX.namespace('BX.Sale.OrderAjaxComponent');
         }
       }
 
+      // Сохраняем данные адресных полей перед обновлением
+      this.saveAddressValues();
+
       this.sendRequest();
     },
 
@@ -4921,6 +4930,12 @@ BX.namespace('BX.Sale.OrderAjaxComponent');
       deliveryItemsContainer.appendChild(row);
       deliveryItemsContainer.appendChild(button);
       deliveryItemsContainer.appendChild(address);
+
+      // Восстанавливаем сохраненные данные адресных полей
+      var self = this;
+      setTimeout(function() {
+        self.restoreAddressValues();
+      }, 0);
 
       for (k = 0; k < this.deliveryPagination.currentPage.length; k++) {
         deliveryItemNode = this.createDeliveryItem(this.deliveryPagination.currentPage[k]);
@@ -5305,6 +5320,45 @@ BX.namespace('BX.Sale.OrderAjaxComponent');
       BX.bind(node.querySelector('.alert.alert-warning'), 'click', BX.proxy(this.showByClick, this));
     },
 
+    // Функция для сохранения значений адресных полей
+    saveAddressValues: function () {
+      var addressBlock = BX('_order-address');
+      if (!addressBlock) return;
+
+      var inputs = addressBlock.querySelectorAll('input[type=text], textarea');
+      this.savedAddressData = {};
+
+      for (var i = 0; i < inputs.length; i++) {
+        var input = inputs[i];
+        var placeholder = input.getAttribute('placeholder');
+        if (placeholder && input.value) {
+          this.savedAddressData[placeholder] = input.value;
+        }
+      }
+    },
+
+    // Функция для восстановления значений адресных полей
+    restoreAddressValues: function () {
+      if (!this.savedAddressData) return;
+
+      var addressBlock = BX('_order-address');
+      if (!addressBlock) return;
+
+      var inputs = addressBlock.querySelectorAll('input[type=text], textarea');
+
+      for (var i = 0; i < inputs.length; i++) {
+        var input = inputs[i];
+        var placeholder = input.getAttribute('placeholder');
+        if (placeholder && this.savedAddressData[placeholder]) {
+          input.value = this.savedAddressData[placeholder];
+          // Добавляем класс для активации стилей формы (если используется)
+          if (input.value) {
+            BX.addClass(input.parentNode, 'form-group--active');
+          }
+        }
+      }
+    },
+
     selectDelivery: function (event) {
       if (!this.orderBlockNode)
         return;
@@ -5316,6 +5370,9 @@ BX.namespace('BX.Sale.OrderAjaxComponent');
 
       if (BX.hasClass(actionSection, 'bx-selected'))
         return BX.PreventDefault(event);
+
+      // Сохраняем данные адресных полей перед обновлением
+      this.saveAddressValues();
 
       if (actionSection) {
         actionInput = actionSection.querySelector('input[type=checkbox]');
