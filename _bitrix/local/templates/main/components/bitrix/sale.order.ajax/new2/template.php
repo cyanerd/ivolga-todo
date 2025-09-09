@@ -308,6 +308,15 @@ if ((string)$request->get('ORDER_ID') !== '') {
     <div id="bx-soa-order" class="order__wrapper" style="opacity: 0">
       <!--	MAIN BLOCK	-->
       <div class="bx-soa order__row order-row">
+
+        <? if (!$USER->IsAuthorized()) { ?>
+          <div class="order-row__item">
+            <div class="order-alert order-alert--action js--modal" data-modal="profile-modal-auth">
+              <p><span>Авторизуйтесь</span>, и получайте кэшбэк с каждого заказа</p>
+            </div>
+          </div>
+        <? } ?>
+
         <div id="bx-soa-main-notifications">
           <div class="alert alert-danger" style="display:none"></div>
           <div data-type="informer" style="display:none"></div>
@@ -412,6 +421,10 @@ if ((string)$request->get('ORDER_ID') !== '') {
               </h2>
             </div>
             <div class="bx-soa-section-content "></div>
+            <? $APPLICATION->IncludeComponent("mindbox:promocode", "ivolga", Array(
+            ),
+                false
+            );?>
           </div>
         <?php
         endif;

@@ -647,10 +647,6 @@ body .product-card__like {
     display: none;
 }
 
-._order #bx-soa-delivery .bx-soa-pp-desc-container {
-    display: block;
-}
-
 ._order #bx-soa-delivery .bx-soa-pp-desc-container .bx-soa-pp-company-subTitle {
     display: none;
 }
@@ -686,4 +682,41 @@ body .product-card__like {
 #bx-soa-main-notifications {
     color: red;
     margin-bottom: 20px;
+}
+
+.mindbox-promocode-container {
+    @media (max-width: 991px) {
+        display: block;
+    }
+}
+
+.pageprod__gallery-slide video {
+    max-width: 100%;
+    object-fit: cover;
+    height: 100%;
+}
+
+.video-thumb {
+    object-fit: contain !important;
+    background: #eee;
+}
+
+#loading_screen img {
+    width: 32px;
+    height: 32px;
+    margin-left: 16px;
+    margin-top: 16px;
+}
+
+body .bx-sls .bx-ui-sls-clear {
+    background: url('/assets/img/close.svg');
+    background-size: 15px;
+    background-repeat: no-repeat;
+    background-position: center;
+    opacity: 0.5;
+}
+
+body .bx-sls .bx-ui-sls-clear:hover {
+    background-position: center;
+    opacity: 0.3;
 }

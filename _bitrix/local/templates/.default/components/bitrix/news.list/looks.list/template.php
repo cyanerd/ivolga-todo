@@ -30,6 +30,7 @@ global $arrFilter;
           </div>
           <?
           $arrFilter['=ID'] = $arItem['DISPLAY_PROPERTIES']['ITEMS']['VALUE'];
+//          $arrFilter['>CATALOG_QUANTITY'] = 0;
           ?>
           <? $APPLICATION->IncludeComponent(
             "bitrix:catalog.section",

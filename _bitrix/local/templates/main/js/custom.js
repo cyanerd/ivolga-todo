@@ -735,7 +735,7 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 // Функция для обновления состояния кнопки "В корзину"
-function updateAddToCartButtonState() {
+async function updateAddToCartButtonState() {
   const addToCartButton = document.querySelector('.pageprod__buy-cart');
   if (!addToCartButton) return;
 
@@ -766,6 +766,26 @@ function updateAddToCartButtonState() {
     isDisabled = true;
     buttonText = 'Выберите размер';
   }
+
+  // Проверяем доступность товара на складе
+  /*
+  if (!isDisabled) {
+    const productId = addToCartButton.dataset.productId;
+    if (productId) {
+      try {
+        const response = await fetch(`/ajax/check_stock.php?product_id=${productId}`);
+        const result = await response.json();
+
+        if (result.success && result.available_quantity <= 0) {
+          isDisabled = true;
+          buttonText = 'Нет в наличии';
+        }
+      } catch (error) {
+        console.error('Error checking stock:', error);
+      }
+    }
+  }
+  */
 
   // Обновляем состояние кнопки
   addToCartButton.disabled = isDisabled;
@@ -804,6 +824,9 @@ async function addToCart(productId, quantity = 1) {
 
       // Обновляем счетчик корзины
       updateCartCounter();
+    } else if (result.result === 'error') {
+      // Показываем ошибку от сервера
+      showNotification(result.message || 'Ошибка при добавлении в корзину', 'error');
     } else {
       console.error('Error adding to cart: server error');
     }
@@ -815,6 +838,18 @@ async function addToCart(productId, quantity = 1) {
 // Функция для обновления количества товара в корзине
 async function updateCartQuantity(cartId, quantity) {
   try {
+    // Проверяем, не превышает ли запрашиваемое количество доступное на складе
+    const cartItem = document.querySelector(`[data-cart-id="${cartId}"]`);
+    if (cartItem) {
+      const counter = cartItem.querySelector('.js--count');
+      const maxQuantity = parseInt(counter.dataset.maxQuantity) || 999;
+
+      if (quantity > maxQuantity) {
+        showNotification('Нельзя добавить больше товара, чем есть на складе', 'warning');
+        return;
+      }
+    }
+
     const response = await fetch('/ajax/sale.php', {
       method: 'POST',
       headers: {
@@ -828,6 +863,24 @@ async function updateCartQuantity(cartId, quantity) {
     if (result.result === 'ok') {
       updateCartContent();
       updateCartCounter();
+
+      // Обновляем состояние кнопок увеличения количества
+      const cartItem = document.querySelector(`[data-cart-id="${cartId}"]`);
+      if (cartItem) {
+        const button = cartItem.querySelector('.counter__next');
+        const input = cartItem.querySelector('.counter__number');
+        const counter = cartItem.querySelector('.js--count');
+        const maxQuantity = parseInt(counter.dataset.maxQuantity) || 999;
+
+        if (quantity >= maxQuantity) {
+          button.disabled = true;
+        } else {
+          button.disabled = false;
+        }
+      }
+    } else if (result.result === 'error') {
+      // Показываем ошибку от сервера
+      showNotification(result.message || 'Ошибка при обновлении количества', 'error');
     }
   } catch (error) {
     console.error('Error updating cart quantity:', error);
@@ -941,6 +994,22 @@ function initCartEventListeners() {
     });
   });
 
+  // Обновляем состояние кнопок увеличения количества
+  document.querySelectorAll('.counter__next').forEach(button => {
+    const cartItem = button.closest('.modalcart-item');
+    const input = cartItem.querySelector('.counter__number');
+    const currentQuantity = parseInt(input.value);
+    const counter = cartItem.querySelector('.js--count');
+    const maxQuantity = parseInt(counter.dataset.maxQuantity) || 999;
+
+    // Отключаем кнопку, если достигнут лимит
+    if (currentQuantity >= maxQuantity) {
+      button.disabled = true;
+    } else {
+      button.disabled = false;
+    }
+  });
+
   document.querySelectorAll('.counter__next').forEach(button => {
     button.addEventListener('click', function (e) {
       e.preventDefault();
@@ -949,7 +1018,15 @@ function initCartEventListeners() {
       const cartId = cartItem.dataset.cartId;
       const input = cartItem.querySelector('.counter__number');
       const currentQuantity = parseInt(input.value);
-      updateCartQuantity(cartId, currentQuantity + 1);
+      const counter = cartItem.querySelector('.js--count');
+      const maxQuantity = parseInt(counter.dataset.maxQuantity) || 999;
+
+      if (currentQuantity < maxQuantity) {
+        updateCartQuantity(cartId, currentQuantity + 1);
+      } else {
+        // Показываем уведомление о том, что достигнут лимит
+        showNotification('Достигнуто максимальное доступное количество товара на складе', 'warning');
+      }
     });
   });
 
@@ -1010,25 +1087,25 @@ function initCartEventListeners() {
 }
 
 // Обработчик для кнопок "В корзину"
-function initAddToCartButtons() {
+async function initAddToCartButtons() {
   // Инициализируем состояние кнопки при загрузке
-  updateAddToCartButtonState();
+  await updateAddToCartButtonState();
 
   // Обработчики для выбора цвета
-  document.addEventListener('change', function (e) {
+  document.addEventListener('change', async function (e) {
     if (e.target.name === 'color') {
       const addToCartButton = document.querySelector('.pageprod__buy-cart');
       if (addToCartButton) {
         addToCartButton.dataset.selectedColor = e.target.value;
-        updateAddToCartButtonState();
+        await updateAddToCartButtonState();
       }
     }
   });
 
   // Обработчики для выбора размера
-  document.addEventListener('change', function (e) {
+  document.addEventListener('change', async function (e) {
     if (e.target.name === 'size') {
-      updateAddToCartButtonState();
+      await updateAddToCartButtonState();
     }
   });
 
@@ -1086,8 +1163,8 @@ function initAddToCartButtons() {
 }
 
 // Инициализация при загрузке страницы
-document.addEventListener('DOMContentLoaded', function () {
-  initAddToCartButtons();
+document.addEventListener('DOMContentLoaded', async function () {
+  await initAddToCartButtons();
   updateCartCounter(); // Загружаем счетчик корзины при загрузке страницы
 
   // Загружаем содержимое корзины при открытии модального окна
@@ -1451,6 +1528,7 @@ $(document).ready(function () {
       if (e1 && e2) {
         const isMoscow = e1 === 'Москва' && e2 === 'Москва, Россия';
 
+        $('#bx-soa-delivery .order-methods + div').show();
         $('#bx-soa-delivery .order-methods').show();
         $('.order-alert--area').hide();
         const selectedDeliveryMethod = $('#bx-soa-delivery .order-methods__row .order-methods__item.bx-selected h2').text();
@@ -1500,6 +1578,7 @@ $(document).ready(function () {
         }
       } else {
         $('#bx-soa-delivery .order-methods').hide();
+        $('#bx-soa-delivery .order-methods + div').hide();
         $('.order-alert--area').show();
         $('#bx-soa-pickup').hide();
         $('#hehe1').hide();
@@ -2052,7 +2131,7 @@ function validateCheckoutForm() {
 }
 
 // Обработчик отправки формы заказа
-$(document).on('submit', 'form', function (e) {
+$(document).on('submit', 'form[name="ORDER_FORM"]', function (e) {
   // Проверяем, находимся ли мы на странице checkout
   if (window.location.pathname.includes('/checkout/')) {
     if (!validateCheckoutForm()) {

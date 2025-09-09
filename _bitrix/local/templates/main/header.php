@@ -5,7 +5,6 @@ IncludeTemplateLangFile(__FILE__);
 <?
 
 use Bitrix\Main\Page\Asset;
-
 ?>
 <!DOCTYPE html>
 <html>
@@ -49,6 +48,15 @@ use Bitrix\Main\Page\Asset;
   $APPLICATION->SetAdditionalCSS('/assets/css/favourite.css?v=2');
   ?>
   <title><? $APPLICATION->ShowTitle(); ?></title>
+
+    <script>
+        mindbox = window.mindbox || function() { mindbox.queue.push(arguments); };
+        mindbox.queue = mindbox.queue || [];
+        mindbox('create', {
+            endpointId: 'ivolga.Website'
+        });
+    </script>
+    <script src="https://api.mindbox.ru/scripts/v1/tracker.js" async></script>
 </head>
 
 <?
@@ -105,11 +113,11 @@ if ($APPLICATION->GetCurPage() === '/policy/') {
 <body class="<?= implode(' ', $bodyClasses) ?>" style="padding-top: 64px;">
 
 <script type="text/javascript">
-  var digiScript = document.createElement ('script');
-  digiScript.src = '//aq.dolyame.ru/site id/client.js?ts=' + Date.now();
+  var digiScript = document.createElement('script');
+  digiScript.src = '//aq.dolyame.ru/2723/client.js?ts=' + Date.now();
   digiScript.defer = true;
   digiScript.async = true;
-  document.body.appendChild (digiScript);
+  document.body.appendChild(digiScript);
 </script>
 
 <div class="topblock">

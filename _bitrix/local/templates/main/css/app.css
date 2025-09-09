@@ -10214,7 +10214,7 @@ body {
     height: 100vh;
     left: 0;
     position: fixed;
-    top: -100vh;
+    top: calc(-100vh - 200px);
     transition: all 0.9s ease-in;
     width: 100vw;
     z-index: 9999;
@@ -10275,4 +10275,27 @@ body {
 /* Стили для body при открытом мобильном меню */
 body.modal-open {
     overflow: hidden;
+}
+
+/* Стили для отключенной кнопки счетчика */
+.counter__next:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    pointer-events: none;
+}
+
+.counter__next:disabled svg path {
+    fill: #999;
+}
+
+/* Стили для отключенной кнопки "Добавить в корзину" */
+.pageprod__buy-cart.disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    pointer-events: none;
+}
+
+.pageprod__buy-cart.disabled:hover {
+    background-color: inherit;
+    color: inherit;
 }

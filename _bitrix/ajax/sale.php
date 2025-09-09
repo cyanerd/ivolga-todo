@@ -33,6 +33,42 @@ if ($command == 'add_to_cart'):
 
   projectDebugLog('Add to cart: Found product: ' . $arProduct['NAME'], 'cart_add');
 
+  // Проверяем доступное количество на складе
+  $availableQuantity = 0;
+  $rsStore = CCatalogStoreProduct::GetList(
+    [],
+    ['PRODUCT_ID' => $arProduct['ID']],
+    false,
+    false,
+    ['AMOUNT']
+  );
+  while ($arStore = $rsStore->GetNext()) {
+    $availableQuantity += $arStore['AMOUNT'];
+  }
+  
+  // Если товара нет на складе, возвращаем ошибку
+  if ($availableQuantity <= 0) {
+    projectErrorLog('Add to cart: Product out of stock', 'cart_add');
+    echo json_encode(['result' => 'error', 'message' => 'Товар отсутствует на складе']);
+    die;
+  }
+  
+  // Проверяем, есть ли уже этот товар в корзине
+  $basket = MyTools::getBasket();
+  $currentQuantity = 0;
+  foreach ($basket['BASKET_ITEMS'] as $arItem) {
+    if ($arItem->getProductId() == $arProduct['ID']) {
+      $currentQuantity += $arItem->getQuantity();
+    }
+  }
+  
+  // Если общее количество превышает доступное на складе, возвращаем ошибку
+  if (($currentQuantity + $quantity) > $availableQuantity) {
+    projectErrorLog('Add to cart: Not enough stock', 'cart_add');
+    echo json_encode(['result' => 'error', 'message' => 'Недостаточно товара на складе']);
+    die;
+  }
+
   $fields = [
     'PRODUCT_ID' => $arProduct['ID'], // ID товара, обязательно
     'QUANTITY' => $quantity, // количество, обязательно
@@ -53,6 +89,35 @@ endif;
 if ($command == 'update_cart_amount'):
   $cart_id = $request['id'];
   $value = $request['value'];
+  
+  // Получаем информацию о товаре в корзине
+  $basketItem = CSaleBasket::GetByID($cart_id);
+  if (!$basketItem) {
+    echo json_encode(['result' => 'error', 'message' => 'Товар в корзине не найден']);
+    die;
+  }
+  
+  $product_id = $basketItem['PRODUCT_ID'];
+  
+  // Проверяем доступное количество на складе
+  $availableQuantity = 0;
+  $rsStore = CCatalogStoreProduct::GetList(
+    [],
+    ['PRODUCT_ID' => $product_id],
+    false,
+    false,
+    ['AMOUNT']
+  );
+  while ($arStore = $rsStore->GetNext()) {
+    $availableQuantity += $arStore['AMOUNT'];
+  }
+  
+  // Если запрашиваемое количество больше доступного, возвращаем ошибку
+  if ($value > $availableQuantity) {
+    echo json_encode(['result' => 'error', 'message' => 'Недостаточно товара на складе']);
+    die;
+  }
+  
   $arFields = [
     "QUANTITY" => $value
   ];

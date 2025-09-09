@@ -53,6 +53,19 @@ ob_start();
           ['ID', 'NAME', 'CATALOG_PRICE_7', 'PREVIEW_PICTURE']
         );
         $arElement = $rsElement->GetNext();
+
+        // Получаем информацию о доступном количестве товара на складе
+        $availableQuantity = 0;
+        $rsStore = \CCatalogStoreProduct::GetList(
+          [],
+          ['PRODUCT_ID' => $product_id],
+          false,
+          false,
+          ['AMOUNT']
+        );
+        while ($arStore = $rsStore->GetNext()) {
+          $availableQuantity += $arStore['AMOUNT'];
+        }
         $parent_product = CCatalogSku::GetProductInfo($arElement['ID']);
         $rsParentProduct = \CIBlockElement::GetList(
           [],
@@ -94,14 +107,14 @@ ob_start();
                 <? endif; ?>
                 Размер: М
               </p>
-              <div class="counter js--count">
+              <div class="counter js--count" data-max-quantity="<?= $availableQuantity ?>">
                 <button class="counter__prev">
                   <svg width="16" height="17" viewBox="0 0 16 17" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path fill-rule="evenodd" clip-rule="evenodd" d="M2 9.25V7.75H14V9.25H2Z" fill="#232229"/>
                   </svg>
                 </button>
                 <input type="number" value="<?= $qty ?>" class="counter__number" readonly>
-                <button class="counter__next">
+                <button class="counter__next" <?= ($qty >= $availableQuantity) ? 'disabled' : '' ?>>
                   <svg width="16" height="17" viewBox="0 0 16 17" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path fill-rule="evenodd" clip-rule="evenodd"
                           d="M8.75 7.75V4.5H7.25V7.75H2V9.25H7.25V12.5H8.75V9.25H14V7.75H8.75Z" fill="#232229"/>

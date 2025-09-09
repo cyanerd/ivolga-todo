@@ -1,5 +1,6 @@
 <? if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED !== true) die();
 $this->setFrameMode(true);
+global $APPLICATION;
 ?>
 
 <div class="breadcrumbs">
@@ -33,6 +34,19 @@ $this->setFrameMode(true);
   </div>
 </div>
 
+<?
+$videoCovers = [];
+if ($arResult['DETAIL_PICTURE']['ID']) {
+  $images = array_merge([$arResult['DETAIL_PICTURE']['ID']], $arResult["PROPERTIES"]["MORE_PHOTO"]["VALUE"]);
+} else {
+  $images = $arResult["PROPERTIES"]["MORE_PHOTO"]["VALUE"];
+}
+if ($arResult["PROPERTIES"]['FILES']['VALUE']) {
+  $images = array_merge($arResult["PROPERTIES"]['FILES']['VALUE'], $images);
+  $videoCovers = $arResult["PROPERTIES"]['VIDEO_COVER']['VALUE'];
+}
+?>
+
 <section class="pageprod">
   <div class="pageprod__wrap">
     <div class="container">
@@ -41,15 +55,25 @@ $this->setFrameMode(true);
           <div class="pageprod__gallery">
             <div class="pageprod__gallery-thumbs swiper">
               <div class="swiper-wrapper">
-                <? if ($arResult["PROPERTIES"]["MORE_PHOTO"]["VALUE"]): ?>
-                  <? foreach ($arResult["PROPERTIES"]["MORE_PHOTO"]["VALUE"] as $photoId): ?>
-                    <? $photo = CFile::GetFileArray($photoId); ?>
-                    <div class="swiper-slide">
-                      <div class="pageprod__gallery-thumb">
+                <? if ($images):
+                  $i = 0;
+                  ?>
+                  <? foreach ($images as $photoId): ?>
+                  <? $photo = CFile::GetFileArray($photoId); ?>
+                  <div class="swiper-slide">
+                    <div class="pageprod__gallery-thumb">
+                      <? if (substr_count($photo['CONTENT_TYPE'], 'video')) { ?>
+                        <? if ($videoCovers[$i] and $j = CFile::GetFileArray($videoCovers[$i])['SRC']) { ?>
+                          <img src="<?= $j ?>" alt="<?= $arResult["NAME"] ?>">
+                        <? } else { ?>
+                          <img src="/assets/img/video.png" alt="<?= $arResult["NAME"] ?>" class="video-thumb">
+                        <? } ?>
+                      <? } else { ?>
                         <img src="<?= $photo["SRC"] ?>" alt="<?= $arResult["NAME"] ?>">
-                      </div>
+                      <? } ?>
                     </div>
-                  <? endforeach; ?>
+                  </div>
+                  <? $i++; endforeach; ?>
                 <? else: ?>
                   <? if ($arResult["PREVIEW_PICTURE"]["SRC"]): ?>
                     <div class="swiper-slide">
@@ -69,13 +93,19 @@ $this->setFrameMode(true);
             </div>
             <div class="pageprod__gallery-main swiper">
               <div class="swiper-wrapper">
-                <? if ($arResult["PROPERTIES"]["MORE_PHOTO"]["VALUE"]): ?>
-                  <? foreach ($arResult["PROPERTIES"]["MORE_PHOTO"]["VALUE"] as $photoId): ?>
+                <? if ($images): ?>
+                  <? foreach ($images as $photoId): ?>
                     <? $photo = CFile::GetFileArray($photoId); ?>
                     <div class="swiper-slide">
-                      <a href="<?= $photo["SRC"] ?>" data-fancybox="gallery" class="pageprod__gallery-slide">
-                        <img src="<?= $photo["SRC"] ?>" alt="<?= $arResult["NAME"] ?>">
-                      </a>
+                      <? if (substr_count($photo['CONTENT_TYPE'], 'video')) { ?>
+                        <a href="<?= $photo["SRC"] ?>" data-fancybox="gallery" class="pageprod__gallery-slide">
+                          <video src="<?= $photo["SRC"] ?>" autoplay loop muted>
+                        </a>
+                      <? } else { ?>
+                        <a href="<?= $photo["SRC"] ?>" data-fancybox="gallery" class="pageprod__gallery-slide">
+                          <img src="<?= $photo["SRC"] ?>" alt="<?= $arResult["NAME"] ?>">
+                        </a>
+                      <? } ?>
                     </div>
                   <? endforeach; ?>
                 <? else: ?>
@@ -313,8 +343,8 @@ $this->setFrameMode(true);
                 <div class="pageprod-accords__wrap">
                   <div class="pageprod-accords__body">
                     <p>
-<!--                      <a href="">Online-чат</a> <br><br>-->
-<!--                      <a href="">Whatsapp</a> <br><br>-->
+                      <!--                      <a href="">Online-чат</a> <br><br>-->
+                      <!--                      <a href="">Whatsapp</a> <br><br>-->
                       <a href="https://t.me/ivolgafashion" target="_blank">Telegram</a> <br><br>
                       <a href="https://vk.com/ivolgamoscow" target="_blank">vk.com</a>
                     </p>
@@ -608,3 +638,10 @@ $this->setFrameMode(true);
     </div>
   </section>
 <? endif; ?>
+<?
+$APPLICATION->IncludeComponent(
+  'mindbox:view.product',
+  '',
+  ['PRODUCT_ID' => $arResult['ID']]
+);
+?>

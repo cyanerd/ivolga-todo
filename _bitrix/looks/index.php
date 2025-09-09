@@ -11,7 +11,8 @@ $APPLICATION->SetTitle("Образы");
       </h1>
     </div>
 
-    <? $APPLICATION->IncludeComponent(
+    <?
+    $APPLICATION->IncludeComponent(
       "bitrix:news.list",
       "looks.list",
       [

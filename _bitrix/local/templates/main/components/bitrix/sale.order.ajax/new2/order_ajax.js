@@ -3340,7 +3340,7 @@ BX.namespace('BX.Sale.OrderAjaxComponent');
       return BX.create('picture', {
         props: {className: 'bx-soa-item-content'},
         children: [
-          BX.create('img', {props: {src: data.PREVIEW_PICTURE_SRC || data.DETAIL_PICTURE_SRC}}),
+          BX.create('img', {props: {src: data.PREVIEW_PICTURE_SRC || data.DETAIL_PICTURE_SRC || '/assets/img/no-photo.jpg'}}),
         ]
         // children: propsNodes.length ? [
         //   BX.create('DIV', {props: {className: 'bx-soa-item-title'}, html: titleHtml}),
@@ -6155,6 +6155,11 @@ BX.namespace('BX.Sale.OrderAjaxComponent');
         propertyType = property.getType() || '',
         propertyDesc = property.getDescription() || '',
         label;
+
+      // скрываем пункт доставки Mindbox
+      if (property.getId() == 52) {
+        propsItemNode.style='display:none;';
+      }
 
       if (disabled) {
         propsItemNode.innerHTML = '<strong>' + BX.util.htmlspecialchars(property.getName()) + ':</strong> ';
