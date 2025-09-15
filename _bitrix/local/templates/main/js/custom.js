@@ -47,8 +47,10 @@ $(document).ready(function () {
 
   const getCatalogParams = () => {
     const params = {};
-    const cat = $("input[name='categories']:checked").val();
-    if (cat) params.category = cat;
+
+    // Обрабатываем категорию отдельно - она будет в URL пути, а не в параметрах
+    const cat = $("input[name='categories']:checked").data('val');
+
     const sizes = $("input[name='size']:checked").map(function () {return this.value;}).get();
     if (sizes.length) params.size = sizes.join(',');
     const colors = $("input[name='color']:checked").map(function () {return this.value;}).get();
@@ -64,18 +66,40 @@ $(document).ready(function () {
     if (sortValue) params.sort = sortValue;
     if (orderValue) params.order = orderValue;
 
-    return Object.keys(params).map(key => encodeURIComponent(key) + '=' + encodeURIComponent(params[key])).join('&');
+    // Формируем базовый URL с категорией в пути
+    let baseUrl = '/catalog/';
+    if (cat) {
+      baseUrl += cat + '/';
+    }
+
+    // Формируем параметры запроса
+    const queryString = Object.keys(params).map(key => encodeURIComponent(key) + '=' + encodeURIComponent(params[key])).join('&');
+
+    // Возвращаем объект с URL и параметрами
+    return {
+      url: baseUrl,
+      params: queryString,
+      fullUrl: baseUrl + (queryString ? '?' + queryString : '')
+    };
   }
 
   window.getCatalogParams = getCatalogParams;
 
-  function updateCatalogAjax(params) {
-    const url = window.location.pathname + (params ? ('?' + params) : '');
+  function updateCatalogAjax(catalogData) {
+    // Если передана строка (для обратной совместимости), используем текущий путь
+    let url, ajaxUrl;
+    if (typeof catalogData === 'string') {
+      url = window.location.pathname + (catalogData ? ('?' + catalogData) : '');
+      ajaxUrl = url + (catalogData ? '&' : '?') + 'ajax=Y';
+    } else {
+      // Новый формат - объект с url и params
+      url = catalogData.fullUrl;
+      ajaxUrl = catalogData.url + (catalogData.params ? ('?' + catalogData.params + '&ajax=Y') : '?ajax=Y');
+    }
+
     window.history.pushState({}, '', url);
     $("#catalog-ajax-container").addClass('loading');
     closeModal('.catdrop', true);
-
-    const ajaxUrl = url + (params ? '&' : '?') + 'ajax=Y';
 
     $.get(ajaxUrl, function (data) {
       const $container = $(data).filter('#catalog-ajax-container');
@@ -87,6 +111,9 @@ $(document).ready(function () {
       initFilters();
       initSortHandlers(); // Переинициализируем обработчики сортировки
 
+      // Обновляем активный пункт навигации
+      updateCatalogNavigation(url);
+
       // Проверяем, обновился ли класс сортировки
       const $sortContainer = $('.catalogpage__sort');
     }).fail(function (xhr, status, error) {
@@ -95,19 +122,42 @@ $(document).ready(function () {
     });
   }
 
+  // Функция для обновления активного пункта навигации в каталоге
+  function updateCatalogNavigation(currentUrl) {
+    // Убираем параметры из URL, оставляем только путь
+    const urlPath = currentUrl.split('?')[0];
+    
+    // Убираем все активные классы
+    $('.catalogpage__nav a').removeClass('active');
+    
+    // Находим соответствующий пункт навигации и делаем его активным
+    $('.catalogpage__nav a').each(function() {
+      const navHref = $(this).attr('href');
+      if (navHref === urlPath) {
+        $(this).addClass('active');
+        return false; // Прерываем цикл
+      }
+    });
+    
+    // Если точное совпадение не найдено и это путь каталога без категории
+    if (urlPath === '/catalog/' && !$('.catalogpage__nav a.active').length) {
+      $('.catalogpage__nav a[href="/catalog/"]').addClass('active');
+    }
+  }
+
   window.updateCatalogAjax = updateCatalogAjax;
 
   // Фильтрация каталога по выбранным фильтрам (AJAX или обычная перезагрузка)
   $(document).on('click', '.catdrop__apply', function (e) {
-    const search = getCatalogParams();
+    const catalogData = getCatalogParams();
 
     if (window.USE_CATALOG_AJAX) {
       e.preventDefault();
-      updateCatalogAjax(search);
+      updateCatalogAjax(catalogData);
       // Обновляем связанные фильтры
       setTimeout(updateRelatedFilters, 500);
     } else {
-      window.location.href = window.location.pathname + (search ? ('?' + search) : '');
+      window.location.href = catalogData.fullUrl;
     }
   });
 
@@ -129,13 +179,14 @@ $(document).ready(function () {
 
   // Функция для обновления связанных фильтров
   function updateRelatedFilters() {
-    const currentParams = getCatalogParams();
-    if (!currentParams) return; // Если нет параметров, не обновляем
+    const catalogData = getCatalogParams();
+    if (!catalogData.params) return; // Если нет параметров, не обновляем
 
     // Добавляем индикатор загрузки
     $('.catdrop-block').addClass('loading');
 
-    $.get(window.location.pathname + '?' + currentParams + '&ajax=Y&update_filters=Y', function (data) {
+    const updateUrl = catalogData.url + (catalogData.params ? ('?' + catalogData.params + '&ajax=Y&update_filters=Y') : '?ajax=Y&update_filters=Y');
+    $.get(updateUrl, function (data) {
       const $html = $('<div>').html(data);
       const $newFilters = $html.find('.catdrop-block');
 
@@ -652,6 +703,22 @@ function updateFavouriteButtons() {
   });
 }
 
+function favouriteAjax(productId) {
+  var param = 'id=' + productId;
+
+  $.ajax({
+    url: '/ajax/favourites.php',
+    type: "GET",
+    dataType: "html",
+    data: param,
+    success: function (response) {
+    },
+    error: function (jqXHR, textStatus, errorThrown) { // Если ошибка, то выкладываем печаль в консоль
+      console.log('Error: ' + errorThrown);
+    }
+  });
+}
+
 // Обработчик кликов на кнопки избранного
 function initFavouriteButtons() {
   // Проверяем, не добавлен ли уже обработчик
@@ -685,6 +752,8 @@ function initFavouriteButtons() {
       } else {
         console.error('Product ID not found!');
       }
+
+      favouriteAjax(productId);
     }
   });
 
@@ -1574,7 +1643,7 @@ $(document).ready(function () {
         }
 
         if (selectedDeliveryMethod === 'Самовывоз из шоурума') {
-          $('input[name="ORDER_PROP_26"]').val('Шоу-рум Ivolga, Дизайн-завод Флакон, Большая Новодмитровская ул., 36');
+          $('input[name="ORDER_PROP_26"]').val('Шоурум ívolga, ул. Яузская, 5. Бизнес-центр "Яузская, 5"');
         }
       } else {
         $('#bx-soa-delivery .order-methods').hide();

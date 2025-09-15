@@ -126,6 +126,12 @@ $APPLICATION->IncludeComponent(
 );
 ?>
 
+<?
+$GLOBALS['sectionsFilter'] = [
+  '!UF_SHOW_ON_MAIN' => false
+];
+?>
+
 <? $APPLICATION->IncludeComponent(
   "bitrix:catalog.section.list",
   "categories",

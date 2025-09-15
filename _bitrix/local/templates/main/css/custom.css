@@ -720,3 +720,11 @@ body .bx-sls .bx-ui-sls-clear:hover {
     background-position: center;
     opacity: 0.3;
 }
+
+.product-card__colors-item {
+    border: 1px solid rgba(35, 34, 41, .1)
+}
+
+.product-card {
+    position: relative;
+}

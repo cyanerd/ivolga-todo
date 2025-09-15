@@ -316,7 +316,7 @@ BX.namespace('BX.Sale.OrderAjaxComponent');
         this.editOrder();
         this.mapsReady && this.initMaps();
         BX.saleOrderAjax && BX.saleOrderAjax.initDeferredControl();
-        
+
         // Восстанавливаем сохраненные данные адресных полей после обновления всех блоков
         var self = this;
         setTimeout(function() {
@@ -5218,7 +5218,7 @@ BX.namespace('BX.Sale.OrderAjaxComponent');
           h3: '',
         },
         '3': {
-          par: 'Дизайн-завод Флакон',
+          par: 'Бизнес-центр "Яузская, 5"',
           h3: 'Бесплатно',
         },
         '265': {
@@ -5867,7 +5867,7 @@ BX.namespace('BX.Sale.OrderAjaxComponent');
         props: {className: 'bx-soa-pickup-list-item', id: 'store-' + currentStore.ID},
         children: [
           BX.create('p', {
-            text: 'Шоу-рум Ivolga, Дизайн-завод Флакон, Большая Новодмитровская ул., 36'
+            text: 'Шоурум ívolga, ул. Яузская, 5. Бизнес-центр "Яузская, 5"'
           }),
           // BX.create('button', {
           //   attrs: {'data-modal': '#modal-address'},

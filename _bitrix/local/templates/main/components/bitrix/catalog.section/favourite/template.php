@@ -65,6 +65,8 @@ $this->setFrameMode(true);
       const oldPrice = product.old_price || 0;
       const discount = oldPrice > price ? Math.round(((oldPrice - price) / oldPrice) * 100) : 0;
 
+      console.log('product', product);
+
       html += `
       <div class="catalogpage__col">
         <div class="product-card" data-product-id="${product.id}">
@@ -126,9 +128,13 @@ $this->setFrameMode(true);
           <div class="product-card__footer">
             ${product.colors && product.colors.length > 0 ? `
               <div class="product-card__colors">
-                ${product.colors.slice(0, 5).map(color => `
-                  <a href="${product.detail_url}" class="product-card__colors-item" style="background-color: ${color.code || '#f6f5f3'};"></a>
-                `).join('')}
+                ${product.colors.slice(0, 5).map(color => {
+                  const colorCode = color.code || '#f6f5f3';
+                  const isImage = colorCode.includes('/') || colorCode.includes('.');
+                  const backgroundStyle = isImage ? `background-image: url(${colorCode})` : `background-color: ${colorCode}`;
+                  const colorLink = color.detail_page || product.detail_url;
+                  return `<a href="${colorLink}" class="product-card__colors-item" style="${backgroundStyle};"></a>`;
+                }).join('')}
               </div>
             ` : ''}
             ${product.sizes && product.sizes.length > 0 ? `

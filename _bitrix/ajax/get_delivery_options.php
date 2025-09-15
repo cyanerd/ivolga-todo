@@ -11,25 +11,25 @@ try {
     $request = \Bitrix\Main\Context::getCurrent()->getRequest();
     $city = $request->get('city');
     $basketTotal = (float)$request->get('basket_total', 0);
-    
+
     if (empty($city) || $city === '0') {
         echo json_encode(['success' => false, 'error' => 'Город не выбран']);
         exit;
     }
-    
+
     // Получаем корзину пользователя для расчета стоимости
     $basket = \Bitrix\Sale\Basket::loadItemsForFUser(\Bitrix\Sale\Fuser::getId(), SITE_ID);
     $basketItems = $basket->getBasketItems();
-    
+
     $totalWeight = 0;
     $totalVolume = 0;
-    
+
     foreach ($basketItems as $item) {
         $totalWeight += $item->getWeight() * $item->getQuantity();
         // Примерный расчет объема (если нет точных данных)
         $totalVolume += 0.001 * $item->getQuantity(); // 1 литр на товар
     }
-    
+
     // Базовые настройки доставки для разных городов
     $deliverySettings = [
         'Москва' => [
@@ -43,7 +43,7 @@ try {
             ],
             'pickup' => [
                 'name' => 'Самовывоз из шоурума',
-                'description' => 'Дизайн-завод Флакон',
+                'description' => 'ул. Яузская, 5. Бизнес-центр "Яузская, 5"',
                 'price' => 0,
                 'min_order' => 0,
                 'delivery_time' => 'Сегодня'
@@ -129,7 +129,7 @@ try {
             ]
         ]
     ];
-    
+
     // Если город не найден в настройках, используем базовые настройки
     if (!isset($deliverySettings[$city])) {
         $deliverySettings[$city] = [
@@ -157,23 +157,23 @@ try {
             ]
         ];
     }
-    
+
     // Применяем скидки и корректировки в зависимости от суммы заказа
     $citySettings = $deliverySettings[$city];
-    
+
     // Скидка на доставку при заказе от определенной суммы
     foreach ($citySettings as $key => &$method) {
         if ($basketTotal >= 5000 && $method['price'] > 0) {
             $method['price'] = round($method['price'] * 0.8); // 20% скидка
             $method['description'] .= ' (скидка 20% от 5000₽)';
         }
-        
+
         // Бесплатная доставка при заказе от 10000₽
         if ($basketTotal >= 10000 && $method['price'] > 0) {
             $method['price'] = 0;
             $method['description'] .= ' (бесплатно от 10000₽)';
         }
-        
+
         // Проверяем ограничения по весу
         if (isset($method['max_weight']) && $totalWeight > $method['max_weight']) {
             $method['available'] = false;
@@ -181,14 +181,14 @@ try {
         } else {
             $method['available'] = true;
         }
-        
+
         // Форматируем цену
         $method['price_formatted'] = $method['price'] > 0 ? number_format($method['price'], 0, '.', ' ') . ' ₽' : 'Бесплатно';
     }
-    
+
     // Формируем HTML для вариантов доставки
     $deliveryHtml = '';
-    
+
     // Курьер
     if ($citySettings['courier']['available']) {
         $deliveryHtml .= '<label class="order-methods__item' . ($citySettings['courier']['price'] === 0 ? ' order-methods__item--free' : '') . '">
@@ -198,7 +198,7 @@ try {
             <input type="radio" name="method-delivery" value="courier" data-price="' . $citySettings['courier']['price'] . '" data-delivery-time="' . htmlspecialchars($citySettings['courier']['delivery_time']) . '">
         </label>';
     }
-    
+
     // СДЭК
     if ($citySettings['cdek']['available']) {
         $deliveryHtml .= '<label class="order-methods__item' . ($citySettings['cdek']['price'] === 0 ? ' order-methods__item--free' : '') . '">
@@ -208,7 +208,7 @@ try {
             <input type="radio" name="method-delivery" value="cdek" data-price="' . $citySettings['cdek']['price'] . '" data-delivery-time="' . htmlspecialchars($citySettings['cdek']['delivery_time']) . '">
         </label>';
     }
-    
+
     // Самовывоз
     $deliveryHtml .= '<label class="order-methods__item order-methods__item--free">
         <h2>' . htmlspecialchars($citySettings['pickup']['name']) . '</h2>
@@ -216,7 +216,7 @@ try {
         <h3>Бесплатно</h3>
         <input type="radio" name="method-delivery" value="pickup" data-price="0" data-delivery-time="' . htmlspecialchars($citySettings['pickup']['delivery_time']) . '">
     </label>';
-    
+
     // Дополнительная информация о доставке
     $deliveryInfo = [
         'city' => $city,
@@ -225,7 +225,7 @@ try {
         'total_volume' => $totalVolume,
         'methods' => $citySettings
     ];
-    
+
     echo json_encode([
         'success' => true,
         'delivery_html' => $deliveryHtml,
@@ -234,7 +234,7 @@ try {
 
 } catch (Exception $e) {
     echo json_encode([
-        'success' => false, 
+        'success' => false,
         'error' => $e->getMessage()
     ]);
 }

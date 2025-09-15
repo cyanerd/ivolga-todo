@@ -51,7 +51,7 @@ while ($arSearchResult = $obSearch->GetNext()) {
   //различаем товар от секции
   if ($arSearchResult['PARAM1'] == 'CRM_PRODUCT_CATALOG' and (intval($arSearchResult['ITEM_ID']))) {
 
-//    d($arSearchResult['TITLE']);
+//    d($arSearchResult['ACTIVE']);
 //    d($q);
 //    d(mb_stripos($arSearchResult['TITLE'], $q) !== false);
 //    echo '<br>===========<br>';

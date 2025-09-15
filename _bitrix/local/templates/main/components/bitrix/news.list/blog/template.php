@@ -2,7 +2,7 @@
 $this->setFrameMode(true);
 ?>
 <section class="blog">
-  <? if ($arOptions['SHOW_CAPTION'] === 'Y') { ?>
+  <? if ($arParams['SHOW_CAPTION'] === 'Y') { ?>
     <div class="container">
       <a href="/blog/" class="blog__header">
         <h2 class="blog__title">Ivolga Blog</h2>

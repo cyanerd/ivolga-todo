@@ -374,8 +374,7 @@ if ($_GET['update_filters'] === 'Y') {
 
 
 <?php
-// Получаем категории (разделы)
-/*
+// Получаем категории (разделы) с такой же структурой как в $arResult["SECTIONS"]
 $categories = [];
 $rsSections = CIBlockSection::GetList([
   'SORT' => 'ASC'
@@ -383,13 +382,17 @@ $rsSections = CIBlockSection::GetList([
   'IBLOCK_ID' => 29,
   'ACTIVE' => 'Y',
   'GLOBAL_ACTIVE' => 'Y',
-  'DEPTH_LEVEL' => 2
-], false, ['ID', 'NAME']);
+//  'DEPTH_LEVEL' => 2
+], true, ['ID', 'NAME', 'ELEMENT_CNT', 'SECTION_PAGE_URL']);
 while ($arSection = $rsSections->GetNext()) {
-  $categories[] = $arSection;
+  $categories[] = [
+    'ID' => $arSection['ID'],
+    'NAME' => $arSection['NAME'],
+    'CODE' => $arSection['CODE'],
+    'ELEMENT_CNT' => $arSection['ELEMENT_CNT'],
+    'SECTION_PAGE_URL' => $arSection['SECTION_PAGE_URL']
+  ];
 }
-*/
-$categories = [];
 
 // Получаем уникальные размеры для текущего раздела
 $sizes = [];
@@ -531,9 +534,15 @@ if (empty($collections)) {
             <div class="catdrop-block__radios">
               <?php foreach ($categories as $i => $cat): ?>
                 <div class="catdrop-block__radios-item">
-                  <input type="radio" value="<?= htmlspecialchars($cat['NAME']) ?>" name="categories"
-                         id="categories-<?= $cat['ID'] ?>">
-                  <label for="categories-<?= $cat['ID'] ?>"><?= htmlspecialchars($cat['NAME']) ?></label>
+                  <input
+                    data-val="<?= htmlspecialchars($cat['CODE']) ?>"
+                    type="radio"
+                    value="<?= htmlspecialchars($cat['NAME']) ?>"
+                    name="categories"
+                    id="categories-<?= $cat['CODE'] ?>"
+                    <?= (!empty($_REQUEST['SECTION_CODE']) && $_REQUEST['SECTION_CODE'] === $cat['CODE']) ? ' checked' : '' ?>
+                  >
+                  <label for="categories-<?= $cat['CODE'] ?>"><?= htmlspecialchars($cat['NAME']) ?></label>
                 </div>
               <?php endforeach; ?>
             </div>
@@ -653,3 +662,10 @@ if ($_GET['update_filters'] === 'Y') {
 ?>
 
 <div class="backdrop"></div>
+<?php
+$APPLICATION->IncludeComponent(
+    'mindbox:view.category',
+    '',
+    ['CATEGORY_ID' => $arResult['ID']]
+);
+?>

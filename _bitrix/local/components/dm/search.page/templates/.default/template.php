@@ -37,7 +37,7 @@ $q = $arResult['q'];
                   foreach ($arResult['ITEMS'] as $arSearchItem) {
                     $arProductIDs[] = $arSearchItem['ITEM_ID'];
                   }
-                  $GLOBALS['searchFilter'] = ['ID' => $arProductIDs];
+                  $GLOBALS['searchFilter'] = ['ID' => $arProductIDs, 'ACTIVE' => 'Y'];
 
                   $APPLICATION->IncludeComponent(
                     "bitrix:catalog.section",

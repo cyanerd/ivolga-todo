@@ -103,7 +103,7 @@ global $arrFilter;
               "PAGER_TITLE" => "Товары",
               "PAGE_ELEMENT_COUNT" => "18",
               "PARTIAL_PRODUCT_PROPERTIES" => "N",
-              "PRICE_CODE" => ["Цена скидочная 10%"],
+              "PRICE_CODE" => ["Розничная цена"],
               "PRICE_VAT_INCLUDE" => "Y",
               "PRODUCT_BLOCKS_ORDER" => "price,props,sku,quantityLimit,quantity,buttons",
               "PRODUCT_DISPLAY_MODE" => "N",

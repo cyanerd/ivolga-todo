@@ -1,7 +1,4 @@
 <?php
-
-use local\php_interface\MyTools;
-
 require($_SERVER["DOCUMENT_ROOT"] . "/bitrix/modules/main/include/prolog_before.php");
 
 // Включаем обработку ошибок
@@ -108,33 +105,59 @@ foreach ($productIds as $productId) {
       $article = $arProp['VALUE'];
     }
 
-    // Получаем цвета
+    // Получаем цвета правильным способом
     $arColors = [];
-    if (isset($arProps['TSVET']['VALUE']) && $arProps['TSVET']['VALUE'] && $article && function_exists('local\php_interface\MyTools')) {
+
+    // Сначала пытаемся получить цвета через MyTools::getVariantColors
+    if ($article) {
       try {
         $colors_list = MyTools::getVariantColors($article);
         foreach ($colors_list as $color => $detail_page) {
           $arColors[] = [
             'name' => $color,
-            'code' => MyTools::getColor($color)
+            'code' => MyTools::getColor($color),
+            'detail_page' => $detail_page
           ];
         }
       } catch (Exception $e) {
-        // Игнорируем ошибки с цветами
+        // Если MyTools не сработал, получаем цвета из торговых предложений
+        if ($arInfo) {
+          $rsOffers = CIBlockElement::GetList([], ['IBLOCK_ID' => $arInfo['IBLOCK_ID'], 'PROPERTY_' . $arInfo['SKU_PROPERTY_ID'] => $productId], false, false, ["ID", "IBLOCK_ID", "NAME"]);
+          $colors_from_offers = [];
+          while ($rs = $rsOffers->GetNextElement()) {
+            $arOffer = $rs->getFields();
+            $arOffer['PROPERTIES'] = $rs->getProperties();
+            if (!empty($arOffer['PROPERTIES']['TSVET']['VALUE'])) {
+              $color_name = $arOffer['PROPERTIES']['TSVET']['VALUE'];
+              if (!isset($colors_from_offers[$color_name])) {
+                $colors_from_offers[$color_name] = [
+                  'name' => $color_name,
+                  'code' => MyTools::getColor($color_name)
+                ];
+              }
+            }
+          }
+          $arColors = array_values($colors_from_offers);
+        }
       }
     }
 
     // Получаем размеры
     $arSizes = [];
     if ($arInfo) {
-      $rsOffers = CIBlockElement::GetList([], ['IBLOCK_ID' => $arInfo['IBLOCK_ID'], 'PROPERTY_' . $arInfo['SKU_PROPERTY_ID'] => $productId], false, false, ["ID", "IBLOCK_ID", "NAME", "PROPERTY_RAZMER"]);
+      $rsOffers = CIBlockElement::GetList([], ['IBLOCK_ID' => $arInfo['IBLOCK_ID'], 'PROPERTY_' . $arInfo['SKU_PROPERTY_ID'] => $productId], false, false, ["ID", "IBLOCK_ID", "NAME"]);
+      $sizes_unique = [];
       while ($rs = $rsOffers->GetNextElement()) {
         $arOffer = $rs->getFields();
         $arOffer['PROPERTIES'] = $rs->getProperties();
-        if ($arOffer['PROPERTIES']['RAZMER']['VALUE']) {
-          $arSizes[] = $arOffer['PROPERTIES']['RAZMER']['VALUE'];
+        if (!empty($arOffer['PROPERTIES']['RAZMER']['VALUE'])) {
+          $size_value = $arOffer['PROPERTIES']['RAZMER']['VALUE'];
+          if (!in_array($size_value, $sizes_unique)) {
+            $sizes_unique[] = $size_value;
+          }
         }
       }
+      $arSizes = $sizes_unique;
     }
 
     $arProducts[] = [

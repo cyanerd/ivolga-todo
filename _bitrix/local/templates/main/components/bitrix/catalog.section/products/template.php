@@ -3,7 +3,7 @@ $this->setFrameMode(true);
 ?>
 
 <section class="new-products">
-  <? if ($arProps['HIDE_CAPTION'] === 'Y') { ?>
+  <? if ($arProps['HIDE_CAPTION'] !== 'Y') { ?>
     <div class="container">
       <a href="/catalog/" class="new-products__header">
         <h2 class="new-products__title">Новое</h2>
