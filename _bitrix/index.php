@@ -70,7 +70,7 @@ $APPLICATION->IncludeComponent(
   "products",
   [
     "IBLOCK_TYPE" => "CRM_PRODUCT_CATALOG",
-    "IBLOCK_ID" => "29",
+    "IBLOCK_ID" => CATALOG_ID,
     "SECTION_ID" => "",
     "SECTION_CODE" => "",
     "SECTION_USER_FIELDS" => [],
@@ -150,7 +150,7 @@ $GLOBALS['sectionsFilter'] = [
     "COUNT_ELEMENTS" => "N",
     "COUNT_ELEMENTS_FILTER" => "CNT_ACTIVE",
     "FILTER_NAME" => "sectionsFilter",
-    "IBLOCK_ID" => "29",
+    "IBLOCK_ID" => CATALOG_ID,
     "IBLOCK_TYPE" => "CRM_PRODUCT_CATALOG",
     "SECTION_CODE" => "",
     "SECTION_FIELDS" => ["", ""],
@@ -298,7 +298,7 @@ $GLOBALS['sectionsFilter'] = [
 
     <div class="showrooms__map" id="map-container">
       <div class="showrooms__map-img">
-        <img src="/html/assets/img/showmap.0d926a06c426b37fcde4.jpg" alt="">
+        <img src="/html/assets/img/map_new.png" alt="">
       </div>
       <i class="showrooms__map-icon">
         <svg width="24" height="25" viewBox="0 0 24 25" fill="none" xmlns="http://www.w3.org/2000/svg">

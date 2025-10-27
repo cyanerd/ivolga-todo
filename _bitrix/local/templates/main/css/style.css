@@ -112,7 +112,9 @@
     padding-bottom: 10rem;
 }
 
-.form-group > .form-control:not(:placeholder-shown) + .form-label, .form-group > .form-control:focus + .form-label {
+.form-group > .form-control:not(:placeholder-shown) + .form-label,
+.form-group > .form-control:focus + .form-label,
+.form-group.__form-group--phone > .form-control + .form-label {
     color: rgba(35, 34, 41, 0.5);
     transform: scale(0.762);
     padding-bottom: 10rem;

@@ -37,10 +37,12 @@ global $APPLICATION;
 <?
 $videoCovers = [];
 if ($arResult['DETAIL_PICTURE']['ID']) {
+  if (!$arResult["PROPERTIES"]["MORE_PHOTO"]["VALUE"]) $arResult["PROPERTIES"]["MORE_PHOTO"]["VALUE"] = [];
   $images = array_merge([$arResult['DETAIL_PICTURE']['ID']], $arResult["PROPERTIES"]["MORE_PHOTO"]["VALUE"]);
 } else {
   $images = $arResult["PROPERTIES"]["MORE_PHOTO"]["VALUE"];
 }
+if (!$images) $images = [];
 if ($arResult["PROPERTIES"]['FILES']['VALUE']) {
   $images = array_merge($arResult["PROPERTIES"]['FILES']['VALUE'], $images);
   $videoCovers = $arResult["PROPERTIES"]['VIDEO_COVER']['VALUE'];
@@ -135,13 +137,39 @@ if ($arResult["PROPERTIES"]['FILES']['VALUE']) {
 
           <p class="pageprod__prices">
             <?
-            // Получаем торговые предложения для цены
+            // Получаем размеры из торговых предложений (нужно для определения первого активного предложения)
             $arInfo = CCatalogSKU::GetInfoByProductIBlock($arResult["IBLOCK_ID"]);
-            $rsOffers = CIBlockElement::GetList([], ['IBLOCK_ID' => $arInfo['IBLOCK_ID'], 'PROPERTY_' . $arInfo['SKU_PROPERTY_ID'] => $arResult['ID']], false, false, ["ID", "IBLOCK_ID", "NAME", "PRICE_7"]);
-            $arOffer = $rsOffers->GetNext();
-            $price = $arOffer ? $arOffer['PRICE_7'] : 0;
+            $rsOffers = CIBlockElement::GetList([], ['IBLOCK_ID' => $arInfo['IBLOCK_ID'], 'PROPERTY_' . $arInfo['SKU_PROPERTY_ID'] => $arResult['ID']], false, false, ["ID", "IBLOCK_ID", "NAME", "PROPERTY_RAZMER"]);
+            $sizes_list = [];
+            $first_offer_id = null;
+            while ($rs = $rsOffers->GetNextElement()) {
+              $arOffer = $rs->getFields();
+              $arOffer['PROPERTIES'] = $rs->getProperties();
+              if ($arOffer['PROPERTIES']['RAZMER']['VALUE']) {
+                if (!$first_offer_id) {
+                  $first_offer_id = $arOffer['ID']; // Первое предложение
+                }
+                $sizes_list[] = [
+                  'id' => $arOffer['ID'],
+                  'title' => $arOffer['PROPERTIES']['RAZMER']['VALUE'],
+                ];
+              }
+            }
+
+            // Определяем ID товара для получения цены (первое торговое предложение или сам товар)
+            $price_product_id = getPriceProductId($arResult, $arResult, $arInfo);
+
+            // Получаем цены товара/предложения через единую функцию
+            $priceData = getProductPrice($price_product_id);
+            $price = $priceData['price'];
+            $oldPrice = $priceData['oldPrice'];
+            $discountPercent = $priceData['discountPercent'];
             ?>
-            <?= number_format($price, 0, '.', ' ') ?>₽
+            <span id="product-price">
+              <?= number_format($price, 0, '.', ' ') ?>₽
+            </span>
+            <span class="sale"<?= $discountPercent > 0 ? '' : ' style="display: none;"' ?>>-<?= $discountPercent ?>%</span>
+            <span class="old"<?= $oldPrice > $price ? '' : ' style="display: none;"' ?>><?= number_format($oldPrice, 0, '.', ' ') ?>₽</span>
           </p>
 
           <div class="pageprod__params prodpar">
@@ -175,18 +203,7 @@ if ($arResult["PROPERTIES"]['FILES']['VALUE']) {
             <? } ?>
 
             <?
-            // Получаем размеры из торговых предложений
-            $arInfo = CCatalogSKU::GetInfoByProductIBlock($arResult["IBLOCK_ID"]);
-            $rsOffers = CIBlockElement::GetList([], ['IBLOCK_ID' => $arInfo['IBLOCK_ID'], 'PROPERTY_' . $arInfo['SKU_PROPERTY_ID'] => $arResult['ID']], false, false, ["ID", "IBLOCK_ID", "NAME", "PROPERTY_RAZMER"]);
-            $sizes_list = [];
-            while ($rs = $rsOffers->GetNextElement()) {
-              $arOffer = $rs->getFields();
-              $arOffer['PROPERTIES'] = $rs->getProperties();
-              $sizes_list[] = [
-                'id' => $arOffer['ID'],
-                'title' => $arOffer['PROPERTIES']['RAZMER']['VALUE'],
-              ];
-            }
+            // Используем уже полученный массив размеров
             if ($sizes_list): ?>
               <div class="prodpar__block">
                 <p class="prodpar__block-title">
@@ -195,7 +212,13 @@ if ($arResult["PROPERTIES"]['FILES']['VALUE']) {
                 <div class="prodpar__block-sizes">
                   <? foreach ($sizes_list as $size): ?>
                     <div class="prodpar__block-size">
-                      <input type="radio" name="size" id="size-<?= $size['id'] ?>" value="<?= $size['title'] ?>">
+                      <input
+                        type="radio"
+                        name="size"
+                        id="size-<?= $size['id'] ?>"
+                        data-id="<?= $size['id'] ?>"
+                        value="<?= $size['title'] ?>"
+                      >
                       <label for="size-<?= $size['id'] ?>">
                         <?= $size['title'] ?>
                       </label>
@@ -319,6 +342,37 @@ if ($arResult["PROPERTIES"]['FILES']['VALUE']) {
                 </div>
               <? endif; ?>
 
+              <? if ($arResult["PROPERTIES"]["SOSTAV_TKANI"]["VALUE"]) { ?>
+                <div class="pageprod-accords__item">
+                  <button class="pageprod-accords__open">
+                    <p>Состав</p>
+                    <i><span></span><span></span></i>
+                  </button>
+                  <div class="pageprod-accords__wrap">
+                    <div class="pageprod-accords__body">
+                      <p>
+                        <?= $arResult["PROPERTIES"]["SOSTAV_TKANI"]["VALUE"] ?>
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              <? } ?>
+
+              <? if ($arResult["PROPERTIES"]["MODEL_PARAMS"]["VALUE"]) { ?>
+                <div class="pageprod-accords__item">
+                  <button class="pageprod-accords__open">
+                    <p>Параметры модели</p>
+                    <i><span></span><span></span></i>
+                  </button>
+                  <div class="pageprod-accords__wrap">
+                    <div class="pageprod-accords__body">
+                      <p>
+                        <?= $arResult["PROPERTIES"]["MODEL_PARAMS"]["VALUE"] ?>
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              <? } ?>
 
               <div class="pageprod-accords__item">
                 <button class="pageprod-accords__open">
@@ -515,127 +569,72 @@ if ($arResult["PROPERTIES"]['FILES']['VALUE']) {
         <h2 class="new-products__title">Дополнит образ</h2>
       </div>
     </div>
-    <div class="new-products__slider">
-      <div class="swiper new-products__swiper">
-        <div class="swiper-wrapper">
-          <? foreach ($arResult["PROPERTIES"]["RELATED_PRODUCTS"]["VALUE"] as $relatedProductId): ?>
-            <?
-            $relatedProduct = CIBlockElement::GetByID($relatedProductId)->GetNext();
-            if ($relatedProduct):
-              $relatedProduct["DETAIL_PAGE_URL"] = $relatedProduct["DETAIL_PAGE_URL"];
-              $relatedProduct["PREVIEW_PICTURE"] = CFile::GetFileArray($relatedProduct["PREVIEW_PICTURE"]);
-              ?>
-              <div class="swiper-slide">
-                <div class="product-card" data-product-id="<?= $relatedProduct['ID'] ?>">
-                  <div class="product-card__image">
-                    <div class="product-card__slider">
-                      <div class="product-card__slider-track">
-                        <? if ($relatedProduct["PREVIEW_PICTURE"]["SRC"]): ?>
-                          <div class="product-card__slide">
-                            <img src="<?= $relatedProduct["PREVIEW_PICTURE"]["SRC"] ?>" alt="<?= $relatedProduct["NAME"] ?>">
-                          </div>
-                        <? endif; ?>
-                      </div>
-                      <div class="product-card__pagination">
-                        <span class="product-card__pagination-dot active"></span>
-                      </div>
-                    </div>
-                    <div class="product-card__tags">
-                      <? if ($relatedProduct["PROPERTIES"]["NEW"]["VALUE"]): ?>
-                        <span class="product-card__tag">Новинка</span>
-                      <? endif; ?>
-                      <? if ($relatedProduct["PROPERTIES"]["PREORDER"]["VALUE"]): ?>
-                        <span class="product-card__tag">Предзаказ</span>
-                      <? endif; ?>
-                    </div>
-                    <i class="product-card__like" data-product-id="<?= $relatedProduct["ID"] ?>">
-                      <svg class="activelike" width="20" height="18" viewBox="0 0 20 18" fill="none"
-                           xmlns="http://www.w3.org/2000/svg">
-                        <path fill-rule="evenodd" clip-rule="evenodd"
-                              d="M1.74163 2.13008C2.69464 1.19149 3.9848 0.666199 5.32771 0.666199C6.66597 0.666199 7.95186 1.18787 8.9039 2.12038L10.0005 3.12621L11.0971 2.12038C12.0491 1.18787 13.335 0.666199 14.6733 0.666199C16.0162 0.666199 17.3063 1.19149 18.2593 2.13008C19.2127 3.06906 19.7505 4.34504 19.7505 5.67796C19.7505 7.00999 19.2135 8.28515 18.2613 9.22394L18.2593 9.22584L10.0005 17.4763L1.73968 9.22392C0.787496 8.28512 0.250488 7.00998 0.250488 5.67796C0.250488 4.34504 0.78823 3.06906 1.74163 2.13008ZM5.32771 2.1662C4.37531 2.1662 3.46419 2.53892 2.79417 3.1988C2.12455 3.85829 1.75049 4.75031 1.75049 5.67796C1.75049 6.60562 2.12455 7.49764 2.79417 8.15713L2.79797 8.16087L10.0005 15.3561L17.2068 8.15712C17.8764 7.49762 18.2505 6.60562 18.2505 5.67796C18.2505 4.75031 17.8764 3.85829 17.2068 3.1988C16.5368 2.53892 15.6257 2.1662 14.6733 2.1662C13.7209 2.1662 12.8097 2.53892 12.1397 3.1988L12.1302 3.20814L10.0005 5.16165L7.87073 3.20814L7.86124 3.1988C7.19123 2.53892 6.2801 2.1662 5.32771 2.1662Z"
-                              fill="#232229"/>
-                        <path
-                          d="M2.79417 3.1988C3.46419 2.53892 4.37531 2.1662 5.32771 2.1662C6.2801 2.1662 7.19123 2.53892 7.86124 3.1988L7.87073 3.20814L10.0005 5.16165L12.1302 3.20814L12.1397 3.1988C12.8097 2.53892 13.7209 2.1662 14.6733 2.1662C15.6257 2.1662 16.5368 2.53892 17.2068 3.1988C17.8764 3.85829 18.2505 4.75031 18.2505 5.67796C18.2505 6.60562 17.8764 7.49762 17.2068 8.15712L10.0005 15.3561L2.79797 8.16087L2.79417 8.15713C2.12455 7.49764 1.75049 6.60562 1.75049 5.67796C1.75049 4.75031 2.12455 3.85829 2.79417 3.1988Z"
-                          fill="#232229"/>
-                      </svg>
-                      <svg class="deflike" width="21" height="18" viewBox="0 0 21 18" fill="none"
-                           xmlns="http://www.w3.org/2000/svg">
-                        <path fill-rule="evenodd" clip-rule="evenodd"
-                              d="M2.24212 1.96389C3.19513 1.02529 4.48529 0.5 5.8282 0.5C7.16646 0.5 8.45235 1.02167 9.40439 1.95418L10.501 2.96001L11.5976 1.95418C12.5496 1.02167 13.8355 0.5 15.1738 0.5C16.5167 0.5 17.8068 1.02529 18.7598 1.96389C19.7132 2.90286 20.251 4.17884 20.251 5.51177C20.251 6.84379 19.714 8.11895 18.7618 9.05774C18.7611 9.05838 18.7605 9.05901 18.7598 9.05964L10.501 17.3101L2.24017 9.05772C1.28798 8.11893 0.750977 6.84378 0.750977 5.51177C0.750977 4.17884 1.28872 2.90286 2.24212 1.96389ZM5.8282 2C4.8758 2 3.96467 2.37272 3.29466 3.0326C2.62504 3.69209 2.25098 4.58411 2.25098 5.51177C2.25098 6.43942 2.62504 7.33144 3.29466 7.99093L3.29846 7.99468L10.501 15.1899L17.7073 7.99092C18.3769 7.33143 18.751 6.43942 18.751 5.51177C18.751 4.58411 18.3769 3.69209 17.7073 3.0326C17.0373 2.37272 16.1262 2 15.1738 2C14.2214 2 13.3102 2.37272 12.6402 3.0326L12.6307 3.04194L10.501 4.99545L8.37122 3.04194L8.36173 3.0326C7.69172 2.37272 6.78059 2 5.8282 2Z"
-                              fill="#232229"/>
-                      </svg>
-                    </i>
-                  </div>
-                  <a href="<?= $relatedProduct["DETAIL_PAGE_URL"] ?>" class="product-card__info">
-                    <h3 class="product-card__title"><?= $relatedProduct["NAME"] ?></h3>
-                    <div class="product-card__price">
-                      <div class="product-card__price-current">
-                        <span><?= number_format($relatedProduct["PRICES"]["BASE"]["VALUE"], 0, '.', ' ') ?>₽</span>
-                        <? if ($relatedProduct["PRICES"]["BASE"]["DISCOUNT_DIFF"] > 0): ?>
-                          <div class="product-card__discount">
-                            -<?= round(($relatedProduct["PRICES"]["BASE"]["DISCOUNT_DIFF"] / $relatedProduct["PRICES"]["BASE"]["VALUE"]) * 100) ?>
-                            %
-                          </div>
-                        <? endif; ?>
-                      </div>
-                      <? if ($relatedProduct["PRICES"]["BASE"]["DISCOUNT_VALUE"]): ?>
-                        <span
-                          class="product-card__price-old"><?= number_format($relatedProduct["PRICES"]["BASE"]["VALUE"], 0, '.', ' ') ?>₽</span>
-                      <? endif; ?>
-                    </div>
-                  </a>
-                  <div class="product-card__footer">
-                    <? if ($relatedProduct["PROPERTIES"]["COLORS"]["VALUE"]): ?>
-                      <div class="product-card__colors">
-                        <? foreach (array_slice($relatedProduct["PROPERTIES"]["COLORS"]["VALUE"], 0, 5) as $key => $color): ?>
-                          <a href="<?= $relatedProduct["DETAIL_PAGE_URL"] ?>" class="product-card__colors-item"
-                             style="background-color: <?= $relatedProduct["PROPERTIES"]["COLORS"]["VALUE_XML_ID"][$key] ?: '#f6f5f3'; ?>;"></a>
-                        <? endforeach; ?>
-                      </div>
-                    <? endif; ?>
-                    <? if ($relatedProduct["PROPERTIES"]["SIZES"]["VALUE"]): ?>
-                      <div class="product-card__sizes">
-                        <? foreach (array_slice($relatedProduct["PROPERTIES"]["SIZES"]["VALUE"], 0, 5) as $size): ?>
-                          <a href="<?= $relatedProduct["DETAIL_PAGE_URL"] ?>" class="product-card__sizes-item"><?= $size ?></a>
-                        <? endforeach; ?>
-                      </div>
-                    <? endif; ?>
-                  </div>
-                </div>
-              </div>
-            <? endif; ?>
-          <? endforeach; ?>
-        </div>
-        <div class="new-products__nav">
-          <button class="new-products__nav-prev">
-            <svg width="32" height="33" viewBox="0 0 32 33" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <rect x="1" y="1.1665" width="30" height="30" rx="15" stroke="#232229" stroke-width="2"/>
-              <path fill-rule="evenodd" clip-rule="evenodd"
-                    d="M12.25 21.1665L12.25 20.1665C12.25 18.3716 10.7949 16.9165 9 16.9165L9 15.4165C11.6234 15.4165 13.75 17.5432 13.75 20.1665L13.75 21.1665L12.25 21.1665Z"
-                    fill="#232229"/>
-              <path fill-rule="evenodd" clip-rule="evenodd"
-                    d="M9 15.4165C10.7949 15.4165 12.25 13.9614 12.25 12.1665L12.25 11.1665L13.75 11.1665L13.75 12.1665C13.75 14.7899 11.6234 16.9165 9 16.9165L9 15.4165Z"
-                    fill="#232229"/>
-              <path fill-rule="evenodd" clip-rule="evenodd" d="M9 15.4165L27 15.4165L27 16.9165L9 16.9165L9 15.4165Z"
-                    fill="#232229"/>
-            </svg>
-          </button>
-          <button class="new-products__nav-next">
-            <svg width="32" height="33" viewBox="0 0 32 33" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <rect x="1" y="1.1665" width="30" height="30" rx="15" stroke="#232229" stroke-width="2"/>
-              <path fill-rule="evenodd" clip-rule="evenodd"
-                    d="M20.9166 11.9999V12.8332C20.9166 14.2599 22.0732 15.4165 23.5 15.4165V16.9165C21.2448 16.9165 19.4166 15.0884 19.4166 12.8332V11.9999H20.9166Z"
-                    fill="#232229"/>
-              <path fill-rule="evenodd" clip-rule="evenodd"
-                    d="M23.5 16.9165C22.0732 16.9165 20.9166 18.0731 20.9166 19.4998V20.3332H19.4166V19.4998C19.4166 17.2447 21.2448 15.4165 23.5 15.4165V16.9165Z"
-                    fill="#232229"/>
-              <path fill-rule="evenodd" clip-rule="evenodd" d="M23.5 16.9165H8.5V15.4165H23.5V16.9165Z" fill="#232229"/>
-            </svg>
-          </button>
-        </div>
-        <div class="new-products__pag mob"></div>
-      </div>
-    </div>
+    <?
+    global $indexSliderFilter;
+    $indexSliderFilter = ["ID" => $arResult["PROPERTIES"]["RELATED_PRODUCTS"]["VALUE"]];
+
+    $APPLICATION->IncludeComponent(
+      "bitrix:catalog.section",
+      "products",
+      [
+        "HIDE_CAPTION" => "Y",
+        "IBLOCK_TYPE" => "CRM_PRODUCT_CATALOG",
+        "IBLOCK_ID" => CATALOG_ID,
+        "SECTION_ID" => "",
+        "SECTION_CODE" => "",
+        "SECTION_USER_FIELDS" => [],
+        "ELEMENT_SORT_FIELD" => "SORT",
+        "ELEMENT_SORT_ORDER" => "ASC",
+        "ELEMENT_SORT_FIELD2" => "ID",
+        "ELEMENT_SORT_ORDER2" => "DESC",
+        "FILTER_NAME" => "indexSliderFilter",
+        "INCLUDE_SUBSECTIONS" => "Y",
+        "SHOW_ALL_WO_SECTION" => "Y",
+        "PAGE_ELEMENT_COUNT" => "20",
+        "LINE_ELEMENT_COUNT" => "4",
+        "PROPERTY_CODE" => ["MORE_PHOTO", "NAIMENOVANIE_TOVARA_NA_SAYTE_ETIKETKE"],
+        "OFFERS_LIMIT" => "0",
+        "TEMPLATE_THEME" => "",
+        "PRICE_CODE" => ["Розничная цена"],
+        "ADD_PICT_PROP" => "",
+        "LABEL_PROP" => [],
+        "PRODUCT_DISPLAY_MODE" => "Y",
+        "PRODUCT_BLOCKS_ORDER" => "",
+        "SECTION_URL" => "",
+        "DETAIL_URL" => "",
+        "BASKET_URL" => "/personal/basket.php",
+        "ACTION_VARIABLE" => "action",
+        "PRODUCT_ID_VARIABLE" => "id",
+        "PRODUCT_QUANTITY_VARIABLE" => "quantity",
+        "PRODUCT_PROPS_VARIABLE" => "prop",
+        "SECTION_ID_VARIABLE" => "SECTION_ID",
+        "SET_TITLE" => "N",
+        "SET_BROWSER_TITLE" => "N",
+        "SET_META_KEYWORDS" => "N",
+        "SET_META_DESCRIPTION" => "N",
+        "SET_LAST_MODIFIED" => "N",
+        "USE_MAIN_ELEMENT_SECTION" => "N",
+        "CACHE_TYPE" => "A",
+        "CACHE_TIME" => "0",
+        "CACHE_GROUPS" => "Y",
+        "DISPLAY_TOP_PAGER" => "N",
+        "DISPLAY_BOTTOM_PAGER" => "N",
+        "PAGER_TITLE" => "Товары",
+        "PAGER_SHOW_ALWAYS" => "N",
+        "PAGER_TEMPLATE" => ".default",
+        "PAGER_DESC_NUMBERING" => "N",
+        "PAGER_DESC_NUMBERING_CACHE_TIME" => "36000",
+        "PAGER_SHOW_ALL" => "N",
+        "PAGER_BASE_LINK_ENABLE" => "N",
+        "SET_STATUS_404" => "N",
+        "SHOW_404" => "N",
+        "MESSAGE_404" => "",
+        "COMPATIBLE_MODE" => "Y",
+      ],
+      false
+    );
+    ?>
+
   </section>
 <? endif; ?>
 <?

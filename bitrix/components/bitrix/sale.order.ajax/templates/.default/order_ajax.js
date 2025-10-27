@@ -6322,12 +6322,6 @@ BX.namespace('BX.Sale.OrderAjaxComponent');
       }
     },
 
-    valuesToString: function (values) {
-      var str = values.join(', ');
-
-      return str.length ? BX.util.htmlspecialchars(str) : BX.message('SOA_NOT_SELECTED');
-    },
-
     alterProperty: function (settings, propContainer) {
       var divs = BX.findChildren(propContainer, {tagName: 'DIV'}),
         i, textNode, inputs, del, add,
@@ -6351,8 +6345,10 @@ BX.namespace('BX.Sale.OrderAjaxComponent');
           textNode.setAttribute('autocomplete', 'email');
         if (settings.IS_PAYER == 'Y')
           textNode.setAttribute('autocomplete', 'name');
-        if (settings.IS_PHONE == 'Y')
+        if (settings.IS_PHONE == 'Y') {
           textNode.setAttribute('autocomplete', 'tel');
+          textNode.setAttribute('placeholder', '+7 (___) ___-__-__');
+        }
 
         if (settings.PATTERN && settings.PATTERN.length) {
           textNode.removeAttribute('pattern');
@@ -6474,6 +6470,12 @@ BX.namespace('BX.Sale.OrderAjaxComponent');
           }
         }, this));
       }
+    },
+
+    valuesToString: function (values) {
+      var str = values.join(', ');
+
+      return str.length ? BX.util.htmlspecialchars(str) : BX.message('SOA_NOT_SELECTED');
     },
 
     alterDateProperty: function (settings, inputText) {

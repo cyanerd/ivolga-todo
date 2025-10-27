@@ -1,6 +1,5 @@
 $(document).ready(function ()
 {
-	console.log('ADD');
 	BX.addCustomEvent('onAjaxSuccess', setReadonly);
 	BX.addCustomEvent('onAjaxSuccess', consoleMessage);
 	BX.addCustomEvent('onAjaxSuccess', openPopUpMap);
@@ -28,7 +27,6 @@ var popupRussianpost = '';
 
 function callbackFunctionMap(data)
 {
-	console.log(data);
 	$('#russianpost_result_type').val(data.mailType);
 	$('#russianpost_result_price').val(data.cashOfDelivery);
 	$('#russianpost_result_zip').val(data.indexTo);
@@ -55,6 +53,7 @@ function callbackFunctionMap(data)
 		$('#russianpost_street_address').val(data.addressTo);
 	}
 	$('#russianpost_select_pvz').val('Y');
+
 	popupRussianpost.close();
 	BX.Sale.OrderAjaxComponent.sendRequest();
 	//for old
@@ -69,8 +68,12 @@ function setReadonly()
 		var addressProp = $('#russianpost_address_prop').val();
 		$('#zipProperty').attr('readonly', true);
 		$('#zipProperty').css("background-color", "rgb(238, 238, 238)");
-		$('#soa-property-' + addressProp).attr('readonly', true);
-		$('#soa-property-' + addressProp).css("background-color", "rgb(238, 238, 238)");
+		// Для ПВЗ Почты России оставляем поле адреса активным
+		var currentDeliveryMethod = $('input[name="method-delivery"]:checked').closest('label').find('h2').text().trim();
+		if (currentDeliveryMethod !== 'Пункт выдачи заказов Почта России') {
+			$('#soa-property-' + addressProp).attr('readonly', true);
+			$('#soa-property-' + addressProp).css("background-color", "rgb(238, 238, 238)");
+		}
 		var address = $('#soa-property-' + addressProp).val();
 		var addressRussianpost = $('#russianpost_result_address').val();
 		if(typeof address != "undefined" && address == '')
@@ -127,9 +130,7 @@ function consoleMessage()
 	var errMessage = $('#russianpost_error_tarif').val();
 	if (errMessage != null && typeof (errMessage) != undefined)
 	{
-		console.log('CALCULATE ERROR DETAILED ANSWER');
 		errMessage = errMessage.replace(/\\/g, '');
-		console.log(JSON.parse(errMessage));
 	}
 }
 
@@ -183,7 +184,6 @@ function openMap(guidId, price, weight, zip, location, prodIds)
 						var fullMap = $('#russianpost_full_map').val();
 						if(fullMap == 'N')
 						{
-							console.log('FULL MAP');
 							$('#popup-message').css('width', '100%');
 							$('#popup-message').css('height', '100%');
 							$('#popup-message').css('left', 0);
@@ -218,7 +218,6 @@ function openMap(guidId, price, weight, zip, location, prodIds)
 			onPopupShow: function ()
 			{
 				// Событие при показе окна
-				console.log('POPUP SHOW');
 			},
 			onPopupClose: function ()
 			{

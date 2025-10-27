@@ -170,12 +170,12 @@ if ($_GET['update_filters'] === 'Y') {
                 <div class="product-card__slider-track">
                   <? if (!empty($arItem["PROPERTIES"]["MORE_PHOTO"]["VALUE"])): ?>
                     <? foreach ($arItem["PROPERTIES"]["MORE_PHOTO"]["VALUE"] as $imageId): ?>
-                      <div class="product-card__slide">
+                      <div class="product-card__slide product-card__slide--2">
                         <img src="<?= CFile::GetPath($imageId) ?>" alt="<?= $arItem['PROPERTIES']['NAIMENOVANIE_TOVARA_NA_SAYTE_ETIKETKE']['VALUE'] ?: $arItem["NAME"] ?>">
                       </div>
                     <? endforeach; ?>
                   <? else: ?>
-                    <div class="product-card__slide">
+                    <div class="product-card__slide product-card__slide--1">
                       <img src="/assets/img/no-photo.jpg" alt="<?= $arItem['PROPERTIES']['NAIMENOVANIE_TOVARA_NA_SAYTE_ETIKETKE']['VALUE'] ?: $arItem["NAME"] ?>">
                     </div>
                   <? endif; ?>
@@ -191,10 +191,10 @@ if ($_GET['update_filters'] === 'Y') {
                 <? endif; ?>
               </div>
               <div class="product-card__tags">
-                <? if ($arItem["PROPERTIES"]["NEW"]["VALUE"]): ?>
+                <? if ($arItem["PROPERTIES"]["NEW"]["VALUE"] == 'Y'): ?>
                   <span class="product-card__tag">Новинка</span>
                 <? endif; ?>
-                <? if ($arItem["PROPERTIES"]["PREORDER"]["VALUE"]): ?>
+                <? if ($arItem["PROPERTIES"]["PREORDER"]["VALUE"] == 'Y'): ?>
                   <span class="product-card__tag">Предзаказ</span>
                 <? endif; ?>
               </div>
@@ -219,50 +219,21 @@ if ($_GET['update_filters'] === 'Y') {
             <a href="<?= $arItem["DETAIL_PAGE_URL"] ?>" class="product-card__info">
               <h3 class="product-card__title"><?= $arItem['PROPERTIES']['NAIMENOVANIE_TOVARA_NA_SAYTE_ETIKETKE']['VALUE'] ?: $arItem["NAME"] ?></h3>
               <?php
-              // --- Цена ---
               $price = null;
               $oldPrice = null;
               $discount = null;
-              if (!empty($arItem['OFFERS']) && is_array($arItem['OFFERS'])) {
-                $minPrice = null;
-                foreach ($arItem['OFFERS'] as $offer) {
-                  if (!empty($offer['PRICES'])) {
-                    foreach ($offer['PRICES'] as $priceType) {
-                      $offerPrice = $priceType['DISCOUNT_VALUE'] ?? $priceType['VALUE'] ?? null;
-                      if ($offerPrice !== null && ($minPrice === null || $offerPrice < $minPrice)) {
-                        $minPrice = $offerPrice;
-                        $price = $priceType['PRINT_DISCOUNT_VALUE'] ?: $priceType['PRINT_VALUE'];
-                        $oldPrice = $priceType['PRINT_VALUE'] !== $priceType['PRINT_DISCOUNT_VALUE'] ? $priceType['PRINT_VALUE'] : null;
-                        $discount = !empty($priceType['DISCOUNT_DIFF_PERCENT']) ? round($priceType['DISCOUNT_DIFF_PERCENT']) : null;
-                      }
-                    }
-                  } elseif (!empty($offer['CATALOG_PRICE_1'])) {
-                    $offerPrice = $offer['CATALOG_PRICE_1'];
-                    if ($minPrice === null || $offerPrice < $minPrice) {
-                      $minPrice = $offerPrice;
-                      $price = number_format($offerPrice, 0, '', ' ') . '₽';
-                    }
-                  } elseif (!empty($offer['CATALOG_PRICE_7'])) {
-                    $offerPrice = $offer['CATALOG_PRICE_7'];
-                    if ($minPrice === null || $offerPrice < $minPrice) {
-                      $minPrice = $offerPrice;
-                      $price = number_format($offerPrice, 0, '', ' ') . '₽';
-                    }
-                  }
-                }
-              }
-              if (!$price && !empty($arItem['MIN_PRICE'])) {
-                $price = $arItem['MIN_PRICE']['PRINT_DISCOUNT_VALUE'] ?: $arItem['MIN_PRICE']['PRINT_VALUE'];
-                $oldPrice = $arItem['MIN_PRICE']['PRINT_VALUE'] !== $arItem['MIN_PRICE']['PRINT_DISCOUNT_VALUE'] ? $arItem['MIN_PRICE']['PRINT_VALUE'] : null;
-                $discount = !empty($arItem['MIN_PRICE']['DISCOUNT_DIFF_PERCENT']) ? round($arItem['MIN_PRICE']['DISCOUNT_DIFF_PERCENT']) : null;
-              }
-              // Добавляем обработку ITEM_PRICES
-              if (!$price && !empty($arItem['OFFERS'][0]['ITEM_PRICES'][0]['PRINT_PRICE'])) {
-                $price = $arItem['OFFERS'][0]['ITEM_PRICES'][0]['PRINT_PRICE'];
-                // Если есть скидка, можно добавить обработку $arItem['ITEM_PRICES'][0]['PRINT_BASE_PRICE'] и ['PERCENT']
-                if (!empty($arItem['OFFERS'][0]['ITEM_PRICES'][0]['PRINT_BASE_PRICE']) && $arItem['OFFERS'][0]['ITEM_PRICES'][0]['PRINT_BASE_PRICE'] !== $arItem['OFFERS'][0]['ITEM_PRICES'][0]['PRINT_PRICE']) {
-                  $oldPrice = $arItem['OFFERS'][0]['ITEM_PRICES'][0]['PRINT_BASE_PRICE'];
-                  $discount = !empty($arItem['OFFERS'][0]['ITEM_PRICES'][0]['PERCENT']) ? $arItem['OFFERS'][0]['ITEM_PRICES'][0]['PERCENT'] : null;
+
+              // Определяем ID товара для получения цены (первое торговое предложение или сам товар)
+              $price_product_id = getPriceProductId($arItem);
+
+              // Получаем цены товара/предложения через единую функцию
+              if ($price_product_id) {
+                $priceData = getProductPrice($price_product_id);
+//                d($priceData);
+                if ($priceData['formattedPrice']) {
+                  $price = $priceData['formattedPrice'];
+                  $oldPrice = $priceData['formattedOldPrice'] ?: null;
+                  $discount = $priceData['discountPercent'] ?: null;
                 }
               }
               ?>
@@ -279,7 +250,7 @@ if ($_GET['update_filters'] === 'Y') {
               </div>
             </a>
 
-            <div class="product-card__footer">
+            <div class="product-card__footer product-card__footer3">
               <?php
               // --- Цвета ---
               $colors = [];
@@ -379,7 +350,7 @@ $categories = [];
 $rsSections = CIBlockSection::GetList([
   'SORT' => 'ASC'
 ], [
-  'IBLOCK_ID' => 29,
+  'IBLOCK_ID' => CATALOG_ID,
   'ACTIVE' => 'Y',
   'GLOBAL_ACTIVE' => 'Y',
 //  'DEPTH_LEVEL' => 2
@@ -396,11 +367,11 @@ while ($arSection = $rsSections->GetNext()) {
 
 // Получаем уникальные размеры для текущего раздела
 $sizes = [];
-$arInfo = CCatalogSKU::GetInfoByProductIBlock(29);
+$arInfo = CCatalogSKU::GetInfoByProductIBlock(CATALOG_ID);
 if ($arInfo && !empty($arInfo['IBLOCK_ID'])) {
   // Сначала получаем ID товаров из текущего раздела
   $productIds = [];
-  $sectionFilter = ['IBLOCK_ID' => 29, 'ACTIVE' => 'Y'];
+  $sectionFilter = ['IBLOCK_ID' => CATALOG_ID, 'ACTIVE' => 'Y'];
 
   // Если мы в конкретном разделе, добавляем фильтр по разделу
   if (!empty($_REQUEST["SECTION_ID"])) {
@@ -432,7 +403,7 @@ if ($arInfo && !empty($arInfo['IBLOCK_ID'])) {
 }
 // Получаем уникальные цвета для текущего раздела
 $colors = [];
-$sectionFilter = ['IBLOCK_ID' => 29, 'ACTIVE' => 'Y'];
+$sectionFilter = ['IBLOCK_ID' => CATALOG_ID, 'ACTIVE' => 'Y'];
 
 // Если мы в конкретном разделе, добавляем фильтр по разделу
 if (!empty($_REQUEST["SECTION_ID"])) {
@@ -454,7 +425,7 @@ if (empty($colors)) {
   error_log("No colors found in elements, trying property enum...");
   $property_enums = CIBlockPropertyEnum::GetList(
     ["SORT" => "ASC"],
-    ["IBLOCK_ID" => 29, "CODE" => "TSVET"]
+    ["IBLOCK_ID" => CATALOG_ID, "CODE" => "TSVET"]
   );
   while ($enum_fields = $property_enums->GetNext()) {
     $colors[] = $enum_fields["VALUE"];
@@ -484,7 +455,7 @@ if (empty($materials)) {
   error_log("No materials found in elements, trying property enum...");
   $property_enums = CIBlockPropertyEnum::GetList(
     ["SORT" => "ASC"],
-    ["IBLOCK_ID" => 29, "CODE" => "MATERIAL"]
+    ["IBLOCK_ID" => CATALOG_ID, "CODE" => "MATERIAL"]
   );
   while ($enum_fields = $property_enums->GetNext()) {
     $materials[] = $enum_fields["VALUE"];
@@ -507,7 +478,7 @@ if (empty($collections)) {
   error_log("No collections found in elements, trying property enum...");
   $property_enums = CIBlockPropertyEnum::GetList(
     ["SORT" => "ASC"],
-    ["IBLOCK_ID" => 29, "CODE" => "KOLLEKTSIYA"]
+    ["IBLOCK_ID" => CATALOG_ID, "CODE" => "KOLLEKTSIYA"]
   );
   while ($enum_fields = $property_enums->GetNext()) {
     $collections[] = $enum_fields["VALUE"];

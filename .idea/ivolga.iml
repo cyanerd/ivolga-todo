@@ -2,6 +2,7 @@
 <module type="WEB_MODULE" version="4">
   <component name="NewModuleRootManager">
     <content url="file://$MODULE_DIR$">
+      <sourceFolder url="file://$MODULE_DIR$/_bitrix/local/php_interface" isTestSource="false" packagePrefix="Ivolga" />
       <excludeFolder url="file://$MODULE_DIR$/ivolga_source" />
     </content>
     <orderEntry type="inheritedJdk" />

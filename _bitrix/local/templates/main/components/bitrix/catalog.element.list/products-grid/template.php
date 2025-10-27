@@ -16,17 +16,17 @@ $this->setFrameMode(true);
               <div class="product-card__slider-track">
                 <? if ($arItem["PROPERTIES"]["MORE_PHOTO"]["VALUE"]): ?>
                   <? foreach ($arItem["PROPERTIES"]["MORE_PHOTO"]["VALUE"] as $imageId): ?>
-                    <div class="product-card__slide">
+                    <div class="product-card__slide product-card__slide--3">
                       <img src="<?= CFile::GetPath($imageId) ?>" alt="<?= $arItem["NAME"] ?>">
                     </div>
                   <? endforeach; ?>
                 <? else: ?>
                   <? if ($arItem["PREVIEW_PICTURE"]["SRC"]): ?>
-                    <div class="product-card__slide">
+                    <div class="product-card__slide product-card__slide--4">
                       <img src="<?= $arItem["PREVIEW_PICTURE"]["SRC"] ?>" alt="<?= $arItem["NAME"] ?>">
                     </div>
                   <? else: ?>
-                    <div class="product-card__slide">
+                    <div class="product-card__slide product-card__slide--5">
                       <img src="/assets/img/no-photo.jpg" alt="<?= $arItem["NAME"] ?>">
                     </div>
                   <? endif; ?>
@@ -89,7 +89,7 @@ $this->setFrameMode(true);
             </div>
           </a>
 
-          <div class="product-card__footer">
+          <div class="product-card__footer product-card__footer1">
             <? if ($arItem["PROPERTIES"]["COLORS"]["VALUE"]): ?>
               <div class="product-card__colors">
                 <? foreach ($arItem["PROPERTIES"]["COLORS"]["VALUE"] as $color): ?>

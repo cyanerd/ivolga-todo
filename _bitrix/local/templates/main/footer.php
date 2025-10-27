@@ -129,7 +129,7 @@
       <form class="footer__newsletter-form" id="newsletter-form">
         <div class="footer__newsletter-inputWrapper">
           <input type="email" class="footer__newsletter-input" id="newsInput" placeholder="" required>
-          <label for="newsInput"><span>Email для подписки</span></label>
+          <label for="newsInput"><span>Email</span></label>
         </div>
         <button type="submit" class="footer__newsletter-button">Подписаться</button>
       </form>
@@ -143,11 +143,12 @@
       </div>
       <div class="footer__bottom-info">
         <div class="footer__copyright">© <?= $siteSettings['copyright'] ?></div>
+        <? /*
         <div class="footer__creator">
           <span>Сайт создан</span>
           <a href="<?= $siteSettings['madebylink'] ?>" target="_blank"
              class="footer__creator-link">© <?= $siteSettings['madeby'] ?></a>
-        </div>
+        </div>*/ ?>
         <div class="footer__payment">
           <img
             src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iODYiIGhlaWdodD0iMjUiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3QgeT0iLjUiIHdpZHRoPSI4NiIgaGVpZ2h0PSIyNCIgcng9IjEiIGZpbGw9IiMyMzIyMjkiLz48cGF0aCBkPSJNMjAuNDI0IDcuNWgtMS42Njh2OC40NjFoMS42NjhWNy41Wk0xNi44MzkgNy45NzNIMTUuMTd2OC40NjFoMS42Njl2LTguNDZaTTEzLjI1NCA4LjUwMmgtMS42Njl2OC40NjNoMS42NjlWOC41MDJaTTkuNjY5IDkuMDM2SDhWMTcuNWgxLjY2OVY5LjAzNlpNNjQuNDkzIDEyLjAwOCA2MS44MDYgOS4wMmgtMS41N3Y2LjkxNmgxLjY0di00LjQxMmwyLjQ1MiAyLjYxNGguMzAzbDIuNDEtMi42MTR2NC40MTJoMS42NFY5LjAyaC0xLjU3bC0yLjYxOCAyLjk4OFpNNzYuNDk0IDkuMDJsLTQuMDY0IDQuNDk2VjkuMDJoLTEuNjR2Ni45MTZoMS41MDJsNC4wNjUtNC40OTV2NC40OTVoMS42NFY5LjAyaC0xLjUwM1pNNTEuNDAzIDExLjU1MWMwIDEuMTAxLjYwMiAxLjk2OSAxLjUyNiAyLjMzMmwtMS43MzMgMi4wNTNoMi4wMDdsMS41NzctMS44NjdoMS43MDZ2MS44NjdoMS42NFY5LjAySDUzLjk1Yy0xLjU1NiAwLTIuNTQ4IDEuMDY1LTIuNTQ4IDIuNTMxWm01LjA4NC0xLjAwN3YyLjA0NWgtMi4yMzJjLS43NDUgMC0xLjE0NC0uNDE1LTEuMTQ0LTEuMDI0IDAtLjYwOC40MTQtMS4wMjMgMS4xNDQtMS4wMjNsMi4yMzIuMDAyWk00My43ODMgMTAuNDA0Yy0uMSAyLjM3OC0uNjAyIDMuOTE0LTEuNTg1IDMuOTE0aC0uMjQ2djEuNjZsLjI2Mi4wMTRjMS45Ny4xMSAzLjA2LTEuNjIgMy4yMzgtNS4zOTVoMi41OXY1LjM0aDEuNjM4VjkuMDJoLTUuODQybC0uMDU1IDEuMzg0Wk0zNy42MSA4LjkyNGMtMi4yMTggMC0zLjgxNCAxLjUzNS0zLjgxNCAzLjU1NCAwIDIuMDg4IDEuNzM2IDMuNTcgMy44MTQgMy41NyAyLjE2NCAwIDMuODQ1LTEuNTY0IDMuODQ1LTMuNTdzLTEuNjgxLTMuNTU0LTMuODQ1LTMuNTU0Wm0wIDUuNDYzYy0xLjI1NCAwLTIuMTA4LS44MTYtMi4xMDgtMS45MDkgMC0xLjEyLjg1NS0xLjkxNCAyLjEwOC0xLjkxNCAxLjI1MiAwIDIuMTM2LjgzIDIuMTM2IDEuOTE0cy0uODk2IDEuOTEtMi4xMzYgMS45MVpNMzIuMDU3IDkuMDM0SDI2LjI3bC0uMDU2IDEuMzgzYy0uMDgyIDEuOTkyLS42MDIgMy44ODctMS41ODQgMy45MTVsLS40NTUuMDE0VjE3LjVsMS42NTQtLjAwNHYtMS41NTloNS43NDV2MS41NmgxLjY2OHYtMy4xNjVoLTEuMTg1VjkuMDMyWm0tMS42NCA1LjI5N2gtMy41Yy41OTMtLjg5OC45MS0yLjE5OS45NjUtMy43MmgyLjUzNXYzLjcyWiIgZmlsbD0iI2ZmZiIvPjwvc3ZnPg=="
@@ -711,9 +712,7 @@
           </p>
           <p class="cartaler__price-current">
             12 000₽
-            <span>
-                            -25%
-                        </span>
+            <span>-25%</span>
           </p>
         </div>
         <p class="cartaler__info">

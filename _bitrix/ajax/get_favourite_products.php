@@ -85,17 +85,46 @@ foreach ($productIds as $productId) {
       }
     }
 
-    // Получаем цены
-    $arInfo = CCatalogSKU::GetInfoByProductIBlock($arElement['IBLOCK_ID']);
+    // Получаем цены - правильно работаем с торговыми предложениями
     $price = 0;
     $oldPrice = 0;
+    $discountPercent = 0;
 
-    if ($arInfo) {
-      $rsOffers = CIBlockElement::GetList([], ['IBLOCK_ID' => $arInfo['IBLOCK_ID'], 'PROPERTY_' . $arInfo['SKU_PROPERTY_ID'] => $productId], false, false, ["ID", "IBLOCK_ID", "NAME", "PRICE_7"]);
-      if ($arOffer = $rsOffers->GetNext()) {
-        $price = $arOffer['PRICE_7'];
-        $oldPrice = $arOffer['PRICE_7']; // Можно добавить логику для старой цены
+    // Используем GetOptimalPrice для автоматического определения цены (учитывает торговые предложения)
+    $optimalPrice = CCatalogProduct::GetOptimalPrice($productId, 1, array(), 'N', array(), SITE_ID);
+    if ($optimalPrice && isset($optimalPrice['PRICE'])) {
+      $price = $optimalPrice['PRICE']['PRICE'];
+    }
+
+    // Если GetOptimalPrice не вернул цену, пробуем получить напрямую
+    if ($price == 0) {
+      $dbPrice = CPrice::GetList(
+        array(),
+        array(
+          "PRODUCT_ID" => $productId,
+          "CATALOG_GROUP_ID" => 7 // ID типа цены "Розничная цена"
+        )
+      );
+      if ($arPrice = $dbPrice->Fetch()) {
+        $price = $arPrice["PRICE"];
       }
+    }
+
+    // Получаем старую цену (Первоначальная розничная цена, ID=8)
+    $dbOldPrice = CPrice::GetList(
+      array(),
+      array(
+        "PRODUCT_ID" => $productId,
+        "CATALOG_GROUP_ID" => 8 // ID типа цены "Первоначальная розничная цена"
+      )
+    );
+    if ($arOldPrice = $dbOldPrice->Fetch()) {
+      $oldPrice = $arOldPrice["PRICE"];
+    }
+
+    // Рассчитываем процент скидки, если есть старая цена и она больше текущей
+    if ($oldPrice > 0 && $oldPrice > $price) {
+      $discountPercent = round((($oldPrice - $price) / $oldPrice) * 100);
     }
 
     // Получаем артикул товара
@@ -104,6 +133,9 @@ foreach ($productIds as $productId) {
     if ($arProp = $rsPropsArticle->GetNext()) {
       $article = $arProp['VALUE'];
     }
+
+    // Получаем информацию о торговых предложениях
+    $arInfo = CCatalogSKU::GetInfoByProductIBlock($arElement['IBLOCK_ID']);
 
     // Получаем цвета правильным способом
     $arColors = [];
@@ -167,6 +199,7 @@ foreach ($productIds as $productId) {
       'images' => $arImages,
       'price' => $price,
       'old_price' => $oldPrice,
+      'discount_percent' => $discountPercent,
       'is_new' => isset($arProps['NEW']['VALUE']) ? $arProps['NEW']['VALUE'] == 'Y' : false,
       'is_preorder' => isset($arProps['PREORDER']['VALUE']) ? $arProps['PREORDER']['VALUE'] == 'Y' : false,
       'colors' => $arColors,

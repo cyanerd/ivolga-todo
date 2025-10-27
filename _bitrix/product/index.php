@@ -8,7 +8,7 @@ $APPLICATION->SetTitle("Товар");
   "product-detail",
   [
     "IBLOCK_TYPE" => "CRM_PRODUCT_CATALOG",
-    "IBLOCK_ID" => "29",
+    "IBLOCK_ID" => CATALOG_ID,
     "ELEMENT_ID" => $_REQUEST["ELEMENT_ID"],
     "ELEMENT_CODE" => $_REQUEST["ELEMENT_CODE"] ?: $_REQUEST["CODE"],
     "PROPERTY_CODE" => [

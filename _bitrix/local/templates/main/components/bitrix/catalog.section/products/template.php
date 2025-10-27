@@ -3,7 +3,7 @@ $this->setFrameMode(true);
 ?>
 
 <section class="new-products">
-  <? if ($arProps['HIDE_CAPTION'] !== 'Y') { ?>
+  <? if ($arParams['HIDE_CAPTION'] !== 'Y') { ?>
     <div class="container">
       <a href="/catalog/" class="new-products__header">
         <h2 class="new-products__title">Новое</h2>
@@ -32,14 +32,14 @@ $this->setFrameMode(true);
                   <div class="product-card__slider-track">
                     <? if (!empty($arItem["PROPERTIES"]["MORE_PHOTO"]["VALUE"])): ?>
                       <? foreach ($arItem["PROPERTIES"]["MORE_PHOTO"]["VALUE"] as $imageId): ?>
-                        <div class="product-card__slide">
+                        <div class="product-card__slide product-card__slide--11">
                           <a href="<?= $arItem["DETAIL_PAGE_URL"] ?>">
                             <img src="<?= CFile::GetPath($imageId) ?>" alt="<?= $arItem['PROPERTIES']['NAIMENOVANIE_TOVARA_NA_SAYTE_ETIKETKE']['VALUE'] ?: $arItem["NAME"] ?>">
                           </a>
                         </div>
                       <? endforeach; ?>
                     <? else: ?>
-                      <div class="product-card__slide">
+                      <div class="product-card__slide product-card__slide--12">
                         <a href="<?= $arItem["DETAIL_PAGE_URL"] ?>">
                           <img src="/assets/img/no-photo.jpg" alt="<?= $arItem['PROPERTIES']['NAIMENOVANIE_TOVARA_NA_SAYTE_ETIKETKE']['VALUE'] ?: $arItem["NAME"] ?>">
                         </a>
@@ -57,8 +57,12 @@ $this->setFrameMode(true);
                   </div>
                 </div>
                 <div class="product-card__tags">
-                  <span class="product-card__tag">Новинка</span>
-                  <span class="product-card__tag">Предзаказ</span>
+                  <? if ($arItem['PROPERTIES']['NEW']['VALUE'] == 'Y'): ?>
+                    <span class="product-card__tag">Новинка</span>
+                  <? endif; ?>
+                  <? if ($arItem['PROPERTIES']['PREORDER']['VALUE'] == 'Y'): ?>
+                    <span class="product-card__tag">Предзаказ</span>
+                  <? endif; ?>
                 </div>
                 <i class="product-card__like" data-product-id="<?= $arItem["ID"] ?>">
                   <svg class="deflike" width="21" height="18" viewBox="0 0 21 18" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -87,42 +91,20 @@ $this->setFrameMode(true);
                 $oldPrice = null;
                 $discount = null;
 
-                // Если есть офферы — ищем минимальную цену среди всех офферов
-                if (!empty($arItem['OFFERS']) && is_array($arItem['OFFERS'])) {
-                  $minPrice = null;
-                  foreach ($arItem['OFFERS'] as $offer) {
-                    // 1. Если есть PRICES
-                    if (!empty($offer['PRICES'])) {
-                      foreach ($offer['PRICES'] as $priceType) {
-                        $offerPrice = $priceType['DISCOUNT_VALUE'] ?? $priceType['VALUE'] ?? null;
-                        if ($offerPrice !== null && ($minPrice === null || $offerPrice < $minPrice)) {
-                          $minPrice = $offerPrice;
-                          $price = $priceType['PRINT_DISCOUNT_VALUE'] ?: $priceType['PRINT_VALUE'];
-                          $oldPrice = $priceType['PRINT_VALUE'] !== $priceType['PRINT_DISCOUNT_VALUE'] ? $priceType['PRINT_VALUE'] : null;
-                          $discount = !empty($priceType['DISCOUNT_DIFF_PERCENT']) ? round($priceType['DISCOUNT_DIFF_PERCENT']) : null;
-                        }
-                      }
-                    } // 2. Если есть CATALOG_PRICE_1 или CATALOG_PRICE_7
-                    elseif (!empty($offer['CATALOG_PRICE_1'])) {
-                      $offerPrice = $offer['CATALOG_PRICE_1'];
-                      if ($minPrice === null || $offerPrice < $minPrice) {
-                        $minPrice = $offerPrice;
-                        $price = number_format($offerPrice, 0, '', ' ') . '₽';
-                        $oldPrice = null;
-                        $discount = null;
-                      }
-                    } elseif (!empty($offer['CATALOG_PRICE_7'])) {
-                      $offerPrice = $offer['CATALOG_PRICE_7'];
-                      if ($minPrice === null || $offerPrice < $minPrice) {
-                        $minPrice = $offerPrice;
-                        $price = number_format($offerPrice, 0, '', ' ') . '₽';
-                        $oldPrice = null;
-                        $discount = null;
-                      }
-                    }
+                // Определяем ID товара для получения цены (первое торговое предложение или сам товар)
+                $price_product_id = getPriceProductId($arItem);
+
+                // Получаем цены товара/предложения через единую функцию
+                if ($price_product_id) {
+                  $priceData = getProductPrice($price_product_id);
+                  if ($priceData['formattedPrice']) {
+                    $price = $priceData['formattedPrice'];
+                    $oldPrice = $priceData['formattedOldPrice'] ?: null;
+                    $discount = $priceData['discountPercent'] ?: null;
                   }
                 }
-                // Если нет офферов — старая логика
+
+                // Fallback: если функция не вернула цену, используем MIN_PRICE
                 if (!$price && !empty($arItem['MIN_PRICE'])) {
                   $price = $arItem['MIN_PRICE']['PRINT_DISCOUNT_VALUE'] ?: $arItem['MIN_PRICE']['PRINT_VALUE'];
                   $oldPrice = $arItem['MIN_PRICE']['PRINT_VALUE'] !== $arItem['MIN_PRICE']['PRINT_DISCOUNT_VALUE'] ? $arItem['MIN_PRICE']['PRINT_VALUE'] : null;
@@ -141,7 +123,7 @@ $this->setFrameMode(true);
                   <? endif; ?>
                 </div>
               </a>
-              <div class="product-card__footer">
+              <div class="product-card__footer product-card__footer5">
                 <?php
                 $colors = [];
                 $sizes = [];

@@ -9,7 +9,7 @@ $APPLICATION->SetTitle("Избранное");
     "favourite",
     [
       "IBLOCK_TYPE" => "CRM_PRODUCT_CATALOG",
-      "IBLOCK_ID" => "29",
+      "IBLOCK_ID" => CATALOG_ID,
       "SECTION_SORT_FIELD" => "sort",
       "SECTION_SORT_ORDER" => "asc",
       "ELEMENT_SORT_FIELD" => "sort",

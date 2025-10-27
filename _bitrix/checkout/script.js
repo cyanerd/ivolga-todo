@@ -62,6 +62,7 @@ $(document).ready(function() {
 
    // Modal открытие (делегированный обработчик)
    $(document).on('click', '[data-modal]', function() {
+      if ($(this).data('modal') === 'cart') return;
       $('html').addClass('locked');
       $('.offcanvas.show').removeClass('show');
       $('.modal.show').removeClass('show');

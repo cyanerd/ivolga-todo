@@ -2,16 +2,29 @@
 CModule::IncludeModule("catalog");
 CModule::IncludeModule("iblock");
 CModule::IncludeModule("sale");
+CModule::IncludeModule('mindbox.loyalty');
 
 require_once $_SERVER['DOCUMENT_ROOT'] . '/local/php_interface/include/hb.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/local/php_interface/include/axi.php';
 
 define('LOG_FILENAME', $_SERVER['DOCUMENT_ROOT'] . '/log.txt');
+define('CATALOG_ID', 34); // 29
+define('SKU_IBLOCK_ID', 35); // 30
+define('PRICE_PROP', 'PRICE_7');
+
 const TP = '/local/templates/main/';
 
 if (defined('ADMIN_SECTION')) {
   $APPLICATION->SetAdditionalCSS(TP . 'css/admin.css');
 }
+
+CModule::AddAutoloadClasses(
+    '', // не указываем имя модуля
+    array(
+        // ключ - имя класса, значение - путь относительно корня сайта к файлу с классом
+        'Ivolga\Classes\Favourites' => '/local/php_interface/classes/Favourites.php',
+    )
+);
 
 function d($s)
 {
@@ -202,6 +215,10 @@ function substrCountArray($haystack, $needle)
 
 use Bitrix\Sale;
 use Bitrix\Highloadblock as HL;
+use Mindbox\Loyalty\Exceptions\IntegrationLoyaltyException;
+use Mindbox\Loyalty\Models\Customer;
+use Mindbox\Loyalty\Services\CustomerService;
+use Mindbox\Loyalty\Support\FeatureManager;
 
 \Bitrix\Main\Loader::includeModule('highloadblock');
 
@@ -268,7 +285,7 @@ class MyTools
     //ищем по части артикуля другие товары (цвета)
     $art_parts = explode('/', $art); //FWBS020005/98
     $filter = [
-      'IBLOCK_ID' => 29,
+      'IBLOCK_ID' => CATALOG_ID,
       '%PROPERTY_CML2_ARTICLE' => $art_parts[0],
       'ACTIVE' => 'Y'
     ];
@@ -690,4 +707,178 @@ function spellcount_text($num, $one, $two, $many)
   } else {
     return $many;
   }
+}
+
+/**
+ * Получение ID товара/оффера для получения цены
+ *
+ * @param array $arItem Массив товара из компонента (для списка)
+ * @param array|null $arResult Массив результата (для детальной карточки)
+ * @param array|null $arInfo Информация о SKU (для детальной карточки)
+ * @return int|null ID товара или предложения
+ */
+function getPriceProductId($arItem, $arResult = null, $arInfo = null)
+{
+  // Для детальной карточки товара - используем существующую логику
+  if ($arResult && $arInfo) {
+    $rsOffers = CIBlockElement::GetList(
+      [],
+      ['IBLOCK_ID' => $arInfo['IBLOCK_ID'], 'PROPERTY_' . $arInfo['SKU_PROPERTY_ID'] => $arResult['ID']],
+      false,
+      ['nTopCount' => 1],
+      ["ID", "IBLOCK_ID"]
+    );
+
+    if ($arOffer = $rsOffers->GetNextElement()) {
+      $offerFields = $arOffer->getFields();
+      return $offerFields['ID'];
+    }
+
+    return $arResult['ID']; // Если офферов нет, возвращаем ID товара
+  }
+
+  // Для списка товаров
+  if (!empty($arItem['OFFERS']) && is_array($arItem['OFFERS'])) {
+    // Получаем информацию о SKU для правильного определения первого оффера
+    $arInfo = CCatalogSKU::GetInfoByProductIBlock($arItem["IBLOCK_ID"]);
+    if ($arInfo) {
+      $rsOffers = CIBlockElement::GetList(
+        [],
+        ['IBLOCK_ID' => $arInfo['IBLOCK_ID'], 'PROPERTY_' . $arInfo['SKU_PROPERTY_ID'] => $arItem['ID']],
+        false,
+        ['nTopCount' => 1], // Берем только первый оффер
+        ["ID", "IBLOCK_ID"]
+      );
+      if ($arOffer = $rsOffers->GetNextElement()) {
+        $offerFields = $arOffer->getFields();
+        return $offerFields['ID'];
+      }
+    }
+
+    // Fallback: если запрос не сработал, берем первый из массива OFFERS
+    $firstOffer = reset($arItem['OFFERS']);
+    return $firstOffer['ID'];
+  }
+
+  return $arItem['ID']; // Если офферов нет, возвращаем ID товара
+}
+
+/**
+ * Получение цены товара/предложения с расчетом скидки
+ *
+ * @param int $productId ID товара или предложения
+ * @return array Массив с ключами: price, oldPrice, discountPercent, formattedPrice, formattedOldPrice
+ */
+function getProductPrice($productId)
+{
+  $result = [
+    'price' => 0,
+    'oldPrice' => 0,
+    'discountPercent' => 0,
+    'formattedPrice' => '',
+    'formattedOldPrice' => ''
+  ];
+
+  if (!$productId) {
+    return $result;
+  }
+
+  // Используем GetOptimalPrice для автоматического определения цены
+  $optimalPrice = CCatalogProduct::GetOptimalPrice($productId, 1, array(), 'N', array(), SITE_ID);
+  if ($optimalPrice && isset($optimalPrice['PRICE'])) {
+    $result['price'] = $optimalPrice['PRICE']['PRICE'];
+  }
+
+  // Если GetOptimalPrice не вернул цену, пробуем получить напрямую
+  if ($result['price'] == 0) {
+    $dbPrice = CPrice::GetList(
+      array(),
+      array(
+        "PRODUCT_ID" => $productId,
+        "CATALOG_GROUP_ID" => 7 // ID типа цены "Розничная цена"
+      )
+    );
+    if ($arPrice = $dbPrice->Fetch()) {
+      $result['price'] = $arPrice["PRICE"];
+    }
+  }
+
+  // Получаем старую цену (Первоначальная розничная цена, ID=8)
+  $dbOldPrice = CPrice::GetList(
+    array(),
+    array(
+      "PRODUCT_ID" => $productId,
+      "CATALOG_GROUP_ID" => 8 // ID типа цены "Первоначальная розничная цена"
+    )
+  );
+  if ($arOldPrice = $dbOldPrice->Fetch()) {
+    $result['oldPrice'] = $arOldPrice["PRICE"];
+  }
+
+  // Рассчитываем процент скидки, если есть старая цена и она больше текущей
+  if ($result['oldPrice'] > 0 && $result['oldPrice'] > $result['price']) {
+    $result['discountPercent'] = round((($result['oldPrice'] - $result['price']) / $result['oldPrice']) * 100);
+  }
+
+  // Форматируем цены
+  if ($result['price'] > 0) {
+    $result['formattedPrice'] = number_format($result['price'], 0, '', ' ') . '₽';
+  }
+  if ($result['oldPrice'] > 0) {
+    $result['formattedOldPrice'] = number_format($result['oldPrice'], 0, '', ' ') . '₽';
+  }
+
+  return $result;
+}
+
+\Bitrix\Main\EventManager::getInstance()->addEventHandler('sale', 'OnSaleComponentOrderShowAjaxAnswer', ['CustomOrderHandlers', 'OnSaleComponentOrderShowAjaxAnswerHandler']);
+class CustomOrderHandlers {
+    private static $deliveryIds = [
+        '269' => 'Courier',
+        '260' => 'Courier',
+        '261' => 'PVZ',
+        '264' => 'PVZ',
+        '3' => 'Showroom',
+    ];
+
+    public static function OnSaleComponentOrderShowAjaxAnswerHandler(&$result) {
+        //\Bitrix\Main\Diag\Debug::writeToFile(['r' => $result['order']['ORDER_PROP']], '', 'aos22.txt');
+        if (!empty($result['order']['ORDER_PROP']['properties']) && is_array($result['order']['ORDER_PROP']['properties'])) {
+            $k = array_search('MINDBOX_DELIVERY', array_column($result['order']['ORDER_PROP']['properties'], 'CODE'));
+            foreach ($result['order']['DELIVERY'] as $key => $delivery) {
+                if ($delivery['CHECKED'] === 'Y') {
+                    $result['order']['ORDER_PROP']['properties'][$k]['VALUE'][0] = self::$deliveryIds[$key];
+                }
+            }
+        }
+    }
+}
+
+\Bitrix\Main\EventManager::getInstance()->addEventHandler('main', 'OnAfterUserUpdate', ['CustomUserHandlers', 'OnAfterUserUpdateHandler']);
+class CustomUserHandlers {
+    public static function OnAfterUserUpdateHandler(&$arFields) {
+        $settings = \Mindbox\Loyalty\Support\SettingsFactory::create();
+
+        try {
+            $customer = new \Mindbox\Loyalty\Models\Customer((int) $arFields['ID']);
+            $service = new \Mindbox\Loyalty\Services\CustomerService($settings);
+
+            // Если при смене телефона происходит его подтверждение по СМС, не через МБ
+            $session = \Bitrix\Main\Application::getInstance()->getSession();
+            if ($session->has('mindbox_need_confirm_phone')) {
+                $session->remove('mindbox_need_confirm_phone');
+                $service->confirmMobilePhone($customer);
+            }
+            $brand = $settings->getBrand();
+            if (isset($arFields['UF_NOT_SUBSCRIBED']) && $arFields['UF_NOT_SUBSCRIBED']) {
+                $customer->setSubscribe($brand, 'Email', false);
+            } else {
+                $customer->setSubscribe($brand, 'Email', true);
+            }
+            //\Bitrix\Main\Diag\Debug::writeToFile(['f' => $arFields, 'b' => $brand], '', 'fff.txt');
+
+            $service->edit($customer);
+        } catch (IntegrationLoyaltyException $exception) {
+        }
+    }
 }

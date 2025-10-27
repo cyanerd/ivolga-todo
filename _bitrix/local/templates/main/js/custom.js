@@ -43,6 +43,12 @@ $(document).ready(function () {
 
   loadCartContent();
 
+  // Инициализация избранного
+  window.isUserLoggedIn = document.body.getAttribute('data-user-logged-in') === 'true';
+
+  // Загружаем избранное пользователя
+  loadUserFavourites();
+
   window.USE_CATALOG_AJAX = true;
 
   const getCatalogParams = () => {
@@ -126,19 +132,19 @@ $(document).ready(function () {
   function updateCatalogNavigation(currentUrl) {
     // Убираем параметры из URL, оставляем только путь
     const urlPath = currentUrl.split('?')[0];
-    
+
     // Убираем все активные классы
     $('.catalogpage__nav a').removeClass('active');
-    
+
     // Находим соответствующий пункт навигации и делаем его активным
-    $('.catalogpage__nav a').each(function() {
+    $('.catalogpage__nav a').each(function () {
       const navHref = $(this).attr('href');
       if (navHref === urlPath) {
         $(this).addClass('active');
         return false; // Прерываем цикл
       }
     });
-    
+
     // Если точное совпадение не найдено и это путь каталога без категории
     if (urlPath === '/catalog/' && !$('.catalogpage__nav a.active').length) {
       $('.catalogpage__nav a[href="/catalog/"]').addClass('active');
@@ -615,52 +621,151 @@ $(document).ready(function () {
 
 // ===== ФУНКЦИИ ДЛЯ РАБОТЫ С ИЗБРАННЫМ =====
 
-// Функция для получения избранных товаров из localStorage
+// Функция для получения избранных товаров (только с сервера или только из localStorage)
 function getFavouriteProducts() {
-  return JSON.parse(localStorage.getItem('favourite_products') || '[]');
+  // Если пользователь авторизован, используем данные с сервера (уже загруженные)
+  if (window.isUserLoggedIn) {
+    return window.serverFavourites || [];
+  }
+  // Иначе используем localStorage
+  return (JSON.parse(localStorage.getItem('favourite_products') || '[]')).map(id => parseInt(id));
 }
 
 // Функция для добавления товара в избранное
-function addToFavourite(productId) {
-  let favourites = getFavouriteProducts();
-  if (!favourites.includes(productId)) {
-    favourites.push(productId);
-    localStorage.setItem('favourite_products', JSON.stringify(favourites));
-    updateFavouriteCounter();
-    updateFavouriteButtons();
+async function addToFavourite(productId) {
+  try {
+    if (window.isUserLoggedIn) {
+      // Отправляем запрос на сервер
+      const response = await fetch('/ajax/add_to_favourites.php', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({product_id: productId})
+      });
+
+      const result = await response.json();
+
+      if (result.success) {
+        // Перезагружаем актуальные данные с сервера
+        await loadUserFavourites();
+        updateFavouriteCounter();
+        updateFavouriteButtons();
+      } else {
+        console.error('Ошибка добавления в избранное:', result.error);
+      }
+    } else {
+      // Используем localStorage для неавторизованных пользователей
+      let favourites = JSON.parse(localStorage.getItem('favourite_products') || '[]');
+      if (!favourites.includes(productId)) {
+        favourites.push(productId);
+        localStorage.setItem('favourite_products', JSON.stringify(favourites));
+        updateFavouriteCounter();
+        updateFavouriteButtons();
+      }
+    }
+  } catch (error) {
+    console.error('Ошибка:', error);
   }
 }
 
 // Функция для удаления товара из избранного
-function removeFromFavourite(productId) {
-  let favourites = getFavouriteProducts();
-  favourites = favourites.filter(id => id !== productId);
-  localStorage.setItem('favourite_products', JSON.stringify(favourites));
+async function removeFromFavourite(productId) {
+  try {
+    if (window.isUserLoggedIn) {
+      // Отправляем запрос на сервер
+      const response = await fetch('/ajax/remove_from_favourites.php', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({product_id: productId})
+      });
 
-  // Обновляем счетчик
-  updateFavouriteCounter();
+      const result = await response.json();
 
-  // Удаляем карточку товара из DOM (если мы на странице избранного)
-  const productCard = document.querySelector(`.__favourite [data-product-id="${productId}"]`);
-  if (productCard) {
-    productCard.remove();
+      if (result.success) {
+        // Перезагружаем актуальные данные с сервера
+        await loadUserFavourites();
+        updateFavouriteCounter();
+        updateFavouriteButtons();
 
-    // Если товаров нет, показываем сообщение
-    const container = document.getElementById('favourite-products');
-    if (container && container.children.length === 0) {
-      container.innerHTML = '<div class="empty-favourites"><p>В избранном пока ничего нет</p></div>';
+        // Удаляем карточку товара из DOM (если мы на странице избранного)
+        const productCard = document.querySelector(`.__favourite [data-product-id="${productId}"]`);
+        if (productCard) {
+          productCard.remove();
+
+          // Если товаров нет, показываем сообщение
+          const container = document.getElementById('favourite-products');
+          if (container && container.children.length === 0) {
+            container.innerHTML = '<div class="empty-favourites"><p>В избранном пока ничего нет</p></div>';
+          }
+        }
+      } else {
+        console.error('Ошибка удаления из избранного:', result.error);
+      }
+    } else {
+      // Используем localStorage для неавторизованных пользователей
+      let favourites = JSON.parse(localStorage.getItem('favourite_products') || '[]');
+      favourites = favourites.filter(id => id !== productId);
+      localStorage.setItem('favourite_products', JSON.stringify(favourites));
+      updateFavouriteCounter();
+      updateFavouriteButtons();
+
+      // Удаляем карточку товара из DOM (если мы на странице избранного)
+      const productCard = document.querySelector(`.__favourite [data-product-id="${productId}"]`);
+      if (productCard) {
+        productCard.remove();
+
+        // Если товаров нет, показываем сообщение
+        const container = document.getElementById('favourite-products');
+        if (container && container.children.length === 0) {
+          container.innerHTML = '<div class="empty-favourites"><p>В избранном пока ничего нет</p></div>';
+        }
+      }
     }
+  } catch (error) {
+    console.error('Ошибка:', error);
   }
-
-  // Обновляем кнопки избранного
-  updateFavouriteButtons();
 }
 
 // Функция для проверки, находится ли товар в избранном
 function isFavourite(productId) {
   const favourites = getFavouriteProducts();
-  return favourites.includes(productId);
+  return favourites.includes(parseInt(productId));
 }
+
+// Функция для загрузки избранных товаров пользователя с сервера
+async function loadUserFavourites() {
+  if (!window.isUserLoggedIn) {
+    return;
+  }
+
+  try {
+    const response = await fetch('/ajax/get_user_favourites.php', {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      }
+    });
+
+    const result = await response.json();
+
+    if (result.success) {
+      window.serverFavourites = result.favourites || [];
+      updateFavouriteCounter();
+      updateFavouriteButtons();
+
+      // Дополнительный вызов с задержкой на случай, если кнопки еще не отрисованы
+      setTimeout(() => {
+        updateFavouriteButtons();
+      }, 500);
+    }
+  } catch (error) {
+    console.error('Ошибка загрузки избранного:', error);
+  }
+}
+
 
 // Функция для обновления счетчика избранного
 function updateFavouriteCounter() {
@@ -682,8 +787,7 @@ function updateFavouriteCounter() {
 function updateFavouriteButtons() {
   const buttons = document.querySelectorAll('.product-card__like');
 
-  buttons.forEach((button, index) => {
-
+  buttons.forEach((button) => {
     let productId;
     if (button.dataset.productId) productId = button.dataset.productId;
     else {
@@ -703,21 +807,6 @@ function updateFavouriteButtons() {
   });
 }
 
-function favouriteAjax(productId) {
-  var param = 'id=' + productId;
-
-  $.ajax({
-    url: '/ajax/favourites.php',
-    type: "GET",
-    dataType: "html",
-    data: param,
-    success: function (response) {
-    },
-    error: function (jqXHR, textStatus, errorThrown) { // Если ошибка, то выкладываем печаль в консоль
-      console.log('Error: ' + errorThrown);
-    }
-  });
-}
 
 // Обработчик кликов на кнопки избранного
 function initFavouriteButtons() {
@@ -752,8 +841,6 @@ function initFavouriteButtons() {
       } else {
         console.error('Product ID not found!');
       }
-
-      favouriteAjax(productId);
     }
   });
 
@@ -1422,7 +1509,7 @@ async function updateCheckoutPage() {
             // Если корзина пуста, можно показать сообщение или перенаправить
             // Пока просто скрываем кнопку
           } else {
-            changeCartButton.style.display = 'block';
+            changeCartButton.style.display = 'inline';
           }
         }
       }
@@ -1440,7 +1527,6 @@ async function updateCheckoutPage() {
         if (totalPriceElement) {
           totalPriceElement.textContent = result.totalInfo.priceWithoutDiscount + ' ₽';
         }
-
 
         // Обновляем скидку
         const discountElement = document.querySelector('.order-aside__table tbody tr:nth-child(4) td:last-child');
@@ -1484,9 +1570,9 @@ function updateCartAlertInfo(productId) {
   // Ищем фото: сначала в .pageprod__img img, если нет — в .product-card__image img
   const productImage = document.querySelector('.pageprod__img img, .product-card__image img, .pageprod__gallery-slide img')?.src || '/assets/img/no-photo.jpg';
   // Цена — из .pageprod__prices
-  const productPrice = document.querySelector('.pageprod__prices')?.textContent?.trim() || '';
+  const productPrice = document.querySelector('.pageprod__prices #product-price')?.textContent?.trim() || '';
   // Старая цена (если есть)
-  const productOldPrice = document.querySelector('.pageprod__price-old')?.textContent?.trim() || '';
+  const productOldPrice = document.querySelector('.pageprod__prices .old')?.textContent?.trim() || '';
 
   // Получаем выбранные характеристики
   const selectedSize = document.querySelector('input[name="size"]:checked')?.nextElementSibling?.textContent?.trim() || '';
@@ -1509,7 +1595,7 @@ function updateCartAlertInfo(productId) {
   }
   // Обновляем цены
   const cartalerPriceOld = cartaler.querySelector('.cartaler__price-old');
-  if (cartalerPriceOld && productOldPrice) {
+  if (cartalerPriceOld && parseFloat(productOldPrice) > 0) {
     cartalerPriceOld.textContent = productOldPrice;
   } else {
     cartalerPriceOld.textContent = '';
@@ -1560,8 +1646,60 @@ $(document).on('click', '#logout-btn', function (e) {
 
 $(document).ready(function () {
 
+  $('[name="size"]').change(function () {
+
+    const priceElement = document.getElementById('product-price');
+    const offerId = $(this).data('id');
+
+    if (!priceElement || !offerId) return;
+
+    $.ajax({
+      url: '/ajax/get_offer_price.php',
+      method: 'POST',
+      data: {offer_id: offerId},
+      dataType: 'json',
+      success: function (response) {
+        if (response.success) {
+          // Обновляем текущую цену
+          priceElement.textContent = response.formatted_price;
+
+          // Обновляем процент скидки
+          const saleElement = document.querySelector('.sale');
+          if (saleElement) {
+            if (response.formatted_discount) {
+              saleElement.textContent = response.formatted_discount;
+              saleElement.style.display = 'inline';
+            } else {
+              saleElement.style.display = 'none';
+            }
+          }
+
+          // Обновляем старую цену
+          const oldElement = document.querySelector('.old');
+          if (oldElement) {
+            if (response.formatted_old_price) {
+              oldElement.textContent = response.formatted_old_price;
+              oldElement.style.display = 'inline';
+            } else {
+              oldElement.style.display = 'none';
+            }
+          }
+        } else {
+          console.error('Error getting price:', response.error);
+        }
+      },
+      error: function () {
+        console.error('AJAX error while getting price');
+      },
+      complete: function () {
+        priceElement.style.opacity = '1';
+      }
+    });
+  });
+
   if ($('._order').length) {
     let added = false;
+    let added2 = false;
 
     const getDeliveryItem = (name) => {
       return $('#bx-soa-delivery .order-methods [data-delivery-name="' + name + '"]');
@@ -1579,8 +1717,11 @@ $(document).ready(function () {
 
       if (window.IMask) {
         const inp = $('input[name="ORDER_PROP_22"]');
-        if (inp) {
+        if (inp && !added2) {
+          inp.attr('placeholder', '+7 (___) ___-__-__');
+          inp.parents('.form-group').addClass('__form-group--phone');
           IMask(inp[0], maskOptions);
+          // added2 = true;
         }
       }
 
@@ -1601,7 +1742,6 @@ $(document).ready(function () {
         $('#bx-soa-delivery .order-methods').show();
         $('.order-alert--area').hide();
         const selectedDeliveryMethod = $('#bx-soa-delivery .order-methods__row .order-methods__item.bx-selected h2').text();
-        console.log('selectedDeliveryMethod', selectedDeliveryMethod);
 
         if (!isMoscow) {
           getDeliveryItem('Самовывоз из шоурума').hide();
@@ -1638,8 +1778,12 @@ $(document).ready(function () {
 
         if (selectedDeliveryMethod === 'Пункт выдачи заказов Почта России') {
           $('._order #bx-soa-delivery .bx-soa-pp-desc-container').show();
+          // Обновляем адрес ПВЗ для Почты России
+          updatePVZAddress();
         } else {
           $('._order #bx-soa-delivery .bx-soa-pp-desc-container').hide();
+          // Удаляем адрес ПВЗ для других способов доставки
+          removePVZAddress();
         }
 
         if (selectedDeliveryMethod === 'Самовывоз из шоурума') {
@@ -1679,6 +1823,36 @@ $(document).ready(function () {
 
   $('#logout-no').on('click', function () {
     closeModal('logout-modal');
+  });
+
+  // Функция для управления состоянием поля адреса в зависимости от метода доставки
+  function updateAddressFieldState() {
+    var selectedDeliveryMethod = $('input[name="method-delivery"]:checked').closest('label').find('h2').text().trim();
+    var addressProp = $('#russianpost_address_prop').val();
+    var addressField = $('#soa-property-' + addressProp);
+
+    if (selectedDeliveryMethod === 'Пункт выдачи заказов Почта России') {
+      // Для ПВЗ Почты России делаем поле адреса активным
+      addressField.removeAttr('readonly');
+      addressField.css("background-color", "");
+    } else {
+      // Для других методов доставки делаем поле адреса readonly
+      addressField.attr('readonly', true);
+      addressField.css("background-color", "rgb(238, 238, 238)");
+    }
+  }
+
+  // Обработчик изменения метода доставки для управления полем адреса
+  $(document).on('change', 'input[name="method-delivery"]', function () {
+    updateAddressFieldState();
+  });
+
+  // Инициализация состояния поля адреса при загрузке страницы
+  $(document).ready(function () {
+    // Небольшая задержка, чтобы DOM полностью загрузился
+    setTimeout(function () {
+      updateAddressFieldState();
+    }, 100);
   });
 });
 
@@ -2209,4 +2383,46 @@ $(document).on('submit', 'form[name="ORDER_FORM"]', function (e) {
     }
   }
 });
+
+// Функция для обновления адреса ПВЗ в блоке информации о доставке
+function updatePVZAddress() {
+  // Получаем адрес ПВЗ из скрытого поля
+  const pvzAddress = $('#russianpost_result_address').val();
+
+  // Находим блок с информацией о доставке
+  const $deliveryInfoBlock = $('._order #bx-soa-delivery .bx-soa-pp-list');
+
+  if ($deliveryInfoBlock.length && pvzAddress && pvzAddress.trim()) {
+    // Проверяем, есть ли уже элемент с адресом ПВЗ
+    let $pvzAddressItem = $deliveryInfoBlock.find('li').filter(function() {
+      return $(this).find('.bx-soa-pp-list-termin').text().includes('Адрес ПВЗ');
+    });
+
+    if ($pvzAddressItem.length === 0) {
+      // Создаем новый элемент для адреса ПВЗ
+      const $newItem = $('<li></li>');
+      $newItem.append('<div class="bx-soa-pp-list-termin">Адрес ПВЗ:</div>');
+      $newItem.append('<div class="bx-soa-pp-list-description">' + pvzAddress + '</div>');
+
+      // Добавляем в конец списка
+      $deliveryInfoBlock.append($newItem);
+    } else {
+      // Обновляем существующий элемент
+      $pvzAddressItem.find('.bx-soa-pp-list-description').text(pvzAddress);
+    }
+  }
+}
+
+// Функция для удаления адреса ПВЗ из блока информации о доставке
+function removePVZAddress() {
+  // Находим блок с информацией о доставке
+  const $deliveryInfoBlock = $('._order #bx-soa-delivery .bx-soa-pp-list');
+
+  if ($deliveryInfoBlock.length) {
+    // Удаляем элемент с адресом ПВЗ
+    $deliveryInfoBlock.find('li').filter(function() {
+      return $(this).find('.bx-soa-pp-list-termin').text().includes('Адрес ПВЗ');
+    }).remove();
+  }
+}
 

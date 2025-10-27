@@ -5,6 +5,7 @@ IncludeTemplateLangFile(__FILE__);
 <?
 
 use Bitrix\Main\Page\Asset;
+
 ?>
 <!DOCTYPE html>
 <html>
@@ -49,14 +50,14 @@ use Bitrix\Main\Page\Asset;
   ?>
   <title><? $APPLICATION->ShowTitle(); ?></title>
 
-    <script>
-        mindbox = window.mindbox || function() { mindbox.queue.push(arguments); };
-        mindbox.queue = mindbox.queue || [];
-        mindbox('create', {
-            endpointId: 'ivolga.Website'
-        });
-    </script>
-    <script src="https://api.mindbox.ru/scripts/v1/tracker.js" async></script>
+  <script>
+    mindbox = window.mindbox || function () { mindbox.queue.push(arguments); };
+    mindbox.queue = mindbox.queue || [];
+    mindbox('create', {
+      endpointId: 'ivolga.Website'
+    });
+  </script>
+  <script src="https://api.mindbox.ru/scripts/v1/tracker.js" async></script>
 </head>
 
 <?
@@ -109,15 +110,15 @@ if ($APPLICATION->GetCurPage() === '/policy/') {
 }
 
 ?>
-<? $APPLICATION->ShowPanel() ?>
-<body class="<?= implode(' ', $bodyClasses) ?>" style="padding-top: 64px;">
+<? # $APPLICATION->ShowPanel() ?>
+<body class="<?= implode(' ', $bodyClasses) ?>" style="padding-top: 64px;" data-user-logged-in="<?= $USER->IsAuthorized() ? 'true' : 'false' ?>">
 
 <script type="text/javascript">
   var digiScript = document.createElement('script');
-  digiScript.src = '//aq.dolyame.ru/2723/client.js?ts=' + Date.now();
+  digiScript.src = '//aq.dolyame.ru/9585/client.js'; //
   digiScript.defer = true;
   digiScript.async = true;
-  document.body.appendChild(digiScript);
+  document.head.appendChild(digiScript);
 </script>
 
 <div class="topblock">
@@ -273,6 +274,8 @@ if ($APPLICATION->GetCurPage() === '/policy/') {
             Зарегистрироваться
           </button>
         </div>
+        <p class="lkmodal__form-descr">Нажимая кнопку, вы соглашаетесь на обработку своих персональных данных и ознакомлены с <a
+            href="/info/policy/" target="_blank">политикой конфиденциальности</a>.</p>
         <? /*
         <div class="lkmodal__form-el">
           <button class="lkmodal__form-submit primary-button" type="button" id="enter-as-guest">Продолжить как гость</button>
@@ -284,10 +287,16 @@ if ($APPLICATION->GetCurPage() === '/policy/') {
             autocomplete="off">
         <p class="lkmodal__form-descr">Мы отправим на номер SMS-сообщение с кодом подтверждения.</p>
         <div class="lkmodal__form-el">
-          <div class="inputel">
-            <input class="input mobile-phone-input js_phone" id="phone" name="phone" placeholder="+7 (___) ___-__-__" type="tel"
-                   required>
-            <label for="phone">Ваш номер телефона</label>
+          <div style="color: rgba(35, 34, 41, .5)">Ваш номер телефона</div>
+          <div class="inputel inputel_placeholder">
+            <input
+              class="input mobile-phone-input js_phone"
+              id="phone"
+              name="phone"
+              placeholder="+7 (___) ___-__-__"
+              type="tel"
+              required
+            >
           </div>
         </div>
         <div class="lkmodal__form-el">

@@ -48,7 +48,7 @@ class Element extends \CBitrixComponent
     );
 
 
-    $IBLOCK_ID = 29;
+    $IBLOCK_ID = CATALOG_ID;
     $rsElement = \CIBlockElement::GetList([], ['IBLOCK_ID' => $IBLOCK_ID, 'ACTIVE' => 'Y', '=CODE' => $variables['ELEMENT_CODE']], false, false, ['ID', 'IBLOCK_ID', 'NAME', 'DETAIL_TEXT', 'CODE',]);
     $rsItem = $rsElement->GetNextElement();
     $arItem = $rsItem->getFields();

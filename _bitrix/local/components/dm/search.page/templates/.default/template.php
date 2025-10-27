@@ -44,7 +44,7 @@ $q = $arResult['q'];
                     "catalog-page",
                     [
                       "IBLOCK_TYPE" => "CRM_PRODUCT_CATALOG",
-                      "IBLOCK_ID" => "29",
+                      "IBLOCK_ID" => CATALOG_ID,
                       "SECTION_ID" => "",
                       "SECTION_CODE" => "",
                       "SECTION_USER_FIELDS" => [],

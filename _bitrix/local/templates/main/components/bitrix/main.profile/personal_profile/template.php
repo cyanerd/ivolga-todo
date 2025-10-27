@@ -83,7 +83,7 @@ $this->setFrameMode(true);
             id="email"
             <?= ($arResult["bVarsFromForm"] ? "" : "placeholder=\"1\"") ?>
           >
-          <label for="email">Email для подписки</label>
+          <label for="email">Email</label>
         </div>
       </div>
       <div class="lk-main__col lk-main__col_12">
@@ -95,9 +95,10 @@ $this->setFrameMode(true);
             id="want"
             <?= ($arResult["arUser"]["UF_NOT_SUBSCRIBED"] == "0" ? "checked" : "") ?>
           >
+          <? /*
           <label for="want">
             Я хочу получать новости от Ivolga на свой Email
-          </label>
+          </label> */ ?>
         </div>
       </div>
       <div class="lk-main__col lk-main__col_12">
@@ -105,6 +106,11 @@ $this->setFrameMode(true);
           Сохранить
         </button>
       </div>
+      <p class="__pol">
+        Нажимая кнопку «Сохранить», вы соглашаетесь на обработку своих персональных данных и ознакомлены с <a href="/info/policy/"
+                                                                                                              target="_blank">политикой
+          конфиденциальности</a>.
+      </p>
     </div>
 
     <div class="lk-main__password">

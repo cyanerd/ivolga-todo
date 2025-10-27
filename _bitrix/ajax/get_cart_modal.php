@@ -91,6 +91,7 @@ ob_start();
 
         $color = $arParentProduct['PROPERTY_TSVET_VALUE'];
         $color_code = MyTools::getColor($color);
+
         ?>
         <div class="modalcart-item" data-cart-id="<?= $cart_id ?>">
           <div class="modalcart-item__group">

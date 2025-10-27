@@ -45,17 +45,17 @@ $this->setFrameMode(true);
               <div class="product-card__image">
                 <div class="product-card__slider">
                   <div class="product-card__slider-track">
-                    <div class="product-card__slide">
+                    <div class="product-card__slide product-card__slide--6">
                       <? if ($arItem["PREVIEW_PICTURE"]["SRC"]): ?>
                         <img src="<?= $arItem["PREVIEW_PICTURE"]["SRC"] ?>" alt="<?= $arItem["NAME"] ?>">
                       <? else: ?>
                         <img src="/html/assets/img/products/product1.792483bfa9ffa5cf727d.jpg" alt="<?= $arItem["NAME"] ?>">
                       <? endif; ?>
                     </div>
-                    <div class="product-card__slide">
+                    <div class="product-card__slide product-card__slide--7">
                       <img src="/html/assets/img/blog/blog1.86d699f6545e7e1d9215.jpg" alt="<?= $arItem["NAME"] ?>">
                     </div>
-                    <div class="product-card__slide">
+                    <div class="product-card__slide product-card__slide--8">
                       <? if ($arItem["PREVIEW_PICTURE"]["SRC"]): ?>
                         <img src="<?= $arItem["PREVIEW_PICTURE"]["SRC"] ?>" alt="<?= $arItem["NAME"] ?>">
                       <? else: ?>
@@ -92,7 +92,7 @@ $this->setFrameMode(true);
                 </div>
               </a>
 
-              <div class="product-card__footer">
+              <div class="product-card__footer product-card__footer2">
                 <div class="product-card__colors">
                   <a href="" class="product-card__colors-item" style="background-color: #3b3465;"></a>
                   <a href="" class="product-card__colors-item" style="background-color: #34654f;"></a>

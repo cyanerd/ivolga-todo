@@ -116,7 +116,7 @@ $order = $arResult;
             Способ доставки
           </p>
           <p>
-            <?= $order["DELIVERY_NAME"] ?? '-'; ?>
+            <?= $order['SHIPMENT'][0]["DELIVERY_NAME"] ?? '-'; ?>
           </p>
         </div>
         <div class="singleorder-info__info-item">

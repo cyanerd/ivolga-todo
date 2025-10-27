@@ -6571,8 +6571,10 @@ BX.namespace('BX.Sale.OrderAjaxComponent');
           textNode.setAttribute('autocomplete', 'email');
         if (settings.IS_PAYER == 'Y')
           textNode.setAttribute('autocomplete', 'name');
-        if (settings.IS_PHONE == 'Y')
+        if (settings.IS_PHONE == 'Y') {
           textNode.setAttribute('autocomplete', 'tel');
+          textNode.setAttribute('placeholder', '+7 (___) ___-__-__');
+        }
 
         if (settings.PATTERN && settings.PATTERN.length) {
           textNode.removeAttribute('pattern');

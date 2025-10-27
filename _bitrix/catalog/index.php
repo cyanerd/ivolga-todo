@@ -18,7 +18,7 @@ $APPLICATION->SetTitle("Каталог");
       "categories-nav",
       [
         "IBLOCK_TYPE" => "CRM_PRODUCT_CATALOG",
-        "IBLOCK_ID" => "29",
+        "IBLOCK_ID" => CATALOG_ID,
         "SECTION_ID" => $_REQUEST["SECTION_ID"],
         "SECTION_URL" => "/catalog/#SECTION_CODE#/",
         "COUNT_ELEMENTS" => "Y",
@@ -46,7 +46,7 @@ $APPLICATION->SetTitle("Каталог");
     $enumIds = [];
     $property_enums = CIBlockPropertyEnum::GetList(
       ["SORT" => "ASC"],
-      ["IBLOCK_ID" => 30, "CODE" => "RAZMER"]
+      ["IBLOCK_ID" => SKU_IBLOCK_ID, "CODE" => "RAZMER"]
     );
     $valueToId = [];
     while ($enum_fields = $property_enums->GetNext()) {
@@ -60,7 +60,7 @@ $APPLICATION->SetTitle("Каталог");
     }
     if (!empty($enumIds)) {
       $sizeFilter = [
-        'IBLOCK_ID' => 30,
+        'IBLOCK_ID' => SKU_IBLOCK_ID,
         'ACTIVE' => 'Y',
         'PROPERTY_RAZMER' => $enumIds
       ];
@@ -87,7 +87,7 @@ $APPLICATION->SetTitle("Каталог");
       // Ищем цвет в справочнике свойств
       $property_enums = CIBlockPropertyEnum::GetList(
         ["SORT" => "ASC"],
-        ["IBLOCK_ID" => 29, "CODE" => "TSVET", "VALUE" => $colorName]
+        ["IBLOCK_ID" => CATALOG_ID, "CODE" => "TSVET", "VALUE" => $colorName]
       );
       while ($enum_fields = $property_enums->GetNext()) {
         $colorIds[] = $enum_fields["ID"];
@@ -109,7 +109,7 @@ $APPLICATION->SetTitle("Каталог");
     error_log("Full filter: " . print_r($GLOBALS['arrFilter'], true));
 
     // Проверяем, есть ли товары с таким цветом
-    $testFilter = ['IBLOCK_ID' => 29, 'ACTIVE' => 'Y', 'PROPERTY_TSVET' => (!empty($colorIds) ? $colorIds : $colorValues)];
+    $testFilter = ['IBLOCK_ID' => CATALOG_ID, 'ACTIVE' => 'Y', 'PROPERTY_TSVET' => (!empty($colorIds) ? $colorIds : $colorValues)];
 
     // Если есть фильтр по разделу, добавляем его
     if (!empty($_REQUEST["SECTION_ID"])) {
@@ -137,7 +137,7 @@ $APPLICATION->SetTitle("Каталог");
       // Ищем материал в справочнике свойств
       $property_enums = CIBlockPropertyEnum::GetList(
         ["SORT" => "ASC"],
-        ["IBLOCK_ID" => 29, "CODE" => "MATERIAL", "VALUE" => $materialName]
+        ["IBLOCK_ID" => CATALOG_ID, "CODE" => "MATERIAL", "VALUE" => $materialName]
       );
       while ($enum_fields = $property_enums->GetNext()) {
         $materialIds[] = $enum_fields["ID"];
@@ -160,7 +160,7 @@ $APPLICATION->SetTitle("Каталог");
     error_log("Full filter: " . print_r($GLOBALS['arrFilter'], true));
 
     // Проверяем, есть ли товары с таким материалом
-    $testFilter = ['IBLOCK_ID' => 29, 'ACTIVE' => 'Y', 'PROPERTY_MATERIAL' => (!empty($materialIds) ? $materialIds : $materialValues)];
+    $testFilter = ['IBLOCK_ID' => CATALOG_ID, 'ACTIVE' => 'Y', 'PROPERTY_MATERIAL' => (!empty($materialIds) ? $materialIds : $materialValues)];
 
     // Если есть фильтр по разделу, добавляем его
     if (!empty($_REQUEST["SECTION_ID"])) {
@@ -188,7 +188,7 @@ $APPLICATION->SetTitle("Каталог");
       // Ищем коллекцию в справочнике свойств
       $property_enums = CIBlockPropertyEnum::GetList(
         ["SORT" => "ASC"],
-        ["IBLOCK_ID" => 29, "CODE" => "KOLLEKTSIYA", "VALUE" => $collectionName]
+        ["IBLOCK_ID" => CATALOG_ID, "CODE" => "KOLLEKTSIYA", "VALUE" => $collectionName]
       );
       while ($enum_fields = $property_enums->GetNext()) {
         $collectionIds[] = $enum_fields["ID"];
@@ -211,7 +211,7 @@ $APPLICATION->SetTitle("Каталог");
     error_log("Full filter: " . print_r($GLOBALS['arrFilter'], true));
 
     // Проверяем, есть ли товары с такой коллекцией
-    $testFilter = ['IBLOCK_ID' => 29, 'ACTIVE' => 'Y', 'PROPERTY_KOLLEKTSIYA' => (!empty($collectionIds) ? $collectionIds : $collectionValues)];
+    $testFilter = ['IBLOCK_ID' => CATALOG_ID, 'ACTIVE' => 'Y', 'PROPERTY_KOLLEKTSIYA' => (!empty($collectionIds) ? $collectionIds : $collectionValues)];
 
     // Если есть фильтр по разделу, добавляем его
     if (!empty($_REQUEST["SECTION_ID"])) {
@@ -254,7 +254,7 @@ $APPLICATION->SetTitle("Каталог");
   // Проверяем раздел
   if (!empty($_REQUEST["SECTION_CODE"])) {
     error_log("Section code: " . $_REQUEST["SECTION_CODE"]);
-    $sectionRes = CIBlockSection::GetList([], ['IBLOCK_ID' => 29, 'CODE' => $_REQUEST["SECTION_CODE"]], false, false, ['ID', 'NAME', 'CODE']);
+    $sectionRes = CIBlockSection::GetList([], ['IBLOCK_ID' => CATALOG_ID, 'CODE' => $_REQUEST["SECTION_CODE"]], false, false, ['ID', 'NAME', 'CODE']);
     $section = $sectionRes->GetNext();
     if ($section) {
       error_log("Section found: " . $section['NAME'] . " (ID: " . $section['ID'] . ")");
@@ -269,7 +269,7 @@ $APPLICATION->SetTitle("Каталог");
       "catalog-page",
       [
         "IBLOCK_TYPE" => "CRM_PRODUCT_CATALOG",
-        "IBLOCK_ID" => "29",
+        "IBLOCK_ID" => CATALOG_ID,
         "PRICE_CODE" => ["Розничная цена"],
         "USE_PRICE_COUNT" => "Y",
         "SHOW_PRICE_COUNT" => "1",
@@ -278,7 +278,20 @@ $APPLICATION->SetTitle("Каталог");
         "PRICE_VAT_INCLUDE" => "Y",
         "ELEMENT_SORT_FIELD2" => "id",
         "ELEMENT_SORT_ORDER2" => "desc",
-        "PROPERTY_CODE" => ["PRICE", "OLD_PRICE", "MORE_PHOTO", "NEW", "PREORDER", "FAVORITE", "COLORS", "SIZES", "NAIMENOVANIE_TOVARA_NA_SAYTE_ETIKETKE"],
+        "PROPERTY_CODE" => [
+          "PRICE",
+          "OLD_PRICE",
+          "MORE_PHOTO",
+          "NEW",
+          "PREORDER",
+          "FAVORITE",
+          "COLORS",
+          "SIZES",
+          "NAIMENOVANIE_TOVARA_NA_SAYTE_ETIKETKE",
+          "SOSTAV_TKANI",
+          "UKHOD",
+          "MODEL_PARAMS"
+        ],
         "PAGE_ELEMENT_COUNT" => "20",
         "LINE_ELEMENT_COUNT" => "3",
         "CACHE_TYPE" => "A",
@@ -296,14 +309,13 @@ $APPLICATION->SetTitle("Каталог");
         "SHOW_ALL_WO_SECTION" => "N",
         "HIDE_NOT_AVAILABLE" => "Y",
         "HIDE_NOT_AVAILABLE_OFFERS" => "Y",
-        "QUANTITY_FILTER" => array(
-          "PROPERTY_CODE" => array("QUANTITY"),
+        "QUANTITY_FILTER" => [
+          "PROPERTY_CODE" => ["QUANTITY"],
           "FILTER_VALUE" => ">0"
-        ),
+        ],
         "SECTION_ID" => $_REQUEST["SECTION_ID"],
         "SECTION_CODE" => $_REQUEST["SECTION_CODE"],
         "SECTION_CODE_PATH" => $_REQUEST["SECTION_CODE_PATH"],
-        // Отладочная информация для раздела
         "SECTION_URL" => "",
         "ELEMENT_SORT_FIELD" => $sortField,
         "ELEMENT_SORT_ORDER" => $sortOrder,

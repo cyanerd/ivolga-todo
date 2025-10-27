@@ -25,7 +25,7 @@ $obSearch->Search([
   [
     [
       "MODULE_ID" => "iblock",
-      "PARAM2" => [29,],
+      "PARAM2" => [CATALOG_ID],
     ],
   ]
 );

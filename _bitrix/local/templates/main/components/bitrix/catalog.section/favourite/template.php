@@ -20,7 +20,17 @@ $this->setFrameMode(true);
 <script>
   // Функция для загрузки данных товаров
   async function loadFavouriteProducts() {
-    const favourites = getFavouriteProducts();
+
+    const _getProducts = async () => {
+      window.isUserLoggedIn = document.body.getAttribute('data-user-logged-in') === 'true';
+      if (window.isUserLoggedIn) {
+        await loadUserFavourites();
+        return window.serverFavourites || [];
+      }
+      return JSON.parse(localStorage.getItem('favourite_products') || '[]');
+    }
+
+    const favourites = await _getProducts();
 
     if (favourites.length === 0) {
       document.getElementById('favourite-products').innerHTML = '<div class="empty-favourites"><p>В избранном пока ничего нет</p></div>';
@@ -63,7 +73,7 @@ $this->setFrameMode(true);
     products.forEach(product => {
       const price = product.price || 0;
       const oldPrice = product.old_price || 0;
-      const discount = oldPrice > price ? Math.round(((oldPrice - price) / oldPrice) * 100) : 0;
+      const discount = product.discount_percent || 0;
 
       console.log('product', product);
 
@@ -75,11 +85,11 @@ $this->setFrameMode(true);
               <div class="product-card__slider-track">
                 ${product.images && product.images.length > 0 ?
         product.images.map((image, index) => `
-                    <div class="product-card__slide">
+                    <div class="product-card__slide product-card__slide--9">
                       <img src="${image}" alt="${product.name}">
                     </div>
                   `).join('') :
-        `<div class="product-card__slide">
+        `<div class="product-card__slide product-card__slide--10">
                     <img src="/assets/img/no-photo.jpg" alt="${product.name}">
                   </div>`
       }
@@ -125,7 +135,7 @@ $this->setFrameMode(true);
             </div>
           </a>
 
-          <div class="product-card__footer">
+          <div class="product-card__footer product-card__footer4">
             ${product.colors && product.colors.length > 0 ? `
               <div class="product-card__colors">
                 ${product.colors.slice(0, 5).map(color => {

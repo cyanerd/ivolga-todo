@@ -71,7 +71,7 @@ global $arrFilter;
               "FILTER_NAME" => "arrFilter",
               "HIDE_NOT_AVAILABLE" => "Y",
               "HIDE_NOT_AVAILABLE_OFFERS" => "Y",
-              "IBLOCK_ID" => "29",
+              "IBLOCK_ID" => CATALOG_ID,
               "IBLOCK_TYPE" => "CRM_PRODUCT_CATALOG",
               "INCLUDE_SUBSECTIONS" => "Y",
               "LABEL_PROP" => [],
