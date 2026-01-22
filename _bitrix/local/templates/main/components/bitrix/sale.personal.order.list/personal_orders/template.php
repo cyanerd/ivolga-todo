@@ -29,7 +29,7 @@ $this->setFrameMode(true);
               №<?= $arOrder["ORDER"]["ACCOUNT_NUMBER"] ?>
             </p>
             <p class="lk-orders__tag">
-              <?= $arResult['INFO']['STATUS'][$arOrder['ORDER']['STATUS_ID']]['NAME'] ?>
+              <?= ($arOrder['ORDER']['CANCELED'] === 'Y') ? 'Отменён' : $arResult['INFO']['STATUS'][$arOrder['ORDER']['STATUS_ID']]['NAME'] ?>
             </p>
             <p class="lk-orders__date">
               от <?= $arOrder["ORDER"]["DATE_INSERT_FORMATED"] ?>
@@ -37,7 +37,7 @@ $this->setFrameMode(true);
           </a>
           <a href="/personal/order/detail/?ID=<?= $arOrder["ORDER"]["ID"] ?>" class="lk-orders__buttons">
             <p class="lk-orders__status">
-              <?= $arResult['INFO']['STATUS'][$arOrder['ORDER']['STATUS_ID']]['NAME'] ?>
+              <?= ($arOrder['ORDER']['CANCELED'] === 'Y') ? 'Отменён' : $arResult['INFO']['STATUS'][$arOrder['ORDER']['STATUS_ID']]['NAME'] ?>
             </p>
             <p class="lk-orders__price">
               <?= $arOrder["ORDER"]["FORMATED_PRICE"] ?>

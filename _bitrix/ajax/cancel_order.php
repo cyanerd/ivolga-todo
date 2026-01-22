@@ -31,6 +31,8 @@ if ($order->isCanceled()) {
 
 $result = $order->setField('CANCELED', 'Y');
 $order->setField('REASON_CANCELED', 'Отмена пользователем через личный кабинет');
+//$targetStatus = 'D';
+//$order->setField('STATUS_ID', $targetStatus);
 $saveResult = $order->save();
 
 if ($saveResult->isSuccess()) {

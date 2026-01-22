@@ -318,6 +318,9 @@ $(document).ready(function () {
       if ($newItems.length) {
         $('.catalogpage__items > div').append($newItems);
       }
+      setTimeout(() => {
+        window.initProductCards();
+      }, 100);
       // Проверяем, есть ли ещё страницы
       const $newBtn = $html.find('.catalogpage__more');
       if ($newBtn.length) {
@@ -466,11 +469,13 @@ $(document).ready(function () {
 
   $(document).on('click', '.js--close', function (e) {
     closeModals();
+    console.log('asdasd');
   });
 
   window.closeModals = function () {
     $('html').removeClass('locked');
-    $('.lkmodal.open').removeClass('open');
+    if ($('.modalcart.open').length) $('.modalcart.open').removeClass('open');
+    if ($('.lkmodal.open').length) $('.lkmodal.open').removeClass('open');
     if ($('.backdrop').length) $('.backdrop').removeClass('open');
   }
 
@@ -1201,6 +1206,7 @@ function initCartEventListeners() {
   const cartModal = document.getElementById('cart');
   if (cartModal) {
     const closeButtons = cartModal.querySelectorAll('.js--close');
+
     closeButtons.forEach(button => {
       button.addEventListener('click', function () {
         // Если мы на странице checkout, обновляем её
@@ -1824,6 +1830,44 @@ $(document).ready(function () {
   $('#logout-no').on('click', function () {
     closeModal('logout-modal');
   });
+
+  // Автозаполнение Bitrix-поля адреса из формы (Улица/Дом/Квартира/Подъезд/Этаж)
+  function buildCheckoutAddress() {
+    const street = $('input[placeholder="Улица"]').val()?.trim() || '';
+    const house = $('input[placeholder="Дом"]').val()?.trim() || '';
+    const apartment = $('input[placeholder="Квартира"]').val()?.trim() || '';
+    const entrance = $('input[placeholder="Подъезд"]').val()?.trim() || '';
+    const floor = $('input[placeholder="Этаж"]').val()?.trim() || '';
+
+    let address = street;
+    if (house) address += (address ? ', ' : '') + 'д. ' + house;
+    if (apartment) address += (address ? ', ' : '') + 'кв. ' + apartment;
+    if (entrance) address += (address ? ', ' : '') + 'подъезд ' + entrance;
+    if (floor) address += (address ? ', ' : '') + 'этаж ' + floor;
+    return address;
+  }
+
+  function updateSoaAddress26() {
+    const $soaField = $('#soa-property-26');
+    if ($soaField.length) {
+      const address = buildCheckoutAddress();
+      $soaField.val(address).trigger('input').trigger('change');
+    }
+  }
+
+  // Подписываемся на изменения полей адреса и обновляем ORDER_PROP_26
+  $(document).on('input change',
+    '.order-controls input[placeholder="Улица"],\
+     .order-controls input[placeholder="Дом"],\
+     .order-controls input[placeholder="Квартира"],\
+     .order-controls input[placeholder="Подъезд"],\
+     .order-controls input[placeholder="Этаж"]',
+    updateSoaAddress26
+  );
+
+  // Инициализация при загрузке (и с задержкой для динамической отрисовки)
+  updateSoaAddress26();
+  setTimeout(updateSoaAddress26, 300);
 
   // Функция для управления состоянием поля адреса в зависимости от метода доставки
   function updateAddressFieldState() {

@@ -22,14 +22,14 @@ foreach ($productIds as $productId) {
     // Получаем свойства товара
     $rsProps = CIBlockElement::GetProperty($arElement['IBLOCK_ID'], $productId, ["sort" => "asc"], ["CODE" => "MORE_PHOTO"]);
     $arProps = [];
+    $morePhotoValues = [];
     while ($arProp = $rsProps->GetNext()) {
-      $arProps[$arProp['CODE']] = $arProp;
+      // Собираем все значения множественного свойства MORE_PHOTO в массив
+      if ($arProp['VALUE']) {
+        $morePhotoValues[] = $arProp['VALUE'];
+      }
     }
-
-    // Если свойство MORE_PHOTO не найдено, создаем пустой массив
-    if (!isset($arProps['MORE_PHOTO'])) {
-      $arProps['MORE_PHOTO'] = ['VALUE' => []];
-    }
+    $arProps['MORE_PHOTO'] = ['VALUE' => $morePhotoValues];
 
     // Получаем остальные свойства отдельно
     $rsPropsNew = CIBlockElement::GetProperty($arElement['IBLOCK_ID'], $productId, ["sort" => "asc"], ["CODE" => "NEW"]);

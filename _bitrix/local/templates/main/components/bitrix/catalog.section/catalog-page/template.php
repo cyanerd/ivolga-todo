@@ -169,14 +169,20 @@ if ($_GET['update_filters'] === 'Y') {
               <a href="<?= $arItem["DETAIL_PAGE_URL"] ?>" class="product-card__slider">
                 <div class="product-card__slider-track">
                   <? if (!empty($arItem["PROPERTIES"]["MORE_PHOTO"]["VALUE"])): ?>
-                    <? foreach ($arItem["PROPERTIES"]["MORE_PHOTO"]["VALUE"] as $imageId): ?>
+                    <? foreach ($arItem["PROPERTIES"]["MORE_PHOTO"]["VALUE"] as $index => $imageId): ?>
                       <div class="product-card__slide product-card__slide--2">
-                        <img src="<?= CFile::GetPath($imageId) ?>" alt="<?= $arItem['PROPERTIES']['NAIMENOVANIE_TOVARA_NA_SAYTE_ETIKETKE']['VALUE'] ?: $arItem["NAME"] ?>">
+                        <img src="<?= CFile::GetPath($imageId) ?>"
+                             alt="<?= $arItem['PROPERTIES']['NAIMENOVANIE_TOVARA_NA_SAYTE_ETIKETKE']['VALUE'] ?: $arItem["NAME"] ?>"
+                             loading="<?= $index === 0 ? 'eager' : 'lazy' ?>"
+                             decoding="async">
                       </div>
                     <? endforeach; ?>
                   <? else: ?>
                     <div class="product-card__slide product-card__slide--1">
-                      <img src="/assets/img/no-photo.jpg" alt="<?= $arItem['PROPERTIES']['NAIMENOVANIE_TOVARA_NA_SAYTE_ETIKETKE']['VALUE'] ?: $arItem["NAME"] ?>">
+                      <img src="/assets/img/no-photo.jpg"
+                           alt="<?= $arItem['PROPERTIES']['NAIMENOVANIE_TOVARA_NA_SAYTE_ETIKETKE']['VALUE'] ?: $arItem["NAME"] ?>"
+                           loading="eager"
+                           decoding="async">
                     </div>
                   <? endif; ?>
                 </div>
@@ -229,7 +235,6 @@ if ($_GET['update_filters'] === 'Y') {
               // Получаем цены товара/предложения через единую функцию
               if ($price_product_id) {
                 $priceData = getProductPrice($price_product_id);
-//                d($priceData);
                 if ($priceData['formattedPrice']) {
                   $price = $priceData['formattedPrice'];
                   $oldPrice = $priceData['formattedOldPrice'] ?: null;

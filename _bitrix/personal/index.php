@@ -1,6 +1,11 @@
 <?
 require($_SERVER["DOCUMENT_ROOT"] . "/bitrix/header.php");
 $APPLICATION->SetTitle("Личный кабинет");
+global $USER;
+if (!$USER->IsAuthorized()) {
+  LocalRedirect('/');
+  die();
+}
 ?>
 
 <section class="infopage lk">

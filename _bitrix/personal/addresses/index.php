@@ -1,6 +1,11 @@
 <?php
 require($_SERVER["DOCUMENT_ROOT"] . "/bitrix/header.php");
 $APPLICATION->SetTitle("Адреса доставки");
+global $USER;
+if (!$USER->IsAuthorized()) {
+  LocalRedirect('/');
+  die();
+}
 ?>
 
 <section class="infopage lk">

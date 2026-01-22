@@ -1,5 +1,7 @@
 // Обработка оформления заказа
 document.addEventListener('DOMContentLoaded', function () {
+  console.log('CHECKOUT!');
+
   const orderButton = document.getElementById('order_create');
   const errorContainer = document.getElementById('error-container');
 

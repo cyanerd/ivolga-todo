@@ -96,7 +96,7 @@ if ($arResult["PROPERTIES"]['FILES']['VALUE']) {
             <div class="pageprod__gallery-main swiper">
               <div class="swiper-wrapper">
                 <? if ($images): ?>
-                  <? foreach ($images as $photoId): ?>
+                  <? foreach ($images as $index => $photoId): ?>
                     <? $photo = CFile::GetFileArray($photoId); ?>
                     <div class="swiper-slide">
                       <? if (substr_count($photo['CONTENT_TYPE'], 'video')) { ?>
@@ -105,7 +105,10 @@ if ($arResult["PROPERTIES"]['FILES']['VALUE']) {
                         </a>
                       <? } else { ?>
                         <a href="<?= $photo["SRC"] ?>" data-fancybox="gallery" class="pageprod__gallery-slide">
-                          <img src="<?= $photo["SRC"] ?>" alt="<?= $arResult["NAME"] ?>">
+                          <img src="<?= $photo["SRC"] ?>"
+                               alt="<?= $arResult["NAME"] ?>"
+                               loading="<?= $index === 0 ? 'eager' : 'lazy' ?>"
+                               decoding="async">
                         </a>
                       <? } ?>
                     </div>
@@ -115,13 +118,19 @@ if ($arResult["PROPERTIES"]['FILES']['VALUE']) {
                     <div class="swiper-slide">
                       <a href="<?= $arResult["PREVIEW_PICTURE"]["SRC"] ?>" data-fancybox="gallery"
                          class="pageprod__gallery-slide">
-                        <img src="<?= $arResult["PREVIEW_PICTURE"]["SRC"] ?>" alt="<?= $arResult["NAME"] ?>">
+                        <img src="<?= $arResult["PREVIEW_PICTURE"]["SRC"] ?>"
+                             alt="<?= $arResult["NAME"] ?>"
+                             loading="eager"
+                             decoding="async">
                       </a>
                     </div>
                   <? else: ?>
                     <div class="swiper-slide">
                       <a href="/assets/img/no-photo.jpg" data-fancybox="gallery" class="pageprod__gallery-slide">
-                        <img src="/assets/img/no-photo.jpg" alt="<?= $arResult["NAME"] ?>">
+                        <img src="/assets/img/no-photo.jpg"
+                             alt="<?= $arResult["NAME"] ?>"
+                             loading="eager"
+                             decoding="async">
                       </a>
                     </div>
                   <? endif; ?>

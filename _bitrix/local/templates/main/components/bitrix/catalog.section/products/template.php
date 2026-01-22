@@ -31,17 +31,23 @@ $this->setFrameMode(true);
                 <div class="product-card__slider">
                   <div class="product-card__slider-track">
                     <? if (!empty($arItem["PROPERTIES"]["MORE_PHOTO"]["VALUE"])): ?>
-                      <? foreach ($arItem["PROPERTIES"]["MORE_PHOTO"]["VALUE"] as $imageId): ?>
+                      <? foreach ($arItem["PROPERTIES"]["MORE_PHOTO"]["VALUE"] as $index => $imageId): ?>
                         <div class="product-card__slide product-card__slide--11">
                           <a href="<?= $arItem["DETAIL_PAGE_URL"] ?>">
-                            <img src="<?= CFile::GetPath($imageId) ?>" alt="<?= $arItem['PROPERTIES']['NAIMENOVANIE_TOVARA_NA_SAYTE_ETIKETKE']['VALUE'] ?: $arItem["NAME"] ?>">
+                            <img src="<?= CFile::GetPath($imageId) ?>"
+                                 alt="<?= $arItem['PROPERTIES']['NAIMENOVANIE_TOVARA_NA_SAYTE_ETIKETKE']['VALUE'] ?: $arItem["NAME"] ?>"
+                                 loading="<?= $index === 0 ? 'eager' : 'lazy' ?>"
+                                 decoding="async">
                           </a>
                         </div>
                       <? endforeach; ?>
                     <? else: ?>
                       <div class="product-card__slide product-card__slide--12">
                         <a href="<?= $arItem["DETAIL_PAGE_URL"] ?>">
-                          <img src="/assets/img/no-photo.jpg" alt="<?= $arItem['PROPERTIES']['NAIMENOVANIE_TOVARA_NA_SAYTE_ETIKETKE']['VALUE'] ?: $arItem["NAME"] ?>">
+                          <img src="/assets/img/no-photo.jpg"
+                               alt="<?= $arItem['PROPERTIES']['NAIMENOVANIE_TOVARA_NA_SAYTE_ETIKETKE']['VALUE'] ?: $arItem["NAME"] ?>"
+                               loading="eager"
+                               decoding="async">
                         </a>
                       </div>
                     <? endif; ?>
