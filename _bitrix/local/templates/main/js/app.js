@@ -1,3 +1,4 @@
+var is = function(){};
 (() => {
   var e = {
       392: () => {

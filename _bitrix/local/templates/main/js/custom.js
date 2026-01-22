@@ -116,6 +116,7 @@ $(document).ready(function () {
       $(html).removeClass('locked');
       initFilters();
       initSortHandlers(); // Переинициализируем обработчики сортировки
+      updateFavouriteButtons(); // Обновляем состояние сердечек избранного
 
       // Обновляем активный пункт навигации
       updateCatalogNavigation(url);
@@ -696,16 +697,7 @@ async function removeFromFavourite(productId) {
         updateFavouriteButtons();
 
         // Удаляем карточку товара из DOM (если мы на странице избранного)
-        const productCard = document.querySelector(`.__favourite [data-product-id="${productId}"]`);
-        if (productCard) {
-          productCard.remove();
-
-          // Если товаров нет, показываем сообщение
-          const container = document.getElementById('favourite-products');
-          if (container && container.children.length === 0) {
-            container.innerHTML = '<div class="empty-favourites"><p>В избранном пока ничего нет</p></div>';
-          }
-        }
+        removeProductCardFromFavouritePage(productId);
       } else {
         console.error('Ошибка удаления из избранного:', result.error);
       }
@@ -718,19 +710,32 @@ async function removeFromFavourite(productId) {
       updateFavouriteButtons();
 
       // Удаляем карточку товара из DOM (если мы на странице избранного)
-      const productCard = document.querySelector(`.__favourite [data-product-id="${productId}"]`);
-      if (productCard) {
-        productCard.remove();
-
-        // Если товаров нет, показываем сообщение
-        const container = document.getElementById('favourite-products');
-        if (container && container.children.length === 0) {
-          container.innerHTML = '<div class="empty-favourites"><p>В избранном пока ничего нет</p></div>';
-        }
-      }
+      removeProductCardFromFavouritePage(productId);
     }
   } catch (error) {
     console.error('Ошибка:', error);
+  }
+}
+
+// Функция для удаления карточки товара со страницы избранного
+function removeProductCardFromFavouritePage(productId) {
+  const container = document.getElementById('favourite-products');
+  if (!container) return;
+
+  const productCard = container.querySelector(`[data-product-id="${productId}"]`);
+  if (productCard) {
+    // Удаляем родительский .catalogpage__col, чтобы не оставалось пустого места
+    const col = productCard.closest('.catalogpage__col');
+    if (col) {
+      col.remove();
+    } else {
+      productCard.remove();
+    }
+
+    // Если товаров нет, показываем сообщение
+    if (container.children.length === 0) {
+      container.innerHTML = '<div class="empty-favourites"><p>В избранном пока ничего нет</p></div>';
+    }
   }
 }
 
@@ -1735,7 +1740,7 @@ $(document).ready(function () {
         $('#_styles').remove();
         $('#bx-soa-delivery .order-methods').before(
           `<div class="order-alert order-alert--area" style="display: none;">
-            <p><span>Для отображения опций доставки выберите город</span></p>
+            <p><span>Для отображения опции доставки введите город</span></p>
           </div>`
         );
         added = true;
@@ -2237,7 +2242,7 @@ function updateDeliveryVisibility() {
     }
   }
 
-  // 1. Блок "Для отображения опций доставки выберите город"
+  // 1. Блок "Для отображения опции доставки введите город"
   const $cityAlert = $('.order-alert--area');
   if ($cityAlert.length) {
     if (selectedCity === '0') {

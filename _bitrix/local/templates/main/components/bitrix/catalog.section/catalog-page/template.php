@@ -298,7 +298,7 @@ if ($_GET['update_filters'] === 'Y') {
               ?>
               <div class="product-card__sizes">
                 <?php foreach ($sizes_list as $size): ?>
-                  <span class="product-card__sizes-item"><?= htmlspecialchars($size['title']) ?></span>
+                  <a href="<?= $arItem['DETAIL_PAGE_URL'] ?>" class="product-card__sizes-item"><?= htmlspecialchars($size['title']) ?></a>
                 <?php endforeach; ?>
               </div>
             </div>

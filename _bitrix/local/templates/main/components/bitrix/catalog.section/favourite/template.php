@@ -162,6 +162,42 @@ $this->setFrameMode(true);
 
     container.innerHTML = html;
     updateFavouriteCounter();
+
+    // Инициализируем слайдер для динамически загруженных карточек
+    initProductCardSliders(container);
+  }
+
+  // Функция инициализации слайдера карточек товаров
+  function initProductCardSliders(container) {
+    container.querySelectorAll(".product-card").forEach(function(card) {
+      var track = card.querySelector(".product-card__slider-track");
+      var slides = card.querySelectorAll(".product-card__slide");
+      var dots = card.querySelectorAll(".product-card__pagination-dot");
+
+      if (!track || slides.length <= 1) return;
+
+      var setActiveSlide = function(index) {
+        slides.forEach(function(slide, i) {
+          slide.style.opacity = i === index ? "1" : "0";
+          slide.style.pointerEvents = i === index ? "auto" : "none";
+        });
+        dots.forEach(function(dot, i) {
+          dot.classList.toggle("active", i === index);
+        });
+      };
+
+      track.addEventListener("mousemove", function(e) {
+        var rect = track.getBoundingClientRect();
+        var x = e.clientX - rect.left;
+        var zoneWidth = rect.width / slides.length;
+        var index = Math.min(Math.floor(x / zoneWidth), slides.length - 1);
+        setActiveSlide(index);
+      });
+
+      track.addEventListener("mouseleave", function() {
+        setActiveSlide(0);
+      });
+    });
   }
 
   // Загружаем товары при загрузке страницы

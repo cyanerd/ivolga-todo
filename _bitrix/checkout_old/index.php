@@ -60,7 +60,7 @@ foreach ($basketItems as $item) {
             </select>
           </div>
           <div class="order-alert order-alert--area">
-            <p><span>Для отображения опций доставки выберите город</span></p>
+            <p><span>Для отображения опции доставки введите город</span></p>
           </div>
           <!-- Скрытые поля с информацией о корзине для JavaScript -->
           <input type="hidden" id="basket-total" value="<?= $totalPrice ?>">

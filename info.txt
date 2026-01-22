@@ -26,6 +26,15 @@ https://disk.yandex.ru/d/_RJE8442Na5Krg
 Шрифты https://t.me/c/2450627644/23
 Брендбук https://t.me/c/2450627644/24
 
+grep -rn "placeholder" ./components/bitrix/sale.order.ajax/templates/.default/ 2>/dev/null | head -30
+cat ./components/bitrix/sale.order.ajax/templates/.default/lang/ru/template.php
+ grep -r "$(echo -e '\xD0\x92\xD0\xB2\xD0\xB5\xD0\xB4\xD0\xB8\xD1\x82\xD0\xB5')" . 2>/dev/null | head -10
+
+ grep -r "$(echo -e '\xD0\x92\xD0\xB2\xD0\xB5\xD0\xB4\xD0\xB8\xD1\x82\xD0\xB5 \xD0\xBD\xD0\xB0\xD0\xB7\xD0\xB2\xD0\xB0\xD0\xBD\xD0\xB8\xD0\xB5\"')" . 2>/dev/null
+
+ sed -i "s/$(echo -e '\xD0\x92\xD0\xB2\xD0\xB5\xD0\xB4\xD0\xB8\xD1\x82\xD0\xB5 \xD0\xBD\xD0\xB0\xD0\xB7\xD0\xB2\xD0\xB0\xD0\xBD\xD0\xB8\xD0\xB5')/$(echo -e '\xD0\x92\xD0\xB2\xD0\xB5\xD0\xB4\xD0\xB8\xD1\x82\xD0\xB5\xD0\xB3\xD0\xBE\xD1\x80\xD0\xBE\xD0\xB4')/g" ./components/bitrix/sale.location.selector.search/templates/.default/lang/ru/template.php
+
+ cat ./components/bitrix/sale.location.selector.search/templates/.default/lang/ru/template.php
 
 
 https://new.ivolga.moscow/
@@ -113,3 +122,9 @@ CDEK
 Банковской картой онлайн (cloud payments)
 Оплата Долями (сервис Долями)
 + стоимость доставки рассчитывается автоматически
+
+
+=== SSH команды для поиска/замены русского текста ===
+
+# Исправить "Введитегород" на "Введите город" (добавить пробел):
+sed -i "s/$(echo -e '\xD0\x92\xD0\xB2\xD0\xB5\xD0\xB4\xD0\xB8\xD1\x82\xD0\xB5\xD0\xB3\xD0\xBE\xD1\x80\xD0\xBE\xD0\xB4')/$(echo -e '\xD0\x92\xD0\xB2\xD0\xB5\xD0\xB4\xD0\xB8\xD1\x82\xD0\xB5 \xD0\xB3\xD0\xBE\xD1\x80\xD0\xBE\xD0\xB4')/g" ./components/bitrix/sale.location.selector.search/templates/.default/lang/ru/template.php

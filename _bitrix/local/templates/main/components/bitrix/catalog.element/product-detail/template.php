@@ -311,12 +311,6 @@ if ($arResult["PROPERTIES"]['FILES']['VALUE']) {
           </div>
 
           <div class="pageprod__info">
-            <? if ($arResult["PREVIEW_TEXT"]): ?>
-              <p class="pageprod__info-txt">
-                <?= $arResult["PREVIEW_TEXT"] ?>
-              </p>
-            <? endif; ?>
-
             <? if ($arResult["PROPERTIES"]["CML2_ARTICLE"]["VALUE"]): ?>
               <p class="pageprod__info-artikul">
                 Артикул: <?= $arResult["PROPERTIES"]["CML2_ARTICLE"]["VALUE"] ?>

@@ -19,11 +19,11 @@ if (defined('ADMIN_SECTION')) {
 }
 
 CModule::AddAutoloadClasses(
-    '', // не указываем имя модуля
-    array(
-        // ключ - имя класса, значение - путь относительно корня сайта к файлу с классом
-        'Ivolga\Classes\Favourites' => '/local/php_interface/classes/Favourites.php',
-    )
+  '', // не указываем имя модуля
+  [
+    // ключ - имя класса, значение - путь относительно корня сайта к файлу с классом
+    'Ivolga\Classes\Favourites' => '/local/php_interface/classes/Favourites.php',
+  ]
 );
 
 function d($s)
@@ -784,7 +784,7 @@ function getProductPrice($productId)
   }
 
   // Используем GetOptimalPrice для автоматического определения цены
-  $optimalPrice = CCatalogProduct::GetOptimalPrice($productId, 1, array(), 'N', array(), SITE_ID);
+  $optimalPrice = CCatalogProduct::GetOptimalPrice($productId, 1, [], 'N', [], SITE_ID);
   if ($optimalPrice && isset($optimalPrice['PRICE'])) {
     $result['price'] = $optimalPrice['PRICE']['PRICE'];
   }
@@ -792,11 +792,11 @@ function getProductPrice($productId)
   // Если GetOptimalPrice не вернул цену, пробуем получить напрямую
   if ($result['price'] == 0) {
     $dbPrice = CPrice::GetList(
-      array(),
-      array(
+      [],
+      [
         "PRODUCT_ID" => $productId,
         "CATALOG_GROUP_ID" => 7 // ID типа цены "Розничная цена"
-      )
+      ]
     );
     if ($arPrice = $dbPrice->Fetch()) {
       $result['price'] = $arPrice["PRICE"];
@@ -805,11 +805,11 @@ function getProductPrice($productId)
 
   // Получаем старую цену (Первоначальная розничная цена, ID=8)
   $dbOldPrice = CPrice::GetList(
-    array(),
-    array(
+    [],
+    [
       "PRODUCT_ID" => $productId,
       "CATALOG_GROUP_ID" => 8 // ID типа цены "Первоначальная розничная цена"
-    )
+    ]
   );
   if ($arOldPrice = $dbOldPrice->Fetch()) {
     $result['oldPrice'] = $arOldPrice["PRICE"];
@@ -832,53 +832,59 @@ function getProductPrice($productId)
 }
 
 \Bitrix\Main\EventManager::getInstance()->addEventHandler('sale', 'OnSaleComponentOrderShowAjaxAnswer', ['CustomOrderHandlers', 'OnSaleComponentOrderShowAjaxAnswerHandler']);
-class CustomOrderHandlers {
-    private static $deliveryIds = [
-        '269' => 'Courier',
-        '260' => 'Courier',
-        '261' => 'PVZ',
-        '264' => 'PVZ',
-        '3' => 'Showroom',
-    ];
 
-    public static function OnSaleComponentOrderShowAjaxAnswerHandler(&$result) {
-        //\Bitrix\Main\Diag\Debug::writeToFile(['r' => $result['order']['ORDER_PROP']], '', 'aos22.txt');
-        if (!empty($result['order']['ORDER_PROP']['properties']) && is_array($result['order']['ORDER_PROP']['properties'])) {
-            $k = array_search('MINDBOX_DELIVERY', array_column($result['order']['ORDER_PROP']['properties'], 'CODE'));
-            foreach ($result['order']['DELIVERY'] as $key => $delivery) {
-                if ($delivery['CHECKED'] === 'Y') {
-                    $result['order']['ORDER_PROP']['properties'][$k]['VALUE'][0] = self::$deliveryIds[$key];
-                }
-            }
+class CustomOrderHandlers
+{
+  private static $deliveryIds = [
+    '269' => 'Courier',
+    '260' => 'Courier',
+    '261' => 'PVZ',
+    '264' => 'PVZ',
+    '3' => 'Showroom',
+  ];
+
+  public static function OnSaleComponentOrderShowAjaxAnswerHandler(&$result)
+  {
+    //\Bitrix\Main\Diag\Debug::writeToFile(['r' => $result['order']['ORDER_PROP']], '', 'aos22.txt');
+    if (!empty($result['order']['ORDER_PROP']['properties']) && is_array($result['order']['ORDER_PROP']['properties'])) {
+      $k = array_search('MINDBOX_DELIVERY', array_column($result['order']['ORDER_PROP']['properties'], 'CODE'));
+      foreach ($result['order']['DELIVERY'] as $key => $delivery) {
+        if ($delivery['CHECKED'] === 'Y') {
+          $result['order']['ORDER_PROP']['properties'][$k]['VALUE'][0] = self::$deliveryIds[$key];
         }
+      }
     }
+  }
 }
 
 \Bitrix\Main\EventManager::getInstance()->addEventHandler('main', 'OnAfterUserUpdate', ['CustomUserHandlers', 'OnAfterUserUpdateHandler']);
-class CustomUserHandlers {
-    public static function OnAfterUserUpdateHandler(&$arFields) {
-        $settings = \Mindbox\Loyalty\Support\SettingsFactory::create();
 
-        try {
-            $customer = new \Mindbox\Loyalty\Models\Customer((int) $arFields['ID']);
-            $service = new \Mindbox\Loyalty\Services\CustomerService($settings);
+class CustomUserHandlers
+{
+  public static function OnAfterUserUpdateHandler(&$arFields)
+  {
+    $settings = \Mindbox\Loyalty\Support\SettingsFactory::create();
 
-            // Если при смене телефона происходит его подтверждение по СМС, не через МБ
-            $session = \Bitrix\Main\Application::getInstance()->getSession();
-            if ($session->has('mindbox_need_confirm_phone')) {
-                $session->remove('mindbox_need_confirm_phone');
-                $service->confirmMobilePhone($customer);
-            }
-            $brand = $settings->getBrand();
-            if (isset($arFields['UF_NOT_SUBSCRIBED']) && $arFields['UF_NOT_SUBSCRIBED']) {
-                $customer->setSubscribe($brand, 'Email', false);
-            } else {
-                $customer->setSubscribe($brand, 'Email', true);
-            }
-            //\Bitrix\Main\Diag\Debug::writeToFile(['f' => $arFields, 'b' => $brand], '', 'fff.txt');
+    try {
+      $customer = new \Mindbox\Loyalty\Models\Customer((int)$arFields['ID']);
+      $service = new \Mindbox\Loyalty\Services\CustomerService($settings);
 
-            $service->edit($customer);
-        } catch (IntegrationLoyaltyException $exception) {
-        }
+      // Если при смене телефона происходит его подтверждение по СМС, не через МБ
+      $session = \Bitrix\Main\Application::getInstance()->getSession();
+      if ($session->has('mindbox_need_confirm_phone')) {
+        $session->remove('mindbox_need_confirm_phone');
+        $service->confirmMobilePhone($customer);
+      }
+      $brand = $settings->getBrand();
+      if (isset($arFields['UF_NOT_SUBSCRIBED']) && $arFields['UF_NOT_SUBSCRIBED']) {
+        $customer->setSubscribe($brand, 'Email', false);
+      } else {
+        $customer->setSubscribe($brand, 'Email', true);
+      }
+      //\Bitrix\Main\Diag\Debug::writeToFile(['f' => $arFields, 'b' => $brand], '', 'fff.txt');
+
+      $service->edit($customer);
+    } catch (IntegrationLoyaltyException $exception) {
     }
+  }
 }
