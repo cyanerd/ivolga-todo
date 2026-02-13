@@ -2381,6 +2381,7 @@ function validateCheckoutForm() {
   if (selectedDeliveryMethod === 'Курьер') {
     const street = $('input[placeholder="Улица"]').val().trim();
     const house = $('input[placeholder="Дом"]').val().trim();
+    const apartment = $('input[placeholder="Квартира"]').val().trim();
 
     if (!street) {
       showNotification('Пожалуйста, укажите улицу', 'error');
@@ -2389,6 +2390,29 @@ function validateCheckoutForm() {
 
     if (!house) {
       showNotification('Пожалуйста, укажите номер дома', 'error');
+      return false;
+    }
+
+    if (!apartment) {
+      showNotification('Пожалуйста, укажите квартиру', 'error');
+      return false;
+    }
+  }
+
+  // Если выбран СДЭК, проверяем выбор ПВЗ
+  if (selectedDeliveryMethod === 'Пункт выдачи СДЭК' || selectedDeliveryMethod === 'Курьер СДЭК') {
+    const cdekAddress = $('#cdek_result_address').val() || '';
+    if (!cdekAddress.trim()) {
+      showNotification('Пожалуйста, выберите пункт выдачи СДЭК', 'error');
+      return false;
+    }
+  }
+
+  // Если выбрана Почта России, проверяем выбор ПВЗ
+  if (selectedDeliveryMethod === 'Пункт выдачи заказов Почта России') {
+    const postAddress = $('#russianpost_result_address').val() || '';
+    if (!postAddress.trim()) {
+      showNotification('Пожалуйста, выберите пункт выдачи Почты России', 'error');
       return false;
     }
   }
